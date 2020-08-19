@@ -48,7 +48,7 @@ namespace HelloWorld
             char specialty;
             if (role == '1') //Magic
             {
-                health = 80;  //This and the next three lines set the base stats for Mage types
+                health = 80;  //This and the next three lines set the base stats for Magic types
                 healthRegen = 20;
                 playerDamageMult = 1.2f;
                 playerDefense = 15;
@@ -96,7 +96,7 @@ namespace HelloWorld
 
             else if (role == '2') //Warrior
             {
-                health = 110; //This and the next three lines set the base stats for Knight types
+                health = 110; //This and the next three lines set the base stats for Warrior types
                 healthRegen = 10;
                 playerDamageMult = 1.5f;
                 playerbaseDamage = 15;
@@ -144,7 +144,7 @@ namespace HelloWorld
 
             else if(role == '3') //Trickery
             {
-                health = 70; //This and the next three lines set the base stats for Rogue types
+                health = 70; //This and the next four lines set the base stats for Trickery types
                 healthRegen = 20;
                 playerDamageMult = 2.5f;
                 playerbaseDamage = 15;
@@ -213,8 +213,9 @@ namespace HelloWorld
             bool ready = true;
 
             Console.WriteLine("[An enemy appears]");
-            enemyName = "Slime";
             Console.WriteLine("This is a slime. You shouldn't have a problem with this.");
+            enemyName = "Slime";
+
 
             float battlePlayerHealth = (playerDefense * 1 / 2) + health;
             float battlePlayerDefense = playerDefense;
