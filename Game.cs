@@ -9,9 +9,11 @@ namespace HelloWorld
         public void Run()
         {
             float health = 100.0f; //Sets player's health
-            float healthRegen = 10; //Sets the rate the player regens at
-            float playerDefense = 20; //Sets the player's base defense
-            string playerType = "None"; //Placeholder class
+            float healthRegen = 8; //Sets the rate the player regens at
+            float playerDefense = 15; //Sets the player's base defense
+
+            string playerType = "None"; //Placeholder Specialty
+            string roleName = "None"; //Placeholder Class
 
             int level = 1;
 
@@ -27,12 +29,13 @@ namespace HelloWorld
 
             float enemyLevel = 1; //Sets the base enemy level
             float enemyDamageMult = 1; //Sets the base enemy damage multiplier
-            float enemybaseDamage = 2; //Sets the base multiplier for damage based on the entity's level
+            float enemybaseDamage = 15; //Sets the base multiplier for damage based on the entity's level
             float enemyDamage = (enemyLevel + enemybaseDamage) * enemyDamageMult; //Sets the base enemy damage based on their level
 
 
 
             Console.WriteLine("What is your name? ");
+            Console.WriteLine("[Press Enter to enter your name]");
             Console.Write("My name is ");
             string name = Console.ReadLine(); //Gets the player's name
             Console.WriteLine("");
@@ -40,30 +43,68 @@ namespace HelloWorld
             Console.Write("Welcome, " + name);
             Console.WriteLine(", what is your style of battle?");
             Console.WriteLine("[1: Magic, 2: Warrior, 3: Trickery]");
+            Console.WriteLine("[Press the number to continue]");
 
             Console.Write("My style is ");
             char role = Console.ReadKey().KeyChar;
             Console.WriteLine("");
+            Console.Clear(); //Clears the screen
 
             char specialty;
             if (role == '1') //Magic
             {
-                health = 80;  //This and the next three lines set the base stats for Magic types
-                healthRegen = 20;
-                playerDamageMult = 1.2f;
-                playerDefense = 15;
-                playerbaseDamage = 10;
+                roleName = "Magic"; //Sets the class name
 
                 Console.WriteLine("What is your specialty?");
                 Console.WriteLine("[1: Warder, 2: Atronach, 3: Battle Mage, 4: Mage]");
+                Console.WriteLine("[Press the number to continue]");
+                Console.WriteLine("");
+                Console.WriteLine("");
+
+                Console.WriteLine("Warder [1]");
+                Console.WriteLine("Health = 90");
+                Console.WriteLine("Regen = 9");
+                Console.WriteLine("Damage Mult = 1");
+                Console.WriteLine("Base Damage = 8");
+                Console.WriteLine("Defense = 35");
+                Console.WriteLine("");
+                Console.WriteLine("");
+
+                Console.WriteLine("Atronach [2]");
+                Console.WriteLine("Health = 160");
+                Console.WriteLine("Regen = 4");
+                Console.WriteLine("Damage Mult = 1.1");
+                Console.WriteLine("Base Damage = 9");
+                Console.WriteLine("Defense = 10");
+                Console.WriteLine("");
+                Console.WriteLine("");
+
+                Console.WriteLine("Battle Mage [3]");
+                Console.WriteLine("Health = 80");
+                Console.WriteLine("Regen = 10");
+                Console.WriteLine("Damage Mult = 1.5");
+                Console.WriteLine("Base Damage = 13");
+                Console.WriteLine("Defense = 15");
+                Console.WriteLine("");
+                Console.WriteLine("");
+
+                Console.WriteLine("Mage [4]");
+                Console.WriteLine("Health = 80");
+                Console.WriteLine("Regen = 10");
+                Console.WriteLine("Damage Mult = 1.2");
+                Console.WriteLine("Base Damage = 10");
+                Console.WriteLine("Defense = 15");
+                Console.WriteLine("");
+                Console.WriteLine("");
 
                 Console.Write("My specialty is ");
-                specialty = Console.ReadKey().KeyChar; //Gets the specialty of Mage
+                specialty = Console.ReadKey().KeyChar; //Gets the specialty of Magic
+
 
                 if (specialty == '1') //Warder
                 {
                     health = 90;
-                    healthRegen = 10;
+                    healthRegen = 9;
                     playerDamageMult = 1;
                     playerbaseDamage = 8;
                     playerDefense = 35;
@@ -72,7 +113,7 @@ namespace HelloWorld
                 else if (specialty == '2') //Atronach
                 {
                     health = 160;
-                    healthRegen = 5;
+                    healthRegen = 4;
                     playerDamageMult = 1.1f;
                     playerbaseDamage = 9;
                     playerDefense = 10;
@@ -81,7 +122,7 @@ namespace HelloWorld
                 else if (specialty == '3') //Battle Mage
                 {
                     health = 80;
-                    healthRegen = 15;
+                    healthRegen = 10;
                     playerDamageMult = 1.5f;
                     playerbaseDamage = 13;
                     playerDefense = 15;
@@ -89,22 +130,64 @@ namespace HelloWorld
                 }
                 else if (specialty == '4') //Mage
                 {
+                    health = 80;
+                    healthRegen = 10;
+                    playerDamageMult = 1.2f;
+                    playerDefense = 15;
+                    playerbaseDamage = 10;
                     playerType = "Mage";
                 }
-                
+                else
+                {
+                    roleName = "None";
+                }
             }
 
             else if (role == '2') //Warrior
             {
-                health = 110; //This and the next three lines set the base stats for Warrior types
-                healthRegen = 10;
-                playerDamageMult = 1.5f;
-                playerbaseDamage = 15;
-                playerDefense = 30;
+                roleName = "Warrior"; //Sets the class name
 
                 Console.WriteLine("What is your specialty?");
-                Console.WriteLine("[1: Tank, 2: Berzerker, 3: Shielder]");
-                Console.WriteLine("[Enter 4 to not specialize]");
+                Console.WriteLine("[1: Tank, 2: Berzerker, 3: Shielder, 4: Knight]");
+                Console.WriteLine("[Press the number to continue]");
+                Console.WriteLine("");
+                Console.WriteLine("");
+
+                Console.WriteLine("Tank [1]");
+                Console.WriteLine("Health = 120");
+                Console.WriteLine("Regen = 8");
+                Console.WriteLine("Damage Mult = 1");
+                Console.WriteLine("Base Damage = 10");
+                Console.WriteLine("Defense = 50");
+                Console.WriteLine("");
+                Console.WriteLine("");
+
+                Console.WriteLine("Berzerker [2]");
+                Console.WriteLine("Health = 90");
+                Console.WriteLine("Regen = 9");
+                Console.WriteLine("Damage Mult = 2.2");
+                Console.WriteLine("Base Damage = 15");
+                Console.WriteLine("Defense = 13");
+                Console.WriteLine("");
+                Console.WriteLine("");
+
+                Console.WriteLine("Shielder [3]");
+                Console.WriteLine("Health = 100");
+                Console.WriteLine("Regen = 7");
+                Console.WriteLine("Damage Mult = 1.2");
+                Console.WriteLine("Base Damage = 10");
+                Console.WriteLine("Defense = 80");
+                Console.WriteLine("");
+                Console.WriteLine("");
+
+                Console.WriteLine("Knight [4]");
+                Console.WriteLine("Health = 110");
+                Console.WriteLine("Regen = 8");
+                Console.WriteLine("Damage Mult = 1.5");
+                Console.WriteLine("Base Damage = 15");
+                Console.WriteLine("Defense = 30");
+                Console.WriteLine("");
+                Console.WriteLine("");
 
                 Console.Write("My specialty is ");
                 specialty = Console.ReadKey().KeyChar; //Gets the specialty of Knight
@@ -121,7 +204,7 @@ namespace HelloWorld
                 if (specialty == '2') //Berzerker
                 {
                     health = 90;
-                    healthRegen = 15;
+                    healthRegen = 9;
                     playerDamageMult = 2.2f;
                     playerbaseDamage = 15;
                     playerDefense = 13;
@@ -130,7 +213,7 @@ namespace HelloWorld
                 if (specialty =='3') //Shielder
                 {
                     health = 100;
-                    healthRegen = 10;
+                    healthRegen = 7;
                     playerDamageMult = 1.2f;
                     playerbaseDamage = 10;
                     playerDefense = 80;
@@ -138,21 +221,62 @@ namespace HelloWorld
                 }
                 else if (specialty == '4') //Knight
                 {
+                    health = 110;
+                    healthRegen = 8;
+                    playerDamageMult = 1.5f;
+                    playerbaseDamage = 15;
+                    playerDefense = 30;
                     playerType = "Knight";
+                }
+                else
+                {
+                    roleName = "None";
                 }
             }
 
             else if(role == '3') //Trickery
             {
-                health = 70; //This and the next four lines set the base stats for Trickery types
-                healthRegen = 20;
-                playerDamageMult = 2.5f;
-                playerbaseDamage = 15;
-                playerDefense = 5;
+                roleName = "Trickster"; //Sets the class name
 
                 Console.WriteLine("What is your specialty?");
-                Console.WriteLine("[1: Assassin, 2: Martial Artist]");
-                Console.WriteLine("[Enter 4 to not specialize]");
+                Console.WriteLine("[1: Assassin, 2: Martial Artist, 3: Ninja, 4: Rogue]");
+                Console.WriteLine("[Press the number to continue]");
+
+                Console.WriteLine("Assassin [1]");
+                Console.WriteLine("Health = 70");
+                Console.WriteLine("Regen = 10");
+                Console.WriteLine("Damage Mult = 3");
+                Console.WriteLine("Base Damage = 17");
+                Console.WriteLine("Defense = 10");
+                Console.WriteLine("");
+                Console.WriteLine("");
+
+                Console.WriteLine("Martial Artist [2]");
+                Console.WriteLine("Health = 70");
+                Console.WriteLine("Regen = 15");
+                Console.WriteLine("Damage Mult = 2.7");
+                Console.WriteLine("Base Damage = 10");
+                Console.WriteLine("Defense = 20");
+                Console.WriteLine("");
+                Console.WriteLine("");
+
+                Console.WriteLine("Ninja [3]");
+                Console.WriteLine("Health = 70");
+                Console.WriteLine("Regen = 9");
+                Console.WriteLine("Damage Mult = 3.5");
+                Console.WriteLine("Base Damage = 12");
+                Console.WriteLine("Defense = 10");
+                Console.WriteLine("");
+                Console.WriteLine("");
+
+                Console.WriteLine("Rogue [4]");
+                Console.WriteLine("Health = 70");
+                Console.WriteLine("Regen = 9");
+                Console.WriteLine("Damage Mult = 2.5");
+                Console.WriteLine("Base Damage = 15");
+                Console.WriteLine("Defense = 5");
+                Console.WriteLine("");
+                Console.WriteLine("");
 
                 Console.Write("My specialty is ");
                 specialty = Console.ReadKey().KeyChar; //Gets the specialty of Rogue
@@ -160,34 +284,43 @@ namespace HelloWorld
                 if (specialty == '1') //Assassin
                 {
                     health = 70;
-                    healthRegen = 20;
+                    healthRegen = 10;
                     playerDamageMult = 3;
                     playerbaseDamage = 17;
                     playerDefense = 10;
                     playerType = "Assassin";
                 }
-                if (specialty == '2') //Martial Artist
+                else if (specialty == '2') //Martial Artist
                 {
                     health = 70;
-                    healthRegen = 30;
+                    healthRegen = 15;
                     playerDamageMult = 2.7f;
-                    playerbaseDamage = 12;
-                    playerDefense = 25;
+                    playerbaseDamage = 10;
+                    playerDefense = 20;
                     playerType = "Martial Artist";
                 }
-                if (specialty == '3') //Ninja
+                else if (specialty == '3') //Ninja
                 {
                     health = 70;
-                    healthRegen = 10;
+                    healthRegen = 9;
                     playerDamageMult = 3.5f;
                     playerbaseDamage = 12;
-                    playerDefense = 15;
+                    playerDefense = 10;
                     playerType = "Ninja";
                 }
 
                 else if (specialty == '4') //Rogue
                 {
+                    health = 70;
+                    healthRegen = 9;
+                    playerDamageMult = 2.5f;
+                    playerbaseDamage = 15;
+                    playerDefense = 5;
                     playerType = "Rogue";
+                }
+                else
+                {
+                    roleName = "None";
                 }
             }
 
@@ -203,7 +336,9 @@ namespace HelloWorld
             Console.WriteLine("Defense: " + playerDefense);
             Console.WriteLine("Damage Multiplier: " + playerDamageMult);
             Console.WriteLine("Level: " + level);
-            Console.WriteLine("Class: " + playerType);
+            Console.WriteLine("Class: " + roleName);
+            Console.WriteLine("Specialty: " + playerType);
+
 
             Console.WriteLine("");
             Console.WriteLine("[Enter anything to continue]");
@@ -216,13 +351,19 @@ namespace HelloWorld
             Console.WriteLine("This is a slime. You shouldn't have a problem with this.");
             enemyName = "Slime";
 
+            Console.WriteLine("");
+            Console.WriteLine("[Enter anything to continue]");
+            Console.ReadLine();
+            Console.Clear();
 
-            float battlePlayerHealth = (playerDefense * 1 / 2) + health;
-            float battlePlayerDefense = playerDefense;
+
+            float battlePlayerHealth = (playerDefense * 1 / 2) + health + level;
+            float battlePlayerDefense = playerDefense + level;
             playerDamage = (level + playerbaseDamage) * playerDamageMult; //Sets the total damage based on the player's level, base damage, and the damage mutliplier
 
-            float battleEnemyHealth = (enemyDefense * 1 / 2) + enemyHealth;
-            float battleEnemyDefense = enemyDefense;
+            float battleEnemyHealth = (enemyDefense * 1 / 2) + enemyHealth + enemyLevel;
+            float battleEnemyDefense = enemyDefense + enemyLevel;
+            enemyDamage = (enemyLevel + enemyDamage) * enemyDamageMult;
 
             if (ready = true)
             {
@@ -236,19 +377,21 @@ namespace HelloWorld
                         turncounter++;
 
                         Console.WriteLine("Turn: " + turncounter);
+                        Console.WriteLine("[" + name + "'s turn]");
 
                         Console.WriteLine(name); //This and the next line show your name and health
                         Console.WriteLine(battlePlayerHealth + " HP");
+                        Console.WriteLine(playerDamage + " Atk");
                         Console.WriteLine(battlePlayerDefense + " Def");
 
                         Console.WriteLine("");
 
                         Console.WriteLine(enemyName); //This and the next line show the enemy's name and health
                         Console.WriteLine(battleEnemyHealth + " HP");
+                        Console.WriteLine(enemyDamage + " Atk");
                         Console.WriteLine(battleEnemyDefense + " Def");
                         Console.WriteLine("");
                         Console.WriteLine("");
-
 
                         Console.WriteLine("What will you do?");
                         Console.WriteLine("[1: Attack, 2: Block, 3: Nothing]");
@@ -258,6 +401,7 @@ namespace HelloWorld
                         {
                             Console.Clear(); //Clears the screen to show the enemy's health before your attack
 
+                            Console.WriteLine("[" + name + "'s turn]");
                             Console.WriteLine(enemyName);
                             Console.WriteLine(battleEnemyHealth); //Enemy's stats before your attack
                             Console.WriteLine(battleEnemyDefense + " Def");
@@ -265,16 +409,19 @@ namespace HelloWorld
                             Console.WriteLine("[Enter anything to continue]");
                             Console.ReadLine();
 
-                            battleEnemyHealth = battleEnemyHealth - playerDamage;
+                            battleEnemyHealth = battleEnemyHealth - playerDamage; //Your attack
                             Console.Clear(); //Clears the screen
 
+                            Console.WriteLine("[" + name + "'s turn]");
                             Console.WriteLine(enemyName);
                             Console.WriteLine(battleEnemyHealth); //Enemy's stats after your attack
                             Console.WriteLine(battleEnemyDefense + " Def");
 
                             Console.WriteLine("[Enter anything to continue]");
                             Console.ReadLine();
+                            Console.Clear(); //Clears the screen
 
+                            Console.WriteLine("[" + enemyName + "'s turn]");
 
                             Console.WriteLine(name); //Your stats before being struck
                             Console.WriteLine(battlePlayerHealth + " HP");
@@ -285,22 +432,19 @@ namespace HelloWorld
                             Console.ReadLine();
                             Console.Clear(); //Clears the screen
 
-                            battlePlayerHealth = battlePlayerHealth - enemyDamage;
+                            battlePlayerHealth = battlePlayerHealth - enemyDamage;  //Enemy's attack
 
+                            Console.WriteLine("[" + enemyName + "'s turn]");
                             Console.WriteLine(name); //Your stats after being struck
                             Console.WriteLine(battlePlayerHealth + " HP");
                             Console.WriteLine(battlePlayerDefense + " Def");
                             Console.WriteLine("");
-
-                            Console.WriteLine("[Enter anything to continue]");
-                            Console.ReadLine();
-                            Console.Clear(); //Clears the screen
-
                         }
 
                         if (action == '2') //Block
                         {
                             Console.Clear(); //Clears the screen
+                            Console.WriteLine("[" + enemyName + "'s turn]");
 
                             Console.WriteLine(name); //Your stats before being struck
                             Console.WriteLine(battlePlayerHealth + " HP");
@@ -311,19 +455,21 @@ namespace HelloWorld
                             Console.ReadLine();
                             Console.Clear(); //Clears the screen
 
-                            battlePlayerDefense = battlePlayerDefense - enemyDamage;
+                            battlePlayerDefense = battlePlayerDefense - enemyDamage; //Enemy's attack
 
+                            Console.WriteLine("[" + enemyName + "'s turn]");
                             Console.WriteLine(name); //Your stats after being struck
                             Console.WriteLine(battlePlayerHealth + " HP");
                             Console.WriteLine(battlePlayerDefense + " Def");
                             Console.WriteLine("");
-
                         }
 
-                        if (action == '2') //Nothing
+                        if (action == '3') //Nothing
                         {
                             Console.Clear(); //Clears the screen
 
+                            Console.WriteLine("[" + enemyName + "'s turn]");
+
                             Console.WriteLine(name); //Your stats before being struck
                             Console.WriteLine(battlePlayerHealth + " HP");
                             Console.WriteLine(battlePlayerDefense + " Def");
@@ -332,27 +478,26 @@ namespace HelloWorld
                             Console.ReadLine();
                             Console.Clear(); //Clears the screen
 
-                            battlePlayerHealth = battlePlayerHealth - enemyDamage;
+                            battlePlayerHealth = battlePlayerHealth - enemyDamage;  //Enemy's attack
 
+                            Console.WriteLine("[" + enemyName + "'s turn]");
                             Console.WriteLine(name); //Your stats after being struck
                             Console.WriteLine(battlePlayerHealth + " HP");
                             Console.WriteLine(battlePlayerDefense + " Def");
                             Console.WriteLine("");
-
-                            Console.WriteLine("[Enter anything to continue]");
-                            Console.ReadLine();
-                            Console.Clear(); //Clears the screen
                         }
 
 
-                        Console.WriteLine("[Enter anything to end this round]");
+                        Console.WriteLine("[Enter anything to end this round; regen will be applied]");
                         Console.ReadLine();
                         Console.Clear(); //Clears the screen
+                        battleEnemyHealth = battleEnemyHealth + enemyRegen;
+                        battlePlayerHealth = battlePlayerHealth + healthRegen;
                     } //while battleEnemyHealth > 0
 
                     if (battleEnemyHealth <= 0)
                     {
-
+                        
                     }
 
                 } //While health > 0
