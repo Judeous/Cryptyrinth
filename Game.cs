@@ -148,7 +148,7 @@ namespace HelloWorld
                 roleName = "Warrior"; //Sets the class name
 
                 Console.WriteLine("What is your specialty?");
-                Console.WriteLine("[1: Tank, 2: Berzerker, 3: Shielder, 4: Knight]");
+                Console.WriteLine("[1: Tank, 2: Berserker, 3: Shielder, 4: Knight]");
                 Console.WriteLine("[Press the number to continue]");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -162,7 +162,7 @@ namespace HelloWorld
                 Console.WriteLine("");
                 Console.WriteLine("");
 
-                Console.WriteLine("Berzerker [2]");
+                Console.WriteLine("Berserker [2]");
                 Console.WriteLine("Health = 90");
                 Console.WriteLine("Regen = 9");
                 Console.WriteLine("Damage Mult = 2.2");
@@ -201,14 +201,14 @@ namespace HelloWorld
                     playerDefense = 50;
                     playerType = "Tank";
                 }
-                if (specialty == '2') //Berzerker
+                if (specialty == '2') //Berserker
                 {
                     health = 90;
                     healthRegen = 9;
                     playerDamageMult = 2.2f;
                     playerbaseDamage = 15;
                     playerDefense = 13;
-                    playerType = "Berzerker";
+                    playerType = "Berserker";
                 }
                 if (specialty =='3') //Shielder
                 {
