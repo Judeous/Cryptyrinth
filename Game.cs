@@ -347,6 +347,7 @@ namespace HelloWorld
 
                         Console.WriteLine("[Enter anything to end this round]");
                         Console.ReadLine();
+                        Console.Clear(); //Clears the screen
                     } //while battleEnemyHealth > 0
 
                     if (battleEnemyHealth <= 0)
