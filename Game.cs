@@ -8,7 +8,7 @@ namespace HelloWorld
     {
         public void Run()
         {
-            float health = 100.0f; //Sets player's health
+            float health = 100; //Sets player's health
             float healthRegen = 8; //Sets the rate the player regens at
             float playerDefense = 15; //Sets the player's base defense
 
@@ -17,20 +17,21 @@ namespace HelloWorld
 
             int level = 1;
 
-            float playerbaseDamage = 8; //Sets the base multiplier for damage based on the player's level
-            float playerDamageMult = 1; //Sets the base player damage multiplier based on class
-            float playerDamage = (level + playerbaseDamage) * playerDamageMult; //Sets the base damage based on double the player's level
+            float playerbaseDamage = 9; //Sets the base player damage
+            float playerDamageMult = 1; //Sets the base player damage multiplier that changes based on specialty
+            float playerDamage;
+            playerDamage = (level + playerbaseDamage) * playerDamageMult; //The equation for player attack damage
 
 
             string enemyName;
             float enemyHealth = 50; //Sets the base enemy health
-            float enemyRegen = 5; //Sets the base enemy regen
+            float enemyRegen = 2; //Sets the base enemy regen
             float enemyDefense = 7; //Sets the enemies' base defense
 
             float enemyLevel = 1; //Sets the base enemy level
             float enemyDamageMult = 1; //Sets the base enemy damage multiplier
-            float enemybaseDamage = 15; //Sets the base multiplier for damage based on the entity's level
-            float enemyDamage = (enemyLevel + enemybaseDamage) * enemyDamageMult; //Sets the base enemy damage based on their level
+            float enemybaseDamage = 15; //Sets the base damage
+            float enemyDamage = (enemyLevel + enemybaseDamage) * enemyDamageMult; //The equation for enemy attack damage
 
 
 
@@ -65,7 +66,6 @@ namespace HelloWorld
                 Console.WriteLine("Health = 90");
                 Console.WriteLine("Regen = 9");
                 Console.WriteLine("Damage Mult = 1");
-                Console.WriteLine("Base Damage = 8");
                 Console.WriteLine("Defense = 35");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -73,8 +73,7 @@ namespace HelloWorld
                 Console.WriteLine("Atronach [2]");
                 Console.WriteLine("Health = 160");
                 Console.WriteLine("Regen = 4");
-                Console.WriteLine("Damage Mult = 1.1");
-                Console.WriteLine("Base Damage = 9");
+                Console.WriteLine("Damage Mult = 0.8");
                 Console.WriteLine("Defense = 10");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -82,8 +81,7 @@ namespace HelloWorld
                 Console.WriteLine("Battle Mage [3]");
                 Console.WriteLine("Health = 80");
                 Console.WriteLine("Regen = 10");
-                Console.WriteLine("Damage Mult = 1.5");
-                Console.WriteLine("Base Damage = 13");
+                Console.WriteLine("Damage Mult = 1.2");
                 Console.WriteLine("Defense = 15");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -91,8 +89,7 @@ namespace HelloWorld
                 Console.WriteLine("Mage [4]");
                 Console.WriteLine("Health = 80");
                 Console.WriteLine("Regen = 10");
-                Console.WriteLine("Damage Mult = 1.2");
-                Console.WriteLine("Base Damage = 10");
+                Console.WriteLine("Damage Mult = 1.05");
                 Console.WriteLine("Defense = 15");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -106,7 +103,6 @@ namespace HelloWorld
                     health = 90;
                     healthRegen = 9;
                     playerDamageMult = 1;
-                    playerbaseDamage = 8;
                     playerDefense = 35;
                     playerType = "Warder";
                 }
@@ -114,8 +110,7 @@ namespace HelloWorld
                 {
                     health = 160;
                     healthRegen = 4;
-                    playerDamageMult = 1.1f;
-                    playerbaseDamage = 9;
+                    playerDamageMult = 0.8f;
                     playerDefense = 10;
                     playerType = "Atronach";
                 }
@@ -123,8 +118,7 @@ namespace HelloWorld
                 {
                     health = 80;
                     healthRegen = 10;
-                    playerDamageMult = 1.5f;
-                    playerbaseDamage = 13;
+                    playerDamageMult = 1.2f;
                     playerDefense = 15;
                     playerType = "Battle Mage";
                 }
@@ -132,9 +126,8 @@ namespace HelloWorld
                 {
                     health = 80;
                     healthRegen = 10;
-                    playerDamageMult = 1.2f;
+                    playerDamageMult = 1.05f;
                     playerDefense = 15;
-                    playerbaseDamage = 10;
                     playerType = "Mage";
                 }
                 else
@@ -146,7 +139,6 @@ namespace HelloWorld
             else if (role == '2') //Warrior
             {
                 roleName = "Warrior"; //Sets the class name
-
                 Console.WriteLine("What is your specialty?");
                 Console.WriteLine("[1: Tank, 2: Berserker, 3: Shielder, 4: Knight]");
                 Console.WriteLine("[Press the number to continue]");
@@ -157,7 +149,6 @@ namespace HelloWorld
                 Console.WriteLine("Health = 120");
                 Console.WriteLine("Regen = 8");
                 Console.WriteLine("Damage Mult = 1");
-                Console.WriteLine("Base Damage = 10");
                 Console.WriteLine("Defense = 50");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -165,8 +156,7 @@ namespace HelloWorld
                 Console.WriteLine("Berserker [2]");
                 Console.WriteLine("Health = 90");
                 Console.WriteLine("Regen = 9");
-                Console.WriteLine("Damage Mult = 2.2");
-                Console.WriteLine("Base Damage = 15");
+                Console.WriteLine("Damage Mult = 1.8");
                 Console.WriteLine("Defense = 13");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -174,8 +164,7 @@ namespace HelloWorld
                 Console.WriteLine("Shielder [3]");
                 Console.WriteLine("Health = 100");
                 Console.WriteLine("Regen = 7");
-                Console.WriteLine("Damage Mult = 1.2");
-                Console.WriteLine("Base Damage = 10");
+                Console.WriteLine("Damage Mult = 1");
                 Console.WriteLine("Defense = 80");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -183,8 +172,7 @@ namespace HelloWorld
                 Console.WriteLine("Knight [4]");
                 Console.WriteLine("Health = 110");
                 Console.WriteLine("Regen = 8");
-                Console.WriteLine("Damage Mult = 1.5");
-                Console.WriteLine("Base Damage = 15");
+                Console.WriteLine("Damage Mult = 1.2");
                 Console.WriteLine("Defense = 30");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -197,7 +185,6 @@ namespace HelloWorld
                     health = 120;
                     healthRegen = 8;
                     playerDamageMult = 1;
-                    playerbaseDamage = 10;
                     playerDefense = 50;
                     playerType = "Tank";
                 }
@@ -205,8 +192,7 @@ namespace HelloWorld
                 {
                     health = 90;
                     healthRegen = 9;
-                    playerDamageMult = 2.2f;
-                    playerbaseDamage = 15;
+                    playerDamageMult = 1.8f;
                     playerDefense = 13;
                     playerType = "Berserker";
                 }
@@ -214,8 +200,7 @@ namespace HelloWorld
                 {
                     health = 100;
                     healthRegen = 7;
-                    playerDamageMult = 1.2f;
-                    playerbaseDamage = 10;
+                    playerDamageMult = 1;
                     playerDefense = 80;
                     playerType = "Shielder";
                 }
@@ -223,8 +208,7 @@ namespace HelloWorld
                 {
                     health = 110;
                     healthRegen = 8;
-                    playerDamageMult = 1.5f;
-                    playerbaseDamage = 15;
+                    playerDamageMult = 1.2f;
                     playerDefense = 30;
                     playerType = "Knight";
                 }
@@ -244,36 +228,32 @@ namespace HelloWorld
 
                 Console.WriteLine("Assassin [1]");
                 Console.WriteLine("Health = 70");
-                Console.WriteLine("Regen = 10");
-                Console.WriteLine("Damage Mult = 3");
-                Console.WriteLine("Base Damage = 17");
+                Console.WriteLine("Regen = 8");
+                Console.WriteLine("Damage Mult = 1.35");
                 Console.WriteLine("Defense = 10");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
                 Console.WriteLine("Martial Artist [2]");
-                Console.WriteLine("Health = 70");
-                Console.WriteLine("Regen = 15");
-                Console.WriteLine("Damage Mult = 2.7");
-                Console.WriteLine("Base Damage = 10");
+                Console.WriteLine("Health = 80");
+                Console.WriteLine("Regen = 13");
+                Console.WriteLine("Damage Mult = 1.2");
                 Console.WriteLine("Defense = 20");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
                 Console.WriteLine("Ninja [3]");
-                Console.WriteLine("Health = 70");
+                Console.WriteLine("Health = 65");
                 Console.WriteLine("Regen = 9");
-                Console.WriteLine("Damage Mult = 3.5");
-                Console.WriteLine("Base Damage = 12");
-                Console.WriteLine("Defense = 10");
+                Console.WriteLine("Damage Mult = 1.4");
+                Console.WriteLine("Defense = 8");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
                 Console.WriteLine("Rogue [4]");
                 Console.WriteLine("Health = 70");
-                Console.WriteLine("Regen = 9");
-                Console.WriteLine("Damage Mult = 2.5");
-                Console.WriteLine("Base Damage = 15");
+                Console.WriteLine("Regen = 8");
+                Console.WriteLine("Damage Mult = 1.3");
                 Console.WriteLine("Defense = 5");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -284,37 +264,33 @@ namespace HelloWorld
                 if (specialty == '1') //Assassin
                 {
                     health = 70;
-                    healthRegen = 10;
-                    playerDamageMult = 3;
-                    playerbaseDamage = 17;
+                    healthRegen = 8;
+                    playerDamageMult = 1.35f;
                     playerDefense = 10;
                     playerType = "Assassin";
                 }
                 else if (specialty == '2') //Martial Artist
                 {
-                    health = 70;
-                    healthRegen = 15;
-                    playerDamageMult = 2.7f;
-                    playerbaseDamage = 10;
+                    health = 80;
+                    healthRegen = 13;
+                    playerDamageMult = 1.2f;
                     playerDefense = 20;
                     playerType = "Martial Artist";
                 }
                 else if (specialty == '3') //Ninja
                 {
-                    health = 70;
+                    health = 65;
                     healthRegen = 9;
-                    playerDamageMult = 3.5f;
-                    playerbaseDamage = 12;
-                    playerDefense = 10;
+                    playerDamageMult = 1.4f;
+                    playerDefense = 8;
                     playerType = "Ninja";
                 }
 
                 else if (specialty == '4') //Rogue
                 {
                     health = 70;
-                    healthRegen = 9;
-                    playerDamageMult = 2.5f;
-                    playerbaseDamage = 15;
+                    healthRegen = 8;
+                    playerDamageMult = 1.3f;
                     playerDefense = 5;
                     playerType = "Rogue";
                 }
@@ -409,10 +385,9 @@ namespace HelloWorld
                             Console.WriteLine("[Enter anything to continue]");
                             Console.ReadLine();
 
+                            Console.WriteLine("");
                             battleEnemyHealth = battleEnemyHealth - playerDamage; //Your attack
-                            Console.Clear(); //Clears the screen
 
-                            Console.WriteLine("[" + name + "'s turn]");
                             Console.WriteLine(enemyName);
                             Console.WriteLine(battleEnemyHealth); //Enemy's stats after your attack
                             Console.WriteLine(battleEnemyDefense + " Def");
@@ -421,8 +396,8 @@ namespace HelloWorld
                             Console.ReadLine();
                             Console.Clear(); //Clears the screen
 
-                            Console.WriteLine("[" + enemyName + "'s turn]");
 
+                            Console.WriteLine("[" + enemyName + "'s turn]");
                             Console.WriteLine(name); //Your stats before being struck
                             Console.WriteLine(battlePlayerHealth + " HP");
                             Console.WriteLine(battlePlayerDefense + " Def");
@@ -430,11 +405,10 @@ namespace HelloWorld
 
                             Console.WriteLine("[Enter anything to continue]");
                             Console.ReadLine();
-                            Console.Clear(); //Clears the screen
+                            Console.WriteLine("");
 
                             battlePlayerHealth = battlePlayerHealth - enemyDamage;  //Enemy's attack
 
-                            Console.WriteLine("[" + enemyName + "'s turn]");
                             Console.WriteLine(name); //Your stats after being struck
                             Console.WriteLine(battlePlayerHealth + " HP");
                             Console.WriteLine(battlePlayerDefense + " Def");
@@ -453,11 +427,10 @@ namespace HelloWorld
 
                             Console.WriteLine("[Enter anything to continue]");
                             Console.ReadLine();
-                            Console.Clear(); //Clears the screen
+                            Console.WriteLine("");
 
                             battlePlayerDefense = battlePlayerDefense - enemyDamage; //Enemy's attack
 
-                            Console.WriteLine("[" + enemyName + "'s turn]");
                             Console.WriteLine(name); //Your stats after being struck
                             Console.WriteLine(battlePlayerHealth + " HP");
                             Console.WriteLine(battlePlayerDefense + " Def");
@@ -476,11 +449,10 @@ namespace HelloWorld
                             Console.WriteLine("");
                             Console.WriteLine("[Enter anything to continue]");
                             Console.ReadLine();
-                            Console.Clear(); //Clears the screen
+                            Console.WriteLine("");
 
                             battlePlayerHealth = battlePlayerHealth - enemyDamage;  //Enemy's attack
 
-                            Console.WriteLine("[" + enemyName + "'s turn]");
                             Console.WriteLine(name); //Your stats after being struck
                             Console.WriteLine(battlePlayerHealth + " HP");
                             Console.WriteLine(battlePlayerDefense + " Def");
