@@ -226,18 +226,26 @@ namespace HelloWorld
 
             if (ready = true)
             {
-                do
+                int turncounter = 0;
+
+                while (health > 0)
                 {
                     if (enemyHealth > 0)
                     {
                         bool inBattle = true;
+                        turncounter++;
 
-                        Console.WriteLine(name);
+                        Console.WriteLine("Turn: " + turncounter);
+
+                        Console.WriteLine(name); //This and the next line show your name and health
                         Console.WriteLine(battlePlayerHealth + " HP");
+                        Console.WriteLine(battlePlayerDefense + " Def");
+
                         Console.WriteLine("");
 
-                        Console.WriteLine(enemyName);
+                        Console.WriteLine(enemyName); //This and the next line show the enemy's name and health
                         Console.WriteLine(battleEnemyHealth + " HP");
+                        Console.WriteLine(battleEnemyDefense + " Def");
                         Console.WriteLine("");
                         Console.WriteLine("");
 
@@ -246,31 +254,111 @@ namespace HelloWorld
                         Console.WriteLine("[1: Attack, 2: Block, 3: Nothing]");
                         char action = Console.ReadKey().KeyChar;
 
-                        if (action == '1')
+                        if (action == '1') //Attack
                         {
-                            Console.WriteLine(battleEnemyHealth);
+                            Console.Clear(); //Clears the screen to show the enemy's health before your attack
+
+                            Console.WriteLine(enemyName);
+                            Console.WriteLine(battleEnemyHealth); //Enemy's stats before your attack
+                            Console.WriteLine(battleEnemyDefense + " Def");
+
+                            Console.WriteLine("[Enter anything to continue]");
+                            Console.ReadLine();
+
+                            battleEnemyHealth = battleEnemyHealth - playerDamage;
+                            Console.Clear(); //Clears the screen
+
+                            Console.WriteLine(enemyName);
+                            Console.WriteLine(battleEnemyHealth); //Enemy's stats after your attack
+                            Console.WriteLine(battleEnemyDefense + " Def");
+
                             Console.WriteLine("[Enter anything to continue]");
                             Console.ReadLine();
 
 
+                            Console.WriteLine(name); //Your stats before being struck
+                            Console.WriteLine(battlePlayerHealth + " HP");
+                            Console.WriteLine(battlePlayerDefense + " Def");
+                            Console.WriteLine("");
+
+                            Console.WriteLine("[Enter anything to continue]");
+                            Console.ReadLine();
+                            Console.Clear(); //Clears the screen
+
+                            battlePlayerHealth = battlePlayerHealth - enemyDamage;
+
+                            Console.WriteLine(name); //Your stats after being struck
+                            Console.WriteLine(battlePlayerHealth + " HP");
+                            Console.WriteLine(battlePlayerDefense + " Def");
+                            Console.WriteLine("");
+
+                            Console.WriteLine("[Enter anything to continue]");
+                            Console.ReadLine();
+                            Console.Clear(); //Clears the screen
 
                         }
 
+                        if (action == '2') //Block
+                        {
+                            Console.Clear(); //Clears the screen
+
+                            Console.WriteLine(name); //Your stats before being struck
+                            Console.WriteLine(battlePlayerHealth + " HP");
+                            Console.WriteLine(battlePlayerDefense + " Def");
+                            Console.WriteLine("");
+
+                            Console.WriteLine("[Enter anything to continue]");
+                            Console.ReadLine();
+                            Console.Clear(); //Clears the screen
+
+                            battlePlayerDefense = battlePlayerDefense - enemyDamage;
+
+                            Console.WriteLine(name); //Your stats after being struck
+                            Console.WriteLine(battlePlayerHealth + " HP");
+                            Console.WriteLine(battlePlayerDefense + " Def");
+                            Console.WriteLine("");
+
+                        }
+
+                        if (action == '2') //Nothing
+                        {
+                            Console.Clear(); //Clears the screen
+
+                            Console.WriteLine(name); //Your stats before being struck
+                            Console.WriteLine(battlePlayerHealth + " HP");
+                            Console.WriteLine(battlePlayerDefense + " Def");
+                            Console.WriteLine("");
+                            Console.WriteLine("[Enter anything to continue]");
+                            Console.ReadLine();
+                            Console.Clear(); //Clears the screen
+
+                            battlePlayerHealth = battlePlayerHealth - enemyDamage;
+
+                            Console.WriteLine(name); //Your stats after being struck
+                            Console.WriteLine(battlePlayerHealth + " HP");
+                            Console.WriteLine(battlePlayerDefense + " Def");
+                            Console.WriteLine("");
+
+                            Console.WriteLine("[Enter anything to continue]");
+                            Console.ReadLine();
+                            Console.Clear(); //Clears the screen
+                        }
 
 
-
-
-
-                        Console.WriteLine("[Enter anything to continue]");
+                        Console.WriteLine("[Enter anything to end this round]");
                         Console.ReadLine();
-                    } //Checks to see if enemy health is no longer above 0
-                }
-                while (health > 0);
+                    } //while battleEnemyHealth > 0
 
+                    if (battleEnemyHealth <= 0)
+                    {
+
+                    }
+
+                } //While health > 0
                 
 
             } //If ready
 
         } //Void Run
-    }
+    } //Game
 }
