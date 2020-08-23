@@ -12,14 +12,14 @@ namespace HelloWorld
             float healthRegen = 8; //Sets the rate the player regens at
             float playerDefense = 15; //Sets the player's base defense
 
+            float playerbaseDamage = 9; //Sets the base player damage
+            float playerDamageMult = 1; //Sets the base player damage multiplier that changes based on specialty
+            float playerDamage;
+
             string playerType = "None"; //Placeholder Specialty
             string roleName = "None"; //Placeholder Class
 
             int level = 1;
-
-            float playerbaseDamage = 9; //Sets the base player damage
-            float playerDamageMult = 1; //Sets the base player damage multiplier that changes based on specialty
-            float playerDamage;
 
             //playerDamage = (level + playerbaseDamage) * playerDamageMult; is the equation for player attack damage
 
