@@ -20,17 +20,17 @@ namespace HelloWorld
             float playerbaseDamage = 9; //Sets the base player damage
             float playerDamageMult = 1; //Sets the base player damage multiplier that changes based on specialty
             float playerDamage;
-            playerDamage = (level + playerbaseDamage) * playerDamageMult; //The equation for player attack damage
 
+            //playerDamage = (level + playerbaseDamage) * playerDamageMult; is the equation for player attack damage
 
             string enemyName;
-            float enemyHealth = 50; //Sets the base enemy health
+            float enemyHealth = 25; //Sets the base enemy health
             float enemyRegen = 2; //Sets the base enemy regen
             float enemyDefense = 7; //Sets the enemies' base defense
 
             float enemyLevel = 1; //Sets the base enemy level
             float enemyDamageMult = 1; //Sets the base enemy damage multiplier
-            float enemybaseDamage = 15; //Sets the base damage
+            float enemybaseDamage = 8; //Sets the base damage
             float enemyDamage = (enemyLevel + enemybaseDamage) * enemyDamageMult; //The equation for enemy attack damage
 
 
@@ -88,7 +88,7 @@ namespace HelloWorld
 
                 Console.WriteLine("Mage [4]");
                 Console.WriteLine("Health = 80");
-                Console.WriteLine("Regen = 10");
+                Console.WriteLine("Regen = 12");
                 Console.WriteLine("Damage Mult = 1.05");
                 Console.WriteLine("Defense = 15");
                 Console.WriteLine("");
@@ -125,7 +125,7 @@ namespace HelloWorld
                 else if (specialty == '4') //Mage
                 {
                     health = 80;
-                    healthRegen = 10;
+                    healthRegen = 12;
                     playerDamageMult = 1.05f;
                     playerDefense = 15;
                     playerType = "Mage";
@@ -139,6 +139,7 @@ namespace HelloWorld
             else if (role == '2') //Warrior
             {
                 roleName = "Warrior"; //Sets the class name
+
                 Console.WriteLine("What is your specialty?");
                 Console.WriteLine("[1: Tank, 2: Berserker, 3: Shielder, 4: Knight]");
                 Console.WriteLine("[Press the number to continue]");
@@ -155,8 +156,8 @@ namespace HelloWorld
 
                 Console.WriteLine("Berserker [2]");
                 Console.WriteLine("Health = 90");
-                Console.WriteLine("Regen = 9");
-                Console.WriteLine("Damage Mult = 1.8");
+                Console.WriteLine("Regen = 6");
+                Console.WriteLine("Damage Mult = 1.45");
                 Console.WriteLine("Defense = 13");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -188,15 +189,15 @@ namespace HelloWorld
                     playerDefense = 50;
                     playerType = "Tank";
                 }
-                if (specialty == '2') //Berserker
+                else if (specialty == '2') //Berserker
                 {
                     health = 90;
-                    healthRegen = 9;
-                    playerDamageMult = 1.8f;
+                    healthRegen = 6;
+                    playerDamageMult = 1.45f;
                     playerDefense = 13;
                     playerType = "Berserker";
                 }
-                if (specialty =='3') //Shielder
+                else if (specialty =='3') //Shielder
                 {
                     health = 100;
                     healthRegen = 7;
@@ -218,7 +219,7 @@ namespace HelloWorld
                 }
             }
 
-            else if(role == '3') //Trickery
+            else if (role == '3') //Trickery
             {
                 roleName = "Trickster"; //Sets the class name
 
@@ -244,7 +245,7 @@ namespace HelloWorld
 
                 Console.WriteLine("Ninja [3]");
                 Console.WriteLine("Health = 65");
-                Console.WriteLine("Regen = 9");
+                Console.WriteLine("Regen = 8");
                 Console.WriteLine("Damage Mult = 1.4");
                 Console.WriteLine("Defense = 8");
                 Console.WriteLine("");
@@ -317,45 +318,49 @@ namespace HelloWorld
 
 
             Console.WriteLine("");
-            Console.WriteLine("[Enter anything to continue]");
+            Console.WriteLine("[Press Enter to continue]");
             Console.ReadLine();
             Console.Clear();
 
             bool ready = true;
 
-            Console.WriteLine("[An enemy appears]");
+            Console.WriteLine("[A slime appears]");
             Console.WriteLine("This is a slime. You shouldn't have a problem with this.");
             enemyName = "Slime";
 
             Console.WriteLine("");
-            Console.WriteLine("[Enter anything to continue]");
+            Console.WriteLine("[Press Enter to continue]");
             Console.ReadLine();
             Console.Clear();
 
 
             float battlePlayerHealth = (playerDefense * 1 / 2) + health + level;
+            float battlePlayerMaxHP = battlePlayerHealth; //Sets the max in-battle health for the player so they don't regenerate to unholy levels
             float battlePlayerDefense = playerDefense + level;
             playerDamage = (level + playerbaseDamage) * playerDamageMult; //Sets the total damage based on the player's level, base damage, and the damage mutliplier
 
             float battleEnemyHealth = (enemyDefense * 1 / 2) + enemyHealth + enemyLevel;
+            float battleEnemyMaxHP = battleEnemyHealth; //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
             float battleEnemyDefense = enemyDefense + enemyLevel;
             enemyDamage = (enemyLevel + enemyDamage) * enemyDamageMult;
 
-            if (ready = true)
-            {
-                int turncounter = 0;
+            int turncounter = 0;
 
-                while (health > 0)
+            while (ready == true)
+            {
+
+                if (battlePlayerHealth > 0)
                 {
-                    if (enemyHealth > 0)
+
+                    if (battleEnemyHealth > 0)
                     {
-                        bool inBattle = true;
                         turncounter++;
 
                         Console.WriteLine("Turn: " + turncounter);
-                        Console.WriteLine("[" + name + "'s turn]");
+                        Console.WriteLine("[Actions are being decided]");
+                        Console.WriteLine("");
 
-                        Console.WriteLine(name); //This and the next line show your name and health
+                        Console.WriteLine(name); //This and the next line show player's name and health
                         Console.WriteLine(battlePlayerHealth + " HP");
                         Console.WriteLine(playerDamage + " Atk");
                         Console.WriteLine(battlePlayerDefense + " Def");
@@ -369,113 +374,255 @@ namespace HelloWorld
                         Console.WriteLine("");
                         Console.WriteLine("");
 
+                        Random r = new Random(); //Sets a thing for the randomizer for enemyAction
+                        int enemyAction = r.Next(0, 3); //Decides the enemy's action
+
                         Console.WriteLine("What will you do?");
                         Console.WriteLine("[1: Attack, 2: Block, 3: Nothing]");
                         char action = Console.ReadKey().KeyChar;
 
                         if (action == '1') //Attack
                         {
-                            Console.Clear(); //Clears the screen to show the enemy's health before your attack
+                            Console.Clear(); //Clears the screen to show the enemy's stats before player's attack
 
-                            Console.WriteLine("[" + name + "'s turn]");
-                            Console.WriteLine(enemyName);
-                            Console.WriteLine(battleEnemyHealth); //Enemy's stats before your attack
-                            Console.WriteLine(battleEnemyDefense + " Def");
+                            Console.WriteLine("[" + name + " is attacking!]");
 
-                            Console.WriteLine("[Enter anything to continue]");
-                            Console.ReadLine();
+                            if (enemyAction == 2) //If enemy blocks
+                            {
+                                Console.WriteLine("[" + enemyName + " is blocking!]");
+                                Console.WriteLine("");
 
-                            Console.WriteLine("");
-                            battleEnemyHealth = battleEnemyHealth - playerDamage; //Your attack
+                                Console.WriteLine(enemyName + "[Pre-Strike]"); //Enemy's stats before player's attack
+                                Console.WriteLine(battleEnemyHealth + " HP");
+                                Console.WriteLine(battleEnemyDefense + " Def <<");
 
-                            Console.WriteLine(enemyName);
-                            Console.WriteLine(battleEnemyHealth); //Enemy's stats after your attack
-                            Console.WriteLine(battleEnemyDefense + " Def");
+                                Console.WriteLine("[Press Enter to continue]");
+                                Console.ReadLine();
 
-                            Console.WriteLine("[Enter anything to continue]");
+                                Console.WriteLine("");
+                                battleEnemyDefense -= playerDamage; //Player's attack
+
+                                if (battleEnemyDefense <= 0) //If defense failed
+                                {
+                                    Console.WriteLine("[" + enemyName + " cannot block!]");
+                                    battleEnemyHealth += battleEnemyDefense; //remainder of attack goes to health
+                                    battleEnemyDefense = 0; //Sets defense back to 0
+
+                                    Console.WriteLine(enemyName + " [Post-Strike]"); //Enemy's stats after player's attack
+                                    Console.WriteLine(battleEnemyHealth + " HP <<");
+                                    Console.WriteLine(battleEnemyDefense + " Def <<");
+                                }
+
+                                else //If defense didn't fail
+                                {
+                                    Console.WriteLine(enemyName + " [Post-Strike]"); //Enemy's stats after player's attack
+                                    Console.WriteLine(battleEnemyHealth + " HP");
+                                    Console.WriteLine(battleEnemyDefense + " Def <<");
+                                }
+                                
+
+                            } //If enemy blocks
+
+                            else //Whether the enemy is attacking or does nothing
+                            {
+
+                                Console.WriteLine("");
+
+                                Console.WriteLine(enemyName + "[Pre-Strike]"); //Enemy's stats before player's attack
+                                Console.WriteLine(battleEnemyHealth + " HP <<");
+                                Console.WriteLine(battleEnemyDefense + " Def ");
+
+                                Console.WriteLine("[Press Enter to continue]");
+                                Console.ReadLine();
+
+                                Console.WriteLine("");
+                                battleEnemyHealth -= playerDamage; //Player's attack
+
+                                Console.WriteLine(enemyName + " [Post-Strike]"); //Enemy's stats after player's attack
+                                Console.WriteLine(battleEnemyHealth + " HP <<");
+                                Console.WriteLine(battleEnemyDefense + " Def");
+
+                                if (battleEnemyHealth <= 0) //Checks to see if the enemy was killed by the attack
+                                {
+                                    Console.WriteLine("");
+
+                                    Console.WriteLine("The enemy was unmade");
+                                    Console.WriteLine("[Press Enter to continue]");
+                                    break; //Ends the loop
+                                }
+
+                            } //If enemy isn't blocking
+
+                            Console.WriteLine("[Press Enter to continue]");
                             Console.ReadLine();
                             Console.Clear(); //Clears the screen
 
+                            if (enemyAction <= 1) //If the enemy is attacking after player attack
+                            {
+                                Console.WriteLine("[" + enemyName + " is attacking!]");
+                                Console.WriteLine("");
 
-                            Console.WriteLine("[" + enemyName + "'s turn]");
-                            Console.WriteLine(name); //Your stats before being struck
-                            Console.WriteLine(battlePlayerHealth + " HP");
-                            Console.WriteLine(battlePlayerDefense + " Def");
-                            Console.WriteLine("");
+                                Console.WriteLine(name + "[Pre-Strike]"); //Player's stats before being struck
+                                Console.WriteLine(battlePlayerHealth + " HP <<");
+                                Console.WriteLine(battlePlayerDefense + " Def");
+                                Console.WriteLine("");
 
-                            Console.WriteLine("[Enter anything to continue]");
-                            Console.ReadLine();
-                            Console.WriteLine("");
+                                Console.WriteLine("[Press Enter to continue]");
+                                Console.ReadLine();
+                                Console.WriteLine("");
 
-                            battlePlayerHealth = battlePlayerHealth - enemyDamage;  //Enemy's attack
+                                battlePlayerHealth -= enemyDamage;  //Enemy's attack
 
-                            Console.WriteLine(name); //Your stats after being struck
-                            Console.WriteLine(battlePlayerHealth + " HP");
-                            Console.WriteLine(battlePlayerDefense + " Def");
-                            Console.WriteLine("");
-                        }
+                                Console.WriteLine(name + " [Post-Strike]"); //Player's stats after being struck
+                                Console.WriteLine(battlePlayerHealth + " HP <<");
+                                Console.WriteLine(battlePlayerDefense + " Def");
+                                Console.WriteLine("");
+                            } // If enemy retaliates
+
+                        } //If player attacks
 
                         if (action == '2') //Block
                         {
                             Console.Clear(); //Clears the screen
-                            Console.WriteLine("[" + enemyName + "'s turn]");
 
-                            Console.WriteLine(name); //Your stats before being struck
-                            Console.WriteLine(battlePlayerHealth + " HP");
-                            Console.WriteLine(battlePlayerDefense + " Def");
-                            Console.WriteLine("");
+                            if (enemyAction <= 1)
+                            {
+                                Console.WriteLine("[" + enemyName + " is attacking!]");
+                                Console.WriteLine("[" + name + " is blocking!]");
+                                Console.WriteLine("");
 
-                            Console.WriteLine("[Enter anything to continue]");
-                            Console.ReadLine();
-                            Console.WriteLine("");
+                                Console.WriteLine(name + "[Pre-Strike]"); //Player's stats before being struck
+                                Console.WriteLine(battlePlayerHealth + " HP ");
+                                Console.WriteLine(battlePlayerDefense + " Def <<");
+                                Console.WriteLine("");
 
-                            battlePlayerDefense = battlePlayerDefense - enemyDamage; //Enemy's attack
+                                Console.WriteLine("[Press Enter to continue]");
+                                Console.ReadLine();
+                                Console.WriteLine("");
 
-                            Console.WriteLine(name); //Your stats after being struck
-                            Console.WriteLine(battlePlayerHealth + " HP");
-                            Console.WriteLine(battlePlayerDefense + " Def");
-                            Console.WriteLine("");
-                        }
+                                battlePlayerDefense -= enemyDamage; //Enemy's attack on player's defense
+                                if (battlePlayerDefense <= 0) //If defense failed
+                                {
+                                    Console.WriteLine("[" + name + " cannot block!]");
+                                    battlePlayerHealth += battlePlayerDefense; //remainder of attack goes to health
+                                    battlePlayerDefense = 0; //Sets defense back to 0
 
-                        if (action == '3') //Nothing
+                                    Console.WriteLine(name + " [Post-Strike]"); //Player's stats after player's attack
+                                    Console.WriteLine(battlePlayerHealth + " HP <<");
+                                    Console.WriteLine(battlePlayerDefense + " Def <<");
+                                }
+
+                                else //If defense didn't fail
+                                {
+                                    Console.WriteLine(name + " [Post-Strike]"); //Player's stats after player's attack
+                                    Console.WriteLine(battlePlayerHealth + " HP");
+                                    Console.WriteLine(battlePlayerDefense + " Def <<");
+                                }
+                            }
+
+                            if (enemyAction == 2)
+                            {
+                                Console.WriteLine("[" + enemyName + " is also blocking...]");
+                            } //If enemy mirrors Block
+
+                            if (enemyAction == 3)
+                            {
+                                Console.WriteLine("[" + enemyName + " is doing nothing...]");
+                            } //If enemy does Nothing
+
+                        } //If player blocks
+
+                        else if (action == '3') //Nothing
                         {
                             Console.Clear(); //Clears the screen
 
-                            Console.WriteLine("[" + enemyName + "'s turn]");
+                            if (enemyAction <= 1) //If the enemy is attacking
+                            {
+                                Console.WriteLine("[" + enemyName + " is attacking!]");
+                                Console.WriteLine("");
 
-                            Console.WriteLine(name); //Your stats before being struck
-                            Console.WriteLine(battlePlayerHealth + " HP");
-                            Console.WriteLine(battlePlayerDefense + " Def");
-                            Console.WriteLine("");
-                            Console.WriteLine("[Enter anything to continue]");
-                            Console.ReadLine();
-                            Console.WriteLine("");
+                                Console.WriteLine(name + "[Pre-Strike]"); //Player's stats before being struck
+                                Console.WriteLine(battlePlayerHealth + " HP <<");
+                                Console.WriteLine(battlePlayerDefense + " Def");
+                                Console.WriteLine("");
 
-                            battlePlayerHealth = battlePlayerHealth - enemyDamage;  //Enemy's attack
+                                Console.WriteLine("[Press Enter to continue]");
+                                Console.ReadLine();
+                                Console.WriteLine("");
 
-                            Console.WriteLine(name); //Your stats after being struck
-                            Console.WriteLine(battlePlayerHealth + " HP");
-                            Console.WriteLine(battlePlayerDefense + " Def");
-                            Console.WriteLine("");
-                        }
+                                battlePlayerHealth -= enemyDamage;  //Enemy's attack
+
+                                Console.WriteLine(name + " [Post-Strike]"); //Player's stats after being struck
+                                Console.WriteLine(battlePlayerHealth + " HP <<");
+                                Console.WriteLine(battlePlayerDefense + " Def");
+                                Console.WriteLine("");
+                            } // If enemy Attacks
+
+                            if (enemyAction == 2)
+                            {
+                                Console.WriteLine("[" + enemyName + " is blocking...]");
+                            } //If enemy Blocks
+
+                            if (enemyAction == 3)
+                            {
+                                Console.WriteLine("[" + enemyName + " also does nothing...]");
+                            } //If enemy does Nothing
+
+                        } //If player does nothing
 
 
                         Console.WriteLine("[Enter anything to end this round; regen will be applied]");
                         Console.ReadLine();
                         Console.Clear(); //Clears the screen
-                        battleEnemyHealth = battleEnemyHealth + enemyRegen;
-                        battlePlayerHealth = battlePlayerHealth + healthRegen;
-                    } //while battleEnemyHealth > 0
 
-                    if (battleEnemyHealth <= 0)
+                        if (battlePlayerHealth + healthRegen <= battlePlayerMaxHP) //Applies normal regeneration to player if the result would be <= max hp
+                        {
+                            battlePlayerHealth += healthRegen;
+                        }
+
+                        else if (battlePlayerHealth + healthRegen > battlePlayerMaxHP) //Sets player hp to max if regen would surpass max
+                        {
+                            battlePlayerHealth = battlePlayerMaxHP;
+                        }
+
+                        if (battleEnemyHealth + enemyRegen <= battleEnemyMaxHP) //Applies normal regeneration to enemy if the result would be <= max hp
+                        {
+                            battleEnemyHealth += enemyRegen;
+                        }
+
+                        else if (battleEnemyHealth + enemyRegen > battlePlayerMaxHP) //Sets enemy hp to max if regen would surpass max
+                        {
+                            battlePlayerHealth = battleEnemyMaxHP;
+                        }
+
+                    } //if battleEnemyHealth > 0
+
+                    else
                     {
-                        
+                        ready = false; //Ends the battle loop
                     }
 
-                } //While health > 0
+                } //If battlePlayerhealth > 0
                 
+                else
+                {
+                    ready = false; //Ends the battle loop
+                }
 
             } //If ready
+
+            Console.WriteLine("The battle has ended");
+            Console.WriteLine("");
+
+            if (battlePlayerHealth <= 0) //If the player lost
+            {
+                Console.WriteLine("Unless you're testing something, you are really bad at this; congratulations");
+            }
+
+            if (battleEnemyHealth <= 0) //If the player won
+            {
+                Console.WriteLine("Congratulations, you won!");
+            }
 
         } //Void Run
     } //Game
