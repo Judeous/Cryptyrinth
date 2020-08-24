@@ -381,10 +381,8 @@ namespace HelloWorld
 
                 while (ready == true)
                 {
-
                     if (battlePlayerHealth > 0)
                     {
-
                         if (battleEnemyHealth > 0)
                         {
                             turncounter++;
@@ -487,7 +485,6 @@ namespace HelloWorld
                                         Console.ReadKey();
                                         break; //Ends the loop
                                     }
-
                                 } //If enemy isn't blocking
 
                                 if (enemyAction <= 1) //If the enemy is attacking after player attack
@@ -675,8 +672,8 @@ namespace HelloWorld
                                     Console.WriteLine(battlePlayerDefense + " Def");
                                     Console.WriteLine("");
 
-                                    Console.WriteLine("[[Press any key to continue]]");
                                     Console.WriteLine("[Press any key to continue]");
+                                    Console.ReadKey();
                                     Console.WriteLine("");
 
                                     battlePlayerHealth += playerHeal; //The player's heal
@@ -686,18 +683,18 @@ namespace HelloWorld
                                     Console.WriteLine(battlePlayerDefense + " Def");
                                     Console.WriteLine("");
 
-                                    Console.WriteLine("[[Press any key to continue]]");
                                     Console.WriteLine("[Press any key to continue]");
+                                    Console.ReadKey();
                                     Console.WriteLine("");
 
                                     Console.WriteLine(enemyName + "[Pre-Heal]"); //Enemy's stats before heal
                                     Console.WriteLine(battleEnemyHealth + " HP <<");
                                     Console.WriteLine(battleEnemyDefense + " Def ");
 
-                                    Console.WriteLine("[[Press any key to continue]]");
                                     Console.WriteLine("[Press any key to continue]");
-
+                                    Console.ReadKey();
                                     Console.WriteLine("");
+
                                     battleEnemyHealth += enemyHeal; //The enemy's heal
 
                                     Console.WriteLine(enemyName + " [Post-Heal]"); //Enemy's stats after heal
@@ -715,8 +712,8 @@ namespace HelloWorld
                                     Console.WriteLine(battlePlayerDefense + " Def");
                                     Console.WriteLine("");
 
-                                    Console.WriteLine("[[Press any key to continue]]");
                                     Console.WriteLine("[Press any key to continue]");
+                                    Console.ReadKey();
                                     Console.WriteLine("");
 
                                     battlePlayerHealth += playerHeal; //The player's heal
@@ -742,7 +739,6 @@ namespace HelloWorld
                                     Console.WriteLine(battlePlayerDefense + " Def");
                                     Console.WriteLine("");
 
-                                    Console.WriteLine("[[Press any key to continue]]");
                                     Console.WriteLine("[Press any key to continue]");
                                     Console.WriteLine("");
 
@@ -768,7 +764,6 @@ namespace HelloWorld
                                     Console.WriteLine(battleEnemyHealth + " HP <<");
                                     Console.WriteLine(battleEnemyDefense + " Def ");
 
-                                    Console.WriteLine("[[Press any key to continue]]");
                                     Console.WriteLine("[Press any key to continue]");
                                     Console.WriteLine("");
 
