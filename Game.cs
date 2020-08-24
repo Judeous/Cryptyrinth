@@ -654,7 +654,6 @@ namespace HelloWorld
                                     Console.WriteLine(battlePlayerDefense + " Def");
                                     Console.WriteLine("");
 
-                                    Console.WriteLine("[[Press any key to continue]]");
                                     Console.WriteLine("[Press any key to continue]");
                                     Console.WriteLine("");
 
