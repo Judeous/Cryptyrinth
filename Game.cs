@@ -791,8 +791,8 @@ namespace HelloWorld
                                 turncounter--;
                             }
 
-                            Console.WriteLine("[Enter anything to end this round; regen will be applied]");
-                            Console.ReadLine();
+                            Console.WriteLine("[Press any key to end this round; regen will be applied]");
+                            Console.ReadKey();
                             Console.Clear(); //Clears the screen
 
                             if (battlePlayerHealth < battlePlayerMaxHP) //Checks to see if the player's hp is below max
