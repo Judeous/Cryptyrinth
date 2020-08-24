@@ -361,7 +361,7 @@ namespace HelloWorld
 
                 Console.WriteLine("");
                 Console.WriteLine("[Press any key to continue]");
-                Console.ReadKey();
+                Console.ReadKey();  //Pauses
                 Console.Clear();
 
                 bool ready = true;
@@ -372,7 +372,7 @@ namespace HelloWorld
 
                 Console.WriteLine("");
                 Console.WriteLine("[Press any key to continue]");
-                Console.ReadKey();
+                Console.ReadKey();  //Pauses
                 Console.Clear();
 
 
@@ -428,7 +428,7 @@ namespace HelloWorld
                                     Console.WriteLine(battleEnemyDefense + " Def <<");
 
                                     Console.WriteLine("[Press any key to continue]");
-                                    Console.ReadKey();
+                                    Console.ReadKey();  //Pauses
 
                                     Console.WriteLine("");
                                     battleEnemyDefense -= playerDamage; //Player's attack
@@ -463,7 +463,7 @@ namespace HelloWorld
                                     Console.WriteLine(battleEnemyDefense + " Def ");
 
                                     Console.WriteLine("[Press any key to continue]");
-                                    Console.ReadKey();
+                                    Console.ReadKey();  //Pauses
 
                                     Console.WriteLine("");
                                     battleEnemyHealth -= playerDamage; //Player's attack
@@ -473,7 +473,7 @@ namespace HelloWorld
                                     Console.WriteLine(battleEnemyDefense + " Def");
 
                                     Console.WriteLine("[Press any key to continue]");
-                                    Console.ReadKey();
+                                    Console.ReadKey();  //Pauses
                                     Console.WriteLine("");
 
                                     if (battleEnemyHealth <= 0) //Checks to see if the enemy was killed by the attack
@@ -482,7 +482,7 @@ namespace HelloWorld
 
                                         Console.WriteLine("The enemy was unmade");
                                         Console.WriteLine("[Press any key to continue]");
-                                        Console.ReadKey();
+                                        Console.ReadKey();  //Pauses
                                         break; //Ends the loop
                                     }
                                 } //If enemy isn't blocking
@@ -498,7 +498,7 @@ namespace HelloWorld
                                     Console.WriteLine("");
 
                                     Console.WriteLine("[Press any key to continue]");
-                                    Console.ReadKey();
+                                    Console.ReadKey();  //Pauses
                                     Console.WriteLine("");
 
                                     battlePlayerHealth -= enemyDamage;  //Enemy's attack
@@ -519,7 +519,7 @@ namespace HelloWorld
                                     Console.WriteLine(battleEnemyDefense + " Def ");
 
                                     Console.WriteLine("[Press any key to continue]");
-                                    Console.ReadKey();
+                                    Console.ReadKey();  //Pauses
 
                                     Console.WriteLine("");
                                     battleEnemyHealth += enemyHeal; //The enemy's heal
@@ -548,7 +548,7 @@ namespace HelloWorld
                                     Console.WriteLine("");
 
                                     Console.WriteLine("[Press any key to continue]");
-                                    Console.ReadKey();
+                                    Console.ReadKey();  //Pauses
                                     Console.WriteLine("");
 
                                     battlePlayerDefense -= enemyDamage; //Enemy's attack on player's defense
@@ -586,7 +586,7 @@ namespace HelloWorld
                                     Console.WriteLine(battleEnemyDefense + " Def ");
 
                                     Console.WriteLine("[Press any key to continue]");
-                                    Console.ReadKey();
+                                    Console.ReadKey();  //Pauses
 
                                     Console.WriteLine("");
                                     battleEnemyHealth += enemyHeal; //The enemy's heal
@@ -620,7 +620,7 @@ namespace HelloWorld
                                     Console.WriteLine("");
 
                                     Console.WriteLine("[Press any key to continue]");
-                                    Console.ReadKey();
+                                    Console.ReadKey();  //Pauses
                                     Console.WriteLine("");
 
                                     battlePlayerHealth += playerHeal; //The player's heal
@@ -631,7 +631,7 @@ namespace HelloWorld
                                     Console.WriteLine("");
 
                                     Console.WriteLine("[Press any key to continue]");
-                                    Console.ReadKey();
+                                    Console.ReadKey();  //Pauses
                                     Console.WriteLine("");
 
                                     battlePlayerHealth -= enemyDamage;  //Enemy's attack
@@ -652,6 +652,7 @@ namespace HelloWorld
                                     Console.WriteLine("");
 
                                     Console.WriteLine("[Press any key to continue]");
+                                    Console.ReadKey();  //Pauses
                                     Console.WriteLine("");
 
                                     battlePlayerHealth += playerHeal; //The player's heal
@@ -673,7 +674,7 @@ namespace HelloWorld
                                     Console.WriteLine("");
 
                                     Console.WriteLine("[Press any key to continue]");
-                                    Console.ReadKey();
+                                    Console.ReadKey();  //Pauses
                                     Console.WriteLine("");
 
                                     battlePlayerHealth += playerHeal; //The player's heal
@@ -684,7 +685,7 @@ namespace HelloWorld
                                     Console.WriteLine("");
 
                                     Console.WriteLine("[Press any key to continue]");
-                                    Console.ReadKey();
+                                    Console.ReadKey();  //Pauses
                                     Console.WriteLine("");
 
                                     Console.WriteLine(enemyName + "[Pre-Heal]"); //Enemy's stats before heal
@@ -692,7 +693,7 @@ namespace HelloWorld
                                     Console.WriteLine(battleEnemyDefense + " Def ");
 
                                     Console.WriteLine("[Press any key to continue]");
-                                    Console.ReadKey();
+                                    Console.ReadKey();  //Pauses
                                     Console.WriteLine("");
 
                                     battleEnemyHealth += enemyHeal; //The enemy's heal
@@ -713,7 +714,7 @@ namespace HelloWorld
                                     Console.WriteLine("");
 
                                     Console.WriteLine("[Press any key to continue]");
-                                    Console.ReadKey();
+                                    Console.ReadKey();  //Pauses
                                     Console.WriteLine("");
 
                                     battlePlayerHealth += playerHeal; //The player's heal
@@ -787,7 +788,7 @@ namespace HelloWorld
                             }
 
                             Console.WriteLine("[Press any key to end this round; regen will be applied]");
-                            Console.ReadKey();
+                            Console.ReadKey();  //Pauses
                             Console.Clear(); //Clears the screen
 
                             if (battlePlayerHealth < battlePlayerMaxHP) //Checks to see if the player's hp is below max
