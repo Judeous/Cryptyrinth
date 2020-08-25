@@ -140,12 +140,12 @@ namespace HelloWorld
             {
                 Console.WriteLine("");
 
-                if (heal == 1) //If they cannot heal (If the heal would return 1 hp)
+                if (heal < 5) //If they cannot heal (If the heal would return less than 5 hp)
                 {
                     Console.WriteLine("[" + name + " cannot heal!]");
                 }
 
-                else if (heal > 1)
+                else if (heal >= 5)
                 {
                     Console.WriteLine(name + "[Pre-Heal]"); //Stats before heal
                     Console.WriteLine(health + " HP <<");
