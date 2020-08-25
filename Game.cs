@@ -140,18 +140,25 @@ namespace HelloWorld
             {
                 Console.WriteLine("");
 
-                Console.WriteLine(name + "[Pre-Heal]"); //Stats before heal
-                Console.WriteLine(health + " HP <<");
-                Console.WriteLine(defense + " Def ");
+                if (heal == 1) //If they cannot heal (If the heal would return 1 hp)
+                {
+                    Console.WriteLine("[" + name + " cannot heal!]");
+                }
 
-                Pause();
+                else if (heal > 1)
+                {
+                    Console.WriteLine(name + "[Pre-Heal]"); //Stats before heal
+                    Console.WriteLine(health + " HP <<");
+                    Console.WriteLine(defense + " Def ");
 
-                health += heal; //The heal
+                    Pause();
 
-                Console.WriteLine(name + " [Post-Heal]"); //Stats after heal
-                Console.WriteLine(health + " HP <<");
-                Console.WriteLine(defense + " Def");
+                    health += heal; //The heal
 
+                    Console.WriteLine(name + " [Post-Heal]"); //Stats after heal
+                    Console.WriteLine(health + " HP <<");
+                    Console.WriteLine(defense + " Def");
+                }
                 return health;
             } //Heal function
 
