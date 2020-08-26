@@ -13,13 +13,13 @@ namespace HelloWorld
             float healthRegen = 8; //Sets the rate the player regens at
             float playerDefense = 15; //Sets the player's base defense
             int level = 1;
-            float battlePlayerHealth;
-            float battlePlayerMaxHP;
-            float battlePlayerDefense;
+            float battlePlayerHealth = 10;
+            float battlePlayerMaxHP = 10;
+            float battlePlayerDefense = 10;
             float playerHeal = 5; //Sets the base heal
             float playerbaseDamage = 9; //Sets the base player damage
             float playerDamageMult = 1; //Sets the base player damage multiplier that changes based on specialty
-            float playerDamage;
+            float playerDamage = 10;
 
             //Starting enemy stats and declarations
             string enemyName = "None";
@@ -80,22 +80,25 @@ namespace HelloWorld
             {
                 Console.WriteLine("");
 
-                Console.WriteLine(victimName + "[Pre-Strike]"); //Stats before being struck
-                Console.WriteLine(health + " HP <<");
-                Console.WriteLine(defense + " Def");
-                Console.WriteLine("");
+                if (health > 0)
+                {
+                    Console.WriteLine(victimName + "[Pre-Strike]"); //Stats before being struck
+                    Console.WriteLine(health + " HP <<");
+                    Console.WriteLine(defense + " Def");
+                    Console.WriteLine("");
 
-                Pause();
+                    Pause();
 
-                health -= damage;  //The Attack
+                    health -= damage;  //The Attack
 
-                Console.WriteLine(victimName + " [Post-Strike]"); //Stats after being struck
-                Console.WriteLine(health + " HP <<");
-                Console.WriteLine(defense + " Def");
-                Console.WriteLine("");
+                    Console.WriteLine(victimName + " [Post-Strike]"); //Stats after being struck
+                    Console.WriteLine(health + " HP <<");
+                    Console.WriteLine(defense + " Def");
+                    Console.WriteLine("");
 
-                Pause();
-                DeathCheck(health);
+                    Pause();
+                    DeathCheck(health);
+                } //If enemy alive
                 return health;
             } //DirectAttack Function
 
@@ -129,20 +132,15 @@ namespace HelloWorld
                     Console.WriteLine(defenderDefense + " Def <<");
                 }
 
-
                 DeathCheck(health);
-                return health;
+                return health + defenderDefense;
             } //DefendedAttack function
 
             void DeathCheck(float health)
             {
                 if (health <= 0) //Checks to see if the enemy was killed by the attack
                 {
-                    Console.WriteLine("");
-
                     Console.WriteLine("The enemy was unmade");
-
-                    Pause();
 
                     InBattle = false;
                 }
@@ -152,33 +150,37 @@ namespace HelloWorld
             {
                 Console.WriteLine("");
 
-                if (heal < 5) //If they cannot heal (If the heal would return less than 5 hp)
+                if (health > 0)
                 {
-                    Console.WriteLine("[" + name + " cannot heal!]");
-                }
+                    if (heal < 5) //If they cannot heal (If the heal would return less than 5 hp)
+                    {
+                        Console.WriteLine("[" + name + " cannot heal!]");
+                    }
 
-                else if (heal >= 5)
-                {
-                    Console.WriteLine(name + "[Pre-Heal]"); //Stats before heal
-                    Console.WriteLine(health + " HP <<");
-                    Console.WriteLine(defense + " Def ");
+                    else if (heal >= 5)
+                    {
+                        Console.WriteLine(name + "[Pre-Heal]"); //Stats before heal
+                        Console.WriteLine(health + " HP <<");
+                        Console.WriteLine(defense + " Def ");
 
-                    Pause();
+                        Pause();
 
-                    health += heal; //The heal
+                        health += heal; //The heal
 
-                    Console.WriteLine(name + " [Post-Heal]"); //Stats after heal
-                    Console.WriteLine(health + " HP <<");
-                    Console.WriteLine(defense + " Def");
-                }
+                        Console.WriteLine(name + " [Post-Heal]"); //Stats after heal
+                        Console.WriteLine(health + " HP <<");
+                        Console.WriteLine(defense + " Def");
+                    }
+                } //If enemy alive
+                
                 return health;
             } //Heal function
 
-            string DecideSpecialty(string name, string style, string specialty, string location)
+            string DecideSpecialty(string name, string styleName, string specialty)
             {
-                Console.Write("Welcome, " + name);
-                Console.WriteLine(", what is your style of battle?");
-                Console.WriteLine("[1: Magic\n2: Warrior\n3: Trickery]");
+                Console.Clear(); //Clears the screen
+                Console.WriteLine("Welcome, " + name + ", what is your style of battle?");
+                Console.WriteLine("[1: Magic]\n[2: Warrior]\n[3: Trickery]");
                 Console.WriteLine("[Press the number to continue]");
 
                 Console.Write("My style is ");
@@ -193,7 +195,7 @@ namespace HelloWorld
                     styleName = "Magic"; //Sets the class name
 
                     Console.WriteLine("What is your specialty?");
-                    Console.WriteLine("[1: Warder\n2: Atronach\n3: Battle Mage\n4: Priest]");
+                    Console.WriteLine("[1: Warder]\n[2: Atronach]\n[3: Battle Mage]\n[4: Priest]");
                     Console.WriteLine("[Press the number to continue]");
                     Console.WriteLine("");
                     Console.WriteLine("");
@@ -285,7 +287,7 @@ namespace HelloWorld
                     styleName = "Warrior"; //Sets the class name
 
                     Console.WriteLine("What is your specialty?");
-                    Console.WriteLine("[1: Tank\n2: Berserker\n3: Shielder\n4: Knight]");
+                    Console.WriteLine("[1: Tank]\n[2: Berserker]\n[3: Shielder]\n[4: Knight]");
                     Console.WriteLine("[Press the number to continue]");
                     Console.WriteLine("");
                     Console.WriteLine("");
@@ -376,8 +378,10 @@ namespace HelloWorld
                     styleName = "Trickster"; //Sets the class name
 
                     Console.WriteLine("What is your specialty?");
-                    Console.WriteLine("[1: Assassin\n2: Martial Artist\n3: Ninja\n4: Rogue]");
+                    Console.WriteLine("[1: Assassin]\n[2: Martial Artist]\n[3: Ninja\n[4: Rogue]");
                     Console.WriteLine("[Press the number to continue]");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
                     Console.WriteLine("Assassin [1]");
                     Console.WriteLine("Base Health = 70");
@@ -460,14 +464,15 @@ namespace HelloWorld
                         styleName = "None";
                     }
                 } //If Trickery class
-                Pause();
-                Console.Clear();
-                return style + specialty;
+                Console.Clear(); //Clears the screen
+                return styleName + specialty;
             } //DecideSpecialty function
 
-            static void StatCheck(string name, float health, float regen, float heal, float defense, float damage, float level, string style, string specialty)
+            void StatCheck(string name, float health, float regen, float heal, float defense, float damage, float level, string style, string specialty)
             {
-                Console.WriteLine("This is who you are:");
+                Console.Clear(); //Clears the screen
+
+                Console.WriteLine("This is who I am:");
                 Console.WriteLine("Name: " + name); //This and next few lines are just to show to the player their stats
                 Console.WriteLine("Health: " + health);
                 Console.WriteLine("Regen: " + regen);
@@ -479,17 +484,33 @@ namespace HelloWorld
                 Console.WriteLine("Specialty: " + specialty);
 
                 Pause();
+                Console.Clear(); //Clears the screen
             } //StatCheck function
 
-            float EnemySlime(float health, float damagemult, float defense, float regen)
+            float EnemySetup(float health, float damageMult, float defense, float regen)
             {
-                health = r.Next(25, 50);
-                damagemult = 0.5f;
-                defense = 20;
-                regen = 5;
+                if(enemyName == "Slime")
+                {
+                    health = r.Next(25, 50);
+                    damageMult = 0.5f;
+                    defense = 20;
+                    regen = 5;
+                }
+                
 
-                return health + damagemult + defense + regen;
+                return health + damageMult + defense + regen;
             } //If the enemy is a slime
+
+            float StatCalculation(float health, float oobDefense, float oobHealth, float level, float maxHealth, float defense, float damage, float baseDamage, float damageMult, float heal)
+            {
+                health = (defense * 1 / 2) + oobHealth + level; //The base health with the addition of level plus half the defense makes the max player health
+                maxHealth = health; //Sets the max in-battle health for the player so they don't regenerate to unholy levels
+                defense += level;
+                damage = (level + baseDamage) * damageMult; //Sets the total damage based on the player's level, base damage, and the damage mutliplier
+                heal += level; //Adds the player's level to the amount they heal
+
+                return health + maxHealth + defense + damage + heal;
+            }
 
             Console.WriteLine("What is your name? ");
             Console.WriteLine("[Press Enter to enter your name]");
@@ -497,23 +518,22 @@ namespace HelloWorld
             string name = Console.ReadLine(); //Gets the player's name
             Console.WriteLine("");
 
-            DecideSpecialty(name, styleName, specialty, area);
+            DecideSpecialty(name, styleName, specialty);
+            StatCalculation(battlePlayerHealth, playerDefense, health, level, battlePlayerMaxHP, battlePlayerDefense, playerDamage, playerbaseDamage, playerDamageMult, playerHeal);
+            StatCheck(name, battlePlayerHealth, healthRegen, playerHeal, battlePlayerDefense, playerDamage, level, styleName, specialty);
 
             while (GameOver == false)
             {
                 //Player Stat calculation
-                battlePlayerHealth = (playerDefense * 1 / 2) + health + level; //The base health with the addition of level plus half the defense makes the max player health
-                battlePlayerMaxHP = battlePlayerHealth; //Sets the max in-battle health for the player so they don't regenerate to unholy levels
-                battlePlayerDefense = playerDefense + level;
-                playerDamage = (level + playerbaseDamage) * playerDamageMult; //Sets the total damage based on the player's level, base damage, and the damage mutliplier
-                playerHeal += level; //Adds the player's level to the amount they heal
+
+                StatCalculation(battlePlayerHealth, playerDefense, health, level, battlePlayerMaxHP, battlePlayerDefense, playerDamage, playerbaseDamage, playerDamageMult, playerHeal);
 
 
                 if (area == "Shack")
                 {
                     if (ShackExplored == 'n') //If the player has seen these messages
                     {
-                        Console.WriteLine("[I find myself upon a small hill outside of the shack in whense I chose my class in (Still not sure how that person changed my physical makeup)]");
+                        Console.WriteLine("[I find myself upon a small hill outside of the shack whense I chose my class in (Still not sure how that person changed my physical makeup)]");
                         Console.WriteLine("[There's a path trailing from the shack into a field before me]");
                         Console.WriteLine("[The field has slimes scattered throughout it, murking around]");
                     }
@@ -526,14 +546,14 @@ namespace HelloWorld
                     Console.WriteLine("");
 
                     Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Re-enter the shack to change my style & specialty\n2: Follow the path down into the field\n3: Check my stats]");
+                    Console.WriteLine("[1: Re-enter the shack to change my style & specialty]\n[2: Follow the path down into the field]\n[3: Check my stats]");
                     Console.WriteLine("");
                     Console.WriteLine("[Press the number to continue]");
                     char action = Console.ReadKey().KeyChar;
 
                     if (action == '1') //Redecide Style/Specialty
                     {
-                        DecideSpecialty(name, styleName, specialty, area);
+                        DecideSpecialty(name, styleName, specialty);
                     }
 
                     if (action == '2') //Go to the field
@@ -556,10 +576,12 @@ namespace HelloWorld
                     {
                         Console.WriteLine("[I'm in the slime field, and living slime is everywhere]");
                         Console.WriteLine("[The shack is on a hill up the path]");
-                        Console.WriteLine("[There's a castle far down the path; the gate appears to be closed though]");
+                        Console.WriteLine("[There's a castle far down the path]");
+                        Console.WriteLine("[The gate appears to be closed, though]");
+
                     }
 
-                    if (FieldExplored == 'n') //If the player's already been to the fields
+                    if (FieldExplored == 'y') //If the player's already been to the fields
                     {
                         Console.WriteLine("[I'm back in the slime field, and living slime is still everywhere]");
                         Console.WriteLine("[The shack still sits upon the hill further up the path]");
@@ -568,7 +590,7 @@ namespace HelloWorld
                     Console.WriteLine("");
 
                     Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Head to the hill with the shack atop it\n2: Head towards the Castle\n3: Engage a slime\n4: Check my stats]");
+                    Console.WriteLine("[1: Head to the hill with the shack atop it]\n[2: Head towards the Castle]\n[3: Engage a slime]\n[4: Check my stats]");
                     Console.WriteLine("");
                     Console.WriteLine("[Press the number to continue]");
                     char action = Console.ReadKey().KeyChar;
@@ -585,9 +607,10 @@ namespace HelloWorld
 
                     if (action == '3') //Engage a slime
                     {
+                        Console.Clear(); //Clears the screen
                         Console.WriteLine("[I engage one of the many slimes]");
-                        Console.WriteLine("");
-                        EnemySlime(enemyHealth, enemyDamageMult, enemyDefense, enemyRegen);
+                        Pause();
+                        EnemySetup(enemyHealth, enemyDamageMult, enemyDefense, enemyRegen);
                         enemyName = "Slime";
                         InBattle = true;
                     }
@@ -606,7 +629,9 @@ namespace HelloWorld
                         {
                             Console.WriteLine("[A slime enages me!]");
                             Console.WriteLine("");
-                            EnemySlime(enemyHealth, enemyDamageMult, enemyDefense, enemyRegen);
+                            Pause();
+                            EnemySetup(enemyHealth, enemyDamageMult, enemyDefense, enemyRegen);
+                            enemyName = "Slime";
                             InBattle = true;
                         } //If slime engages
                     } //If not engaging
@@ -619,7 +644,7 @@ namespace HelloWorld
                     if (CastleGateExplored == 'n') //If the player hasn't been to the gate yet
                     {
                         Console.WriteLine("[I'm now in front of the stone brick castle, it appears as if it was taken over by force, now that I look at it]");
-                        Console.WriteLine("[That'd partially explain why the gate is down");
+                        Console.WriteLine("[That'd partially explain why the gate is down]");
                         Console.WriteLine("[If this castle Was taken over by force, why would it not have been repaired by the new inhabitants?]");
                         Console.WriteLine("");
                         Console.WriteLine("[There's a large hole in the side, looks as if the bricks were just... removed, rather than destroyed]");
@@ -632,14 +657,14 @@ namespace HelloWorld
 
                     Console.WriteLine("");
                     Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Return to the slimy fields\n2: Enter the odd 'entrance'\n3: Check my stats]");
+                    Console.WriteLine("[1: Return to the slimy fields]\n[2: Enter the odd 'entrance']\n[3: Check my stats]");
                     Console.WriteLine("");
                     Console.WriteLine("[Press the number to continue]");
                     char action = Console.ReadKey().KeyChar;
 
                     if (action == '1') //Go to the field
                     {
-                        area = "CastleGate";
+                        area = "Field";
                     }
 
                     if (action == '2') //Enter the Castle
@@ -651,6 +676,7 @@ namespace HelloWorld
                     {
                         StatCheck(name, battlePlayerHealth, healthRegen, playerHeal, battlePlayerDefense, playerDamage, level, styleName, specialty);
                     }
+
                     CastleGateExplored = 'y';
                 }
 
@@ -672,7 +698,7 @@ namespace HelloWorld
 
                     Console.WriteLine("");
                     Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Exit the castle\n2: Check my stats]");
+                    Console.WriteLine("[1: Exit the castle]\n[2: Check my stats]");
                     Console.WriteLine("");
                     Console.WriteLine("[Press the number to continue]");
                     char action = Console.ReadKey().KeyChar;
@@ -825,11 +851,11 @@ namespace HelloWorld
                             Console.WriteLine("");
 
                             battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
-
                             Pause();
 
                             Console.WriteLine("[" + enemyName + " is attacking!]");
                             battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
+                            Pause();
                             if (GameOver == true)
                             {
                                 break;
@@ -841,16 +867,17 @@ namespace HelloWorld
                             Console.WriteLine("[" + enemyName + " is blocking...]");
 
                             battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+                            Pause();
                         } //If enemy Blocks
 
                         if (enemyAction == 3) //If the enemy is healing
                         {
                             Console.WriteLine("[" + enemyName + " is also healing!]");
                             battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
-
                             Pause();
 
                             battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
+                            Pause();
                         } //If enemy also Heals
 
                         if (enemyAction == 4)
@@ -858,6 +885,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + enemyName + " does nothing...]");
 
                             battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+                            Pause();
                         } //If enemy does Nothing
                     } //If player Heals
 
@@ -869,6 +897,7 @@ namespace HelloWorld
                         {
                             Console.WriteLine("[" + enemyName + " is attacking!]");
                             battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
+                            Pause();
                             if (GameOver == true)
                             {
                                 break;
@@ -884,6 +913,7 @@ namespace HelloWorld
                         {
                             Console.WriteLine("[" + enemyName + " is healing!]");
                             battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
+                            Pause();
                         } //If enemy Heals
 
                         if (enemyAction == 4)
