@@ -460,7 +460,8 @@ namespace HelloWorld
                         styleName = "None";
                     }
                 } //If Trickery class
-
+                Pause();
+                Console.Clear();
                 return style + specialty;
             } //DecideSpecialty function
 
