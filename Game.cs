@@ -8,34 +8,46 @@ namespace HelloWorld
     {
         public void Run()
         {
+            //Starting player stats and declarations
             float health = 100; //Sets player's health
             float healthRegen = 8; //Sets the rate the player regens at
             float playerDefense = 15; //Sets the player's base defense
-
+            int level = 1;
+            float battlePlayerHealth;
+            float battlePlayerMaxHP;
+            float battlePlayerDefense;
+            float playerHeal = 5; //Sets the base heal
             float playerbaseDamage = 9; //Sets the base player damage
             float playerDamageMult = 1; //Sets the base player damage multiplier that changes based on specialty
             float playerDamage;
-            float playerHeal = 5; //Sets the base heal
 
-            string playerType = "None"; //Placeholder Specialty
-            string roleName = "None"; //Placeholder Class
-
-            int level = 1;
-
-            //playerDamage = (level + playerbaseDamage) * playerDamageMult; is the equation for player attack damage
-
-            string enemyName;
+            //Starting enemy stats and declarations
+            string enemyName = "None";
             float enemyHealth = 25; //Sets the base enemy health
             float enemyRegen = 2; //Sets the base enemy regen
             float enemyDefense = 7; //Sets the enemies' base defense
-
             float enemyLevel = 1; //Sets the base enemy level
+            float battleEnemyHealth;
+            float battleEnemyMaxHP;
+            float battleEnemyDefense;
+            float enemyHeal = 5; //Sets the base enemy heal
             float enemyDamageMult = 1; //Sets the base enemy damage multiplier
             float enemybaseDamage = 8; //Sets the base damage
-            float enemyDamage = (enemyLevel + enemybaseDamage) * enemyDamageMult; //The equation for enemy attack damage
-            float enemyHeal = 5; //Sets the base enemy heal
+            float enemyDamage;
+
+            Random r = new Random(); //Sets a variable for a randomizer
 
             bool GameOver = false;
+            bool InBattle = false;
+
+            string specialty = "None"; //Placeholder Specialty
+            string styleName = "None"; //Placeholder Class
+
+            string area = "Shack";
+            char ShackExplored = 'n';
+            char FieldExplored = 'n';
+            char CastleGateExplored = 'n';
+            char CastleEntryExplored = 'n';
 
             static void Pause()
             {
@@ -132,7 +144,7 @@ namespace HelloWorld
 
                     Pause();
 
-                    GameOver = true;
+                    InBattle = false;
                 }
             }
 
@@ -162,555 +174,761 @@ namespace HelloWorld
                 return health;
             } //Heal function
 
+            string DecideSpecialty(string name, string style, string specialty, string location)
+            {
+                Console.Write("Welcome, " + name);
+                Console.WriteLine(", what is your style of battle?");
+                Console.WriteLine("[1: Magic\n2: Warrior\n3: Trickery]");
+                Console.WriteLine("[Press the number to continue]");
+
+                Console.Write("My style is ");
+                char styleKey = Console.ReadKey().KeyChar;
+                char specialtyKey;
+
+                Console.WriteLine("");
+                Console.Clear(); //Clears the screen
+
+                if (styleKey == '1') //Magic
+                {
+                    styleName = "Magic"; //Sets the class name
+
+                    Console.WriteLine("What is your specialty?");
+                    Console.WriteLine("[1: Warder\n2: Atronach\n3: Battle Mage\n4: Priest]");
+                    Console.WriteLine("[Press the number to continue]");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Warder [1]");
+                    Console.WriteLine("Base Health = 90");
+                    Console.WriteLine("Base Regen = 9");
+                    Console.WriteLine("Base Heal = 6");
+                    Console.WriteLine("Damage Mult = 1");
+                    Console.WriteLine("Base Defense = 35");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Atronach [2]");
+                    Console.WriteLine("Base Health = 160");
+                    Console.WriteLine("Base Regen = 4");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 0.8");
+                    Console.WriteLine("Base Defense = 10");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Battle Mage [3]");
+                    Console.WriteLine("Base Health = 80");
+                    Console.WriteLine("Base Regen = 10");
+                    Console.WriteLine("Base Heal = 8");
+                    Console.WriteLine("Damage Mult = 1.2");
+                    Console.WriteLine("Base Defense = 15");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Priest [4]");
+                    Console.WriteLine("Base Health = 75");
+                    Console.WriteLine("Base Regen = 8");
+                    Console.WriteLine("Base Heal = 15");
+                    Console.WriteLine("Damage Mult = 0.8");
+                    Console.WriteLine("Base Defense = 15");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.Write("My specialty is ");
+                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Magic
+
+
+                    if (specialtyKey == '1') //Warder
+                    {
+                        health = 90;
+                        healthRegen = 9;
+                        playerHeal = 6;
+                        playerDamageMult = 1;
+                        playerDefense = 35;
+                        specialty = "Warder";
+                    }
+                    else if (specialtyKey == '2') //Atronach
+                    {
+                        health = 160;
+                        healthRegen = 4;
+                        playerHeal = 0;
+                        playerDamageMult = 0.8f;
+                        playerDefense = 10;
+                        specialty = "Atronach";
+                    }
+                    else if (specialtyKey == '3') //Battle Mage
+                    {
+                        health = 80;
+                        healthRegen = 10;
+                        playerHeal = 8;
+                        playerDamageMult = 1.2f;
+                        playerDefense = 15;
+                        specialty = "Battle Mage";
+                    }
+                    else if (specialtyKey == '4') //Priest
+                    {
+                        health = 75;
+                        healthRegen = 8;
+                        playerHeal = 15;
+                        playerDamageMult = 0.8f;
+                        playerDefense = 15;
+                        specialty = "Priest";
+                    }
+                    else
+                    {
+                        styleName = "None";
+                    }
+                } //If Magic class
+
+                else if (styleKey == '2') //Warrior
+                {
+                    styleName = "Warrior"; //Sets the class name
+
+                    Console.WriteLine("What is your specialty?");
+                    Console.WriteLine("[1: Tank\n2: Berserker\n3: Shielder\n4: Knight]");
+                    Console.WriteLine("[Press the number to continue]");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Tank [1]");
+                    Console.WriteLine("Base Health = 120");
+                    Console.WriteLine("Base Regen = 8");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1");
+                    Console.WriteLine("Base Defense = 50");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Berserker [2]");
+                    Console.WriteLine("Base Health = 90");
+                    Console.WriteLine("Base Regen = 6");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1.3");
+                    Console.WriteLine("Base Defense = 13");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Shielder [3]");
+                    Console.WriteLine("Base Health = 100");
+                    Console.WriteLine("Base Regen = 7");
+                    Console.WriteLine("Base Heal = 5");
+                    Console.WriteLine("Damage Mult = 1");
+                    Console.WriteLine("Base Defense = 80");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Knight [4]");
+                    Console.WriteLine("Base Health = 110");
+                    Console.WriteLine("Base Regen = 8");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1.2");
+                    Console.WriteLine("Base Defense = 30");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.Write("My specialty is ");
+                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Knight
+
+                    if (specialtyKey == '1') //Tank
+                    {
+                        health = 120;
+                        healthRegen = 8;
+                        playerHeal = 0;
+                        playerDamageMult = 1;
+                        playerDefense = 50;
+                        specialty = "Tank";
+                    }
+                    else if (specialtyKey == '2') //Berserker
+                    {
+                        health = 90;
+                        healthRegen = 6;
+                        playerHeal = 0;
+                        playerDamageMult = 1.3f;
+                        playerDefense = 13;
+                        specialty = "Berserker";
+                    }
+                    else if (specialtyKey == '3') //Shielder
+                    {
+                        health = 100;
+                        healthRegen = 7;
+                        playerHeal = 5;
+                        playerDamageMult = 1;
+                        playerDefense = 80;
+                        specialty = "Shielder";
+                    }
+                    else if (specialtyKey == '4') //Knight
+                    {
+                        health = 110;
+                        healthRegen = 8;
+                        playerHeal = 0;
+                        playerDamageMult = 1.2f;
+                        playerDefense = 30;
+                        specialty = "Knight";
+                    }
+                    else
+                    {
+                        styleName = "None";
+                    }
+                } //If Warrior class
+
+                else if (styleKey == '3') //Trickery
+                {
+                    styleName = "Trickster"; //Sets the class name
+
+                    Console.WriteLine("What is your specialty?");
+                    Console.WriteLine("[1: Assassin\n2: Martial Artist\n3: Ninja\n4: Rogue]");
+                    Console.WriteLine("[Press the number to continue]");
+
+                    Console.WriteLine("Assassin [1]");
+                    Console.WriteLine("Base Health = 70");
+                    Console.WriteLine("Base Regen = 8");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1.35");
+                    Console.WriteLine("Base Defense = 10");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Martial Artist [2]");
+                    Console.WriteLine("Base Health = 80");
+                    Console.WriteLine("Base Regen = 13");
+                    Console.WriteLine("Base Heal = 5");
+                    Console.WriteLine("Damage Mult = 1.2");
+                    Console.WriteLine("Base Defense = 20");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Ninja [3]");
+                    Console.WriteLine("Base Health = 65");
+                    Console.WriteLine("Base Regen = 8");
+                    Console.WriteLine("Base Heal = 5");
+                    Console.WriteLine("Damage Mult = 1.4");
+                    Console.WriteLine("Base Defense = 8");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Rogue [4]");
+                    Console.WriteLine("Base Health = 70");
+                    Console.WriteLine("Base Regen = 8");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1.3");
+                    Console.WriteLine("Base Defense = 5");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.Write("My specialty is ");
+                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Rogue
+
+                    if (specialtyKey == '1') //Assassin
+                    {
+                        health = 70;
+                        healthRegen = 8;
+                        playerHeal = 0;
+                        playerDamageMult = 1.35f;
+                        playerDefense = 10;
+                        specialty = "Assassin";
+                    }
+                    else if (specialtyKey == '2') //Martial Artist
+                    {
+                        health = 80;
+                        healthRegen = 13;
+                        playerHeal = 5;
+                        playerDamageMult = 1.2f;
+                        playerDefense = 20;
+                        specialty = "Martial Artist";
+                    }
+                    else if (specialtyKey == '3') //Ninja
+                    {
+                        health = 65;
+                        healthRegen = 9;
+                        playerHeal = 5;
+                        playerDamageMult = 1.4f;
+                        playerDefense = 8;
+                        specialty = "Ninja";
+                    }
+
+                    else if (specialtyKey == '4') //Rogue
+                    {
+                        health = 70;
+                        healthRegen = 8;
+                        playerHeal = 0;
+                        playerDamageMult = 1.3f;
+                        playerDefense = 5;
+                        specialty = "Rogue";
+                    }
+                    else
+                    {
+                        styleName = "None";
+                    }
+                } //If Trickery class
+
+                return style + specialty;
+            } //DecideSpecialty function
+
+            static void StatCheck(string name, float health, float regen, float heal, float defense, float damage, float level, string style, string specialty)
+            {
+                Console.WriteLine("This is who you are:");
+                Console.WriteLine("Name: " + name); //This and next few lines are just to show to the player their stats
+                Console.WriteLine("Health: " + health);
+                Console.WriteLine("Regen: " + regen);
+                Console.WriteLine("Heal: " + heal);
+                Console.WriteLine("Defense: " + defense);
+                Console.WriteLine("Attack: " + damage);
+                Console.WriteLine("Level: " + level);
+                Console.WriteLine("Class: " + style);
+                Console.WriteLine("Specialty: " + specialty);
+
+                Pause();
+            } //StatCheck function
+
+            float EnemySlime(float health, float damagemult, float defense, float regen)
+            {
+                health = r.Next(25, 50);
+                damagemult = 0.5f;
+                defense = 20;
+                regen = 5;
+
+                return health + damagemult + defense + regen;
+            } //If the enemy is a slime
+
             Console.WriteLine("What is your name? ");
             Console.WriteLine("[Press Enter to enter your name]");
             Console.Write("My name is ");
             string name = Console.ReadLine(); //Gets the player's name
             Console.WriteLine("");
 
-            Console.Write("Welcome, " + name);
-            Console.WriteLine(", what is your style of battle?");
-            Console.WriteLine("[1: Magic, 2: Warrior, 3: Trickery]");
-            Console.WriteLine("[Press the number to continue]");
-
-            Console.Write("My style is ");
-            char role = Console.ReadKey().KeyChar;
-            Console.WriteLine("");
-            Console.Clear(); //Clears the screen
-
-            char specialty;
-            if (role == '1') //Magic
-            {
-                roleName = "Magic"; //Sets the class name
-
-                Console.WriteLine("What is your specialty?");
-                Console.WriteLine("[1: Warder, 2: Atronach, 3: Battle Mage, 4: Priest]");
-                Console.WriteLine("[Press the number to continue]");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.WriteLine("Warder [1]");
-                Console.WriteLine("Base Health = 90");
-                Console.WriteLine("Base Regen = 9");
-                Console.WriteLine("Base Heal = 6");
-                Console.WriteLine("Damage Mult = 1");
-                Console.WriteLine("Base Defense = 35");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.WriteLine("Atronach [2]");
-                Console.WriteLine("Base Health = 160");
-                Console.WriteLine("Base Regen = 4");
-                Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 0.8");
-                Console.WriteLine("Base Defense = 10");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.WriteLine("Battle Mage [3]");
-                Console.WriteLine("Base Health = 80");
-                Console.WriteLine("Base Regen = 10");
-                Console.WriteLine("Base Heal = 8");
-                Console.WriteLine("Damage Mult = 1.2");
-                Console.WriteLine("Base Defense = 15");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.WriteLine("Priest [4]");
-                Console.WriteLine("Base Health = 75");
-                Console.WriteLine("Base Regen = 8");
-                Console.WriteLine("Base Heal = 15");
-                Console.WriteLine("Damage Mult = 0.8");
-                Console.WriteLine("Base Defense = 15");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.Write("My specialty is ");
-                specialty = Console.ReadKey().KeyChar; //Gets the specialty of Magic
-
-
-                if (specialty == '1') //Warder
-                {
-                    health = 90;
-                    healthRegen = 9;
-                    playerHeal = 6;
-                    playerDamageMult = 1;
-                    playerDefense = 35;
-                    playerType = "Warder";
-                }
-                else if (specialty == '2') //Atronach
-                {
-                    health = 160;
-                    healthRegen = 4;
-                    playerHeal = 0;
-                    playerDamageMult = 0.8f;
-                    playerDefense = 10;
-                    playerType = "Atronach";
-                }
-                else if (specialty == '3') //Battle Mage
-                {
-                    health = 80;
-                    healthRegen = 10;
-                    playerHeal = 8;
-                    playerDamageMult = 1.2f;
-                    playerDefense = 15;
-                    playerType = "Battle Mage";
-                }
-                else if (specialty == '4') //Priest
-                {
-                    health = 75;
-                    healthRegen = 8;
-                    playerHeal = 15;
-                    playerDamageMult = 0.8f;
-                    playerDefense = 15;
-                    playerType = "Priest";
-                }
-                else
-                {
-                    roleName = "None";
-                }
-            }
-
-            else if (role == '2') //Warrior
-            {
-                roleName = "Warrior"; //Sets the class name
-
-                Console.WriteLine("What is your specialty?");
-                Console.WriteLine("[1: Tank, 2: Berserker, 3: Shielder, 4: Knight]");
-                Console.WriteLine("[Press the number to continue]");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.WriteLine("Tank [1]");
-                Console.WriteLine("Base Health = 120");
-                Console.WriteLine("Base Regen = 8");
-                Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 1");
-                Console.WriteLine("Base Defense = 50");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.WriteLine("Berserker [2]");
-                Console.WriteLine("Base Health = 85");
-                Console.WriteLine("Base Regen = 6");
-                Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 1.45");
-                Console.WriteLine("Base Defense = 13");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.WriteLine("Shielder [3]");
-                Console.WriteLine("Base Health = 100");
-                Console.WriteLine("Base Regen = 7");
-                Console.WriteLine("Base Heal = 5");
-                Console.WriteLine("Damage Mult = 1");
-                Console.WriteLine("Base Defense = 80");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.WriteLine("Knight [4]");
-                Console.WriteLine("Base Health = 110");
-                Console.WriteLine("Base Regen = 8");
-                Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 1.2");
-                Console.WriteLine("Base Defense = 30");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.Write("My specialty is ");
-                specialty = Console.ReadKey().KeyChar; //Gets the specialty of Knight
-
-                if (specialty == '1') //Tank
-                {
-                    health = 120;
-                    healthRegen = 8;
-                    playerHeal = 0;
-                    playerDamageMult = 1;
-                    playerDefense = 50;
-                    playerType = "Tank";
-                }
-                else if (specialty == '2') //Berserker
-                {
-                    health = 85;
-                    healthRegen = 6;
-                    playerHeal = 0;
-                    playerDamageMult = 1.45f;
-                    playerDefense = 13;
-                    playerType = "Berserker";
-                }
-                else if (specialty == '3') //Shielder
-                {
-                    health = 100;
-                    healthRegen = 7;
-                    playerHeal = 5;
-                    playerDamageMult = 1;
-                    playerDefense = 80;
-                    playerType = "Shielder";
-                }
-                else if (specialty == '4') //Knight
-                {
-                    health = 110;
-                    healthRegen = 8;
-                    playerHeal = 0;
-                    playerDamageMult = 1.2f;
-                    playerDefense = 30;
-                    playerType = "Knight";
-                }
-                else
-                {
-                    roleName = "None";
-                }
-            }
-
-            else if (role == '3') //Trickery
-            {
-                roleName = "Trickster"; //Sets the class name
-
-                Console.WriteLine("What is your specialty?");
-                Console.WriteLine("[1: Assassin, 2: Martial Artist, 3: Ninja, 4: Rogue]");
-                Console.WriteLine("[Press the number to continue]");
-
-                Console.WriteLine("Assassin [1]");
-                Console.WriteLine("Base Health = 70");
-                Console.WriteLine("Base Regen = 8");
-                Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 1.35");
-                Console.WriteLine("Base Defense = 10");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.WriteLine("Martial Artist [2]");
-                Console.WriteLine("Base Health = 80");
-                Console.WriteLine("Base Regen = 13");
-                Console.WriteLine("Base Heal = 5");
-                Console.WriteLine("Damage Mult = 1.2");
-                Console.WriteLine("Base Defense = 20");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.WriteLine("Ninja [3]");
-                Console.WriteLine("Base Health = 65");
-                Console.WriteLine("Base Regen = 8");
-                Console.WriteLine("Base Heal = 5");
-                Console.WriteLine("Damage Mult = 1.4");
-                Console.WriteLine("Base Defense = 8");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.WriteLine("Rogue [4]");
-                Console.WriteLine("Base Health = 70");
-                Console.WriteLine("Base Regen = 8");
-                Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 1.3");
-                Console.WriteLine("Base Defense = 5");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Console.Write("My specialty is ");
-                specialty = Console.ReadKey().KeyChar; //Gets the specialty of Rogue
-
-                if (specialty == '1') //Assassin
-                {
-                    health = 70;
-                    healthRegen = 8;
-                    playerHeal = 0;
-                    playerDamageMult = 1.35f;
-                    playerDefense = 10;
-                    playerType = "Assassin";
-                }
-                else if (specialty == '2') //Martial Artist
-                {
-                    health = 80;
-                    healthRegen = 13;
-                    playerHeal = 5;
-                    playerDamageMult = 1.2f;
-                    playerDefense = 20;
-                    playerType = "Martial Artist";
-                }
-                else if (specialty == '3') //Ninja
-                {
-                    health = 65;
-                    healthRegen = 9;
-                    playerHeal = 5;
-                    playerDamageMult = 1.4f;
-                    playerDefense = 8;
-                    playerType = "Ninja";
-                }
-
-                else if (specialty == '4') //Rogue
-                {
-                    health = 70;
-                    healthRegen = 8;
-                    playerHeal = 0;
-                    playerDamageMult = 1.3f;
-                    playerDefense = 5;
-                    playerType = "Rogue";
-                }
-                else
-                {
-                    roleName = "None";
-                }
-            }
-
-            bool maxLevelReached = false; //Checks to see if the player is on the last level, and sets it so the player doesn't start on the last level
-            int maxLevel = 100; //Sets the last level so the original thing knows what the last level is
-
-            float battlePlayerHealth = (playerDefense * 1 / 2) + health + level; //The base health with the addition of level plus half the defense makes the max player health
-            float battlePlayerMaxHP = battlePlayerHealth; //Sets the max in-battle health for the player so they don't regenerate to unholy levels
-            float battlePlayerDefense = playerDefense + level;
-            playerDamage = (level + playerbaseDamage) * playerDamageMult; //Sets the total damage based on the player's level, base damage, and the damage mutliplier
-            playerHeal += level; //Adds the player's level to the amount they heal
-
-            float battleEnemyHealth = (enemyDefense * 1 / 2) + enemyHealth + enemyLevel; //The base health with the addition of level plus half the defense makes the max enemy health
-            float battleEnemyMaxHP = battleEnemyHealth; //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
-            float battleEnemyDefense = enemyDefense + enemyLevel;
-            enemyDamage = (enemyLevel + enemyDamage) * enemyDamageMult;
-            enemyHeal += enemyLevel; //Adds the enemy's level to the amount they heal
-
-
-            Console.Clear(); //Clears the screen
-
-            Console.WriteLine("This is who you are:");
-            Console.WriteLine("Name: " + name); //This and next few lines are just to show to the player their stats
-            Console.WriteLine("Health: " + battlePlayerHealth);
-            Console.WriteLine("Regen: " + healthRegen);
-            Console.WriteLine("Heal: " + playerHeal);
-            Console.WriteLine("Defense: " + battlePlayerDefense);
-            Console.WriteLine("Attack: " + playerDamage);
-            Console.WriteLine("Level: " + level);
-            Console.WriteLine("Class: " + roleName);
-            Console.WriteLine("Specialty: " + playerType);
-
-            Pause();
-            Console.Clear();
-
-            Console.WriteLine("[A slime appears]");
-            Console.WriteLine("This is a slime. You shouldn't have a problem with this.");
-            enemyName = "Slime";
-
-            Pause();
-            Console.Clear();
-
-            int turncounter = 0;
+            DecideSpecialty(name, styleName, specialty, area);
 
             while (GameOver == false)
             {
+                //Player Stat calculation
+                battlePlayerHealth = (playerDefense * 1 / 2) + health + level; //The base health with the addition of level plus half the defense makes the max player health
+                battlePlayerMaxHP = battlePlayerHealth; //Sets the max in-battle health for the player so they don't regenerate to unholy levels
+                battlePlayerDefense = playerDefense + level;
+                playerDamage = (level + playerbaseDamage) * playerDamageMult; //Sets the total damage based on the player's level, base damage, and the damage mutliplier
+                playerHeal += level; //Adds the player's level to the amount they heal
 
-                turncounter++;
 
-                Console.WriteLine("Turn: " + turncounter);
-                Console.WriteLine("[Actions are being decided]");
-                Console.WriteLine("");
-
-                Console.WriteLine(name); //This and the next line show player's name and health
-                Console.WriteLine(battlePlayerHealth + " HP");
-                Console.WriteLine(playerHeal + " Healing");
-                Console.WriteLine(playerDamage + " Atk");
-                Console.WriteLine(battlePlayerDefense + " Def");
-
-                Console.WriteLine("");
-
-                Console.WriteLine(enemyName); //This and the next line show the enemy's name and health
-                Console.WriteLine(battleEnemyHealth + " HP");
-                Console.WriteLine(enemyHeal + " Healing");
-                Console.WriteLine(enemyDamage + " Atk");
-                Console.WriteLine(battleEnemyDefense + " Def");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-                Random r = new Random(); //Sets a thing for the randomizer for enemyAction
-                int enemyAction = r.Next(0, 4); //Decides the enemy's action
-
-                Console.WriteLine("What will you do?");
-                Console.WriteLine("[1: Attack, 2: Block, 3: Heal, 4: Nothing]");
-                char action = Console.ReadKey().KeyChar;
-
-                if (action == '1') //Attack
+                if (area == "Shack")
                 {
-                    Console.Clear(); //Clears the screen to show the enemy's stats before player's attack
-
-                    Console.WriteLine("[" + name + " is attacking!]");
-
-                    if (enemyAction == 2) //If enemy blocks
+                    if (ShackExplored == 'n') //If the player has seen these messages
                     {
-                        Console.WriteLine("[" + enemyName + " is blocking!]");
-                        battleEnemyHealth = DefendedAttack(enemyName, battleEnemyHealth, battleEnemyDefense, playerDamage);
-                        if (GameOver == true)
-                        {
-                            break;
-                        }
-                    } //If enemy blocks
+                        Console.WriteLine("[I find myself upon a small hill outside of the shack in whense I chose my class in (Still not sure how that person changed my physical makeup)]");
+                        Console.WriteLine("[There's a path trailing from the shack into a field before me]");
+                        Console.WriteLine("[The field has slimes scattered throughout it, murking around]");
+                    }
 
-                    else //Whether the enemy is Attacking, Healing, or doing Nothing
+                    if (ShackExplored == 'y') //If the player's been to the Shack
                     {
-                        battleEnemyHealth = DirectAttack(playerDamage, battleEnemyHealth, battleEnemyDefense, enemyName);
-                        if (GameOver == true)
-                        {
-                            break;
-                        }
-                    } //If enemy isn't blocking
+                        Console.WriteLine("[I'm back on the hill outside the shack (Still not sure how that person changed my physical makeup)]");
+                        Console.WriteLine("[The path stretches into the distance through the slime field before me]");
+                    }
+                    Console.WriteLine("");
 
-                    if (enemyAction <= 1) //If the enemy is attacking after player attack
+                    Console.WriteLine("[What do I do?]");
+                    Console.WriteLine("[1: Re-enter the shack to change my style & specialty\n2: Follow the path down into the field\n3: Check my stats]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[Press the number to continue]");
+                    char action = Console.ReadKey().KeyChar;
+
+                    if (action == '1') //Redecide Style/Specialty
                     {
-                        Console.WriteLine("[" + enemyName + " is retaliating!]");
-                        battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
-                        if (GameOver == true)
-                        {
-                            break;
-                        }
-                    } // If enemy Retaliates
+                        DecideSpecialty(name, styleName, specialty, area);
+                    }
 
-                    if (enemyAction == 3) //If the enemy is healing
+                    if (action == '2') //Go to the field
                     {
-                        Console.WriteLine("[" + enemyName + " is healing!]");
-                        battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
-                    } //If enemy Heals
+                        area = "Field";
+                    }
 
+                    if (action == '3') //Check stats
+                    {
+                        StatCheck(name, battlePlayerHealth, healthRegen, playerHeal, battlePlayerDefense, playerDamage, level, styleName, specialty);
+                    }
 
-                } //If player attacks
-
-                if (action == '2') //Block
-                {
+                    ShackExplored = 'y';
                     Console.Clear(); //Clears the screen
+                } //If at the Shack
 
-                    if (enemyAction <= 1)
-                    {
-                        battlePlayerHealth = DefendedAttack(name, battlePlayerHealth, battlePlayerDefense, enemyDamage);
-                        if (GameOver == true)
-                        {
-                            break;
-                        }
-                    } //If enemy Attacks
-
-                    if (enemyAction == 2)
-                    {
-                        Console.WriteLine("[" + enemyName + " is also blocking...]");
-                    } //If enemy mirrors Block
-
-                    if (enemyAction == 3) //If the enemy is healing
-                    {
-                        Console.WriteLine("[" + enemyName + " is healing!]");
-                        battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
-                    } //If enemy Heals
-
-
-                    if (enemyAction == 4)
-                    {
-                        Console.WriteLine("[" + enemyName + " is doing nothing...]");
-                    } //If enemy does Nothing
-
-                } //If player blocks
-
-                else if (action == '3')
+                if (area == "Field")
                 {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("[" + name + " is healing!]");
-
-                    if (enemyAction <= 1) //If the enemy is attacking
+                    if (FieldExplored == 'n') //If the player hasn't been to the fields
                     {
-                        Console.WriteLine("[" + enemyName + " disagrees!]");
+                        Console.WriteLine("[I'm in the slime field, and living slime is everywhere]");
+                        Console.WriteLine("[The shack is on a hill up the path]");
+                        Console.WriteLine("[There's a castle far down the path; the gate appears to be closed though]");
+                    }
+
+                    if (FieldExplored == 'n') //If the player's already been to the fields
+                    {
+                        Console.WriteLine("[I'm back in the slime field, and living slime is still everywhere]");
+                        Console.WriteLine("[The shack still sits upon the hill further up the path]");
+                        Console.WriteLine("[The castle resides further down the path]");
+                    }
+                    Console.WriteLine("");
+
+                    Console.WriteLine("[What do I do?]");
+                    Console.WriteLine("[1: Head to the hill with the shack atop it\n2: Head towards the Castle\n3: Engage a slime\n4: Check my stats]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[Press the number to continue]");
+                    char action = Console.ReadKey().KeyChar;
+
+                    if (action == '1') //Return to Shack
+                    {
+                        area = "Shack";
+                    }
+
+                    if (action == '2') //Go to the castle
+                    {
+                        area = "CastleGate";
+                    }
+
+                    if (action == '3') //Engage a slime
+                    {
+                        Console.WriteLine("[I engage one of the many slimes]");
                         Console.WriteLine("");
+                        EnemySlime(enemyHealth, enemyDamageMult, enemyDefense, enemyRegen);
+                        enemyName = "Slime";
+                        InBattle = true;
+                    }
 
-                        battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
-
-                        Pause();
-
-                        Console.WriteLine("[" + enemyName + " is attacking!]");
-                        battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
-                        if (GameOver == true)
-                        {
-                            break;
-                        }
-                    } //If enemy Attacks
-
-                    if (enemyAction == 2) //If the enemy is blocking
+                    if (action == '4') //Stat Check
                     {
-                        Console.WriteLine("[" + enemyName + " is blocking...]");
+                        StatCheck(name, battlePlayerHealth, healthRegen, playerHeal, battlePlayerDefense, playerDamage, level, styleName, specialty);
+                    }
 
-                        battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
-                    } //If enemy Blocks
-
-                    if (enemyAction == 3) //If the enemy is healing
-                    {
-                        Console.WriteLine("[" + enemyName + " is also healing!]");
-                        battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
-
-                        Pause();
-
-                        battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
-                    } //If enemy also Heals
-
-                    if (enemyAction == 4)
-                    {
-                        Console.WriteLine("[" + enemyName + " does nothing...]");
-
-                        battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
-                    } //If enemy does Nothing
-                } //If player Heals
-
-                else if (action == '4') //Nothing
-                {
                     Console.Clear(); //Clears the screen
 
-                    if (enemyAction <= 1) //If the enemy is attacking
+                    if (action != 3) //Makes it so two engagements don't occur at once
                     {
-                        Console.WriteLine("[" + enemyName + " is attacking!]");
-                        battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
-                        if (GameOver == true)
+                        int SlimeApproach = r.Next(1, 5); //Chance for a slime to engage
+                        if (SlimeApproach == 1) //If a slime engages
                         {
-                            break;
-                        }
-                    } // If enemy Attacks
+                            Console.WriteLine("[A slime enages me!]");
+                            Console.WriteLine("");
+                            EnemySlime(enemyHealth, enemyDamageMult, enemyDefense, enemyRegen);
+                            InBattle = true;
+                        } //If slime engages
+                    } //If not engaging
 
-                    if (enemyAction == 2)
-                    {
-                        Console.WriteLine("[" + enemyName + " is blocking...]");
-                    } //If enemy Blocks
+                    FieldExplored = 'y';
+                } //If in the field
 
-                    if (enemyAction == 3) //If the enemy is healing
-                    {
-                        Console.WriteLine("[" + enemyName + " is healing!]");
-                        battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
-                    } //If enemy Heals
-
-                    if (enemyAction == 4)
-                    {
-                        Console.WriteLine("[" + enemyName + " also does nothing...]");
-                    } //If enemy also does Nothing
-
-                } //If player does nothing
-
-                else
+                if (area == "CastleGate")
                 {
-                    turncounter--;
-                }
+                    if (CastleGateExplored == 'n') //If the player hasn't been to the gate yet
+                    {
+                        Console.WriteLine("[I'm now in front of the stone brick castle, it appears as if it was taken over by force, now that I look at it]");
+                        Console.WriteLine("[That'd partially explain why the gate is down");
+                        Console.WriteLine("[If this castle Was taken over by force, why would it not have been repaired by the new inhabitants?]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[There's a large hole in the side, looks as if the bricks were just... removed, rather than destroyed]");
+                    }
 
-                Console.WriteLine("[Press any key to end this round; regen will be applied]");
-                Console.ReadKey();  //Pauses
-                Console.Clear(); //Clears the screen
+                    if (CastleGateExplored == 'y') //If the player has been to the gate
+                    {
+                        Console.WriteLine("[I'm in front of the taken-over brick castle that has an odd 'entrance']");
+                    }
 
-                battlePlayerHealth = Regeneration(battlePlayerHealth, battlePlayerMaxHP, healthRegen); //Regenerates player
-
-                battleEnemyHealth = Regeneration(battleEnemyHealth, battleEnemyMaxHP, enemyRegen); //Regenerates Enemy
-
-
-
-                if (battlePlayerHealth <= 0) //If the player lost
-                {
-                    Console.WriteLine("The battle has ended");
                     Console.WriteLine("");
-                    Console.WriteLine("Unless you're testing something, you are really bad at this; congratulations");
-                    break;
+                    Console.WriteLine("[What do I do?]");
+                    Console.WriteLine("[1: Return to the slimy fields\n2: Enter the odd 'entrance'\n3: Check my stats]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[Press the number to continue]");
+                    char action = Console.ReadKey().KeyChar;
+
+                    if (action == '1') //Go to the field
+                    {
+                        area = "CastleGate";
+                    }
+
+                    if (action == '2') //Enter the Castle
+                    {
+                        area = "CastleEntry";
+                    }
+
+                    if (action == '3') //Check stats
+                    {
+                        StatCheck(name, battlePlayerHealth, healthRegen, playerHeal, battlePlayerDefense, playerDamage, level, styleName, specialty);
+                    }
+                    CastleGateExplored = 'y';
                 }
 
-                if (battleEnemyHealth <= 0) //If the player won
+                if (area == "CastleEntry")
                 {
-                    Console.WriteLine("The battle has ended");
+
+                    if (CastleEntryExplored == 'n') //If the player hasn't entered the Castle before
+                    {
+                        Console.WriteLine("[I've entered the castle; it looks normal]");
+                        Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
+                        Console.WriteLine("[One of these disturbances include a doorway without a door that Has hinges for one, but not the door itself]");
+                        Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
+                    }
+
+                    if (CastleEntryExplored == 'y') //If the player has entered the castle already
+                    {
+                        Console.WriteLine("[I'm in the entryway of the castle]");
+                    }
+
                     Console.WriteLine("");
-                    Console.WriteLine("Congratulations, you won!");
-                    break;
+                    Console.WriteLine("[What do I do?]");
+                    Console.WriteLine("[1: Exit the castle\n2: Check my stats]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[Press the number to continue]");
+                    char action = Console.ReadKey().KeyChar;
+
+                    if (action == '1') //Exit the Castle
+                    {
+                        area = "CastleGate";
+                    }
+
+                    if (action == '2') //Check stats
+                    {
+                        StatCheck(name, battlePlayerHealth, healthRegen, playerHeal, battlePlayerDefense, playerDamage, level, styleName, specialty);
+                    }
+
+                    CastleEntryExplored = 'y';
                 }
+
+
+
+                Console.Clear();
+
+
+
+
+
+
+                //Calculates enemy stats
+                battleEnemyHealth = (enemyDefense * 1 / 2) + enemyHealth + enemyLevel; //The base health with the addition of level plus half the defense makes the max enemy health
+                battleEnemyMaxHP = battleEnemyHealth; //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
+                battleEnemyDefense = enemyDefense + enemyLevel;
+                enemyDamage = (enemyLevel + enemybaseDamage) * enemyDamageMult;
+                enemyHeal += enemyLevel; //Adds the enemy's level to the amount they heal
+
+                while (InBattle == true)
+                {
+                    int turncounter = 0; //Sets the turn counter to 0 before battle starts
+
+                    turncounter++;
+
+                    Console.WriteLine("Turn: " + turncounter);
+                    Console.WriteLine("[Actions are being decided]");
+                    Console.WriteLine("");
+
+                    Console.WriteLine(name); //This and the next line show player's name and health
+                    Console.WriteLine(battlePlayerHealth + " HP");
+                    Console.WriteLine(playerHeal + " Healing");
+                    Console.WriteLine(playerDamage + " Atk");
+                    Console.WriteLine(battlePlayerDefense + " Def");
+
+                    Console.WriteLine("");
+
+                    Console.WriteLine(enemyName); //This and the next line show the enemy's name and health
+                    Console.WriteLine(battleEnemyHealth + " HP");
+                    Console.WriteLine(enemyHeal + " Healing");
+                    Console.WriteLine(enemyDamage + " Atk");
+                    Console.WriteLine(battleEnemyDefense + " Def");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    int enemyAction = r.Next(0, 4); //Decides the enemy's action
+
+                    Console.WriteLine("[What do I do?]");
+                    Console.WriteLine("[1: Attack, 2: Block, 3: Heal, 4: Nothing]");
+                    char action = Console.ReadKey().KeyChar;
+
+                    if (action == '1') //Attack
+                    {
+                        Console.Clear(); //Clears the screen to show the enemy's stats before player's attack
+
+                        Console.WriteLine("[" + name + " is attacking!]");
+
+                        if (enemyAction == 2) //If enemy blocks
+                        {
+                            Console.WriteLine("[" + enemyName + " is blocking!]");
+                            battleEnemyHealth = DefendedAttack(enemyName, battleEnemyHealth, battleEnemyDefense, playerDamage);
+                            if (GameOver == true)
+                            {
+                                break;
+                            }
+                        } //If enemy blocks
+
+                        else //Whether the enemy is Attacking, Healing, or doing Nothing
+                        {
+                            battleEnemyHealth = DirectAttack(playerDamage, battleEnemyHealth, battleEnemyDefense, enemyName);
+                            if (GameOver == true)
+                            {
+                                break;
+                            }
+                        } //If enemy isn't blocking
+
+                        if (enemyAction <= 1) //If the enemy is attacking after player attack
+                        {
+                            Console.WriteLine("[" + enemyName + " is retaliating!]");
+                            battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
+                            if (GameOver == true)
+                            {
+                                break;
+                            }
+                        } // If enemy Retaliates
+
+                        if (enemyAction == 3) //If the enemy is healing
+                        {
+                            Console.WriteLine("[" + enemyName + " is healing!]");
+                            battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
+                        } //If enemy Heals
+
+
+                    } //If player attacks
+
+                    if (action == '2') //Block
+                    {
+                        Console.Clear(); //Clears the screen
+
+                        if (enemyAction <= 1)
+                        {
+                            battlePlayerHealth = DefendedAttack(name, battlePlayerHealth, battlePlayerDefense, enemyDamage);
+                            if (GameOver == true)
+                            {
+                                break;
+                            }
+                        } //If enemy Attacks
+
+                        if (enemyAction == 2)
+                        {
+                            Console.WriteLine("[" + enemyName + " is also blocking...]");
+                        } //If enemy mirrors Block
+
+                        if (enemyAction == 3) //If the enemy is healing
+                        {
+                            Console.WriteLine("[" + enemyName + " is healing!]");
+                            battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
+                        } //If enemy Heals
+
+
+                        if (enemyAction == 4)
+                        {
+                            Console.WriteLine("[" + enemyName + " is doing nothing...]");
+                        } //If enemy does Nothing
+
+                    } //If player blocks
+
+                    else if (action == '3')
+                    {
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[" + name + " is healing!]");
+
+                        if (enemyAction <= 1) //If the enemy is attacking
+                        {
+                            Console.WriteLine("[" + enemyName + " disagrees!]");
+                            Console.WriteLine("");
+
+                            battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+
+                            Pause();
+
+                            Console.WriteLine("[" + enemyName + " is attacking!]");
+                            battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
+                            if (GameOver == true)
+                            {
+                                break;
+                            }
+                        } //If enemy Attacks
+
+                        if (enemyAction == 2) //If the enemy is blocking
+                        {
+                            Console.WriteLine("[" + enemyName + " is blocking...]");
+
+                            battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+                        } //If enemy Blocks
+
+                        if (enemyAction == 3) //If the enemy is healing
+                        {
+                            Console.WriteLine("[" + enemyName + " is also healing!]");
+                            battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+
+                            Pause();
+
+                            battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
+                        } //If enemy also Heals
+
+                        if (enemyAction == 4)
+                        {
+                            Console.WriteLine("[" + enemyName + " does nothing...]");
+
+                            battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+                        } //If enemy does Nothing
+                    } //If player Heals
+
+                    else if (action == '4') //Nothing
+                    {
+                        Console.Clear(); //Clears the screen
+
+                        if (enemyAction <= 1) //If the enemy is attacking
+                        {
+                            Console.WriteLine("[" + enemyName + " is attacking!]");
+                            battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
+                            if (GameOver == true)
+                            {
+                                break;
+                            }
+                        } // If enemy Attacks
+
+                        if (enemyAction == 2)
+                        {
+                            Console.WriteLine("[" + enemyName + " is blocking...]");
+                        } //If enemy Blocks
+
+                        if (enemyAction == 3) //If the enemy is healing
+                        {
+                            Console.WriteLine("[" + enemyName + " is healing!]");
+                            battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
+                        } //If enemy Heals
+
+                        if (enemyAction == 4)
+                        {
+                            Console.WriteLine("[" + enemyName + " also does nothing...]");
+                        } //If enemy also does Nothing
+
+                    } //If player does nothing
+
+                    else
+                    {
+                        turncounter--;
+                    }
+
+                    Console.WriteLine("[Press any key to end this round; regen will be applied]");
+                    Console.ReadKey();  //Pauses
+                    Console.Clear(); //Clears the screen
+
+                    battlePlayerHealth = Regeneration(battlePlayerHealth, battlePlayerMaxHP, healthRegen); //Regenerates player
+                    battleEnemyHealth = Regeneration(battleEnemyHealth, battleEnemyMaxHP, enemyRegen); //Regenerates Enemy
+
+                    if (battlePlayerHealth <= 0) //If the player lost
+                    {
+                        Console.WriteLine("The battle has ended");
+                        Console.WriteLine("");
+                        Console.WriteLine("Unless you're testing something, you are really bad at this; congratulations");
+                        break;
+                    }
+
+                    if (battleEnemyHealth <= 0) //If the player won
+                    {
+                        Console.WriteLine("The battle has ended");
+                        Console.WriteLine("");
+                        Console.WriteLine("Congratulations, you won!");
+                        Console.WriteLine("");
+                        Console.WriteLine("You've leveled up!");
+                        level++;
+                        Console.WriteLine("Current Level: " + level);
+                        break;
+                    }
+                } //InBattle bool
+
+
+
+
             } //GameOver bool
         } //Void Run
     }//Game
-}
+}//HelloWorld
