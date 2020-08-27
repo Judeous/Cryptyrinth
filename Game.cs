@@ -10,7 +10,7 @@ namespace HelloWorld
         string name;
         float health = 100; //Sets player's health
         float healthRegen = 8; //Sets the rate the player regens at
-        float playerDefense = 15; //Sets the player's base defense
+        float playerDefense = 10; //Sets the player's base defense
         int level = 1;
         float battlePlayerHealth;
         float battlePlayerMaxHP;
@@ -166,7 +166,7 @@ namespace HelloWorld
                             Console.Clear(); //Clears the screen
                             Console.WriteLine("[I engage one of the many slimes]");
                             Pause();
-                            EnemySetup(enemyHealth, enemyDamageMult, enemyDefense, enemyRegen);
+                            EnemySetup();
                             enemyName = "Slime";
                             InBattle = true;
                         }
@@ -194,7 +194,7 @@ namespace HelloWorld
                                 Console.WriteLine("[A slime enages me!]");
                                 Console.WriteLine("");
                                 Pause();
-                                EnemySetup(enemyHealth, enemyDamageMult, enemyDefense, enemyRegen);
+                                EnemySetup();
                                 enemyName = "Slime";
                                 InBattle = true;
                             } //If slime engages
@@ -363,7 +363,7 @@ namespace HelloWorld
                         if (enemyAction == 2) //If enemy blocks
                         {
                             Console.WriteLine("[" + enemyName + " is blocking!]");
-                            battleEnemyHealth = DefendedAttack(enemyName, battleEnemyHealth, battleEnemyDefense, battlePlayerDamage);
+                            EnemyDefendedAttack();
                         } //If enemy blocks
 
                         else //Whether the enemy is Attacking, Healing, or doing Nothing
@@ -401,7 +401,7 @@ namespace HelloWorld
                         if (enemyAction <= 1)
                         {
                             Console.WriteLine("[" + enemyName + " is attacking!]");
-                            battlePlayerHealth = DefendedAttack(name, battlePlayerHealth, battlePlayerDefense, enemyDamage);
+                            PlayerDefendedAttack();
                         } //If enemy Attacks
 
                         if (enemyAction == 2)
@@ -598,49 +598,88 @@ namespace HelloWorld
             return health;
         } //DirectAttack Function
 
-        float DefendedAttack(string victimName, float health, float defenderDefense, float damage)
+        void PlayerDefendedAttack()
         {
             Console.WriteLine("");
 
-            if (defenderDefense == 0)
+            if (battlePlayerDefense == 0)
             {
-                Console.WriteLine("[" + victimName + " has nothing to block with!]");
-                health = DirectAttack(damage, health, defenderDefense, victimName);
-                DeathCheck(health, victimName);
-            } //If defender has no defense
+                Console.WriteLine("[I can't block!]");
+                battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
+            } //If player has no defense
+
             else
             {
-                Console.WriteLine(victimName + "[Pre-Strike]"); //Defender's stats before being struck
-                Console.WriteLine(health + " HP ");
-                Console.WriteLine(defenderDefense + " Def <<");
+                Console.WriteLine(name + "[Pre-Strike]"); //Player's stats before being struck
+                Console.WriteLine(battlePlayerHealth + " HP ");
+                Console.WriteLine(battlePlayerDefense + " Def <<");
                 Console.WriteLine("");
 
                 Pause();
 
-                defenderDefense -= damage; //Enemy's attack on player's defense
-                if (defenderDefense <= 0) //If defense falls
+                battlePlayerDefense -= enemyDamage; //Enemy's attack on player's defense
+                if (battlePlayerDefense <= 0) //If defense falls
                 {
-                    Console.WriteLine("[" + victimName + "'s defense was knocked away!]");
-                    defenderDefense = 0; //Sets defense back to 0
+                    Console.WriteLine("[My defense was knocked aside!]");
+                    battlePlayerDefense = 0; //Sets defense back to 0
 
-                    Console.WriteLine(victimName + " [Post-Strike]"); //Player's stats after enemy's attack
-                    Console.WriteLine(health + " HP");
-                    Console.WriteLine(defenderDefense + " Def <<");
+                    Console.WriteLine(name + " [Post-Strike]"); //Player's stats after enemy's attack
+                    Console.WriteLine(battlePlayerHealth + " HP");
+                    Console.WriteLine(battlePlayerDefense + " Def <<");
                 }
 
                 else //If defense didn't fail
                 {
-                    Console.WriteLine("[" + victimName + " successfully blocked!]");
+                    Console.WriteLine("[I successfully blocked!]");
 
-                    Console.WriteLine(victimName + " [Post-Strike]"); //Player's stats after enemy's attack
-                    Console.WriteLine(health + " HP");
-                    Console.WriteLine(defenderDefense + " Def <<");
+                    Console.WriteLine(name + " [Post-Strike]"); //Player's stats after enemy's attack
+                    Console.WriteLine(battlePlayerHealth + " HP");
+                    Console.WriteLine(battlePlayerDefense + " Def <<");
+                }
+            } //If player has defense
+        } //Player Defended Attack function
+
+        void EnemyDefendedAttack()
+        {
+            Console.WriteLine("");
+
+            if (battleEnemyDefense == 0)
+            {
+                Console.WriteLine("[" + enemyName + " can't block!]");
+                battleEnemyHealth = DirectAttack(playerDamage, battleEnemyHealth, battleEnemyDefense, enemyName);
+            } //If player has no defense
+
+            else
+            {
+                Console.WriteLine(name + "[Pre-Strike]"); //Enemy's stats before being struck
+                Console.WriteLine(battleEnemyHealth + " HP ");
+                Console.WriteLine(battleEnemyDefense + " Def <<");
+                Console.WriteLine("");
+
+                Pause();
+
+                battleEnemyDefense -= playerDamage; //Player's attack on enemy's defense
+                if (battleEnemyDefense <= 0) //If defense falls
+                {
+                    Console.WriteLine("[" + enemyName + "'s defense was knocked aside!]");
+                    battleEnemyDefense = 0; //Sets defense back to 0
+
+                    Console.WriteLine(enemyName + " [Post-Strike]"); //Enemy's stats after player's attack
+                    Console.WriteLine(battleEnemyHealth + " HP");
+                    Console.WriteLine(battleEnemyDefense + " Def <<");
                 }
 
-            } //If defender has defense
+                else //If defense didn't fail
+                {
+                    Console.WriteLine("[" + enemyName + " successfully blocked!]");
 
-            return health;
-        } //DefendedAttack function
+                    Console.WriteLine(enemyName + " [Post-Strike]"); //Enemy's stats after enemy's attack
+                    Console.WriteLine(battleEnemyHealth + " HP");
+                    Console.WriteLine(battleEnemyDefense + " Def <<");
+                }
+            } //If enemy has defense
+        } //Enemy Defended Attack function
+
 
         void DeathCheck(float health, string name)
         {
@@ -650,7 +689,7 @@ namespace HelloWorld
 
                 InBattle = false;
             }
-        }
+        } //Death Check function
 
         float Heal(string name, float health, float defense, float heal)
         {
@@ -678,7 +717,6 @@ namespace HelloWorld
                     Console.WriteLine(defense + " Def");
                 }
             } //If enemy alive
-
             return health;
         } //Heal function
 
@@ -711,7 +749,7 @@ namespace HelloWorld
                 Console.WriteLine("Base Regen = 9");
                 Console.WriteLine("Base Heal = 6");
                 Console.WriteLine("Damage Mult = 1");
-                Console.WriteLine("Base Defense = 35");
+                Console.WriteLine("Base Defense = 22");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
@@ -720,7 +758,7 @@ namespace HelloWorld
                 Console.WriteLine("Base Regen = 4");
                 Console.WriteLine("Base Heal = 0");
                 Console.WriteLine("Damage Mult = 0.8");
-                Console.WriteLine("Base Defense = 10");
+                Console.WriteLine("Base Defense = 8");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
@@ -729,7 +767,7 @@ namespace HelloWorld
                 Console.WriteLine("Base Regen = 10");
                 Console.WriteLine("Base Heal = 8");
                 Console.WriteLine("Damage Mult = 1.2");
-                Console.WriteLine("Base Defense = 15");
+                Console.WriteLine("Base Defense = 11");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
@@ -738,7 +776,7 @@ namespace HelloWorld
                 Console.WriteLine("Base Regen = 8");
                 Console.WriteLine("Base Heal = 15");
                 Console.WriteLine("Damage Mult = 0.8");
-                Console.WriteLine("Base Defense = 15");
+                Console.WriteLine("Base Defense = 9");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
@@ -752,7 +790,7 @@ namespace HelloWorld
                     healthRegen = 9;
                     playerHeal = 6;
                     playerDamageMult = 1;
-                    playerDefense = 35;
+                    playerDefense = 24;
                     specialty = "Warder";
                 }
                 else if (specialtyKey == '2') //Atronach
@@ -761,25 +799,25 @@ namespace HelloWorld
                     healthRegen = 4;
                     playerHeal = 0;
                     playerDamageMult = 0.8f;
-                    playerDefense = 10;
+                    playerDefense = 8;
                     specialty = "Atronach";
                 }
                 else if (specialtyKey == '3') //Battle Mage
                 {
-                    health = 80;
+                    health = 75;
                     healthRegen = 10;
                     playerHeal = 8;
                     playerDamageMult = 1.2f;
-                    playerDefense = 15;
+                    playerDefense = 11;
                     specialty = "Battle Mage";
                 }
                 else if (specialtyKey == '4') //Priest
                 {
-                    health = 75;
+                    health = 70;
                     healthRegen = 8;
                     playerHeal = 15;
-                    playerDamageMult = 0.8f;
-                    playerDefense = 15;
+                    playerDamageMult = 0.9f;
+                    playerDefense = 9;
                     specialty = "Priest";
                 }
                 else
@@ -802,8 +840,8 @@ namespace HelloWorld
                 Console.WriteLine("Base Health = 120");
                 Console.WriteLine("Base Regen = 8");
                 Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 1");
-                Console.WriteLine("Base Defense = 50");
+                Console.WriteLine("Damage Mult = 0.8");
+                Console.WriteLine("Base Defense = 16");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
@@ -811,7 +849,7 @@ namespace HelloWorld
                 Console.WriteLine("Base Health = 90");
                 Console.WriteLine("Base Regen = 6");
                 Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 1.3");
+                Console.WriteLine("Damage Mult = 1.2");
                 Console.WriteLine("Base Defense = 13");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -820,8 +858,8 @@ namespace HelloWorld
                 Console.WriteLine("Base Health = 100");
                 Console.WriteLine("Base Regen = 7");
                 Console.WriteLine("Base Heal = 5");
-                Console.WriteLine("Damage Mult = 1");
-                Console.WriteLine("Base Defense = 80");
+                Console.WriteLine("Damage Mult = 0.9");
+                Console.WriteLine("Base Defense = 30");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
@@ -829,8 +867,8 @@ namespace HelloWorld
                 Console.WriteLine("Base Health = 110");
                 Console.WriteLine("Base Regen = 8");
                 Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 1.2");
-                Console.WriteLine("Base Defense = 30");
+                Console.WriteLine("Damage Mult = 1.1");
+                Console.WriteLine("Base Defense = 15");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
@@ -840,37 +878,37 @@ namespace HelloWorld
                 if (specialtyKey == '1') //Tank
                 {
                     health = 120;
-                    healthRegen = 8;
+                    healthRegen = 4;
                     playerHeal = 0;
-                    playerDamageMult = 1;
-                    playerDefense = 50;
+                    playerDamageMult = 0.8f;
+                    playerDefense = 16;
                     specialty = "Tank";
                 }
                 else if (specialtyKey == '2') //Berserker
                 {
                     health = 90;
-                    healthRegen = 6;
+                    healthRegen = 4;
                     playerHeal = 0;
-                    playerDamageMult = 1.3f;
+                    playerDamageMult = 1.2f;
                     playerDefense = 13;
                     specialty = "Berserker";
                 }
                 else if (specialtyKey == '3') //Shielder
                 {
                     health = 100;
-                    healthRegen = 7;
+                    healthRegen = 5;
                     playerHeal = 5;
-                    playerDamageMult = 1;
-                    playerDefense = 80;
+                    playerDamageMult = 0.9f;
+                    playerDefense = 30;
                     specialty = "Shielder";
                 }
                 else if (specialtyKey == '4') //Knight
                 {
                     health = 110;
-                    healthRegen = 8;
+                    healthRegen = 6;
                     playerHeal = 0;
-                    playerDamageMult = 1.2f;
-                    playerDefense = 30;
+                    playerDamageMult = 1.1f;
+                    playerDefense = 15;
                     specialty = "Knight";
                 }
                 else
@@ -894,7 +932,7 @@ namespace HelloWorld
                 Console.WriteLine("Base Regen = 8");
                 Console.WriteLine("Base Heal = 0");
                 Console.WriteLine("Damage Mult = 1.35");
-                Console.WriteLine("Base Defense = 10");
+                Console.WriteLine("Base Defense = 6");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
@@ -903,7 +941,7 @@ namespace HelloWorld
                 Console.WriteLine("Base Regen = 13");
                 Console.WriteLine("Base Heal = 5");
                 Console.WriteLine("Damage Mult = 1.2");
-                Console.WriteLine("Base Defense = 20");
+                Console.WriteLine("Base Defense = 10");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
@@ -912,7 +950,7 @@ namespace HelloWorld
                 Console.WriteLine("Base Regen = 8");
                 Console.WriteLine("Base Heal = 5");
                 Console.WriteLine("Damage Mult = 1.4");
-                Console.WriteLine("Base Defense = 8");
+                Console.WriteLine("Base Defense = 5");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
@@ -921,7 +959,7 @@ namespace HelloWorld
                 Console.WriteLine("Base Regen = 8");
                 Console.WriteLine("Base Heal = 0");
                 Console.WriteLine("Damage Mult = 1.3");
-                Console.WriteLine("Base Defense = 5");
+                Console.WriteLine("Base Defense = 3");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
@@ -934,7 +972,7 @@ namespace HelloWorld
                     healthRegen = 8;
                     playerHeal = 0;
                     playerDamageMult = 1.35f;
-                    playerDefense = 10;
+                    playerDefense = 6;
                     specialty = "Assassin";
                 }
                 else if (specialtyKey == '2') //Martial Artist
@@ -943,7 +981,7 @@ namespace HelloWorld
                     healthRegen = 13;
                     playerHeal = 5;
                     playerDamageMult = 1.2f;
-                    playerDefense = 20;
+                    playerDefense = 10;
                     specialty = "Martial Artist";
                 }
                 else if (specialtyKey == '3') //Ninja
@@ -952,7 +990,7 @@ namespace HelloWorld
                     healthRegen = 9;
                     playerHeal = 5;
                     playerDamageMult = 1.4f;
-                    playerDefense = 8;
+                    playerDefense = 5;
                     specialty = "Ninja";
                 }
 
@@ -962,7 +1000,7 @@ namespace HelloWorld
                     healthRegen = 8;
                     playerHeal = 0;
                     playerDamageMult = 1.3f;
-                    playerDefense = 5;
+                    playerDefense = 3;
                     specialty = "Rogue";
                 }
                 else
@@ -970,10 +1008,8 @@ namespace HelloWorld
                     styleName = "None";
                 }
             } //If Trickery Style
-
-
             Console.Clear(); //Clears the screen
-        } //DecideSpecialty function
+        } //Decide Specialty function
 
         void StatCheck()
         {
@@ -992,22 +1028,21 @@ namespace HelloWorld
 
             Pause();
             Console.Clear(); //Clears the screen
-        } //StatCheck function
+        } //Stat Check function
 
-        float EnemySetup(float health, float damageMult, float defense, float regen)
+        void EnemySetup()
         {
             if (enemyName == "Slime")
             {
-                health = r.Next(25, 50);
-                damageMult = 0.5f;
-                defense = 20;
-                regen = 5;
-            }
+                battleEnemyHealth = r.Next(25, 50);
+                enemyDamageMult = 0.5f;
+                battleEnemyDefense = 20;
+                enemyRegen = 5;
+            } //If the enemy is a slime
 
 
 
-            return health + damageMult + defense + regen;
-        } //If the enemy is a slime
+        } //Enemy Setup function
 
         void StatCalculation()
         {
@@ -1016,9 +1051,6 @@ namespace HelloWorld
             battlePlayerMaxHP = health; //Sets the max in-battle health for the player so they don't regenerate to unholy levels
             battlePlayerDamage = (level + playerDamage) * playerDamageMult; //Sets the total damage based on the player's level, base damage, and the damage mutliplier
             playerHeal += level; //Adds the player's level to the amount they heal
-        }
-
-
-
+        } //Stat Calculation function
     }//Game
 }//HelloWorld
