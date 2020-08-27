@@ -463,6 +463,8 @@ namespace HelloWorld
                         styleName = "None";
                     }
                 } //If Trickery class
+
+
                 Console.Clear(); //Clears the screen
             } //DecideSpecialty function
 
