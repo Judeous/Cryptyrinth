@@ -14,9 +14,11 @@ namespace HelloWorld
         int level = 1;
         float battlePlayerHealth;
         float battlePlayerMaxHP;
+        float playerHeal = 5;
         float battlePlayerDefense;
         float battlePlayerDamage;
-        float playerHeal = 5; //Sets the base heal
+
+        float basePlayerHeal = 5; //Sets the base heal
         float playerDamageMult = 1; //Sets the base player damage multiplier that changes based on specialty
         float playerDamage = 9; //base damage
 
@@ -31,8 +33,14 @@ namespace HelloWorld
         float battleEnemyDefense;
         float enemyHeal = 5; //Sets the base enemy heal
         float enemyDamageMult = 1; //Sets the base enemy damage multiplier
-        float enemybaseDamage = 8; //Sets the base damage
+        float enemybaseDamage = 8; //Sets the base enemy damage
         float enemyDamage;
+
+        string enemyAttackMessage = "The enemy is attacking!";
+        string enemyDefendMessage = "The enemy is defending!";
+        string enemyHealMessage = "The enemy is healing!";
+        string enemyDeathMessage = "The enemy was unmade";
+
 
         Random r = new Random(); //Sets a variable for a randomizer
 
@@ -110,7 +118,7 @@ namespace HelloWorld
                         {
                             Console.Clear(); //Clears the screen
                             Console.WriteLine("[I'm on a small hill outside of the shack whense I chose my class in (Still not sure how that person changed my physical makeup)]");
-                            Console.WriteLine("[There's a path trailing from the shack into a field]");
+                            Console.WriteLine("[There's a path trailing from the shack into a dark grey field]");
                             Console.WriteLine("[The field has slimes scattered throughout it, murking around]");
                             Pause();
                         }
@@ -131,7 +139,7 @@ namespace HelloWorld
                     {
                         if (FieldExplored == 'n') //If the player hasn't been to the fields
                         {
-                            Console.WriteLine("[I'm in the slime field, and living slime is everywhere]");
+                            Console.WriteLine("[I'm in the dark slimy field, and living slime is everywhere]");
                             Console.WriteLine("[The shack is on a hill up the path]");
                             Console.WriteLine("[There's a castle far down the path]");
                             Console.WriteLine("[The gate appears to be closed, though]");
@@ -167,15 +175,15 @@ namespace HelloWorld
                             Console.Clear(); //Clears the screen
                             Console.WriteLine("[I engage one of the many slimes]");
                             Pause();
-                            EnemySetup();
                             enemyName = "Slime";
+                            EnemySetup();
                             InBattle = true;
                         }
 
                         if (action == '4') //Look around
                         {
                             Console.Clear(); //Clears the screen
-                            Console.WriteLine("[I'm in a slime field, and living slime is everywhere]");
+                            Console.WriteLine("[I'm in a dark grey slime field, and there's living mounds of the slime murking around]");
                             Console.WriteLine("[The shack is on a hill up the path]");
                             Console.WriteLine("[There's a castle far down the path]");
                             Console.WriteLine("[The gate appears to be closed]");
@@ -206,6 +214,7 @@ namespace HelloWorld
 
                     } //While not in a battle
                 } //If in the field
+
 
                 if (area == "CastleGate")
                 {
@@ -260,9 +269,7 @@ namespace HelloWorld
 
                         CastleGateExplored = 'y';
                         Console.Clear();
-
                     } //While not in a battle
-
                 } //If in CastleGate
 
                 if (area == "CastleEntry")
@@ -294,9 +301,17 @@ namespace HelloWorld
                             area = "CastleGate";
                         }
 
-                        if (action == '2') //
+                        if (action == '2') //Enter the Void
                         {
-                            area = "    ";
+                            if (level <= 3)
+                            {
+                                Console.WriteLine("[The doorless doorway doesn't lead anywhere, perhaps I should leave]");
+                            }
+
+                            if (level > 3)
+                            {
+                                area = "    ";
+                            }
                         }
 
                         if (action == '3') //Look around
@@ -306,6 +321,7 @@ namespace HelloWorld
                             Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
                             Console.WriteLine("[One of these disturbances include a doorway without a door that Has hinges for one, but not the door itself]");
                             Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
+                            Pause();
                         }
 
                         if (action == '4') //Check stats
@@ -325,10 +341,11 @@ namespace HelloWorld
                         if (Explored == 'n') //If the player hasn't entered the Void before
                         {
                             Console.WriteLine("[I've entered the doorless doorway; it feels like a throne room]");
-                            Console.WriteLine("[There's nothing everywhere, but I think nothing of it]");
-                            Console.WriteLine("[One of them include a doorway without a door that Has hinges for one, but not the door itself]");
+                            Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
+                            Console.WriteLine("[They're moving, but they think nothing of me]");
+                            Console.WriteLine("[There's a doorway without a door that Has hinges for one, but not the door itself]");
                             Console.WriteLine("");
-                            Console.WriteLine("[One of them are a      , it's sitting in the throne]");
+                            Console.WriteLine("[One of them are sitting in the throne]");
                             Console.WriteLine("[It's not moving, but I think nothing of it]");
                             Console.WriteLine("");
                             Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
@@ -342,14 +359,57 @@ namespace HelloWorld
 
                         Console.WriteLine("");
                         Console.WriteLine("[What do I do?]");
-                        Console.WriteLine("[1: Enter the doorless doorway]\n[2: Enter the doored doorway]\n[3: Look around]\n[4: Check my stats]");
+                        Console.WriteLine("[1: Enter the doorless doorway]\n[2: Nothing]\n[3: Engage Nothing]\n[4: Engage Nothing in the throne]\n[5: Look around]\n[6: Check my stats]");
                         Console.WriteLine("");
                         Console.WriteLine("[Press the number to continue]");
                         char action = Console.ReadKey().KeyChar;
 
+                        if (action == '1') //Enter the Doorless Doorway
+                        {
+                            area = "CastleEntry";
+                        }
 
+                        if (action == '2') //Nothing
+                        {
 
-                        if (action == '4') //Check stats
+                        }
+
+                        if (action == '3') //Engage Nothing
+                        {
+                            Console.Clear(); //Clears the screen
+                            Console.WriteLine("[I engage Nothing]");
+                            Pause();
+                            enemyName = "Nothing";
+                            EnemySetup();
+                            InBattle = true;
+                        }
+
+                        if (action == '4') //Engage the Nothing in the throne
+                        {
+                            Console.Clear(); //Clears the screen
+                            Console.WriteLine("[I engage Nothing in the throne]");
+                            Pause();
+                            enemyName = "Nothing";
+                            EnemySetup();
+                            InBattle = true;
+                        }
+
+                        if (action == '5') //Look around
+                        {
+                            Console.WriteLine("[This area feels like a throne room]");
+                            Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
+                            Console.WriteLine("[They're moving, but they think nothing of me]");
+                            Console.WriteLine("[There's a doorway without a door that Has hinges for one, but not the door itself]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[One of them are sitting in the throne]");
+                            Console.WriteLine("[It's not moving, but I think nothing of it]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
+                            Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
+                            Pause();
+                        }
+
+                        if (action == '6') //Check stats
                         {
                             StatCheck();
                         }
@@ -359,8 +419,11 @@ namespace HelloWorld
                     }//While not in a battle
                 } //If in 
 
-                Console.Clear();
 
+
+
+
+                Console.Clear();
 
                 //Calculates enemy stats
                 battleEnemyHealth = (enemyDefense * 1 / 2) + enemyHealth + enemyLevel; //The base health with the addition of level plus half the defense makes the max enemy health
@@ -368,9 +431,7 @@ namespace HelloWorld
                 battleEnemyDefense = enemyDefense + enemyLevel;
                 enemyDamage = (enemyLevel + enemybaseDamage) * enemyDamageMult;
                 enemyHeal += enemyLevel; //Adds the enemy's level to the amount they heal
-
                 int turncounter = 0; //Sets the turn counter to 0 before battle starts
-
                 while (InBattle == true)
                 {
                     turncounter++;
@@ -405,11 +466,11 @@ namespace HelloWorld
                     {
                         Console.Clear(); //Clears the screen to show the enemy's stats before player's attack
 
-                        Console.WriteLine("[" + name + " is attacking!]");
+                        Console.WriteLine("[I am attacking!]");
 
                         if (enemyAction == 2) //If enemy blocks
                         {
-                            Console.WriteLine("[" + enemyName + " is blocking!]");
+                            Console.WriteLine(enemyDefendMessage);
                             EnemyDefendedAttack();
                         } //If enemy blocks
 
@@ -433,7 +494,7 @@ namespace HelloWorld
                             if (battleEnemyHealth > 0) //If the enemy isn't dead
                             {
                                 Pause();
-                                Console.WriteLine("[" + enemyName + " is healing!]");
+                                Console.WriteLine(enemyHealMessage);
                                 battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
                             }
                         } //If enemy Heals after attack
@@ -447,7 +508,7 @@ namespace HelloWorld
 
                         if (enemyAction <= 1)
                         {
-                            Console.WriteLine("[" + enemyName + " is attacking!]");
+                            Console.WriteLine(enemyAttackMessage);
                             PlayerDefendedAttack();
                         } //If enemy Attacks
 
@@ -458,7 +519,7 @@ namespace HelloWorld
 
                         if (enemyAction == 3) //If the enemy is healing
                         {
-                            Console.WriteLine("[" + enemyName + " is healing!]");
+                            Console.WriteLine(enemyHealMessage);
                             battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
                         } //If enemy Heals
 
@@ -473,7 +534,7 @@ namespace HelloWorld
                     else if (action == '3') //If player is healing
                     {
                         Console.Clear(); //Clears the screen
-                        Console.WriteLine("[" + name + " is healing!]");
+                        Console.WriteLine("[I am healing!]");
 
                         if (enemyAction <= 1) //If the enemy is attacking
                         {
@@ -483,13 +544,13 @@ namespace HelloWorld
                             battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
                             Pause();
 
-                            Console.WriteLine("[" + enemyName + " is attacking!]");
+                            Console.WriteLine(enemyAttackMessage);
                             battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
                         } //If enemy Attacks
 
                         if (enemyAction == 2) //If the enemy is blocking
                         {
-                            Console.WriteLine("[" + enemyName + " is blocking...]");
+                            Console.WriteLine(enemyDefendMessage);
 
                             battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
                             Pause();
@@ -497,7 +558,7 @@ namespace HelloWorld
 
                         if (enemyAction == 3) //If the enemy is healing
                         {
-                            Console.WriteLine("[" + enemyName + " is also healing!]");
+                            Console.WriteLine(enemyHealMessage);
                             battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
                             Pause();
 
@@ -520,7 +581,7 @@ namespace HelloWorld
 
                         if (enemyAction <= 1) //If the enemy is attacking
                         {
-                            Console.WriteLine("[" + enemyName + " is attacking!]");
+                            Console.WriteLine(enemyAttackMessage);
                             battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
                             Pause();
                             if (GameOver == true)
@@ -536,7 +597,7 @@ namespace HelloWorld
 
                         if (enemyAction == 3) //If the enemy is healing
                         {
-                            Console.WriteLine("[" + enemyName + " is healing!]");
+                            Console.WriteLine(enemyHealMessage);
                             battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
                             Pause();
                         } //If enemy Heals
@@ -553,6 +614,7 @@ namespace HelloWorld
                         turncounter--;
                     }
 
+                    Console.WriteLine("");
                     Console.WriteLine("[Press any key to end this round; regen will be applied]");
                     Console.WriteLine("");
                     Console.WriteLine("[" + name + ": " + battlePlayerHealth + " + " + healthRegen + "]");
@@ -640,7 +702,7 @@ namespace HelloWorld
                 Console.WriteLine(defense + " Def");
                 Console.WriteLine("");
 
-                DeathCheck(health, victimName);
+                DeathCheck();
             } //If enemy alive
             return health;
         } //DirectAttack Function
@@ -728,14 +790,21 @@ namespace HelloWorld
         } //Enemy Defended Attack function
 
 
-        void DeathCheck(float health, string name)
+        void DeathCheck()
         {
-            if (health <= 0) //Checks to see if victim was killed by the attack
+            if (battlePlayerHealth <= 0) //Checks to see if player was killed by the attack
             {
                 Console.WriteLine(name + " was unmade");
 
                 InBattle = false;
             }
+
+            if (battleEnemyHealth <= 0)
+            {
+                Console.WriteLine(enemyDeathMessage);
+                InBattle = false;
+            }
+
         } //Death Check function
 
         float Heal(string name, float health, float defense, float heal)
@@ -835,7 +904,7 @@ namespace HelloWorld
                 {
                     health = 90;
                     healthRegen = 9;
-                    playerHeal = 6;
+                    basePlayerHeal = 6;
                     playerDamageMult = 1;
                     playerDefense = 24;
                     specialty = "Warder";
@@ -844,7 +913,7 @@ namespace HelloWorld
                 {
                     health = 160;
                     healthRegen = 4;
-                    playerHeal = 0;
+                    basePlayerHeal = 0;
                     playerDamageMult = 0.8f;
                     playerDefense = 8;
                     specialty = "Atronach";
@@ -853,7 +922,7 @@ namespace HelloWorld
                 {
                     health = 75;
                     healthRegen = 10;
-                    playerHeal = 8;
+                    basePlayerHeal = 8;
                     playerDamageMult = 1.2f;
                     playerDefense = 11;
                     specialty = "Battle Mage";
@@ -862,7 +931,7 @@ namespace HelloWorld
                 {
                     health = 70;
                     healthRegen = 8;
-                    playerHeal = 15;
+                    basePlayerHeal = 15;
                     playerDamageMult = 0.9f;
                     playerDefense = 9;
                     specialty = "Priest";
@@ -926,7 +995,7 @@ namespace HelloWorld
                 {
                     health = 120;
                     healthRegen = 4;
-                    playerHeal = 0;
+                    basePlayerHeal = 0;
                     playerDamageMult = 0.8f;
                     playerDefense = 16;
                     specialty = "Tank";
@@ -935,7 +1004,7 @@ namespace HelloWorld
                 {
                     health = 90;
                     healthRegen = 4;
-                    playerHeal = 0;
+                    basePlayerHeal = 0;
                     playerDamageMult = 1.2f;
                     playerDefense = 13;
                     specialty = "Berserker";
@@ -944,7 +1013,7 @@ namespace HelloWorld
                 {
                     health = 100;
                     healthRegen = 5;
-                    playerHeal = 5;
+                    basePlayerHeal = 5;
                     playerDamageMult = 0.9f;
                     playerDefense = 30;
                     specialty = "Shielder";
@@ -953,7 +1022,7 @@ namespace HelloWorld
                 {
                     health = 110;
                     healthRegen = 6;
-                    playerHeal = 0;
+                    basePlayerHeal = 0;
                     playerDamageMult = 1.1f;
                     playerDefense = 15;
                     specialty = "Knight";
@@ -1017,7 +1086,7 @@ namespace HelloWorld
                 {
                     health = 70;
                     healthRegen = 8;
-                    playerHeal = 0;
+                    basePlayerHeal = 0;
                     playerDamageMult = 1.35f;
                     playerDefense = 6;
                     specialty = "Assassin";
@@ -1026,7 +1095,7 @@ namespace HelloWorld
                 {
                     health = 80;
                     healthRegen = 13;
-                    playerHeal = 5;
+                    basePlayerHeal = 5;
                     playerDamageMult = 1.2f;
                     playerDefense = 10;
                     specialty = "Martial Artist";
@@ -1035,7 +1104,7 @@ namespace HelloWorld
                 {
                     health = 65;
                     healthRegen = 9;
-                    playerHeal = 5;
+                    basePlayerHeal = 5;
                     playerDamageMult = 1.4f;
                     playerDefense = 5;
                     specialty = "Ninja";
@@ -1045,7 +1114,7 @@ namespace HelloWorld
                 {
                     health = 70;
                     healthRegen = 8;
-                    playerHeal = 0;
+                    basePlayerHeal = 0;
                     playerDamageMult = 1.3f;
                     playerDefense = 3;
                     specialty = "Rogue";
@@ -1081,12 +1150,31 @@ namespace HelloWorld
         {
             if (enemyName == "Slime")
             {
-                battleEnemyHealth = r.Next(25, 50);
+                battleEnemyHealth = r.Next(10, 25); //Randomizes the health of the slime so they don't all have the same stats
+                enemyHeal = 15;
                 enemyDamageMult = 0.5f;
-                battleEnemyDefense = 20;
+                battleEnemyDefense = 10;
                 enemyRegen = 5;
+
+                enemyDeathMessage = "[The slime melts into the ground]";
+                enemyAttackMessage = "[The slime is attacking!]";
+                enemyDefendMessage = "[The slime's defending!]";
+                enemyHealMessage = "[The slime is growing!]";
             } //If the enemy is a slime
 
+            if (enemyName == "Nothing")
+            {
+                battleEnemyHealth = 60;
+                enemyHeal = 8;
+                enemyDamageMult = 1.5f;
+                battleEnemyDefense = 20;
+                enemyRegen = 8;
+
+                enemyDeathMessage = "[Nothing stopped existing]";
+                enemyAttackMessage = "[Nothing is attacking me]";
+                enemyDefendMessage = "[Nothing is defending itself]";
+                enemyHealMessage = "[Nothing is healing]";
+            } //If the enemy is Nothing
 
 
         } //Enemy Setup function
@@ -1095,9 +1183,9 @@ namespace HelloWorld
         {
             battlePlayerDefense = playerDefense + level;
             battlePlayerHealth = (battlePlayerDefense * 1 / 2) + health + level; //The base health with the addition of level plus half the defense makes the max player health
-            battlePlayerMaxHP = health; //Sets the max in-battle health for the player so they don't regenerate to unholy levels
+            battlePlayerMaxHP = battlePlayerHealth; //Sets the max in-battle health for the player so they don't regenerate to unholy levels
             battlePlayerDamage = (level + playerDamage) * playerDamageMult; //Sets the total damage based on the player's level, base damage, and the damage mutliplier
-            playerHeal += level; //Adds the player's level to the amount they heal
+            playerHeal = basePlayerHeal + level; //Adds the player's level to the amount they heal
         } //Stat Calculation function
     }//Game
 }//HelloWorld
