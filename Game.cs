@@ -47,6 +47,7 @@ namespace HelloWorld
         char FieldExplored = 'n';
         char CastleGateExplored = 'n';
         char CastleEntryExplored = 'n';
+        char Explored = 'n';
 
         public void Run()
         {
@@ -283,7 +284,7 @@ namespace HelloWorld
 
                         Console.WriteLine("");
                         Console.WriteLine("[What do I do?]");
-                        Console.WriteLine("[1: Exit the castle]\n[2: Look around]\n[3: Check my stats]");
+                        Console.WriteLine("[1: Exit the castle]\n\n[3: Look around]\n[4: Check my stats]");
                         Console.WriteLine("");
                         Console.WriteLine("[Press the number to continue]");
                         char action = Console.ReadKey().KeyChar;
@@ -293,7 +294,12 @@ namespace HelloWorld
                             area = "CastleGate";
                         }
 
-                        if (action == '2') //Look around
+                        if (action == '2') //
+                        {
+                            area = "    ";
+                        }
+
+                        if (action == '3') //Look around
                         {
                             Console.Clear(); //Clears the screen
                             Console.WriteLine("[I'm inside the castle; it looks semi-normal]");
@@ -302,7 +308,7 @@ namespace HelloWorld
                             Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
                         }
 
-                        if (action == '3') //Check stats
+                        if (action == '4') //Check stats
                         {
                             StatCheck();
                         }
@@ -311,6 +317,47 @@ namespace HelloWorld
                     }//While not in a battle
                 } //If in CastleEntry
 
+                if (area == "    ")
+                {
+                    if (InBattle != true)
+                    {
+
+                        if (Explored == 'n') //If the player hasn't entered the Void before
+                        {
+                            Console.WriteLine("[I've entered the doorless doorway; it feels like a throne room]");
+                            Console.WriteLine("[There's nothing everywhere, but I think nothing of it]");
+                            Console.WriteLine("[One of them include a doorway without a door that Has hinges for one, but not the door itself]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[One of them are a      , it's sitting in the throne]");
+                            Console.WriteLine("[It's not moving, but I think nothing of it]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
+                            Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
+                        }
+
+                        if (Explored == 'y') //If the player has entered the Void
+                        {
+                            Console.WriteLine("[I'm in the     ]");
+                        }
+
+                        Console.WriteLine("");
+                        Console.WriteLine("[What do I do?]");
+                        Console.WriteLine("[1: Enter the doorless doorway]\n[2: Enter the doored doorway]\n[3: Look around]\n[4: Check my stats]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[Press the number to continue]");
+                        char action = Console.ReadKey().KeyChar;
+
+
+
+                        if (action == '4') //Check stats
+                        {
+                            StatCheck();
+                        }
+
+
+                        Explored = 'y';
+                    }//While not in a battle
+                } //If in 
 
                 Console.Clear();
 
