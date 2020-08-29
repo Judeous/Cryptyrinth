@@ -33,7 +33,7 @@ namespace HelloWorld
         float battleEnemyDefense;
         float enemyHeal = 5; //Sets the base enemy heal
         float enemyDamageMult = 1; //Sets the base enemy damage multiplier
-        float enemybaseDamage = 8; //Sets the base enemy damage
+        float baseEnemyDamage = 8; //Sets the base enemy damage
         float enemyDamage;
 
         string enemyAttackMessage = "The enemy is attacking!";
@@ -53,6 +53,9 @@ namespace HelloWorld
         string area = "Shack";
         char ShackExplored = 'n';
         char FieldExplored = 'n';
+
+        char LabyrinthEntranceExplored = 'n';
+
         char CastleGateExplored = 'n';
         char CastleEntryExplored = 'n';
         char Explored = 'n';
@@ -87,8 +90,8 @@ namespace HelloWorld
                         if (ShackExplored == 'n') //If the player has seen these messages
                         {
                             Console.WriteLine("[I find myself upon a small hill outside of the shack whense I chose my class in (Still not sure how that person changed my physical makeup)]");
-                            Console.WriteLine("[There's a path trailing from the shack into a field before me]");
-                            Console.WriteLine("[The field has slimes scattered throughout it, murking around]");
+                            Console.WriteLine("[There's a path trailing from the shack into a dark grey field before me]");
+                            Console.WriteLine("[The field has blobs of slime scattered throughout it, murking around]");
                         }
 
                         if (ShackExplored == 'y') //If the player's been to the Shack
@@ -139,23 +142,28 @@ namespace HelloWorld
                     {
                         if (FieldExplored == 'n') //If the player hasn't been to the fields
                         {
-                            Console.WriteLine("[I'm in the dark slimy field, and living slime is everywhere]");
+                            Console.WriteLine("[I'm at a T intersection in the path that cuts through the dark slimy field, and living slime is everywhere]");
                             Console.WriteLine("[The shack is on a hill up the path]");
-                            Console.WriteLine("[There's a castle far down the path]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[The fork off leads to a crypt with a stone door facing the path]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[The non-fork part leads to a small castle far down the path]");
                             Console.WriteLine("[The gate appears to be closed, though]");
-
+                            Console.WriteLine("");
+                            Console.WriteLine("[The living slimes appear to stay away from the structures; I wonder why]");
                         }
 
                         if (FieldExplored == 'y') //If the player's already been to the fields
                         {
                             Console.WriteLine("[I'm back in the slime field, and living slime is still everywhere]");
                             Console.WriteLine("[The shack still sits upon the hill further up the path]");
+                            Console.WriteLine("[The crypt is at the end of the forked part of the path]");
                             Console.WriteLine("[The castle resides further down the path]");
                         }
                         Console.WriteLine("");
 
                         Console.WriteLine("[What do I do?]");
-                        Console.WriteLine("[1: Head to the hill with the shack atop it]\n[2: Head towards the Castle]\n[3: Engage a slime]\n[4: Look around]\n[5: Check my stats]");
+                        Console.WriteLine("[1: Head to the hill with the shack atop it]\n[2: Head towards the Castle]\n[3: Head to the crypt]\n[4: Engage a slime]\n[5: Look around]\n[6: Check my stats]");
                         Console.WriteLine("");
                         Console.WriteLine("[Press the number to continue]");
                         char action = Console.ReadKey().KeyChar;
@@ -170,7 +178,12 @@ namespace HelloWorld
                             area = "CastleGate";
                         }
 
-                        if (action == '3') //Engage a slime
+                        if (action == '3') //Go to the Labyrinth
+                        {
+                            area = "LabyrinthEntrance";
+                        }
+
+                        if (action == '4') //Engage a slime
                         {
                             Console.Clear(); //Clears the screen
                             Console.WriteLine("[I engage one of the many slimes]");
@@ -180,17 +193,22 @@ namespace HelloWorld
                             InBattle = true;
                         }
 
-                        if (action == '4') //Look around
+                        if (action == '5') //Look around
                         {
                             Console.Clear(); //Clears the screen
-                            Console.WriteLine("[I'm in a dark grey slime field, and there's living mounds of the slime murking around]");
+                            Console.WriteLine("[I'm at a fork in a path that cuts through a dark grey slime field, and there's living mounds of the slime murking around]");
                             Console.WriteLine("[The shack is on a hill up the path]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[There's a crypt at the end of the forked part of the path]");
+                            Console.WriteLine("");
                             Console.WriteLine("[There's a castle far down the path]");
                             Console.WriteLine("[The gate appears to be closed]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[The living slimes appear to stay away from the structures; I wonder why]");
                             Pause();
                         }
 
-                        if (action == '5') //Stat Check
+                        if (action == '6') //Stat Check
                         {
                             StatCheck();
                         }
@@ -200,6 +218,7 @@ namespace HelloWorld
                             int SlimeApproach = r.Next(1, 5); //Chance for a slime to engage
                             if (SlimeApproach == 1) //If a slime engages
                             {
+                                Console.Clear(); //Clears the screen
                                 Console.WriteLine("[A slime enages me!]");
                                 Console.WriteLine("");
                                 Pause();
@@ -214,6 +233,77 @@ namespace HelloWorld
 
                     } //While not in a battle
                 } //If in the field
+
+                if (area == "LabyrinthEntrance")
+                {
+                    if (InBattle != true)
+                    {
+                        if (LabyrinthEntranceExplored == 'n')
+                        {
+                            Console.WriteLine("[I'm now in front of the small and very sturdy looking crypt]");
+                            Console.WriteLine("[There's a decently large stone door, and a panel to the left of it]");
+                            Console.WriteLine("[It has some text on it, good thing I can read]");
+                        }
+                        if (LabyrinthEntranceExplored == 'y')
+                        {
+                            Console.WriteLine("[I'm at the entrance of the crypt]");
+                        }
+                        Console.WriteLine("");
+
+                        Console.WriteLine("[What do I do?]");
+                        Console.WriteLine("[1: Head back to the fork in the field]\n[2: ]\n[3: Read the panel]\n[4: Look around]\n[5: Check Stats]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[Press the number to continue]");
+                        char action = Console.ReadKey().KeyChar;
+
+                        if (action == '1') //Return to the field
+                        {
+                            area = "Field";
+                        }
+
+                        if (action == '2') //Will be to enter the Labyrinth
+                        {
+
+                        }
+
+                        if (action == '3') //Read the panel
+                        {
+                            Console.Clear(); //Clears the screen
+                            Console.WriteLine("[Those who die in this realm do not stay down for long]");
+                            Console.WriteLine("[Slime is attracted to corpses; it will inhabit those who have died, 'bringing them back to life' in a sense]");
+                            Console.WriteLine("[This causes many problems, even with coffins]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[This is a labyrinth]");
+                            Console.WriteLine("[Those who have died are put into this labyrinth, to roam indefinitely]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[To those who live and wish to enter: Do so at your own risk]");
+                            Console.WriteLine("[Those whose corpses have been desecrated by slime are no longer the people they once were]");
+                            Console.WriteLine("[They are akin to the living slime that roam the surrounding fields]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[These slimes are the result of the slime attempting to posess a corpse too small]");
+                            Console.WriteLine("[The slime instead surrounds it, corroding the corpse]");
+                            Pause();
+                        }
+
+                        if (action == '4') //Look around
+                        {
+                            Console.Clear(); //Clears the screen
+                            Console.WriteLine("[I'm in front of the small, very sturdy looking stone crypt]");
+                            Console.WriteLine("[It has a decently large stone door, with a panel (Also stone) to the left of it]");
+                            Console.WriteLine("[The panel has text describing what's inside and why]");
+                            Pause();
+                        }
+
+                        if (action == '5') //Check stats
+                        {
+                            StatCheck();
+                        }
+
+
+                        LabyrinthEntranceExplored = 'y';
+                        Console.Clear(); //Clears the screen
+                    }//If not in a battle
+                }// If at labrynth Entrance
 
 
                 if (area == "CastleGate")
@@ -236,7 +326,7 @@ namespace HelloWorld
 
                         Console.WriteLine("");
                         Console.WriteLine("[What do I do?]");
-                        Console.WriteLine("[1: Return to the slimy fields]\n[2: Enter the odd 'entrance']\n[3: look around]\n[4: Check my stats]");
+                        Console.WriteLine("[1: Return to the slimy fields]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[4: Check my stats]");
                         Console.WriteLine("");
                         Console.WriteLine("[Press the number to continue]");
                         char action = Console.ReadKey().KeyChar;
@@ -305,7 +395,9 @@ namespace HelloWorld
                         {
                             if (level <= 3)
                             {
+                                Console.Clear(); //Clears the screen
                                 Console.WriteLine("[The doorless doorway doesn't lead anywhere, perhaps I should leave]");
+                                Pause();
                             }
 
                             if (level > 3)
@@ -330,6 +422,7 @@ namespace HelloWorld
                         }
 
                         CastleEntryExplored = 'y';
+                        Console.Clear(); //Clears the screen
                     }//While not in a battle
                 } //If in CastleEntry
 
@@ -416,6 +509,7 @@ namespace HelloWorld
 
 
                         Explored = 'y';
+                        Console.Clear(); //Clears the screen
                     }//While not in a battle
                 } //If in 
 
@@ -425,12 +519,10 @@ namespace HelloWorld
 
                 Console.Clear();
 
-                //Calculates enemy stats
-                battleEnemyHealth = (enemyDefense * 1 / 2) + enemyHealth + enemyLevel; //The base health with the addition of level plus half the defense makes the max enemy health
+                //Calculates enemy damage and adjusts max health
                 battleEnemyMaxHP = battleEnemyHealth; //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
-                battleEnemyDefense = enemyDefense + enemyLevel;
-                enemyDamage = (enemyLevel + enemybaseDamage) * enemyDamageMult;
-                enemyHeal += enemyLevel; //Adds the enemy's level to the amount they heal
+                enemyDamage = baseEnemyDamage * enemyDamageMult; //Sets the total enemy damage based on the base damage and multiplier
+
                 int turncounter = 0; //Sets the turn counter to 0 before battle starts
                 while (InBattle == true)
                 {
@@ -614,27 +706,32 @@ namespace HelloWorld
                         turncounter--;
                     }
 
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press any key to end this round; regen will be applied]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[" + name + ": " + battlePlayerHealth + " + " + healthRegen + "]");
-                    Console.WriteLine("[" + enemyName + ": " + battleEnemyHealth + " + " + enemyRegen + "]");
-                    Console.ReadKey();  //Pauses
-                    Console.Clear(); //Clears the screen
+                    if (InBattle == true) //Runs the regen & end of round text Only if the battle is continuing
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("[Press any key to end this round; regen will be applied]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[" + name + ": " + battlePlayerHealth + " + " + healthRegen + "]");
+                        Console.WriteLine("[" + enemyName + ": " + battleEnemyHealth + " + " + enemyRegen + "]");
+                        Console.ReadKey();  //Pauses
+                        Console.Clear(); //Clears the screen
+                        battlePlayerHealth = Regeneration(battlePlayerHealth, battlePlayerMaxHP, healthRegen); //Regenerates player
+                        battleEnemyHealth = Regeneration(battleEnemyHealth, battleEnemyMaxHP, enemyRegen); //Regenerates Enemy
+                    }
 
-                    battlePlayerHealth = Regeneration(battlePlayerHealth, battlePlayerMaxHP, healthRegen); //Regenerates player
-                    battleEnemyHealth = Regeneration(battleEnemyHealth, battleEnemyMaxHP, enemyRegen); //Regenerates Enemy
 
                     if (battlePlayerHealth <= 0) //If the player lost
                     {
                         Console.WriteLine("The battle has ended");
                         Pause();
                         GameOver = true;
+                        InBattle = false;
                         break;
                     }
 
                     if (battleEnemyHealth <= 0) //If the player won
                     {
+                        Console.WriteLine(enemyDeathMessage);
                         Console.WriteLine("The battle has ended");
                         Console.WriteLine("");
                         Console.WriteLine("Congratulations, you won!");
@@ -644,6 +741,8 @@ namespace HelloWorld
                         StatCalculation();
                         Console.WriteLine("Current Level: " + level);
                         Pause();
+                        Console.Clear(); //Clears the screen
+                        InBattle = false;
                         break;
                     }
                 } //InBattle bool
@@ -760,14 +859,14 @@ namespace HelloWorld
 
             else
             {
-                Console.WriteLine(name + "[Pre-Strike]"); //Enemy's stats before being struck
+                Console.WriteLine(enemyName + "[Pre-Strike]"); //Enemy's stats before being struck
                 Console.WriteLine(battleEnemyHealth + " HP ");
                 Console.WriteLine(battleEnemyDefense + " Def <<");
                 Console.WriteLine("");
 
                 Pause();
 
-                battleEnemyDefense -= playerDamage; //Player's attack on enemy's defense
+                battleEnemyDefense -= battlePlayerDamage; //Player's attack on enemy's defense
                 if (battleEnemyDefense <= 0) //If defense falls
                 {
                     Console.WriteLine("[" + enemyName + "'s defense was knocked aside!]");
@@ -795,14 +894,15 @@ namespace HelloWorld
             if (battlePlayerHealth <= 0) //Checks to see if player was killed by the attack
             {
                 Console.WriteLine(name + " was unmade");
-
                 InBattle = false;
+                Pause();
             }
 
             if (battleEnemyHealth <= 0)
             {
                 Console.WriteLine(enemyDeathMessage);
                 InBattle = false;
+                Pause();
             }
 
         } //Death Check function
@@ -820,7 +920,7 @@ namespace HelloWorld
 
                 else if (heal >= 5)
                 {
-                    Console.WriteLine(name + "[Pre-Heal]"); //Stats before heal
+                    Console.WriteLine(name + " [Pre-Heal]"); //Stats before heal
                     Console.WriteLine(health + " HP <<");
                     Console.WriteLine(defense + " Def ");
 
@@ -1137,7 +1237,7 @@ namespace HelloWorld
             Console.WriteLine("Regen: " + healthRegen);
             Console.WriteLine("Heal: " + playerHeal);
             Console.WriteLine("Defense: " + battlePlayerDefense);
-            Console.WriteLine("Attack: " + playerDamage);
+            Console.WriteLine("Attack: " + battlePlayerDamage);
             Console.WriteLine("Level: " + level);
             Console.WriteLine("Style: " + styleName);
             Console.WriteLine("Specialty: " + specialty);
@@ -1150,7 +1250,7 @@ namespace HelloWorld
         {
             if (enemyName == "Slime")
             {
-                battleEnemyHealth = r.Next(10, 25); //Randomizes the health of the slime so they don't all have the same stats
+                battleEnemyHealth = r.Next(5, 20); //Randomizes the health of the slime so they don't all have the same stats
                 enemyHeal = 15;
                 enemyDamageMult = 0.5f;
                 battleEnemyDefense = 10;
@@ -1164,9 +1264,9 @@ namespace HelloWorld
 
             if (enemyName == "Nothing")
             {
-                battleEnemyHealth = 60;
+                battleEnemyHealth = 50;
                 enemyHeal = 8;
-                enemyDamageMult = 1.5f;
+                enemyDamageMult = 1.8f;
                 battleEnemyDefense = 20;
                 enemyRegen = 8;
 
