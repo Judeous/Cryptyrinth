@@ -55,6 +55,7 @@ namespace HelloWorld
         char FieldExplored = 'n';
 
         char LabyrinthEntranceExplored = 'n';
+        char LabyrinthEntrywayExplored = 'n';
 
         char CastleGateExplored = 'n';
         char CastleEntryExplored = 'n';
@@ -269,7 +270,7 @@ namespace HelloWorld
                         if (action == '3') //Read the panel
                         {
                             Console.Clear(); //Clears the screen
-                            Console.WriteLine("[Those who die in this realm do not stay down for long]");
+                            Console.WriteLine("[Those who die within these fields do not stay down for long]");
                             Console.WriteLine("[Slime is attracted to corpses; it will inhabit those who have died, 'bringing them back to life' in a sense]");
                             Console.WriteLine("[This causes many problems, even with coffins]");
                             Console.WriteLine("");
@@ -305,6 +306,88 @@ namespace HelloWorld
                     }//If not in a battle
                 }// If at labrynth Entrance
 
+                if (area == "LabyrinthEntryway")
+                {
+                    if (LabyrinthEntrywayExplored == 'n')
+                    {
+                        Console.WriteLine("[I've overpowered the big door and have entered the crypt, and descended a suprisingly medium sized flight of stairs]");
+                        Console.WriteLine("[(Not sure that was the best idea)]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[This is definitely a labyrinth, seeing it from the inside]");
+                        Console.WriteLine("[There's a similar dark grey tint to the semi-fancily stone tiled floor]");
+                        Console.WriteLine("[I think I can hear uneven footsteps against the understandably slimy tiles somewhere deeper within]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[In order of distance, there's a turn ahead and to the left, to the right, the left, another to the right, then the hall ends in a dead end]");
+                    }
+                    if (LabyrinthEntrywayExplored == 'y')
+                    {
+                        Console.WriteLine("[I'm at the bottom of the stairway in the entryway of the Labyrinth]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[In order of distance, there's a turn to the left, the right, the left, the right, then a dead end]");
+                    }
+                    Console.WriteLine("");
+
+                    Console.WriteLine("[What do I do?]");
+                    Console.WriteLine("[1: Head up the flight of stairs and exit the Crypt/Labyrinth]\n[2: Turn down the first left]\n[3: Turn down the first right]\n[4: Turn down the second left]\n[5: Turn down the second right]\n[7: Look around]\n[8: Check my stats]");
+                    Console.WriteLine("[Press the number to continue]");
+                    char action = Console.ReadKey().KeyChar;
+
+                    if (action == '1') //Exit the Labyrinth
+                    {
+                        area = "LabyrinthEntrance";
+                    }
+
+                    if (action == '2') //Turn down the first left
+                    {
+                        //area = "";
+                    }
+
+                    if (action == '3') //Turn down the first right
+                    {
+                        //area = "";
+                    }
+
+                    if (action == '4') //Turn down the second left
+                    {
+                        //area = "";
+                    }
+
+                    if (action == '5') //Turn down the second left
+                    {
+                        //area = "";
+                    }
+
+                    if (action == '6') //Turn down the second left
+                    {
+                        //area = "";
+                    }
+
+                    if (action == '7') //Look around
+                    {
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[The very medium sized flight of stairs that leads to the surface]");
+                        Console.WriteLine("[The panel was right about this being a labyrinth]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[The floor is stone, but chiseled into semi-fancy tiles, which is all covered in a relatively thin layer of slime]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[I can hear uneven footstept from deeper within the labyrinth]");
+                        Console.WriteLine("[Likely one of the repurposed dead the panel mentioned]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[In order of distance, there's a sort of checkerboard pattern of turns:]");
+                        Console.WriteLine("[Left, right, left, right, then there's a dead end]");
+                        Console.WriteLine("[I can't see around any of the corners into other pathways except for the first left]");
+
+                        Pause();
+                    }
+
+                    if (action == '8') //Check stats
+                    {
+                        StatCheck();
+                    }
+
+                    LabyrinthEntrywayExplored = 'y';
+                    Console.Clear(); //Clears the screen
+                }
 
                 if (area == "CastleGate")
                 {
@@ -393,14 +476,14 @@ namespace HelloWorld
 
                         if (action == '2') //Enter the Void
                         {
-                            if (level <= 3)
+                            if (level < 10)
                             {
                                 Console.Clear(); //Clears the screen
                                 Console.WriteLine("[The doorless doorway doesn't lead anywhere, perhaps I should leave]");
                                 Pause();
                             }
 
-                            if (level > 3)
+                            if (level >= 10)
                             {
                                 area = "    ";
                             }
@@ -741,6 +824,14 @@ namespace HelloWorld
                         StatCalculation();
                         Console.WriteLine("Current Level: " + level);
                         Pause();
+
+                        if (level == 10)
+                        {
+                            Console.Clear(); //Clears the screen
+                            Console.WriteLine("Thinking back to the doorless doorway, entering it has become an appealing thought");
+                            Pause();
+                        }
+
                         Console.Clear(); //Clears the screen
                         InBattle = false;
                         break;
@@ -1264,11 +1355,11 @@ namespace HelloWorld
 
             if (enemyName == "Nothing")
             {
-                battleEnemyHealth = 50;
-                enemyHeal = 8;
-                enemyDamageMult = 1.8f;
-                battleEnemyDefense = 20;
-                enemyRegen = 8;
+                battleEnemyHealth = 150;
+                enemyHeal = 20;
+                enemyDamageMult = 3;
+                battleEnemyDefense = 40;
+                enemyRegen = 15;
 
                 enemyDeathMessage = "[Nothing stopped existing]";
                 enemyAttackMessage = "[Nothing is attacking me]";
