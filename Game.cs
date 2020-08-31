@@ -90,7 +90,7 @@ namespace HelloWorld
                     {
                         if (ShackExplored == 'n') //If the player has seen these messages
                         {
-                            Console.WriteLine("[I find myself upon a small hill outside of the shack whense I chose my class in (Still not sure how that person changed my physical makeup)]");
+                            Console.WriteLine("[I find myself upon a small hill outside of the shack whense I chose my class (Still not sure how that person changed my physical makeup)]");
                             Console.WriteLine("[There's a path trailing from the shack into a dark grey field before me]");
                             Console.WriteLine("[The field has blobs of slime scattered throughout it, murking around]");
                         }
@@ -252,7 +252,7 @@ namespace HelloWorld
                         Console.WriteLine("");
 
                         Console.WriteLine("[What do I do?]");
-                        Console.WriteLine("[1: Head back to the fork in the field]\n[2: ]\n[3: Read the panel]\n[4: Look around]\n[5: Check Stats]");
+                        Console.WriteLine("[1: Head back to the fork in the field]\n[2: Enter the Crypt]\n[3: Read the panel]\n[4: Look around]\n[5: Check Stats]");
                         Console.WriteLine("");
                         Console.WriteLine("[Press the number to continue]");
                         char action = Console.ReadKey().KeyChar;
@@ -262,9 +262,9 @@ namespace HelloWorld
                             area = "Field";
                         }
 
-                        if (action == '2') //Will be to enter the Labyrinth
+                        if (action == '2') //Enter the Labyrinth
                         {
-
+                            area = "LabyrinthEntryway";
                         }
 
                         if (action == '3') //Read the panel
@@ -323,12 +323,13 @@ namespace HelloWorld
                     {
                         Console.WriteLine("[I'm in the entryway of the Labyrinth]");
                         Console.WriteLine("");
-                        Console.WriteLine("[There's a doorway next to the entry stairway, and there's another doorway next to a sort of dead end on the opposite side of the stairway]");
+                        Console.WriteLine("[There's a doorway next to the entry stairway]");
+                        Console.WriteLine("[On the opposite side of the stairway there's another doorway next to a space with a table]");
                     }
                     Console.WriteLine("");
 
                     Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Head up the flight of stairs and exit the Crypt/Labyrinth]\n[2: Enter the door next to the entry stairway]\n[3: Enter the door opposite the stairway]\n[3: ]\n[4: Look around]\n[5: Check out the table]\n[6: Check my stats]");
+                    Console.WriteLine("[1: Head up the flight of stairs and exit the Crypt/Labyrinth]\n[2: Enter the door next to the entry stairway]\n[3: Enter the door opposite the stairway]\n[4: Check out the table]\n[5: Look around]\n[6: Check my stats]");
                     Console.WriteLine("[Press the number to continue]");
                     char action = Console.ReadKey().KeyChar;
 
@@ -347,7 +348,14 @@ namespace HelloWorld
                         //area = "";
                     }
 
-                    if (action == '4') //Look around
+                    if (action == '4') //Check out the table
+                    {
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[There's nothing on the table; I would have seen it earlier if there was]");
+                        Pause();
+                    }
+
+                    if (action =='5') //Look around
                     {
                         Console.Clear(); //Clears the screen
                         Console.WriteLine("[The very medium sized flight of stairs that leads to the surface]");
@@ -364,13 +372,6 @@ namespace HelloWorld
                         Console.WriteLine("[To the left of the entrance, (When I first enter the Labyrinth/Crypt) there's a doorway to the right, with another door of stone]");
                         Console.WriteLine("[Right before the small space and to the right, there's another door]");
 
-                        Pause();
-                    }
-
-                    if (action =='5') //Check out the table
-                    {
-                        Console.Clear(); //Clears the screen
-                        Console.WriteLine("[There's nothing on the table; I would have seen it earlier if there was]");
                         Pause();
                     }
 
@@ -403,7 +404,7 @@ namespace HelloWorld
 
                         Console.WriteLine("");
                         Console.WriteLine("[What do I do?]");
-                        Console.WriteLine("[1: Return to the slimy fields]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[4: Check my stats]");
+                        Console.WriteLine("[1: Return to the fork in the path]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[4: Check my stats]");
                         Console.WriteLine("");
                         Console.WriteLine("[Press the number to continue]");
                         char action = Console.ReadKey().KeyChar;
@@ -786,10 +787,19 @@ namespace HelloWorld
                     if (InBattle == true) //Runs the regen & end of round text Only if the battle is continuing
                     {
                         Console.WriteLine("");
-                        Console.WriteLine("[Press any key to end this round; regen will be applied]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[" + name + ": " + battlePlayerHealth + " + " + healthRegen + "]");
-                        Console.WriteLine("[" + enemyName + ": " + battleEnemyHealth + " + " + enemyRegen + "]");
+                        Console.Write("[Press any key to end this round");
+                        if (battleEnemyHealth > 0 && battlePlayerHealth > 0) //If both entities have health
+                        {
+                            Console.WriteLine("; regen will be applied]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[" + name + ": " + battlePlayerHealth + " + " + healthRegen + "]");
+                            Console.WriteLine("[" + enemyName + ": " + battleEnemyHealth + " + " + enemyRegen + "]");
+                        }
+                        else //Closes the text if regen won't be applied
+                        {
+                            Console.WriteLine("]");
+                        }
+
                         Console.ReadKey();  //Pauses
                         Console.Clear(); //Clears the screen
                         battlePlayerHealth = Regeneration(battlePlayerHealth, battlePlayerMaxHP, healthRegen); //Regenerates player
@@ -849,21 +859,23 @@ namespace HelloWorld
 
         float Regeneration(float currentHealth, float maxHP, float healthRegen)
         {
-            if (currentHealth < maxHP) //Checks to see if the player's hp is below max
+            if (currentHealth < maxHP) //Checks to see if the entity's hp is below max
             {
                 if (healthRegen > 0) //Checks to see if the entity does regenerate
                 {
-                    if (currentHealth + healthRegen <= maxHP) //Applies normal regeneration to player if the result would be <= max hp
+                    if (currentHealth > 0) //Checks to see if the entity is not dead
                     {
-                        currentHealth += healthRegen;
-                    }
+                        if (currentHealth + healthRegen <= maxHP) //Applies normal regeneration if the result would be <= max hp
+                        {
+                            currentHealth += healthRegen;
+                        }
 
-                    else if (currentHealth + healthRegen > maxHP) //Sets player hp to max if regen would surpass max
-                    {
-                        currentHealth = maxHP;
-                    }
+                        else if (currentHealth + healthRegen > maxHP) //Sets hp to max if regen would surpass max
+                        {
+                            currentHealth = maxHP;
+                        }
+                    } //If entity isn't dead
                 } //If health is below max
-
             } //If entity regenerates
 
             return currentHealth;
