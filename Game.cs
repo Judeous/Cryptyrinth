@@ -317,18 +317,18 @@ namespace HelloWorld
                         Console.WriteLine("[There's a similar dark grey tint to the semi-fancily stone tiled floor]");
                         Console.WriteLine("[I think I can hear uneven footsteps against the understandably slimy tiles somewhere deeper within]");
                         Console.WriteLine("");
-                        Console.WriteLine("[In order of distance, there's a turn ahead and to the left, to the right, the left, another to the right, then the hall ends in a dead end]");
+                        Console.WriteLine("[There's a doorway to the left, then there's a dead end right after a door to the right]");
                     }
                     if (LabyrinthEntrywayExplored == 'y')
                     {
-                        Console.WriteLine("[I'm at the bottom of the stairway in the entryway of the Labyrinth]");
+                        Console.WriteLine("[I'm in the entryway of the Labyrinth]");
                         Console.WriteLine("");
-                        Console.WriteLine("[In order of distance, there's a turn to the left, the right, the left, the right, then a dead end]");
+                        Console.WriteLine("[There's a doorway next to the entry stairway, and there's another doorway next to a sort of dead end on the opposite side of the stairway]");
                     }
                     Console.WriteLine("");
 
                     Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Head up the flight of stairs and exit the Crypt/Labyrinth]\n[2: Turn down the first left]\n[3: Turn down the first right]\n[4: Turn down the second left]\n[5: Turn down the second right]\n[7: Look around]\n[8: Check my stats]");
+                    Console.WriteLine("[1: Head up the flight of stairs and exit the Crypt/Labyrinth]\n[2: Enter the door next to the entry stairway]\n[3: Enter the door opposite the stairway]\n[3: ]\n[4: Look around]\n[5: Check out the table]\n[6: Check my stats]");
                     Console.WriteLine("[Press the number to continue]");
                     char action = Console.ReadKey().KeyChar;
 
@@ -337,32 +337,17 @@ namespace HelloWorld
                         area = "LabyrinthEntrance";
                     }
 
-                    if (action == '2') //Turn down the first left
+                    if (action == '2') //Enter door next to entry
                     {
                         //area = "";
                     }
 
-                    if (action == '3') //Turn down the first right
+                    if (action == '3') //Enter opposite of entry
                     {
                         //area = "";
                     }
 
-                    if (action == '4') //Turn down the second left
-                    {
-                        //area = "";
-                    }
-
-                    if (action == '5') //Turn down the second left
-                    {
-                        //area = "";
-                    }
-
-                    if (action == '6') //Turn down the second left
-                    {
-                        //area = "";
-                    }
-
-                    if (action == '7') //Look around
+                    if (action == '4') //Look around
                     {
                         Console.Clear(); //Clears the screen
                         Console.WriteLine("[The very medium sized flight of stairs that leads to the surface]");
@@ -373,14 +358,21 @@ namespace HelloWorld
                         Console.WriteLine("[I can hear uneven footstept from deeper within the labyrinth]");
                         Console.WriteLine("[Likely one of the repurposed dead the panel mentioned]");
                         Console.WriteLine("");
-                        Console.WriteLine("[In order of distance, there's a sort of checkerboard pattern of turns:]");
-                        Console.WriteLine("[Left, right, left, right, then there's a dead end]");
-                        Console.WriteLine("[I can't see around any of the corners into other pathways except for the first left]");
+                        Console.WriteLine("[I'm in a mostly rectangular room, the stairway is in the center of one end]");
+                        Console.WriteLine("[On the opposite end, to the right, there's a small square space, with a round stone table in the center of it]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[To the left of the entrance, (When I first enter the Labyrinth/Crypt) there's a doorway to the right, with another door of stone]");
+                        Console.WriteLine("[Right before the small space and to the right, there's another door]");
 
                         Pause();
                     }
 
-                    if (action == '8') //Check stats
+                    if (action =='5') //Check out the table
+                    {
+
+                    }
+
+                    if (action == '6') //Check stats
                     {
                         StatCheck();
                     }
@@ -857,16 +849,20 @@ namespace HelloWorld
         {
             if (currentHealth < maxHP) //Checks to see if the player's hp is below max
             {
-                if (currentHealth + healthRegen <= maxHP) //Applies normal regeneration to player if the result would be <= max hp
+                if (healthRegen > 0) //Checks to see if the entity does regenerate
                 {
-                    currentHealth += healthRegen;
-                }
+                    if (currentHealth + healthRegen <= maxHP) //Applies normal regeneration to player if the result would be <= max hp
+                    {
+                        currentHealth += healthRegen;
+                    }
 
-                else if (currentHealth + healthRegen > maxHP) //Sets player hp to max if regen would surpass max
-                {
-                    currentHealth = maxHP;
-                }
-            } //If health is below max
+                    else if (currentHealth + healthRegen > maxHP) //Sets player hp to max if regen would surpass max
+                    {
+                        currentHealth = maxHP;
+                    }
+                } //If health is below max
+
+            } //If entity regenerates
 
             return currentHealth;
 
@@ -1366,6 +1362,20 @@ namespace HelloWorld
                 enemyDefendMessage = "[Nothing is defending itself]";
                 enemyHealMessage = "[Nothing is healing]";
             } //If the enemy is Nothing
+
+            if (enemyName == "Slombie")
+            {
+                battleEnemyHealth = r.Next(50, 100); //Randomizes the health of the slombie so they don't all have the same stats
+                enemyHeal = 10;
+                enemyDamageMult = 1;
+                battleEnemyDefense = 10;
+                enemyRegen = 5;
+
+                enemyDeathMessage = "[The slime leaves the body and sinks to the floor]";
+                enemyAttackMessage = "[The slombie is attacking!]";
+                enemyDefendMessage = "[The slime forms a shield before the body!]";
+                enemyHealMessage = "[More slime is entering the body from the floor!]";
+            }
 
 
         } //Enemy Setup function
