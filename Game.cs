@@ -369,7 +369,9 @@ namespace HelloWorld
 
                     if (action =='5') //Check out the table
                     {
-
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[There's nothing on the table; I would have seen it earlier if there was]");
+                        Pause();
                     }
 
                     if (action == '6') //Check stats
