@@ -76,11 +76,8 @@ namespace HelloWorld
         void Start()
         {
             Console.WriteLine("Welcome");
-            Console.WriteLine("What is your name?");
-            Console.WriteLine("[Press Enter to enter your name]");
-            Console.Write("My name is ");
-            name = Console.ReadLine(); //Gets the player's name
-            Console.WriteLine("");
+
+            GetName();
 
             DecideSpecialty();
 
@@ -110,7 +107,7 @@ namespace HelloWorld
                     Console.WriteLine("");
 
                     Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Re-enter the shack to change my style & specialty]\n[2: Follow the path down into the field]\n[3: Look around]\n[4: Check Stats]");
+                    Console.WriteLine("[1: Re-enter the shack to change my style & specialty]\n[2: Follow the path down into the field]\n[3: Look around]\n[9: Main Menu]");
                     Console.WriteLine("");
                     Console.WriteLine("[Press the number to continue]");
                     char action = Console.ReadKey().KeyChar;
@@ -134,9 +131,9 @@ namespace HelloWorld
                         Pause();
                     }
 
-                    if (action == '4') //Check stats
+                    if (action == '9') //Main Menu
                     {
-                        StatCheck();
+                        MainMenu();
                     }
 
                     ShackExplored = 'y';
@@ -171,7 +168,7 @@ namespace HelloWorld
                     Console.WriteLine("");
 
                     Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Head to the hill with the shack atop it]\n[2: Head to the crypt]\n[3: Head towards the Castle]\n[4: Engage a slime]\n[5: Look around]\n[6: Check my stats]");
+                    Console.WriteLine("[1: Head to the hill with the shack atop it]\n[2: Head to the crypt]\n[3: Head towards the Castle]\n[4: Engage a slime]\n[5: Look around]\n[9: Main Menu]");
                     Console.WriteLine("");
                     Console.WriteLine("[Press the number to continue]");
                     char action = Console.ReadKey().KeyChar;
@@ -216,9 +213,9 @@ namespace HelloWorld
                         Pause();
                     }
 
-                    if (action == '6') //Stat Check
+                    if (action == '9') //Main Menu
                     {
-                        StatCheck();
+                        MainMenu();
                     }
 
                     if (action != '3') //Makes it so two engagements don't occur at once
@@ -259,7 +256,7 @@ namespace HelloWorld
                     Console.WriteLine("");
 
                     Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Head back to the fork in the field]\n[2: Enter the Crypt]\n[3: Read the panel]\n[4: Look around]\n[5: Check Stats]");
+                    Console.WriteLine("[1: Head back to the fork in the field]\n[2: Enter the Crypt]\n[3: Read the panel]\n[4: Look around]\n[5: Main Menu]");
                     Console.WriteLine("");
                     Console.WriteLine("[Press the number to continue]");
                     char action = Console.ReadKey().KeyChar;
@@ -302,9 +299,9 @@ namespace HelloWorld
                         Pause();
                     }
 
-                    if (action == '5') //Check stats
+                    if (action == '9') //Main Menu
                     {
-                        StatCheck();
+                        MainMenu();
                     }
 
 
@@ -336,7 +333,7 @@ namespace HelloWorld
                 Console.WriteLine("");
 
                 Console.WriteLine("[What do I do?]");
-                Console.WriteLine("[1: Head up the flight of stairs and exit the Crypt/Labyrinth]\n[2: Enter the door next to the entry stairway]\n[3: Enter the door opposite the stairway]\n[4: Check out the table]\n[5: Look around]\n[6: Check my stats]");
+                Console.WriteLine("[1: Head up the flight of stairs and exit the Crypt/Labyrinth]\n[2: Enter the door next to the entry stairway]\n[3: Enter the door opposite the stairway]\n[4: Check out the table]\n[5: Look around]\n[9: Main Menu]");
                 Console.WriteLine("[Press the number to continue]");
                 char action = Console.ReadKey().KeyChar;
 
@@ -382,9 +379,9 @@ namespace HelloWorld
                     Pause();
                 }
 
-                if (action == '6') //Check stats
+                if (action == '9') //Main Menu
                 {
-                    StatCheck();
+                    MainMenu();
                 }
 
                 int SlombieApproach = r.Next(1, 10); //Chance for a slombie to engage
@@ -424,7 +421,7 @@ namespace HelloWorld
 
                     Console.WriteLine("");
                     Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Return to the fork in the path]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[4: Check my stats]");
+                    Console.WriteLine("[1: Return to the fork in the path]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[9: Main Menu]");
                     Console.WriteLine("");
                     Console.WriteLine("[Press the number to continue]");
                     char action = Console.ReadKey().KeyChar;
@@ -450,9 +447,9 @@ namespace HelloWorld
                         Pause();
                     }
 
-                    if (action == '4') //Check stats
+                    if (action == '9') //Main Menu
                     {
-                        StatCheck();
+                        MainMenu();
                     }
 
                     CastleGateExplored = 'y';
@@ -479,7 +476,7 @@ namespace HelloWorld
 
                     Console.WriteLine("");
                     Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Exit the castle]\n\n[3: Look around]\n[4: Check my stats]");
+                    Console.WriteLine("[1: Exit the castle]\n\n[3: Look around]\n[9: Main Menu]");
                     Console.WriteLine("");
                     Console.WriteLine("[Press the number to continue]");
                     char action = Console.ReadKey().KeyChar;
@@ -514,9 +511,9 @@ namespace HelloWorld
                         Pause();
                     }
 
-                    if (action == '4') //Check stats
+                    if (action == '9') //Main Menu
                     {
-                        StatCheck();
+                        MainMenu();
                     }
 
                     CastleEntryExplored = 'y';
@@ -550,7 +547,7 @@ namespace HelloWorld
 
                     Console.WriteLine("");
                     Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Enter the doorless doorway]\n[2: Nothing]\n[3: Engage Nothing]\n[4: Engage Nothing in the throne]\n[5: Look around]\n[6: Check my stats]");
+                    Console.WriteLine("[1: Enter the doorless doorway]\n[2: Nothing]\n[3: Engage Nothing]\n[4: Engage Nothing in the throne]\n[5: Look around]\n[9: Main Menu]");
                     Console.WriteLine("");
                     Console.WriteLine("[Press the number to continue]");
                     char action = Console.ReadKey().KeyChar;
@@ -600,9 +597,9 @@ namespace HelloWorld
                         Pause();
                     }
 
-                    if (action == '6') //Check stats
+                    if (action == '9') //Main Menu
                     {
-                        StatCheck();
+                        MainMenu();
                     }
 
 
@@ -1364,6 +1361,62 @@ namespace HelloWorld
             Pause();
             Console.Clear(); //Clears the screen
         } //Stat Check function
+
+        void GetName()
+        {
+            Console.Clear(); //Clears the screen
+            Console.WriteLine("What is your name?");
+            Console.WriteLine("[Press Enter to enter your name]");
+            Console.Write("My name is ");
+            name = Console.ReadLine(); //Gets the player's name
+
+            Console.Clear(); //Clears the screen
+
+            Console.WriteLine(name + " is your name?");
+            Console.WriteLine("[1: Yes]\n[2: No]");
+            char action = Console.ReadKey().KeyChar;
+
+            if (action == '2')
+            {
+                GetName();
+            }
+        } //Get Name function
+
+        void MainMenu()
+        {
+            Console.Clear(); //Clears the screen
+
+            Console.WriteLine("[1: Change Name]\n[2: Check Stats]\n[0: Quit]");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("[Press the number to continue]");
+            char action = Console.ReadKey().KeyChar;
+
+            if (action == '1') //Change Name
+            {
+                GetName();
+            }
+
+            if (action == '2')
+            {
+                StatCheck();
+            }
+
+            if (action == '0') //Quit Game
+            {
+                Console.Clear(); //Clears the screen
+                Console.WriteLine("Are you sure you want to leave?");
+                Console.WriteLine("");
+                Console.WriteLine("[1: Yes]\n[2: No]");
+                Console.WriteLine("[Press the number to continue]");
+                action = Console.ReadKey().KeyChar;
+
+                if (action == '1') //Change Name
+                {
+                    GameOver = true;
+                }
+            }
+        } //Main Menu function
 
         void EnemySetup()
         {
