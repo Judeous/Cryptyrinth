@@ -1056,6 +1056,7 @@ namespace HelloWorld
             Console.Clear(); //Clears the screen
             Console.WriteLine("Welcome, " + name + ", what is your style of battle?");
             Console.WriteLine("[1: Magic]\n[2: Warrior]\n[3: Trickery]");
+            Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
 
             Console.Write("My style is ");
