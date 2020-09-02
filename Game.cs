@@ -6,7 +6,7 @@ namespace HelloWorld
 {
     class Game
     {
-        //Declarations
+        //Player Declarations
         string name;
         float health = 100; //Sets player's health
         float healthRegen = 8; //Sets the rate the player regens at
@@ -22,12 +22,10 @@ namespace HelloWorld
         float playerDamageMult = 1; //Sets the base player damage multiplier that changes based on specialty
         float playerDamage = 9; //base damage
 
-        //Declarations
+        //Enemy Declarations
         string enemyName = "None";
-        float enemyHealth = 25; //Sets the base enemy health
         float enemyRegen = 2; //Sets the base enemy regen
-        float enemyDefense = 7; //Sets the enemies' base defense
-        float enemyLevel = 1; //Sets the base enemy level
+        float enemyLevel; //Sets the base enemy level
         float battleEnemyHealth;
         float battleEnemyMaxHP;
         float battleEnemyDefense;
@@ -36,6 +34,7 @@ namespace HelloWorld
         float baseEnemyDamage = 8; //Sets the base enemy damage
         float enemyDamage;
 
+        string enemyAppearMessage = "An enemy appears!";
         string enemyAttackMessage = "The enemy is attacking!";
         string enemyDefendMessage = "The enemy is defending!";
         string enemyHealMessage = "The enemy is healing!";
@@ -46,11 +45,13 @@ namespace HelloWorld
 
         bool GameOver = false;
         bool InBattle = false;
+        int turncounter;
 
         string specialty = "None"; //Placeholder Specialty
         string styleName = "Fool"; //Placeholder Style
 
-        string area = "Shack";
+        string area = "Shack"; //Starting Location
+
         char ShackExplored = 'n';
         char FieldExplored = 'n';
 
@@ -88,229 +89,219 @@ namespace HelloWorld
 
         void Update()
         {
-            if (area == "Shack")
+            if (area == "Shack" && InBattle != true)
             {
-                if (InBattle != true)
+                if (ShackExplored == 'n') //If the player has seen these messages
                 {
-                    if (ShackExplored == 'n') //If the player has seen these messages
-                    {
-                        Console.WriteLine("[I find myself upon a small hill outside of the shack whense I chose my class (Still not sure how that person changed my physical makeup)]");
-                        Console.WriteLine("[There's a path trailing from the shack into a dark grey field before me]");
-                        Console.WriteLine("[The field has blobs of slime scattered throughout it, murking around]");
-                    }
+                    Console.WriteLine("[I find myself upon a small hill outside of the shack whense I chose my class (Still not sure how that person changed my physical makeup)]");
+                    Console.WriteLine("[There's a path trailing from the shack into a dark grey field before me]");
+                    Console.WriteLine("[The field has blobs of slime scattered throughout it, murking around]");
+                }
 
-                    if (ShackExplored == 'y') //If the player's been to the Shack
-                    {
-                        Console.WriteLine("[I'm back on the hill outside the shack (Still not sure how that person changed my physical makeup)]");
-                        Console.WriteLine("[The path stretches into the distance through the slime field before me]");
-                    }
-                    Console.WriteLine("");
+                if (ShackExplored == 'y') //If the player's been to the Shack
+                {
+                    Console.WriteLine("[I'm back on the hill outside the shack (Still not sure how that person changed my physical makeup)]");
+                    Console.WriteLine("[The path stretches into the distance through the slime field before me]");
+                }
+                Console.WriteLine("");
 
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Re-enter the shack to change my style & specialty]\n[2: Follow the path down into the field]\n[3: Look around]\n[9: 9 Menu]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    char action = Console.ReadKey().KeyChar;
+                Console.WriteLine("[What do I do?]");
+                Console.WriteLine("[1: Re-enter the shack to change my style & specialty]\n[2: Follow the path down into the field]\n[3: Look around]\n[9: 9 Menu]");
+                Console.WriteLine("");
+                Console.WriteLine("[Press the number to continue]");
+                char action = Console.ReadKey().KeyChar;
 
-                    if (action == '1') //Redecide Style/Specialty
-                    {
-                        DecideSpecialty();
-                    }
+                if (action == '1') //Redecide Style/Specialty
+                {
+                    DecideSpecialty();
+                }
 
-                    if (action == '2') //Go to the field
-                    {
-                        area = "Field";
-                    }
+                if (action == '2') //Go to the field
+                {
+                    area = "Field";
+                }
 
-                    if (action == '3') //Look around
-                    {
-                        Console.Clear(); //Clears the screen
-                        Console.WriteLine("[I'm on a small hill outside of the shack whense I chose my class in (Still not sure how that person changed my physical makeup)]");
-                        Console.WriteLine("[There's a path trailing from the shack into a dark grey field]");
-                        Console.WriteLine("[The field has slimes scattered throughout it, murking around]");
-                        Pause();
-                    }
-
-                    if (action == '9') //9 Menu
-                    {
-                        NineMenu();
-                    }
-
-                    ShackExplored = 'y';
+                if (action == '3') //Look around
+                {
                     Console.Clear(); //Clears the screen
-                } //While not in a battle
-            } //If at the Shack
+                    Console.WriteLine("[I'm on a small hill outside of the shack whense I chose my class in (Still not sure how that person changed my physical makeup)]");
+                    Console.WriteLine("[There's a path trailing from the shack into a dark grey field]");
+                    Console.WriteLine("[The field has slimes scattered throughout it, murking around]");
+                    Pause();
+                }
 
-            if (area == "Field")
-            {
-                if (InBattle != true) //If the player isn't in a battle
+                if (action == '9') //9 Menu
                 {
-                    if (FieldExplored == 'n') //If the player hasn't been to the fields
-                    {
-                        Console.WriteLine("[I'm at a T intersection in the path that cuts through the dark slimy field, and living slime is everywhere]");
-                        Console.WriteLine("[The shack is on a hill up the path]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[The fork off leads to a crypt with a stone door facing the path]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[The non-fork part leads to a small castle far down the path]");
-                        Console.WriteLine("[The gate appears to be closed, though]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[The living slimes appear to stay away from the structures; I wonder why]");
-                    }
+                    NineMenu();
+                }
 
-                    if (FieldExplored == 'y') //If the player's already been to the fields
-                    {
-                        Console.WriteLine("[I'm back in the slime field, and living slime is still everywhere]");
-                        Console.WriteLine("[The shack still sits upon the hill further up the path]");
-                        Console.WriteLine("[The crypt is at the end of the forked part of the path]");
-                        Console.WriteLine("[The castle resides further down the path]");
-                    }
+                ShackExplored = 'y';
+                Console.Clear(); //Clears the screen
+            } //If at the Shack and not in a battle
+
+            if (area == "Field" && InBattle != true)
+            {
+                if (FieldExplored == 'n') //If the player hasn't been to the fields
+                {
+                    Console.WriteLine("[I'm at a T intersection in the path that cuts through the dark slimy field, and living slime is everywhere]");
+                    Console.WriteLine("[The shack is on a hill up the path]");
                     Console.WriteLine("");
-
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Head to the hill with the shack atop it]\n[2: Head to the crypt]\n[3: Head towards the Castle]\n[4: Engage a slime]\n[5: Look around]\n[9: 9 Menu]");
+                    Console.WriteLine("[The fork off leads to a crypt with a stone door facing the path]");
                     Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    char action = Console.ReadKey().KeyChar;
+                    Console.WriteLine("[The non-fork part leads to a small castle far down the path]");
+                    Console.WriteLine("[The gate appears to be closed, though]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[The living slimes appear to stay away from the structures; I wonder why]");
+                }
 
-                    if (action == '1') //Return to Shack
-                    {
-                        area = "Shack";
-                    }
+                if (FieldExplored == 'y') //If the player's already been to the fields
+                {
+                    Console.WriteLine("[I'm back in the slime field, and living slime is still everywhere]");
+                    Console.WriteLine("[The shack still sits upon the hill further up the path]");
+                    Console.WriteLine("[The crypt is at the end of the forked part of the path]");
+                    Console.WriteLine("[The castle resides further down the path]");
+                }
+                Console.WriteLine("");
 
-                    if (action == '2') //Go to the Cryptyrinth
-                    {
-                        area = "LabyrinthEntrance";
-                    }
+                Console.WriteLine("[What do I do?]");
+                Console.WriteLine("[1: Head to the hill with the shack atop it]\n[2: Head to the crypt]\n[3: Head towards the Castle]\n[4: Engage a slime]\n[5: Look around]\n[9: 9 Menu]");
+                Console.WriteLine("");
+                Console.WriteLine("[Press the number to continue]");
+                char action = Console.ReadKey().KeyChar;
 
-                    if (action == '3') //Go to the Castle
-                    {
-                        area = "CastleGate";
-                    }
+                if (action == '1') //Return to Shack
+                {
+                    area = "Shack";
+                }
 
-                    if (action == '4') //Engage a slime
+                if (action == '2') //Go to the Cryptyrinth
+                {
+                    area = "LabyrinthEntrance";
+                }
+
+                if (action == '3') //Go to the Castle
+                {
+                    area = "CastleGate";
+                }
+
+                if (action == '4') //Engage a slime
+                {
+                    Console.Clear(); //Clears the screen
+                    Console.WriteLine("[I engage one of the many slimes]");
+                    Pause();
+                    enemyName = "Slime";
+                    EnemySetup();
+                    InBattle = true;
+                }
+
+                if (action == '5') //Look around
+                {
+                    Console.Clear(); //Clears the screen
+                    Console.WriteLine("[I'm at a fork in a path that cuts through a dark grey slime field, and there's living mounds of the slime murking around]");
+                    Console.WriteLine("[The shack is on a hill up the path]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[There's a crypt at the end of the forked part of the path]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[There's a castle far down the path]");
+                    Console.WriteLine("[The gate appears to be closed]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[The living slimes appear to stay away from the structures; I wonder why]");
+                    Pause();
+                }
+
+                if (action == '9') //9 Menu
+                {
+                    NineMenu();
+                }
+
+                if (action != '3') //Makes it so two engagements don't occur at once
+                {
+                    int SlimeApproach = r.Next(1, 5); //Chance for a slime to engage
+                    if (SlimeApproach == 1) //If a slime engages
                     {
                         Console.Clear(); //Clears the screen
-                        Console.WriteLine("[I engage one of the many slimes]");
+                        Console.WriteLine("");
                         Pause();
-                        enemyName = "Slime";
                         EnemySetup();
+                        enemyName = "Slime";
                         InBattle = true;
-                    }
+                    } //If slime engages
+                } //If not engaging
 
-                    if (action == '5') //Look around
-                    {
-                        Console.Clear(); //Clears the screen
-                        Console.WriteLine("[I'm at a fork in a path that cuts through a dark grey slime field, and there's living mounds of the slime murking around]");
-                        Console.WriteLine("[The shack is on a hill up the path]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[There's a crypt at the end of the forked part of the path]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[There's a castle far down the path]");
-                        Console.WriteLine("[The gate appears to be closed]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[The living slimes appear to stay away from the structures; I wonder why]");
-                        Pause();
-                    }
+                FieldExplored = 'y';
+                Console.Clear(); //Clears the screen
 
-                    if (action == '9') //9 Menu
-                    {
-                        NineMenu();
-                    }
+            } //If in the field and not in a battle
 
-                    if (action != '3') //Makes it so two engagements don't occur at once
-                    {
-                        int SlimeApproach = r.Next(1, 5); //Chance for a slime to engage
-                        if (SlimeApproach == 1) //If a slime engages
-                        {
-                            Console.Clear(); //Clears the screen
-                            Console.WriteLine("[A slime enages me!]");
-                            Console.WriteLine("");
-                            Pause();
-                            EnemySetup();
-                            enemyName = "Slime";
-                            InBattle = true;
-                        } //If slime engages
-                    } //If not engaging
-
-                    FieldExplored = 'y';
-                    Console.Clear(); //Clears the screen
-
-                } //While not in a battle
-            } //If in the field
-
-            if (area == "LabyrinthEntrance")
+            if (area == "LabyrinthEntrance" && InBattle != true)
             {
-                if (InBattle != true)
+                if (LabyrinthEntranceExplored == 'n')
                 {
-                    if (LabyrinthEntranceExplored == 'n')
-                    {
-                        Console.WriteLine("[I'm now in front of the small and very sturdy looking crypt]");
-                        Console.WriteLine("[There's a decently large stone door, and a panel to the left of it]");
-                        Console.WriteLine("[It has some text on it, good thing I can read]");
-                    }
-                    if (LabyrinthEntranceExplored == 'y')
-                    {
-                        Console.WriteLine("[I'm at the entrance of the crypt]");
-                    }
-                    Console.WriteLine("");
+                    Console.WriteLine("[I'm now in front of the small and very sturdy looking crypt]");
+                    Console.WriteLine("[There's a decently large stone door, and a panel to the left of it]");
+                    Console.WriteLine("[It has some text on it, good thing I can read]");
+                }
+                if (LabyrinthEntranceExplored == 'y')
+                {
+                    Console.WriteLine("[I'm at the entrance of the crypt]");
+                }
+                Console.WriteLine("");
 
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Head back to the fork in the field]\n[2: Enter the Crypt]\n[3: Read the panel]\n[4: Look around]\n[9: 9 Menu]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    char action = Console.ReadKey().KeyChar;
+                Console.WriteLine("[What do I do?]");
+                Console.WriteLine("[1: Head back to the fork in the field]\n[2: Enter the Crypt]\n[3: Read the panel]\n[4: Look around]\n[9: 9 Menu]");
+                Console.WriteLine("");
+                Console.WriteLine("[Press the number to continue]");
+                char action = Console.ReadKey().KeyChar;
 
-                    if (action == '1') //Return to the field
-                    {
-                        area = "Field";
-                    }
+                if (action == '1') //Return to the field
+                {
+                    area = "Field";
+                }
 
-                    if (action == '2') //Enter the Labyrinth
-                    {
-                        area = "LabyrinthEntryway";
-                    }
+                if (action == '2') //Enter the Labyrinth
+                {
+                    area = "LabyrinthEntryway";
+                }
 
-                    if (action == '3') //Read the panel
-                    {
-                        Console.Clear(); //Clears the screen
-                        Console.WriteLine("[Those who die within these fields do not stay down for long]");
-                        Console.WriteLine("[Slime is attracted to corpses; it will inhabit those who have died, 'bringing them back to life' in a sense]");
-                        Console.WriteLine("[This causes many problems, even with coffins]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[This is a labyrinth]");
-                        Console.WriteLine("[Those who have died are put into this labyrinth, to roam indefinitely]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[To those who live and wish to enter: Do so at your own risk]");
-                        Console.WriteLine("[Those whose corpses have been desecrated by slime are no longer the people they once were]");
-                        Console.WriteLine("[They are akin to the living slime that roam the surrounding fields]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[These slimes are the result of the slime attempting to posess a corpse too small]");
-                        Console.WriteLine("[The slime instead surrounds it, corroding the corpse]");
-                        Pause();
-                    }
-
-                    if (action == '4') //Look around
-                    {
-                        Console.Clear(); //Clears the screen
-                        Console.WriteLine("[I'm in front of the small, very sturdy looking stone crypt]");
-                        Console.WriteLine("[It has a decently large stone door, with a panel (Also stone) to the left of it]");
-                        Console.WriteLine("[The panel has text describing what's inside and why]");
-                        Pause();
-                    }
-
-                    if (action == '9') //9 Menu
-                    {
-                        NineMenu();
-                    }
-
-
-                    LabyrinthEntranceExplored = 'y';
+                if (action == '3') //Read the panel
+                {
                     Console.Clear(); //Clears the screen
-                }//If not in a battle
-            }// If at labrynth Entrance
+                    Console.WriteLine("[Those who die within these fields do not stay down for long]");
+                    Console.WriteLine("[Slime is attracted to corpses; it will inhabit those who have died, 'bringing them back to life' in a sense]");
+                    Console.WriteLine("[This causes many problems, even with coffins]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[This is a labyrinth]");
+                    Console.WriteLine("[Those who have died are put into this labyrinth, to roam indefinitely]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[To those who live and wish to enter: Do so at your own risk]");
+                    Console.WriteLine("[Those whose corpses have been desecrated by slime are no longer the people they once were]");
+                    Console.WriteLine("[They are akin to the living slime that roam the surrounding fields]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[These slimes are the result of the slime attempting to posess a corpse too small]");
+                    Console.WriteLine("[The slime instead surrounds it, corroding the corpse]");
+                    Pause();
+                }
 
-            if (area == "LabyrinthEntryway")
+                if (action == '4') //Look around
+                {
+                    Console.Clear(); //Clears the screen
+                    Console.WriteLine("[I'm in front of the small, very sturdy looking stone crypt]");
+                    Console.WriteLine("[It has a decently large stone door, with a panel (Also stone) to the left of it]");
+                    Console.WriteLine("[The panel has text describing what's inside and why]");
+                    Pause();
+                }
+
+                if (action == '9') //9 Menu
+                {
+                    NineMenu();
+                }
+
+
+                LabyrinthEntranceExplored = 'y';
+                Console.Clear(); //Clears the screen
+            } // If at labrynth Entrance and not in a battle
+
+            if (area == "LabyrinthEntryway" && InBattle != true)
             {
                 if (LabyrinthEntrywayExplored == 'n')
                 {
@@ -388,7 +379,6 @@ namespace HelloWorld
                 if (SlombieApproach == 1) //If a slombie engages
                 {
                     Console.Clear(); //Clears the screen
-                    Console.WriteLine("[A slombie enages me!]");
                     Console.WriteLine("");
                     Pause();
                     EnemySetup();
@@ -399,222 +389,221 @@ namespace HelloWorld
 
                 LabyrinthEntrywayExplored = 'y';
                 Console.Clear(); //Clears the screen
-            }
+            } //If in Labyrinth Entryway and not in a battle
 
-            if (area == "CastleGate")
+            if (area == "CastleGate" && InBattle != true)
             {
-                if (InBattle != true)
+                if (CastleGateExplored == 'n') //If the player hasn't been to the gate yet
                 {
-                    if (CastleGateExplored == 'n') //If the player hasn't been to the gate yet
-                    {
-                        Console.WriteLine("[I'm now in front of the stone brick castle, it appears as if it had started to be taken down out of order, now that I look at it]");
-                        Console.WriteLine("[That'd partially explain why the gate is down]");
-                        Console.WriteLine("[If this castle Was taken over by force, why would it not have been repaired by the new inhabitants?]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[There's a decently sized hole, looks as if the bricks were just... removed, rather than destroyed]");
-                    }
-
-                    if (CastleGateExplored == 'y') //If the player has been to the gate
-                    {
-                        Console.WriteLine("[I'm in front of the taken-over brick castle that has an odd 'entrance']");
-                    }
-
+                    Console.WriteLine("[I'm now in front of the stone brick castle, it appears as if it had started to be taken down out of order, now that I look at it]");
+                    Console.WriteLine("[That'd partially explain why the gate is down]");
+                    Console.WriteLine("[If this castle Was taken over by force, why would it not have been repaired by the new inhabitants?]");
                     Console.WriteLine("");
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Return to the fork in the path]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[9: 9 Menu]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    char action = Console.ReadKey().KeyChar;
+                    Console.WriteLine("[There's a decently sized hole, looks as if the bricks were just... removed, rather than destroyed]");
+                }
 
-                    if (action == '1') //Go to the field
-                    {
-                        area = "Field";
-                    }
-
-                    if (action == '2') //Enter the Castle
-                    {
-                        area = "CastleEntry";
-                    }
-
-                    if (action == '3') //Look around
-                    {
-                        Console.Clear(); //Clears the screen
-                        Console.WriteLine("[I'm in front of the stone brick castle, it appears as if it had started to be taken down out of order]");
-                        Console.WriteLine("[That'd partially explain why the gate is down]");
-                        Console.WriteLine("[If this castle Was taken over by force, why would it not have been repaired by the new inhabitants?]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[There's a decently-sized hole in the side, looks as if the bricks were just... removed, rather than destroyed]");
-                        Pause();
-                    }
-
-                    if (action == '9') //9 Menu
-                    {
-                        NineMenu();
-                    }
-
-                    CastleGateExplored = 'y';
-                    Console.Clear();
-                } //While not in a battle
-            } //If in CastleGate
-
-            if (area == "CastleEntry")
-            {
-                if (InBattle != true)
+                if (CastleGateExplored == 'y') //If the player has been to the gate
                 {
-                    if (CastleEntryExplored == 'n') //If the player hasn't entered the Castle before
-                    {
-                        Console.WriteLine("[I've entered the castle; it looks relatively normal]");
-                        Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
-                        Console.WriteLine("[One of these disturbances include a doorway without a door that Has hinges for one, but not the door itself]");
-                        Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
-                    }
+                    Console.WriteLine("[I'm in front of the taken-over brick castle that has an odd 'entrance']");
+                }
 
-                    if (CastleEntryExplored == 'y') //If the player has entered the castle already
-                    {
-                        Console.WriteLine("[I'm in the entryway of the castle]");
-                    }
+                Console.WriteLine("");
+                Console.WriteLine("[What do I do?]");
+                Console.WriteLine("[1: Return to the fork in the path]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[9: 9 Menu]");
+                Console.WriteLine("");
+                Console.WriteLine("[Press the number to continue]");
+                char action = Console.ReadKey().KeyChar;
 
-                    Console.WriteLine("");
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Exit the castle]\n\n[3: Look around]\n[9: 9 Menu]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    char action = Console.ReadKey().KeyChar;
+                if (action == '1') //Go to the field
+                {
+                    area = "Field";
+                }
 
-                    if (action == '1') //Exit the Castle
-                    {
-                        area = "CastleGate";
-                    }
+                if (action == '2') //Enter the Castle
+                {
+                    area = "CastleEntry";
+                }
 
-                    if (action == '2') //Enter the Void
-                    {
-                        if (level < 10)
-                        {
-                            Console.Clear(); //Clears the screen
-                            Console.WriteLine("[The doorless doorway doesn't lead anywhere, perhaps I should leave]");
-                            Pause();
-                        }
-
-                        if (level >= 10)
-                        {
-                            area = "    ";
-                        }
-                    }
-
-                    if (action == '3') //Look around
-                    {
-                        Console.Clear(); //Clears the screen
-                        Console.WriteLine("[I'm inside the castle; it looks semi-normal]");
-                        Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
-                        Console.WriteLine("[One of these disturbances include a doorway without a door that Has hinges for one, but not the door itself]");
-                        Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
-                        Pause();
-                    }
-
-                    if (action == '9') //9 Menu
-                    {
-                        NineMenu();
-                    }
-
-                    CastleEntryExplored = 'y';
+                if (action == '3') //Look around
+                {
                     Console.Clear(); //Clears the screen
-                }//While not in a battle
+                    Console.WriteLine("[I'm in front of the stone brick castle, it appears as if it had started to be taken down out of order]");
+                    Console.WriteLine("[That'd partially explain why the gate is down]");
+                    Console.WriteLine("[If this castle Was taken over by force, why would it not have been repaired by the new inhabitants?]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[There's a decently-sized hole in the side, looks as if the bricks were just... removed, rather than destroyed]");
+                    Pause();
+                }
+
+                if (action == '9') //9 Menu
+                {
+                    NineMenu();
+                }
+
+                CastleGateExplored = 'y';
+                Console.Clear();
+            } //If in CastleGate and not in a battle
+
+            if (area == "CastleEntry" && InBattle != true)
+            {
+                if (CastleEntryExplored == 'n') //If the player hasn't entered the Castle before
+                {
+                    Console.WriteLine("[I've entered the castle; it looks relatively normal]");
+                    Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
+                    Console.WriteLine("[One of these disturbances include a doorway without a door that Has hinges for one, but not the door itself]");
+                    Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
+                }
+
+                if (CastleEntryExplored == 'y') //If the player has entered the castle already
+                {
+                    Console.WriteLine("[I'm in the entryway of the castle]");
+                }
+
+                Console.WriteLine("");
+                Console.WriteLine("[What do I do?]");
+                Console.WriteLine("[1: Exit the castle]\n\n[3: Look around]\n[9: 9 Menu]");
+                Console.WriteLine("");
+                Console.WriteLine("[Press the number to continue]");
+                char action = Console.ReadKey().KeyChar;
+
+                if (action == '1') //Exit the Castle
+                {
+                    area = "CastleGate";
+                }
+
+                if (action == '2') //Enter the Void
+                {
+                    if (level < 10)
+                    {
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[The doorless doorway doesn't lead anywhere, perhaps I should leave]");
+                        Pause();
+                    }
+
+                    if (level >= 10)
+                    {
+                        area = "    ";
+                    }
+                }
+
+                if (action == '3') //Look around
+                {
+                    Console.Clear(); //Clears the screen
+                    Console.WriteLine("[I'm inside the castle; it looks semi-normal]");
+                    Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
+                    Console.WriteLine("[One of these disturbances include a doorway without a door that Has hinges for one, but not the door itself]");
+                    Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
+                    Pause();
+                }
+
+                if (action == '9') //9 Menu
+                {
+                    NineMenu();
+                }
+
+                CastleEntryExplored = 'y';
+                Console.Clear(); //Clears the screen
             } //If in CastleEntry
 
-            if (area == "    ")
+            if (area == "    " && InBattle != true)
             {
-                if (InBattle != true)
+
+                if (Explored == 'n') //If the player hasn't entered the Void before
+                {
+                    Console.WriteLine("[I've entered the doorless doorway; it feels like a throne room]");
+                    Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
+                    Console.WriteLine("[They're moving, but they think nothing of me]");
+                    Console.WriteLine("[There's a doorway without a door that Has hinges for one, but not the door itself]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[One of them are sitting in the throne]");
+                    Console.WriteLine("[It's not moving, but I think nothing of it]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
+                    Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
+                }
+
+                if (Explored == 'y') //If the player has entered the Void
+                {
+                    Console.WriteLine("[I'm in the     ]");
+                }
+
+                Console.WriteLine("");
+                Console.WriteLine("[What do I do?]");
+                Console.WriteLine("[1: Enter the doorless doorway]\n[2: Nothing]\n[3: Engage Nothing]\n[4: Engage Nothing in the throne]\n[5: Look around]\n[9: 9 Menu]");
+                Console.WriteLine("");
+                Console.WriteLine("[Press the number to continue]");
+                char action = Console.ReadKey().KeyChar;
+
+                if (action == '1') //Enter the Doorless Doorway
+                {
+                    area = "CastleEntry";
+                }
+
+                if (action == '2') //Nothing
                 {
 
-                    if (Explored == 'n') //If the player hasn't entered the Void before
-                    {
-                        Console.WriteLine("[I've entered the doorless doorway; it feels like a throne room]");
-                        Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
-                        Console.WriteLine("[They're moving, but they think nothing of me]");
-                        Console.WriteLine("[There's a doorway without a door that Has hinges for one, but not the door itself]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[One of them are sitting in the throne]");
-                        Console.WriteLine("[It's not moving, but I think nothing of it]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
-                        Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
-                    }
+                }
 
-                    if (Explored == 'y') //If the player has entered the Void
-                    {
-                        Console.WriteLine("[I'm in the     ]");
-                    }
-
-                    Console.WriteLine("");
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Enter the doorless doorway]\n[2: Nothing]\n[3: Engage Nothing]\n[4: Engage Nothing in the throne]\n[5: Look around]\n[9: 9 Menu]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    char action = Console.ReadKey().KeyChar;
-
-                    if (action == '1') //Enter the Doorless Doorway
-                    {
-                        area = "CastleEntry";
-                    }
-
-                    if (action == '2') //Nothing
-                    {
-
-                    }
-
-                    if (action == '3') //Engage Nothing
-                    {
-                        Console.Clear(); //Clears the screen
-                        Console.WriteLine("[I engage Nothing]");
-                        Pause();
-                        enemyName = "Nothing";
-                        EnemySetup();
-                        InBattle = true;
-                    }
-
-                    if (action == '4') //Engage the Nothing in the throne
-                    {
-                        Console.Clear(); //Clears the screen
-                        Console.WriteLine("[I engage Nothing in the throne]");
-                        Pause();
-                        enemyName = "Nothing";
-                        EnemySetup();
-                        InBattle = true;
-                    }
-
-                    if (action == '5') //Look around
-                    {
-                        Console.WriteLine("[This area feels like a throne room]");
-                        Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
-                        Console.WriteLine("[They're moving, but they think nothing of me]");
-                        Console.WriteLine("[There's a doorway without a door that Has hinges for one, but not the door itself]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[One of them are sitting in the throne]");
-                        Console.WriteLine("[It's not moving, but I think nothing of it]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
-                        Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
-                        Pause();
-                    }
-
-                    if (action == '9') //9 Menu
-                    {
-                        NineMenu();
-                    }
-
-
-                    Explored = 'y';
+                if (action == '3') //Engage Nothing
+                {
                     Console.Clear(); //Clears the screen
-                }//While not in a battle
+                    Console.WriteLine("[I engage Nothing]");
+                    Pause();
+                    enemyName = "Nothing";
+                    EnemySetup();
+                    InBattle = true;
+                }
+
+                if (action == '4') //Engage the Nothing in the throne
+                {
+                    Console.Clear(); //Clears the screen
+                    Console.WriteLine("[I engage Nothing in the throne]");
+                    Pause();
+                    enemyName = "Nothing";
+                    EnemySetup();
+                    InBattle = true;
+                }
+
+                if (action == '5') //Look around
+                {
+                    Console.WriteLine("[This area feels like a throne room]");
+                    Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
+                    Console.WriteLine("[They're moving, but they think nothing of me]");
+                    Console.WriteLine("[There's a doorway without a door that Has hinges for one, but not the door itself]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[One of them are sitting in the throne]");
+                    Console.WriteLine("[It's not moving, but I think nothing of it]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
+                    Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
+                    Pause();
+                }
+
+                if (action == '9') //9 Menu
+                {
+                    NineMenu();
+                }
+
+
+                Explored = 'y';
+                Console.Clear(); //Clears the screen
             } //If in Void
 
             Console.Clear();
 
-            //Calculates enemy damage and adjusts max health
-            battleEnemyMaxHP = battleEnemyHealth; //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
-            enemyDamage = baseEnemyDamage * enemyDamageMult; //Sets the total enemy damage based on the base damage and multiplier
+            if (InBattle == true)
+            {
+                //Calculates enemy damage and adjusts max health
+                battleEnemyMaxHP = battleEnemyHealth; //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
+                enemyDamage = baseEnemyDamage * enemyDamageMult; //Sets the total enemy damage based on the base damage and multiplier
 
-            int turncounter = 0; //Sets the turn counter to 0 before battle starts
+                Console.WriteLine(enemyAppearMessage); //Shows the enemy approach message
+                Console.ReadKey();
+                Console.Clear();
+
+                turncounter = 0; //Sets the turn counter to 0 before battle starts
+            }
+
             while (InBattle == true)
             {
                 turncounter++;
@@ -873,27 +862,17 @@ namespace HelloWorld
 
         float Regeneration(float currentHealth, float maxHP, float healthRegen)
         {
-            if (currentHealth < maxHP) //Checks to see if the entity's hp is below max
+            if (currentHealth < maxHP && currentHealth > 0) //Checks to see if the entity's hp is lower than max and higher than 0
             {
-                if (healthRegen > 0) //Checks to see if the entity does regenerate
-                {
-                    if (currentHealth > 0) //Checks to see if the entity is not dead
-                    {
-                        if (currentHealth + healthRegen <= maxHP) //Applies normal regeneration if the result would be <= max hp
-                        {
-                            currentHealth += healthRegen;
-                        }
+                currentHealth += healthRegen;
 
-                        else if (currentHealth + healthRegen > maxHP) //Sets hp to max if regen would surpass max
-                        {
-                            currentHealth = maxHP;
-                        }
-                    } //If entity isn't dead
-                } //If health is below max
-            } //If entity regenerates
+                if (currentHealth > maxHP) //Sets hp to max if regen surpassed max
+                {
+                    currentHealth = maxHP;
+                }
+            } //If health is within both boundaries
 
             return currentHealth;
-
         } //Regen Function
 
         float DirectAttack(float damage, float health, float defense, string victimName)
@@ -1424,12 +1403,15 @@ namespace HelloWorld
         {
             if (enemyName == "Slime")
             {
+                //Stats
                 battleEnemyHealth = r.Next(5, 20); //Randomizes the health of the slime so they don't all have the same stats
                 enemyHeal = 15;
                 enemyDamageMult = 0.5f;
                 battleEnemyDefense = 10;
                 enemyRegen = 5;
 
+                //Messages
+                enemyAppearMessage = "[A slime becomes hostile!]";
                 enemyDeathMessage = "[The slime melts into the ground]";
                 enemyAttackMessage = "[The slime is attacking!]";
                 enemyDefendMessage = "[The slime's defending!]";
@@ -1438,12 +1420,15 @@ namespace HelloWorld
 
             if (enemyName == "Nothing")
             {
+                //Stats
                 battleEnemyHealth = 150;
                 enemyHeal = 20;
                 enemyDamageMult = 3;
                 battleEnemyDefense = 40;
                 enemyRegen = 15;
 
+                //Messages
+                enemyAppearMessage = "[Nothing is approaching!]";
                 enemyDeathMessage = "[Nothing stopped existing]";
                 enemyAttackMessage = "[Nothing is attacking me]";
                 enemyDefendMessage = "[Nothing is defending itself]";
@@ -1452,12 +1437,15 @@ namespace HelloWorld
 
             if (enemyName == "Slombie")
             {
+                //Stats
                 battleEnemyHealth = r.Next(50, 100); //Randomizes the health of the slombie so they don't all have the same stats
                 enemyHeal = 10;
                 enemyDamageMult = 1;
                 battleEnemyDefense = 10;
                 enemyRegen = 5;
 
+                //Messages
+                enemyAppearMessage = "[There's a posessed corpse in here!]";
                 enemyDeathMessage = "[The slime leaves the body and sinks to the floor]";
                 enemyAttackMessage = "[The slombie is attacking!]";
                 enemyDefendMessage = "[The slime forms a shield before the body!]";
