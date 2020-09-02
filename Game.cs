@@ -76,8 +76,6 @@ namespace HelloWorld
 
         void Start()
         {
-            Console.WriteLine("Welcome");
-
             GetName();
 
             DecideSpecialty();
@@ -110,30 +108,28 @@ namespace HelloWorld
                 Console.WriteLine("");
                 Console.WriteLine("[Press the number to continue]");
                 char action = Console.ReadKey().KeyChar;
-
-                if (action == '1') //Redecide Style/Specialty
+                switch(action)
                 {
-                    DecideSpecialty();
-                }
+                    case '1': //Redecide Style/Specialty
+                        DecideSpecialty();
+                        break;
 
-                if (action == '2') //Go to the field
-                {
-                    area = "Field";
-                }
+                    case '2': //Go to the field
+                        area = "Field";
+                        break;
 
-                if (action == '3') //Look around
-                {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("[I'm on a small hill outside of the shack whense I chose my class in (Still not sure how that person changed my physical makeup)]");
-                    Console.WriteLine("[There's a path trailing from the shack into a dark grey field]");
-                    Console.WriteLine("[The field has slimes scattered throughout it, murking around]");
-                    Pause();
-                }
+                    case '3':
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[I'm on a small hill outside of the shack whense I chose my class in (Still not sure how that person changed my physical makeup)]");
+                        Console.WriteLine("[There's a path trailing from the shack into a dark grey field]");
+                        Console.WriteLine("[The field has slimes scattered throughout it, murking around]");
+                        Pause();
+                        break;
 
-                if (action == '9') //9 Menu
-                {
-                    NineMenu();
-                }
+                    case '9': //9 Menu
+                        NineMenu();
+                        break;
+                } //Action Switch
 
                 ShackExplored = 'y';
                 Console.Clear(); //Clears the screen
@@ -169,52 +165,50 @@ namespace HelloWorld
                 Console.WriteLine("[Press the number to continue]");
                 char action = Console.ReadKey().KeyChar;
 
-                if (action == '1') //Return to Shack
+                switch(action)
                 {
-                    area = "Shack";
-                }
+                    case '1': //Go to Shack
+                        area = "Shack";
+                        break;
 
-                if (action == '2') //Go to the Cryptyrinth
-                {
-                    area = "LabyrinthEntrance";
-                }
+                    case '2': //Go to Labyrinth
+                        area = "LabyrinthEntrance";
+                        break;
 
-                if (action == '3') //Go to the Castle
-                {
-                    area = "CastleGate";
-                }
+                    case '3': //Go to Castle
+                        area = "CastleGate";
+                        break;
 
-                if (action == '4') //Engage a slime
-                {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("[I engage one of the many slimes]");
-                    Pause();
-                    enemyName = "Slime";
-                    EnemySetup();
-                    InBattle = true;
-                }
+                    case '4': //Engage a slime
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[I engage one of the many slimes]");
+                        Pause();
+                        enemyName = "Slime";
+                        EnemySetup();
+                        InBattle = true;
+                        break;
 
-                if (action == '5') //Look around
-                {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("[I'm at a fork in a path that cuts through a dark grey slime field, and there's living mounds of the slime murking around]");
-                    Console.WriteLine("[The shack is on a hill up the path]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[There's a crypt at the end of the forked part of the path]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[There's a castle far down the path]");
-                    Console.WriteLine("[The gate appears to be closed]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[The living slimes appear to stay away from the structures; I wonder why]");
-                    Pause();
-                }
+                    case '5': //Look around
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[I'm at a fork in a path that cuts through a dark grey slime field, and there's living mounds of the slime murking around]");
+                        Console.WriteLine("[The shack is on a hill up the path]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[There's a crypt at the end of the forked part of the path]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[There's a castle far down the path]");
+                        Console.WriteLine("[The gate appears to be closed]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[The living slimes appear to stay away from the structures; I wonder why]");
+                        Pause();
+                        break;
 
-                if (action == '9') //9 Menu
-                {
-                    NineMenu();
-                }
+                    case '9': //Nine Menu
+                        NineMenu();
+                        break;
 
-                if (action != '3') //Makes it so two engagements don't occur at once
+                } //Action Switch
+
+                if (action != '4') //Makes it so two engagements don't occur at once
                 {
                     int SlimeApproach = r.Next(1, 5); //Chance for a slime to engage
                     if (SlimeApproach == 1) //If a slime engages
@@ -250,49 +244,46 @@ namespace HelloWorld
                 Console.WriteLine("[Press the number to continue]");
                 char action = Console.ReadKey().KeyChar;
 
-                if (action == '1') //Return to the field
+                switch(action)
                 {
-                    area = "Field";
-                }
+                    case '1': //Go to Field
+                        area = "Field";
+                        break;
 
-                if (action == '2') //Enter the Labyrinth
-                {
-                    area = "LabyrinthEntryway";
-                }
+                    case '2': //Enter the Labyrinth
+                        area = "LabyrinthEntryway";
+                        break;
 
-                if (action == '3') //Read the panel
-                {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("[Those who die within these fields do not stay down for long]");
-                    Console.WriteLine("[Slime is attracted to corpses; it will inhabit those who have died, 'bringing them back to life' in a sense]");
-                    Console.WriteLine("[This causes many problems, even with coffins]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[This is a labyrinth]");
-                    Console.WriteLine("[Those who have died are put into this labyrinth, to roam indefinitely]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[To those who live and wish to enter: Do so at your own risk]");
-                    Console.WriteLine("[Those whose corpses have been desecrated by slime are no longer the people they once were]");
-                    Console.WriteLine("[They are akin to the living slime that roam the surrounding fields]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[These slimes are the result of the slime attempting to posess a corpse too small]");
-                    Console.WriteLine("[The slime instead surrounds it, corroding the corpse]");
-                    Pause();
-                }
+                    case '3': //Read the Panel
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[Those who die within these fields do not stay down for long]");
+                        Console.WriteLine("[Slime is attracted to corpses; it will inhabit those who have died, 'bringing them back to life' in a sense]");
+                        Console.WriteLine("[This causes many problems, even with coffins]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[This is a labyrinth]");
+                        Console.WriteLine("[Those who have died are put into this labyrinth, to roam indefinitely]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[To those who live and wish to enter: Do so at your own risk]");
+                        Console.WriteLine("[Those whose corpses have been desecrated by slime are no longer the people they once were]");
+                        Console.WriteLine("[They are akin to the living slime that roam the surrounding fields]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[These slimes are the result of the slime attempting to posess a corpse too small]");
+                        Console.WriteLine("[The slime instead surrounds it, corroding the corpse]");
+                        Pause();
+                        break;
 
-                if (action == '4') //Look around
-                {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("[I'm in front of the small, very sturdy looking stone crypt]");
-                    Console.WriteLine("[It has a decently large stone door, with a panel (Also stone) to the left of it]");
-                    Console.WriteLine("[The panel has text describing what's inside and why]");
-                    Pause();
-                }
+                    case '4': //Look around
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[I'm in front of the small, very sturdy looking stone crypt]");
+                        Console.WriteLine("[It has a decently large stone door, with a panel (Also stone) to the left of it]");
+                        Console.WriteLine("[The panel has text describing what's inside and why]");
+                        Pause();
+                        break;
 
-                if (action == '9') //9 Menu
-                {
-                    NineMenu();
-                }
-
+                    case '9': //Nine Menu
+                        NineMenu();
+                        break;
+                } //Action Switch
 
                 LabyrinthEntranceExplored = 'y';
                 Console.Clear(); //Clears the screen
@@ -325,54 +316,51 @@ namespace HelloWorld
                 Console.WriteLine("[Press the number to continue]");
                 char action = Console.ReadKey().KeyChar;
 
-                if (action == '1') //Exit the Labyrinth
+                switch(action)
                 {
-                    area = "LabyrinthEntrance";
-                }
+                    case '1': //Exit the Labyrinth
+                        area = "LabyrinthEntrance";
+                        break;
 
-                if (action == '2') //Enter door next to entry
-                {
-                    //area = "";
-                }
+                    case '2': //Enter Stairway door
+                        //area = ""
+                        break;
 
-                if (action == '3') //Enter opposite of entry
-                {
-                    //area = "";
-                }
+                    case '3': //Enter Non-Stairway door
+                        //area = ""
+                        break;
 
-                if (action == '4') //Check out the table
-                {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("[There's nothing on the table; I would have seen it earlier if there was]");
-                    Pause();
-                }
+                    case '4': //Check out table
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[There's nothing on the table; I would have seen it earlier if there was]");
+                        Pause();
+                        break;
 
-                if (action == '5') //Look around
-                {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("[The very medium sized flight of stairs that leads to the surface]");
-                    Console.WriteLine("[The panel was right about this being a labyrinth]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[The floor is stone, but chiseled into semi-fancy tiles, which is all covered in a relatively thin layer of slime]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[I can hear uneven footstept from deeper within the labyrinth]");
-                    Console.WriteLine("[Likely one of the repurposed dead the panel mentioned]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[I'm in a mostly rectangular room, the stairway is in the center of one end]");
-                    Console.WriteLine("[On the opposite end, to the right, there's a small square space, with a round stone table in the center of it]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[To the left of the entrance, (When I first enter the Labyrinth/Crypt) there's a doorway to the right, with another door of stone]");
-                    Console.WriteLine("[Right before the small space and to the right, there's another door]");
+                    case '5': //Look around
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[The very medium sized flight of stairs leads to the surface]");
+                        Console.WriteLine("[The panel was right about this being a labyrinth]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[The floor is stone, but chiseled into semi-fancy tiles, which is all covered in a relatively thin layer of slime]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[I can hear uneven footstept from deeper within the labyrinth]");
+                        Console.WriteLine("[Likely one of the repurposed dead the panel mentioned]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[I'm in a mostly rectangular room, the stairway is in the center of one end]");
+                        Console.WriteLine("[On the opposite end, to the right, there's a small square space, with a round stone table in the center of it]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[To the left of the entrance, (When I first enter the Labyrinth/Crypt) there's a doorway to the right, with another door of stone]");
+                        Console.WriteLine("[Right before the small space and to the right, there's another door]");
 
-                    Pause();
-                }
+                        Pause();
+                        break;
 
-                if (action == '9') //9 Menu
-                {
-                    NineMenu();
-                }
+                    case '9': //Nine Menu
+                        NineMenu();
+                        break;
+                } //Action Switch
 
-                int SlombieApproach = r.Next(1, 10); //Chance for a slombie to engage
+                int SlombieApproach = r.Next(1, 8); //Chance for a slombie to engage
                 if (SlombieApproach == 1) //If a slombie engages
                 {
                     Console.Clear(); //Clears the screen
@@ -382,7 +370,6 @@ namespace HelloWorld
                     enemyName = "Slombie";
                     InBattle = true;
                 } //If slomibe engages
-
 
                 LabyrinthEntrywayExplored = 'y';
                 Console.Clear(); //Clears the screen
@@ -411,32 +398,32 @@ namespace HelloWorld
                 Console.WriteLine("[Press the number to continue]");
                 char action = Console.ReadKey().KeyChar;
 
-                if (action == '1') //Go to the field
+                switch (action)
                 {
-                    area = "Field";
-                }
+                    case '1': //Return to field
+                        area = "Field";
+                        break;
 
-                if (action == '2') //Enter the Castle
-                {
-                    area = "CastleEntry";
-                }
+                    case '2': //Go to castle
+                        area = "CastleEntry";
+                        break;
 
-                if (action == '3') //Look around
-                {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("[I'm in front of the stone brick castle, it appears as if it had started to be taken down out of order]");
-                    Console.WriteLine("[That'd partially explain why the gate is down]");
-                    Console.WriteLine("[If this castle Was taken over by force, why would it not have been repaired by the new inhabitants?]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[There's a decently-sized hole in the side, looks as if the bricks were just... removed, rather than destroyed]");
-                    Pause();
-                }
 
-                if (action == '9') //9 Menu
-                {
-                    NineMenu();
-                }
+                    case '3': //Look around
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[I'm in front of the stone brick castle, it appears as if it had started to be taken down out of order]");
+                        Console.WriteLine("[That'd partially explain why the gate is down]");
+                        Console.WriteLine("[If this castle Was taken over by force, why would it not have been repaired by the new inhabitants?]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[There's a decently-sized hole in the side, looks as if the bricks were just... removed, rather than destroyed]");
+                        Pause();
+                        break;
 
+                    case '9': //Nine Menu
+                        NineMenu();
+                        break;
+
+                } //Action Switch
                 CastleGateExplored = 'y';
                 Console.Clear();
             } //If in CastleGate and not in a battle
@@ -463,40 +450,39 @@ namespace HelloWorld
                 Console.WriteLine("[Press the number to continue]");
                 char action = Console.ReadKey().KeyChar;
 
-                if (action == '1') //Exit the Castle
+                switch (action)
                 {
-                    area = "CastleGate";
-                }
+                    case '1': //Exit the castle
+                        area = "CastleGate";
+                        break;
 
-                if (action == '2') //Enter the Void
-                {
-                    if (level < 10)
-                    {
+                    case '2': //Enter the Void
+                        if (level < 10)
+                        {
+                            Console.Clear(); //Clears the screen
+                            Console.WriteLine("[The doorless doorway doesn't lead anywhere, perhaps I should leave]");
+                            Pause();
+                        }
+
+                        if (level >= 10)
+                        {
+                            area = "    ";
+                        }
+                        break;
+
+                    case '3': //Look around
                         Console.Clear(); //Clears the screen
-                        Console.WriteLine("[The doorless doorway doesn't lead anywhere, perhaps I should leave]");
+                        Console.WriteLine("[I'm inside the castle; it looks semi-normal]");
+                        Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
+                        Console.WriteLine("[One of these disturbances include a doorway without a door that Has hinges for one, but not the door itself]");
+                        Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
                         Pause();
-                    }
+                        break;
 
-                    if (level >= 10)
-                    {
-                        area = "    ";
-                    }
-                }
-
-                if (action == '3') //Look around
-                {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("[I'm inside the castle; it looks semi-normal]");
-                    Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
-                    Console.WriteLine("[One of these disturbances include a doorway without a door that Has hinges for one, but not the door itself]");
-                    Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
-                    Pause();
-                }
-
-                if (action == '9') //9 Menu
-                {
-                    NineMenu();
-                }
+                    case '9': //Nine Menu
+                        NineMenu();
+                        break;
+                } //Action Switch
 
                 CastleEntryExplored = 'y';
                 Console.Clear(); //Clears the screen
@@ -531,56 +517,52 @@ namespace HelloWorld
                 Console.WriteLine("[Press the number to continue]");
                 char action = Console.ReadKey().KeyChar;
 
-                if (action == '1') //Enter the Doorless Doorway
+                switch(action)
                 {
-                    area = "CastleEntry";
-                }
+                    case '1': //Exit the Void
+                        area = "CastleEntry";
+                        break;
 
-                if (action == '2') //Nothing
-                {
+                    case '2': //Nothing
 
-                }
+                        break;
 
-                if (action == '3') //Engage Nothing
-                {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("[I engage Nothing]");
-                    Pause();
-                    enemyName = "Nothing";
-                    EnemySetup();
-                    InBattle = true;
-                }
+                    case '3': //Engage Nothing
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[I engage Nothing]");
+                        Pause();
+                        enemyName = "Nothing";
+                        EnemySetup();
+                        InBattle = true;
+                        break;
 
-                if (action == '4') //Engage the Nothing in the throne
-                {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("[I engage Nothing in the throne]");
-                    Pause();
-                    enemyName = "Nothing";
-                    EnemySetup();
-                    InBattle = true;
-                }
+                    case '4': //Engage Nothing in the throne
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[I engage Nothing in the throne]");
+                        Pause();
+                        enemyName = "Nothing";
+                        EnemySetup();
+                        InBattle = true;
+                        break;
 
-                if (action == '5') //Look around
-                {
-                    Console.WriteLine("[This area feels like a throne room]");
-                    Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
-                    Console.WriteLine("[They're moving, but they think nothing of me]");
-                    Console.WriteLine("[There's a doorway without a door that Has hinges for one, but not the door itself]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[One of them are sitting in the throne]");
-                    Console.WriteLine("[It's not moving, but I think nothing of it]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
-                    Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
-                    Pause();
-                }
+                    case '5': //Look around
+                        Console.WriteLine("[This area feels like a throne room]");
+                        Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
+                        Console.WriteLine("[They're moving, but they think nothing of me]");
+                        Console.WriteLine("[There's a doorway without a door that Has hinges for one, but not the door itself]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[One of them are sitting in the throne]");
+                        Console.WriteLine("[It's not moving, but I think nothing of it]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
+                        Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
+                        Pause();
+                        break;
 
-                if (action == '9') //9 Menu
-                {
-                    NineMenu();
-                }
-
+                    case '9': //Nine Menu
+                        NineMenu();
+                        break;
+                } //Action Switch
 
                 Explored = 'y';
                 Console.Clear(); //Clears the screen
@@ -630,158 +612,151 @@ namespace HelloWorld
                 Console.WriteLine("[What do I do?]");
                 Console.WriteLine("[1: Attack, 2: Block, 3: Heal, 4: Nothing]");
                 char action = Console.ReadKey().KeyChar;
-
-                if (action == '1') //Attack
+                switch(action)
                 {
-                    Console.Clear(); //Clears the screen to show the enemy's stats before player's attack
+                    case '1': //If player Attacks
+                        Console.Clear(); //Clears the screen to show the enemy's stats before player's attack
 
-                    Console.WriteLine("[I am attacking!]");
+                        Console.WriteLine("[I am attacking!]");
 
-                    if (enemyAction == 2) //If enemy blocks
-                    {
-                        Console.WriteLine(enemyDefendMessage);
-                        EnemyDefendedAttack();
-                    } //If enemy blocks
-
-                    else //Whether the enemy is Attacking, Healing, or doing Nothing
-                    {
-                        battleEnemyHealth = DirectAttack(battlePlayerDamage, battleEnemyHealth, battleEnemyDefense, enemyName);
-                    } //If enemy isn't blocking
-
-                    if (enemyAction <= 1) //If the enemy is attacking after player attack
-                    {
-                        if (battleEnemyHealth > 0) //If the enemy isn't dead
+                        if (enemyAction == 2) //If enemy blocks
                         {
-                            Pause();
-                            Console.WriteLine("[" + enemyName + " is retaliating!]");
-                            battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
-                        }
-                    } // If enemy Retaliates
+                            Console.WriteLine(enemyDefendMessage);
+                            EnemyDefendedAttack();
+                        } //If enemy blocks
 
-                    if (enemyAction == 3) //If the enemy is healing
-                    {
-                        if (battleEnemyHealth > 0) //If the enemy isn't dead
+                        else //Whether the enemy is Attacking, Healing, or doing Nothing
                         {
-                            Pause();
+                            battleEnemyHealth = DirectAttack(battlePlayerDamage, battleEnemyHealth, battleEnemyDefense, enemyName);
+                        } //If enemy isn't blocking
+
+                        if (enemyAction <= 1) //If the enemy is attacking after player attack
+                        {
+                            if (battleEnemyHealth > 0) //If the enemy isn't dead
+                            {
+                                Pause();
+                                Console.WriteLine("[" + enemyName + " is retaliating!]");
+                                battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
+                            }
+                        } // If enemy Retaliates
+
+                        if (enemyAction == 3) //If the enemy is healing
+                        {
+                            if (battleEnemyHealth > 0) //If the enemy isn't dead
+                            {
+                                Pause();
+                                Console.WriteLine(enemyHealMessage);
+                                battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
+                            }
+                        } //If enemy Heals after attack
+                        break;
+
+                    case '2': //If player blocks
+                        Console.Clear(); //Clears the screen
+
+                        if (enemyAction <= 1)
+                        {
+                            Console.WriteLine(enemyAttackMessage);
+                            PlayerDefendedAttack();
+                        } //If enemy Attacks
+
+                        if (enemyAction == 2)
+                        {
+                            Console.WriteLine("[" + enemyName + " is also blocking...]");
+                        } //If enemy mirrors Block
+
+                        if (enemyAction == 3) //If the enemy is healing
+                        {
                             Console.WriteLine(enemyHealMessage);
                             battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
-                        }
-                    } //If enemy Heals after attack
+                        } //If enemy Heals
 
 
-                } //If player attacks
-
-                if (action == '2') //Block
-                {
-                    Console.Clear(); //Clears the screen
-
-                    if (enemyAction <= 1)
-                    {
-                        Console.WriteLine(enemyAttackMessage);
-                        PlayerDefendedAttack();
-                    } //If enemy Attacks
-
-                    if (enemyAction == 2)
-                    {
-                        Console.WriteLine("[" + enemyName + " is also blocking...]");
-                    } //If enemy mirrors Block
-
-                    if (enemyAction == 3) //If the enemy is healing
-                    {
-                        Console.WriteLine(enemyHealMessage);
-                        battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
-                    } //If enemy Heals
-
-
-                    if (enemyAction == 4)
-                    {
-                        Console.WriteLine("[" + enemyName + " is doing nothing...]");
-                    } //If enemy does Nothing
-
-                } //If player blocks
-
-                else if (action == '3') //If player is healing
-                {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("[I am healing!]");
-
-                    if (enemyAction <= 1) //If the enemy is attacking
-                    {
-                        Console.WriteLine("[" + enemyName + " disagrees!]");
-                        Console.WriteLine("");
-
-                        battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
-                        Pause();
-
-                        Console.WriteLine(enemyAttackMessage);
-                        battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
-                    } //If enemy Attacks
-
-                    if (enemyAction == 2) //If the enemy is blocking
-                    {
-                        Console.WriteLine(enemyDefendMessage);
-
-                        battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
-                        Pause();
-                    } //If enemy Blocks
-
-                    if (enemyAction == 3) //If the enemy is healing
-                    {
-                        Console.WriteLine(enemyHealMessage);
-                        battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
-                        Pause();
-
-                        battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
-                        Pause();
-                    } //If enemy also Heals
-
-                    if (enemyAction == 4)
-                    {
-                        Console.WriteLine("[" + enemyName + " does nothing...]");
-
-                        battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
-                        Pause();
-                    } //If enemy does Nothing
-                } //If player Heals
-
-                else if (action == '4') //Nothing
-                {
-                    Console.Clear(); //Clears the screen
-
-                    if (enemyAction <= 1) //If the enemy is attacking
-                    {
-                        Console.WriteLine(enemyAttackMessage);
-                        battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
-                        Pause();
-                        if (GameOver == true)
+                        if (enemyAction == 4)
                         {
-                            break;
-                        }
-                    } // If enemy Attacks
+                            Console.WriteLine("[" + enemyName + " is doing nothing...]");
+                        } //If enemy does Nothing
+                        break;
 
-                    if (enemyAction == 2)
-                    {
-                        Console.WriteLine("[" + enemyName + " is blocking...]");
-                    } //If enemy Blocks
+                    case '3':
+                        Console.Clear(); //Clears the screen
+                        Console.WriteLine("[I am healing!]");
 
-                    if (enemyAction == 3) //If the enemy is healing
-                    {
-                        Console.WriteLine(enemyHealMessage);
-                        battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
-                        Pause();
-                    } //If enemy Heals
+                        if (enemyAction <= 1) //If the enemy is attacking
+                        {
+                            Console.WriteLine("[" + enemyName + " disagrees!]");
+                            Console.WriteLine("");
 
-                    if (enemyAction == 4)
-                    {
-                        Console.WriteLine("[" + enemyName + " also does nothing...]");
-                    } //If enemy also does Nothing
+                            battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+                            Pause();
 
-                } //If player does nothing
+                            Console.WriteLine(enemyAttackMessage);
+                            battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
+                        } //If enemy Attacks
 
-                else
-                {
-                    turncounter--;
-                }
+                        else if (enemyAction == 2) //If the enemy is blocking
+                        {
+                            Console.WriteLine(enemyDefendMessage);
+
+                            battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+                            Pause();
+                        } //If enemy Blocks
+
+                        else if (enemyAction == 3) //If the enemy is healing
+                        {
+                            Console.WriteLine(enemyHealMessage);
+                            battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+                            Pause();
+
+                            battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
+                            Pause();
+                        } //If enemy also Heals
+
+                        else if (enemyAction == 4)
+                        {
+                            Console.WriteLine("[" + enemyName + " does nothing...]");
+
+                            battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+                            Pause();
+                        } //If enemy does Nothing
+                        break;
+
+                    case '4': //Do nothing
+                        Console.Clear(); //Clears the screen
+
+                        if (enemyAction <= 1) //If the enemy is attacking
+                        {
+                            Console.WriteLine(enemyAttackMessage);
+                            battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
+                            Pause();
+                            if (GameOver == true)
+                            {
+                                break;
+                            }
+                        } // If enemy Attacks
+
+                        if (enemyAction == 2)
+                        {
+                            Console.WriteLine("[" + enemyName + " is blocking...]");
+                        } //If enemy Blocks
+
+                        if (enemyAction == 3) //If the enemy is healing
+                        {
+                            Console.WriteLine(enemyHealMessage);
+                            battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
+                            Pause();
+                        } //If enemy Heals
+
+                        if (enemyAction == 4)
+                        {
+                            Console.WriteLine("[" + enemyName + " also does nothing...]");
+                        } //If enemy also does Nothing
+                        break;
+
+                    default:
+                        turncounter--;
+                        break;
+                } //Action Switch
 
                 if (InBattle == true) //Runs the regen & end of round text Only if the battle is continuing
                 {
@@ -813,7 +788,7 @@ namespace HelloWorld
                     GameOver = true;
                     InBattle = false;
                     break;
-                }
+                } //If player lost
 
                 if (battleEnemyHealth <= 0) //If the player won
                 {
@@ -838,7 +813,7 @@ namespace HelloWorld
                     Console.Clear(); //Clears the screen
                     InBattle = false;
                     break;
-                }
+                } //If player won
             } //InBattle bool
         } //Update
 
@@ -1042,280 +1017,280 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.Clear(); //Clears the screen
 
-            if (styleKey == '1') //Magic
+            switch (styleKey)
             {
-                styleName = "Magic"; //Sets the Style name
+                case '1': //Magic
+                    styleName = "Magic"; //Sets the Style name
 
-                Console.WriteLine("What is your specialty?");
-                Console.WriteLine("[1: Warder]\n[2: Atronach]\n[3: Battle Mage]\n[4: Priest]");
-                Console.WriteLine("[Press the number to continue]");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("What is your specialty?");
+                    Console.WriteLine("[1: Warder]\n[2: Atronach]\n[3: Battle Mage]\n[4: Priest]");
+                    Console.WriteLine("[Press the number to continue]");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.WriteLine("Warder [1]");
-                Console.WriteLine("Base Health = 90");
-                Console.WriteLine("Base Regen = 9");
-                Console.WriteLine("Base Heal = 6");
-                Console.WriteLine("Damage Mult = 1");
-                Console.WriteLine("Base Defense = 22");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("Warder [1]");
+                    Console.WriteLine("Base Health = 90");
+                    Console.WriteLine("Base Regen = 9");
+                    Console.WriteLine("Base Heal = 6");
+                    Console.WriteLine("Damage Mult = 1");
+                    Console.WriteLine("Base Defense = 22");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.WriteLine("Atronach [2]");
-                Console.WriteLine("Base Health = 160");
-                Console.WriteLine("Base Regen = 4");
-                Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 0.8");
-                Console.WriteLine("Base Defense = 8");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("Atronach [2]");
+                    Console.WriteLine("Base Health = 160");
+                    Console.WriteLine("Base Regen = 4");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 0.8");
+                    Console.WriteLine("Base Defense = 8");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.WriteLine("Battle Mage [3]");
-                Console.WriteLine("Base Health = 80");
-                Console.WriteLine("Base Regen = 10");
-                Console.WriteLine("Base Heal = 8");
-                Console.WriteLine("Damage Mult = 1.2");
-                Console.WriteLine("Base Defense = 11");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("Battle Mage [3]");
+                    Console.WriteLine("Base Health = 80");
+                    Console.WriteLine("Base Regen = 10");
+                    Console.WriteLine("Base Heal = 8");
+                    Console.WriteLine("Damage Mult = 1.2");
+                    Console.WriteLine("Base Defense = 11");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.WriteLine("Priest [4]");
-                Console.WriteLine("Base Health = 75");
-                Console.WriteLine("Base Regen = 8");
-                Console.WriteLine("Base Heal = 15");
-                Console.WriteLine("Damage Mult = 0.8");
-                Console.WriteLine("Base Defense = 9");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("Priest [4]");
+                    Console.WriteLine("Base Health = 75");
+                    Console.WriteLine("Base Regen = 8");
+                    Console.WriteLine("Base Heal = 15");
+                    Console.WriteLine("Damage Mult = 0.8");
+                    Console.WriteLine("Base Defense = 9");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.Write("My specialty is ");
-                specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Magic
+                    Console.Write("My specialty is ");
+                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Magic
 
 
-                if (specialtyKey == '1') //Warder
-                {
-                    health = 90;
-                    healthRegen = 9;
-                    basePlayerHeal = 6;
-                    playerDamageMult = 1;
-                    playerDefense = 24;
-                    specialty = "Warder";
-                }
-                else if (specialtyKey == '2') //Atronach
-                {
-                    health = 160;
-                    healthRegen = 4;
-                    basePlayerHeal = 0;
-                    playerDamageMult = 0.8f;
-                    playerDefense = 8;
-                    specialty = "Atronach";
-                }
-                else if (specialtyKey == '3') //Battle Mage
-                {
-                    health = 75;
-                    healthRegen = 10;
-                    basePlayerHeal = 8;
-                    playerDamageMult = 1.2f;
-                    playerDefense = 11;
-                    specialty = "Battle Mage";
-                }
-                else if (specialtyKey == '4') //Priest
-                {
-                    health = 70;
-                    healthRegen = 8;
-                    basePlayerHeal = 15;
-                    playerDamageMult = 0.9f;
-                    playerDefense = 9;
-                    specialty = "Priest";
-                }
-                else
-                {
-                    styleName = "None";
-                }
-            } //If Magic Style
+                    if (specialtyKey == '1') //Warder
+                    {
+                        health = 90;
+                        healthRegen = 9;
+                        basePlayerHeal = 6;
+                        playerDamageMult = 1;
+                        playerDefense = 24;
+                        specialty = "Warder";
+                    }
+                    else if (specialtyKey == '2') //Atronach
+                    {
+                        health = 160;
+                        healthRegen = 4;
+                        basePlayerHeal = 0;
+                        playerDamageMult = 0.8f;
+                        playerDefense = 8;
+                        specialty = "Atronach";
+                    }
+                    else if (specialtyKey == '3') //Battle Mage
+                    {
+                        health = 75;
+                        healthRegen = 10;
+                        basePlayerHeal = 8;
+                        playerDamageMult = 1.2f;
+                        playerDefense = 11;
+                        specialty = "Battle Mage";
+                    }
+                    else if (specialtyKey == '4') //Priest
+                    {
+                        health = 70;
+                        healthRegen = 8;
+                        basePlayerHeal = 15;
+                        playerDamageMult = 0.9f;
+                        playerDefense = 9;
+                        specialty = "Priest";
+                    }
+                    else
+                    {
+                        styleName = "None";
+                    }
+                    break;
 
-            else if (styleKey == '2') //Warrior
-            {
-                styleName = "Warrior"; //Sets the Style name
+                case '2':
+                    styleName = "Warrior"; //Sets the Style name
 
-                Console.WriteLine("What is your specialty?");
-                Console.WriteLine("[1: Tank]\n[2: Berserker]\n[3: Shielder]\n[4: Knight]");
-                Console.WriteLine("[Press the number to continue]");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("What is your specialty?");
+                    Console.WriteLine("[1: Tank]\n[2: Berserker]\n[3: Shielder]\n[4: Knight]");
+                    Console.WriteLine("[Press the number to continue]");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.WriteLine("Tank [1]");
-                Console.WriteLine("Base Health = 120");
-                Console.WriteLine("Base Regen = 8");
-                Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 0.8");
-                Console.WriteLine("Base Defense = 16");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("Tank [1]");
+                    Console.WriteLine("Base Health = 120");
+                    Console.WriteLine("Base Regen = 8");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 0.8");
+                    Console.WriteLine("Base Defense = 16");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.WriteLine("Berserker [2]");
-                Console.WriteLine("Base Health = 90");
-                Console.WriteLine("Base Regen = 6");
-                Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 1.2");
-                Console.WriteLine("Base Defense = 13");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("Berserker [2]");
+                    Console.WriteLine("Base Health = 90");
+                    Console.WriteLine("Base Regen = 6");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1.2");
+                    Console.WriteLine("Base Defense = 13");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.WriteLine("Shielder [3]");
-                Console.WriteLine("Base Health = 100");
-                Console.WriteLine("Base Regen = 7");
-                Console.WriteLine("Base Heal = 5");
-                Console.WriteLine("Damage Mult = 0.9");
-                Console.WriteLine("Base Defense = 30");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("Shielder [3]");
+                    Console.WriteLine("Base Health = 100");
+                    Console.WriteLine("Base Regen = 7");
+                    Console.WriteLine("Base Heal = 5");
+                    Console.WriteLine("Damage Mult = 0.9");
+                    Console.WriteLine("Base Defense = 30");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.WriteLine("Knight [4]");
-                Console.WriteLine("Base Health = 110");
-                Console.WriteLine("Base Regen = 8");
-                Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 1.1");
-                Console.WriteLine("Base Defense = 15");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("Knight [4]");
+                    Console.WriteLine("Base Health = 110");
+                    Console.WriteLine("Base Regen = 8");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1.1");
+                    Console.WriteLine("Base Defense = 15");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.Write("My specialty is ");
-                specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Knight
+                    Console.Write("My specialty is ");
+                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Knight
 
-                if (specialtyKey == '1') //Tank
-                {
-                    health = 120;
-                    healthRegen = 4;
-                    basePlayerHeal = 0;
-                    playerDamageMult = 0.8f;
-                    playerDefense = 16;
-                    specialty = "Tank";
-                }
-                else if (specialtyKey == '2') //Berserker
-                {
-                    health = 90;
-                    healthRegen = 4;
-                    basePlayerHeal = 0;
-                    playerDamageMult = 1.2f;
-                    playerDefense = 13;
-                    specialty = "Berserker";
-                }
-                else if (specialtyKey == '3') //Shielder
-                {
-                    health = 100;
-                    healthRegen = 5;
-                    basePlayerHeal = 5;
-                    playerDamageMult = 0.9f;
-                    playerDefense = 30;
-                    specialty = "Shielder";
-                }
-                else if (specialtyKey == '4') //Knight
-                {
-                    health = 110;
-                    healthRegen = 6;
-                    basePlayerHeal = 0;
-                    playerDamageMult = 1.1f;
-                    playerDefense = 15;
-                    specialty = "Knight";
-                }
-                else
-                {
-                    styleName = "None";
-                }
-            } //If Warrior Style
+                    if (specialtyKey == '1') //Tank
+                    {
+                        health = 120;
+                        healthRegen = 4;
+                        basePlayerHeal = 0;
+                        playerDamageMult = 0.8f;
+                        playerDefense = 16;
+                        specialty = "Tank";
+                    }
+                    else if (specialtyKey == '2') //Berserker
+                    {
+                        health = 90;
+                        healthRegen = 4;
+                        basePlayerHeal = 0;
+                        playerDamageMult = 1.2f;
+                        playerDefense = 13;
+                        specialty = "Berserker";
+                    }
+                    else if (specialtyKey == '3') //Shielder
+                    {
+                        health = 100;
+                        healthRegen = 5;
+                        basePlayerHeal = 5;
+                        playerDamageMult = 0.9f;
+                        playerDefense = 30;
+                        specialty = "Shielder";
+                    }
+                    else if (specialtyKey == '4') //Knight
+                    {
+                        health = 110;
+                        healthRegen = 6;
+                        basePlayerHeal = 0;
+                        playerDamageMult = 1.1f;
+                        playerDefense = 15;
+                        specialty = "Knight";
+                    }
+                    else
+                    {
+                        styleName = "None";
+                    }
+                    break;
 
-            else if (styleKey == '3') //Trickery
-            {
-                styleName = "Trickster"; //Sets the Style name
+                case '3':
+                    styleName = "Trickster"; //Sets the Style name
 
-                Console.WriteLine("What is your specialty?");
-                Console.WriteLine("[1: Assassin]\n[2: Martial Artist]\n[3: Ninja\n[4: Rogue]");
-                Console.WriteLine("[Press the number to continue]");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("What is your specialty?");
+                    Console.WriteLine("[1: Assassin]\n[2: Martial Artist]\n[3: Ninja\n[4: Rogue]");
+                    Console.WriteLine("[Press the number to continue]");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.WriteLine("Assassin [1]");
-                Console.WriteLine("Base Health = 70");
-                Console.WriteLine("Base Regen = 8");
-                Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 1.35");
-                Console.WriteLine("Base Defense = 6");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("Assassin [1]");
+                    Console.WriteLine("Base Health = 70");
+                    Console.WriteLine("Base Regen = 8");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1.35");
+                    Console.WriteLine("Base Defense = 6");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.WriteLine("Martial Artist [2]");
-                Console.WriteLine("Base Health = 80");
-                Console.WriteLine("Base Regen = 13");
-                Console.WriteLine("Base Heal = 5");
-                Console.WriteLine("Damage Mult = 1.2");
-                Console.WriteLine("Base Defense = 10");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("Martial Artist [2]");
+                    Console.WriteLine("Base Health = 80");
+                    Console.WriteLine("Base Regen = 13");
+                    Console.WriteLine("Base Heal = 5");
+                    Console.WriteLine("Damage Mult = 1.2");
+                    Console.WriteLine("Base Defense = 10");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.WriteLine("Ninja [3]");
-                Console.WriteLine("Base Health = 65");
-                Console.WriteLine("Base Regen = 8");
-                Console.WriteLine("Base Heal = 5");
-                Console.WriteLine("Damage Mult = 1.4");
-                Console.WriteLine("Base Defense = 5");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("Ninja [3]");
+                    Console.WriteLine("Base Health = 65");
+                    Console.WriteLine("Base Regen = 8");
+                    Console.WriteLine("Base Heal = 5");
+                    Console.WriteLine("Damage Mult = 1.4");
+                    Console.WriteLine("Base Defense = 5");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.WriteLine("Rogue [4]");
-                Console.WriteLine("Base Health = 70");
-                Console.WriteLine("Base Regen = 8");
-                Console.WriteLine("Base Heal = 0");
-                Console.WriteLine("Damage Mult = 1.3");
-                Console.WriteLine("Base Defense = 3");
-                Console.WriteLine("");
-                Console.WriteLine("");
+                    Console.WriteLine("Rogue [4]");
+                    Console.WriteLine("Base Health = 70");
+                    Console.WriteLine("Base Regen = 8");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1.3");
+                    Console.WriteLine("Base Defense = 3");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
 
-                Console.Write("My specialty is ");
-                specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Trickster
+                    Console.Write("My specialty is ");
+                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Trickster
 
-                if (specialtyKey == '1') //Assassin
-                {
-                    health = 70;
-                    healthRegen = 8;
-                    basePlayerHeal = 0;
-                    playerDamageMult = 1.35f;
-                    playerDefense = 6;
-                    specialty = "Assassin";
-                }
-                else if (specialtyKey == '2') //Martial Artist
-                {
-                    health = 80;
-                    healthRegen = 13;
-                    basePlayerHeal = 5;
-                    playerDamageMult = 1.2f;
-                    playerDefense = 10;
-                    specialty = "Martial Artist";
-                }
-                else if (specialtyKey == '3') //Ninja
-                {
-                    health = 65;
-                    healthRegen = 9;
-                    basePlayerHeal = 5;
-                    playerDamageMult = 1.4f;
-                    playerDefense = 5;
-                    specialty = "Ninja";
-                }
+                    if (specialtyKey == '1') //Assassin
+                    {
+                        health = 70;
+                        healthRegen = 8;
+                        basePlayerHeal = 0;
+                        playerDamageMult = 1.35f;
+                        playerDefense = 6;
+                        specialty = "Assassin";
+                    }
+                    else if (specialtyKey == '2') //Martial Artist
+                    {
+                        health = 80;
+                        healthRegen = 13;
+                        basePlayerHeal = 5;
+                        playerDamageMult = 1.2f;
+                        playerDefense = 10;
+                        specialty = "Martial Artist";
+                    }
+                    else if (specialtyKey == '3') //Ninja
+                    {
+                        health = 65;
+                        healthRegen = 9;
+                        basePlayerHeal = 5;
+                        playerDamageMult = 1.4f;
+                        playerDefense = 5;
+                        specialty = "Ninja";
+                    }
 
-                else if (specialtyKey == '4') //Rogue
-                {
-                    health = 70;
-                    healthRegen = 8;
-                    basePlayerHeal = 0;
-                    playerDamageMult = 1.3f;
-                    playerDefense = 3;
-                    specialty = "Rogue";
-                }
-                else
-                {
-                    styleName = "None";
-                }
-            } //If Trickery Style
+                    else if (specialtyKey == '4') //Rogue
+                    {
+                        health = 70;
+                        healthRegen = 8;
+                        basePlayerHeal = 0;
+                        playerDamageMult = 1.3f;
+                        playerDefense = 3;
+                        specialty = "Rogue";
+                    }
+                    else
+                    {
+                        styleName = "None";
+                    }
+                    break;
+            } //Style Key Switch
             Console.Clear(); //Clears the screen
         } //Decide Specialty function
 
@@ -1364,36 +1339,41 @@ namespace HelloWorld
             Console.Clear(); //Clears the screen
             Console.WriteLine("9 Menu");
             Console.WriteLine("");
-            Console.WriteLine("[1: Change Name]\n[2: Check Stats]\n[0: Quit]");
+            Console.WriteLine("[1: Change Name]\n[2: Check Stats]\n[3: Return to Game]\n[0: Quit]");
             Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
             char action = Console.ReadKey().KeyChar;
 
-            if (action == '1') //Change Name
+            switch(action)
             {
-                GetName();
-            }
+                case '1': //Change Name
+                    GetName();
+                    break;
 
-            if (action == '2')
-            {
-                StatCheck();
-            }
+                case '2': //Check Stats
+                    StatCheck();
+                    break;
 
-            if (action == '0') //Quit Game
-            {
-                Console.Clear(); //Clears the screen
-                Console.WriteLine("Are you sure you want to leave?");
-                Console.WriteLine("");
-                Console.WriteLine("[1: Yes]\n[2: No]");
-                Console.WriteLine("[Press the number to continue]");
-                action = Console.ReadKey().KeyChar;
+                case '3': //Return to game
+                    break;
 
-                if (action == '1') //Change Name
-                {
-                    GameOver = true;
-                }
-            }
+                case '0': //Quit
+                    Console.Clear(); //Clears the screen
+                    Console.WriteLine("Are you sure you want to leave?");
+                    Console.WriteLine("");
+                    Console.WriteLine("[1: Yes]\n[2: No]");
+                    Console.WriteLine("[Press the number to continue]");
+                    action = Console.ReadKey().KeyChar;
+                    if (action == '1') //Change Name
+                    {
+                        GameOver = true;
+                    }
+                    break;
+
+                default:
+                    break;
+            } //Action Switch
         } //9 Menu function
 
         void EnemySetup()
