@@ -219,9 +219,6 @@ namespace HelloWorld
                     int SlimeApproach = r.Next(1, 5); //Chance for a slime to engage
                     if (SlimeApproach == 1) //If a slime engages
                     {
-                        Console.Clear(); //Clears the screen
-                        Console.WriteLine("");
-                        Pause();
                         EnemySetup();
                         enemyName = "Slime";
                         InBattle = true;
