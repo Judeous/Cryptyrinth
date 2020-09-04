@@ -57,6 +57,8 @@ namespace HelloWorld
 
         char LabyrinthEntranceExplored = 'n';
         char LabyrinthEntrywayExplored = 'n';
+        string labyYLocation = "26";
+        string labyXLocation = "H";
 
         char CastleGateExplored = 'n';
         char CastleEntryExplored = 'n';
@@ -323,11 +325,15 @@ namespace HelloWorld
                         break;
 
                     case '2': //Enter Stairway door
-                        //area = ""
+                        area = "Labyrinth";
+                        labyYLocation = "21I";
+                        labyXLocation = "";
                         break;
 
                     case '3': //Enter Non-Stairway door
-                        //area = ""
+                        area = "Labyrinth";
+                        labyYLocation = "24";
+                        labyXLocation = "G";
                         break;
 
                     case '4': //Check out table
@@ -374,6 +380,11 @@ namespace HelloWorld
                 LabyrinthEntrywayExplored = 'y';
                 Console.Clear(); //Clears the screen
             } //If in Labyrinth Entryway and not in a battle
+
+            if (area == "Labyrinth")
+            {
+
+            }
 
             if (area == "CastleGate" && InBattle != true)
             {
