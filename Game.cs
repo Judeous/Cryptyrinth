@@ -37,6 +37,9 @@ namespace HelloWorld
         string enemyAppearMessage = "An enemy appears!";
         string enemyAttackMessage = "The enemy is attacking!";
         string enemyDefendMessage = "The enemy is defending!";
+        string enemyNoDefenseMessage = "The enemy's defense was knocked aside!";
+        string enemyNothingMessage = "The enemy does nothing...";
+        string enemyUselessDefenseMessage = "The enemy is defending...";
         string enemyHealMessage = "The enemy is healing!";
         string enemyDeathMessage = "The enemy was unmade";
 
@@ -57,8 +60,8 @@ namespace HelloWorld
 
         char LabyrinthEntranceExplored = 'n';
         char LabyrinthEntrywayExplored = 'n';
-        string labyYLocation = "26";
-        string labyXLocation = "H";
+        int labyYLocation = 26;
+        int labyXLocation = 7;
 
         char CastleGateExplored = 'n';
         char CastleEntryExplored = 'n';
@@ -109,6 +112,7 @@ namespace HelloWorld
                 Console.WriteLine("[1: Re-enter the shack to change my style & specialty]\n[2: Follow the path down into the field]\n[3: Look around]\n[9: 9 Menu]");
                 Console.WriteLine("");
                 Console.WriteLine("[Press the number to continue]");
+                Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
                 switch(action)
                 {
@@ -165,6 +169,7 @@ namespace HelloWorld
                 Console.WriteLine("[1: Head to the hill with the shack atop it]\n[2: Head to the crypt]\n[3: Head towards the Castle]\n[4: Engage a slime]\n[5: Look around]\n[9: 9 Menu]");
                 Console.WriteLine("");
                 Console.WriteLine("[Press the number to continue]");
+                Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
 
                 switch(action)
@@ -186,8 +191,8 @@ namespace HelloWorld
                         Console.WriteLine("[I engage one of the many slimes]");
                         Pause();
                         enemyName = "Slime";
-                        EnemySetup();
                         InBattle = true;
+                        Battle();
                         break;
 
                     case '5': //Look around
@@ -215,9 +220,9 @@ namespace HelloWorld
                     int SlimeApproach = r.Next(1, 5); //Chance for a slime to engage
                     if (SlimeApproach == 1) //If a slime engages
                     {
-                        EnemySetup();
                         enemyName = "Slime";
                         InBattle = true;
+                        Battle();
                     } //If slime engages
                 } //If not engaging
 
@@ -244,6 +249,7 @@ namespace HelloWorld
                 Console.WriteLine("[1: Head back to the fork in the field]\n[2: Enter the Crypt]\n[3: Read the panel]\n[4: Look around]\n[9: 9 Menu]");
                 Console.WriteLine("");
                 Console.WriteLine("[Press the number to continue]");
+                Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
 
                 switch(action)
@@ -299,7 +305,7 @@ namespace HelloWorld
                     Console.WriteLine("[(Not sure that was the best idea)]");
                     Console.WriteLine("");
                     Console.WriteLine("[This is definitely a labyrinth, seeing it from the inside]");
-                    Console.WriteLine("[There's a similar dark grey tint to the semi-fancily stone tiled floor]");
+                    Console.WriteLine("[There's a familiar dark grey tint to the semi-fancily stone tiled floor]");
                     Console.WriteLine("[I think I can hear uneven footsteps against the understandably slimy tiles somewhere deeper within]");
                     Console.WriteLine("");
                     Console.WriteLine("[There's a doorway to the left, then there's a dead end right after a door to the right]");
@@ -315,7 +321,9 @@ namespace HelloWorld
 
                 Console.WriteLine("[What do I do?]");
                 Console.WriteLine("[1: Head up the flight of stairs and exit the Crypt/Labyrinth]\n[2: Enter the door next to the entry stairway]\n[3: Enter the door opposite the stairway]\n[4: Check out the table]\n[5: Look around]\n[9: 9 Menu]");
+                Console.WriteLine("");
                 Console.WriteLine("[Press the number to continue]");
+                Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
 
                 switch(action)
@@ -326,14 +334,14 @@ namespace HelloWorld
 
                     case '2': //Enter Stairway door
                         area = "Labyrinth";
-                        labyYLocation = "21I";
-                        labyXLocation = "";
+                        labyXLocation = 5;
+                        labyYLocation = 25;
                         break;
 
                     case '3': //Enter Non-Stairway door
                         area = "Labyrinth";
-                        labyYLocation = "24";
-                        labyXLocation = "G";
+                        labyXLocation = 10;
+                        labyYLocation = 22;
                         break;
 
                     case '4': //Check out table
@@ -372,9 +380,9 @@ namespace HelloWorld
                     Console.Clear(); //Clears the screen
                     Console.WriteLine("");
                     Pause();
-                    EnemySetup();
                     enemyName = "Slombie";
                     InBattle = true;
+                    Battle();
                 } //If slomibe engages
 
                 LabyrinthEntrywayExplored = 'y';
@@ -407,6 +415,7 @@ namespace HelloWorld
                 Console.WriteLine("[1: Return to the fork in the path]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[9: 9 Menu]");
                 Console.WriteLine("");
                 Console.WriteLine("[Press the number to continue]");
+                Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
 
                 switch (action)
@@ -459,6 +468,7 @@ namespace HelloWorld
                 Console.WriteLine("[1: Exit the castle]\n\n[3: Look around]\n[9: 9 Menu]");
                 Console.WriteLine("");
                 Console.WriteLine("[Press the number to continue]");
+                Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
 
                 switch (action)
@@ -526,6 +536,7 @@ namespace HelloWorld
                 Console.WriteLine("[1: Enter the doorless doorway]\n[2: Nothing]\n[3: Engage Nothing]\n[4: Engage Nothing in the throne]\n[5: Look around]\n[9: 9 Menu]");
                 Console.WriteLine("");
                 Console.WriteLine("[Press the number to continue]");
+                Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
 
                 switch(action)
@@ -543,8 +554,8 @@ namespace HelloWorld
                         Console.WriteLine("[I engage Nothing]");
                         Pause();
                         enemyName = "Nothing";
-                        EnemySetup();
                         InBattle = true;
+                        Battle();
                         break;
 
                     case '4': //Engage Nothing in the throne
@@ -552,8 +563,8 @@ namespace HelloWorld
                         Console.WriteLine("[I engage Nothing in the throne]");
                         Pause();
                         enemyName = "Nothing";
-                        EnemySetup();
                         InBattle = true;
+                        Battle();
                         break;
 
                     case '5': //Look around
@@ -578,21 +589,20 @@ namespace HelloWorld
                 Explored = 'y';
                 Console.Clear(); //Clears the screen
             } //If in Void
+        } //Update
 
+        public void Battle()
+        {
+            Console.Clear();
+            EnemySetup();
+
+            Console.WriteLine(enemyAppearMessage); //Shows the enemy approach message
+            Console.WriteLine("");
+            Console.Write("> ");
+            Console.ReadKey();
             Console.Clear();
 
-            if (InBattle == true)
-            {
-                //Calculates enemy damage and adjusts max health
-                battleEnemyMaxHP = battleEnemyHealth; //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
-                enemyDamage = baseEnemyDamage * enemyDamageMult; //Sets the total enemy damage based on the base damage and multiplier
-
-                Console.WriteLine(enemyAppearMessage); //Shows the enemy approach message
-                Console.ReadKey();
-                Console.Clear();
-
-                turncounter = 0; //Sets the turn counter to 0 before battle starts
-            }
+            turncounter = 0; //Sets the turn counter to 0 before battle starts
 
             while (InBattle == true)
             {
@@ -622,8 +632,11 @@ namespace HelloWorld
 
                 Console.WriteLine("[What do I do?]");
                 Console.WriteLine("[1: Attack, 2: Block, 3: Heal, 4: Nothing]");
+                Console.WriteLine("");
+                Console.WriteLine("[Press the number to continue]");
+                Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
-                switch(action)
+                switch (action)
                 {
                     case '1': //If player Attacks
                         Console.Clear(); //Clears the screen to show the enemy's stats before player's attack
@@ -673,7 +686,7 @@ namespace HelloWorld
 
                         if (enemyAction == 2)
                         {
-                            Console.WriteLine("[" + enemyName + " is also blocking...]");
+                            Console.WriteLine(enemyUselessDefenseMessage);
                         } //If enemy mirrors Block
 
                         if (enemyAction == 3) //If the enemy is healing
@@ -685,7 +698,7 @@ namespace HelloWorld
 
                         if (enemyAction == 4)
                         {
-                            Console.WriteLine("[" + enemyName + " is doing nothing...]");
+                            Console.WriteLine(enemyNothingMessage); 
                         } //If enemy does Nothing
                         break;
 
@@ -725,7 +738,7 @@ namespace HelloWorld
 
                         else if (enemyAction == 4)
                         {
-                            Console.WriteLine("[" + enemyName + " does nothing...]");
+                            Console.WriteLine(enemyNothingMessage);
 
                             battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
                             Pause();
@@ -748,7 +761,7 @@ namespace HelloWorld
 
                         if (enemyAction == 2)
                         {
-                            Console.WriteLine("[" + enemyName + " is blocking...]");
+                            Console.WriteLine(enemyUselessDefenseMessage);
                         } //If enemy Blocks
 
                         if (enemyAction == 3) //If the enemy is healing
@@ -760,7 +773,7 @@ namespace HelloWorld
 
                         if (enemyAction == 4)
                         {
-                            Console.WriteLine("[" + enemyName + " also does nothing...]");
+                            Console.WriteLine(enemyNothingMessage); 
                         } //If enemy also does Nothing
                         break;
 
@@ -786,6 +799,7 @@ namespace HelloWorld
                     }
 
                     Console.ReadKey();  //Pauses
+                    Console.Write("> ");
                     Console.Clear(); //Clears the screen
                     battlePlayerHealth = Regeneration(battlePlayerHealth, battlePlayerMaxHP, healthRegen); //Regenerates player
                     battleEnemyHealth = Regeneration(battleEnemyHealth, battleEnemyMaxHP, enemyRegen); //Regenerates Enemy
@@ -808,11 +822,22 @@ namespace HelloWorld
                     Console.WriteLine("");
                     Console.WriteLine("Congratulations, you won!");
                     Console.WriteLine("");
-                    Console.WriteLine("You've leveled up!");
+                    Console.WriteLine("You've gained a level!");
+                    Pause();
+
+                    Console.Clear(); //Clears the screen
+                    Console.WriteLine("Current Level: " + level);
+                    Console.WriteLine("Pre Level up:");
+                    Pause();
+                    StatCheck();
+
                     level++;
                     StatCalculation();
                     Console.WriteLine("Current Level: " + level);
+
+                    Console.WriteLine("Post Level up:");
                     Pause();
+                    StatCheck();
 
                     if (level == 10)
                     {
@@ -826,7 +851,7 @@ namespace HelloWorld
                     break;
                 } //If player won
             } //InBattle bool
-        } //Update
+        } //Battle Function
 
         void End()
         {
@@ -839,6 +864,7 @@ namespace HelloWorld
         {
             Console.WriteLine("");
             Console.WriteLine("[Press any key to continue]");
+            Console.Write("> ");
             Console.ReadKey();  //Pauses
             Console.WriteLine("");
         }
@@ -930,7 +956,7 @@ namespace HelloWorld
 
             if (battleEnemyDefense == 0)
             {
-                Console.WriteLine("[" + enemyName + " can't block!]");
+                Console.WriteLine("[" + enemyName + " can't block]");
                 battleEnemyHealth = DirectAttack(playerDamage, battleEnemyHealth, battleEnemyDefense, enemyName);
             } //If player has no defense
 
@@ -1021,7 +1047,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
 
-            Console.Write("My style is ");
+            Console.Write("> My style is ");
             char styleKey = Console.ReadKey().KeyChar;
             char specialtyKey;
 
@@ -1075,7 +1101,7 @@ namespace HelloWorld
                     Console.WriteLine("");
                     Console.WriteLine("");
 
-                    Console.Write("My specialty is ");
+                    Console.Write("> My specialty is ");
                     specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Magic
 
 
@@ -1166,7 +1192,7 @@ namespace HelloWorld
                     Console.WriteLine("");
                     Console.WriteLine("");
 
-                    Console.Write("My specialty is ");
+                    Console.Write("> My specialty is ");
                     specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Knight
 
                     if (specialtyKey == '1') //Tank
@@ -1256,7 +1282,7 @@ namespace HelloWorld
                     Console.WriteLine("");
                     Console.WriteLine("");
 
-                    Console.Write("My specialty is ");
+                    Console.Write("> My specialty is ");
                     specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Trickster
 
                     if (specialtyKey == '1') //Assassin
@@ -1329,7 +1355,7 @@ namespace HelloWorld
             Console.Clear(); //Clears the screen
             Console.WriteLine("What is your name?");
             Console.WriteLine("[Press Enter to enter your name]");
-            Console.Write("My name is ");
+            Console.Write("> My name is ");
             name = Console.ReadLine(); //Gets the player's name
 
             Console.Clear(); //Clears the screen
@@ -1337,6 +1363,8 @@ namespace HelloWorld
             Console.WriteLine(name + " is your name?");
             Console.WriteLine("[Press the number to continue]");
             Console.WriteLine("[1: Yes]\n[2: No]");
+            Console.WriteLine("");
+            Console.Write("> ");
             char action = Console.ReadKey().KeyChar;
 
             if (action == '2')
@@ -1354,6 +1382,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
+            Console.Write("> ");
             char action = Console.ReadKey().KeyChar;
 
             switch(action)
@@ -1375,6 +1404,7 @@ namespace HelloWorld
                     Console.WriteLine("");
                     Console.WriteLine("[1: Yes]\n[2: No]");
                     Console.WriteLine("[Press the number to continue]");
+                    Console.Write("> ");
                     action = Console.ReadKey().KeyChar;
                     if (action == '1') //Change Name
                     {
@@ -1402,7 +1432,10 @@ namespace HelloWorld
                 enemyAppearMessage = "[A slime becomes hostile!]";
                 enemyDeathMessage = "[The slime melts into the ground]";
                 enemyAttackMessage = "[The slime is attacking!]";
-                enemyDefendMessage = "[The slime's defending!]";
+                enemyDefendMessage = "[The slime forms a defensive layer!]";
+                enemyNoDefenseMessage = "[The slime's defensive layer was knocked away!]";
+                enemyNothingMessage = "[The slime does nothing...]";
+                enemyUselessDefenseMessage = "[The slime shows it's defensive layer...]";
                 enemyHealMessage = "[The slime is growing!]";
             } //If the enemy is a slime
 
@@ -1420,6 +1453,9 @@ namespace HelloWorld
                 enemyDeathMessage = "[Nothing stopped existing]";
                 enemyAttackMessage = "[Nothing is attacking me]";
                 enemyDefendMessage = "[Nothing is defending itself]";
+                enemyNoDefenseMessage = "[Nothing's defense was shattered]";
+                enemyNothingMessage = "[Nothing happens]";
+                enemyUselessDefenseMessage = "[Nothing defends itself]";
                 enemyHealMessage = "[Nothing is healing]";
             } //If the enemy is Nothing
 
@@ -1434,11 +1470,18 @@ namespace HelloWorld
 
                 //Messages
                 enemyAppearMessage = "[There's a posessed corpse in here!]";
-                enemyDeathMessage = "[The slime leaves the body and sinks to the floor]";
+                enemyDeathMessage = "[The slime leaves the corpse and sinks to the floor]";
                 enemyAttackMessage = "[The slombie is attacking!]";
-                enemyDefendMessage = "[The slime forms a shield before the body!]";
+                enemyDefendMessage = "[The slime forms a shield before the corpse!]";
+                enemyNoDefenseMessage = "[The shield was torn away!]";
+                enemyNothingMessage = "[The slombie does nothing...]";
+                enemyUselessDefenseMessage = "[The slime forms a shield as a response...]";
                 enemyHealMessage = "[More slime is entering the body from the floor!]";
             }
+
+            //Calculates enemy damage and adjusts max health
+            battleEnemyMaxHP = battleEnemyHealth; //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
+            enemyDamage = baseEnemyDamage * enemyDamageMult; //Sets the total enemy damage based on the base damage and multiplier
 
 
         } //Enemy Setup function
