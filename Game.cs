@@ -25,7 +25,6 @@ namespace HelloWorld
         //Enemy Declarations
         string enemyName = "None";
         float enemyRegen = 2; //Sets the base enemy regen
-        float enemyLevel; //Sets the base enemy level
         float battleEnemyHealth;
         float battleEnemyMaxHP;
         float battleEnemyDefense;
@@ -50,22 +49,57 @@ namespace HelloWorld
         bool InBattle = false;
         int turncounter;
 
-        string specialty = "None"; //Placeholder Specialty
+        string specialty = "Foolishness"; //Placeholder Specialty
         string styleName = "Fool"; //Placeholder Style
 
         string area = "Shack"; //Starting Location
 
-        char ShackExplored = 'n';
-        char FieldExplored = 'n';
+        //Field Locations
+        bool ShackExplored = false;
+        bool FieldExplored = false;
+        bool LabyrinthEntranceExplored = false;
+        bool CastleGateExplored = false;
 
-        char LabyrinthEntranceExplored = 'n';
-        char LabyrinthEntrywayExplored = 'n';
-        int labyYLocation = 26;
+        //Labyrinth Locations
+        bool LabyrinthEntrywayExplored = false;
+        bool LabyrinthExplored = false;
+
+        //Castle Locations
+        bool CastleEntryExplored = false;
+        bool Explored = false;
+
+        //Labyrinth Declarations
+        ///Sets the locations to the EntryWay door location
+        int labyYLocation = 26; 
         int labyXLocation = 7;
+        ///For a Back action
+        int oldLabyLocationX;
+        int oldLabyLocationY;
+        ///Wall length declarations
+        int maxWallLength = 4;
+        int wallSouthLength;
+        int wallNorthLength;
+        int wallEastLength;
+        int wallWestLength;
+        ///Borders for when a door exists
+        int wallSouthLeftBorder;
+        int wallSouthRightBorder;
 
-        char CastleGateExplored = 'n';
-        char CastleEntryExplored = 'n';
-        char Explored = 'n';
+        int wallNorthLeftBorder;
+        int wallNorthRightBorder;
+
+        int wallEastFrontBorder;
+        int wallEastBackBorder;
+
+        int wallWestFrontBorder;
+        int wallWestBackBorder;
+        ///Variables used for randomizing the appearance of respective doors
+        int doorSouthChance;
+        int doorNorthChance;
+        int doorEastChance;
+        int doorWestChance;
+        ///
+
 
         public void Run()
         {
@@ -94,14 +128,14 @@ namespace HelloWorld
         {
             if (area == "Shack" && InBattle != true)
             {
-                if (ShackExplored == 'n') //If the player has seen these messages
+                if (ShackExplored == false) //If the player has seen these messages
                 {
                     Console.WriteLine("[I find myself upon a small hill outside of the shack whense I chose my class (Still not sure how that person changed my physical makeup)]");
                     Console.WriteLine("[There's a path trailing from the shack into a dark grey field before me]");
                     Console.WriteLine("[The field has blobs of slime scattered throughout it, murking around]");
                 }
 
-                if (ShackExplored == 'y') //If the player's been to the Shack
+                if (ShackExplored == true) //If the player's been to the Shack
                 {
                     Console.WriteLine("[I'm back on the hill outside the shack (Still not sure how that person changed my physical makeup)]");
                     Console.WriteLine("[The path stretches into the distance through the slime field before me]");
@@ -137,13 +171,13 @@ namespace HelloWorld
                         break;
                 } //Action Switch
 
-                ShackExplored = 'y';
+                ShackExplored = true;
                 Console.Clear(); //Clears the screen
             } //If at the Shack and not in a battle
 
             if (area == "Field" && InBattle != true)
             {
-                if (FieldExplored == 'n') //If the player hasn't been to the fields
+                if (FieldExplored == false) //If the player hasn't been to the fields
                 {
                     Console.WriteLine("[I'm at a T intersection in the path that cuts through the dark slimy field, and living slime is everywhere]");
                     Console.WriteLine("[The shack is on a hill up the path]");
@@ -156,7 +190,7 @@ namespace HelloWorld
                     Console.WriteLine("[The living slimes appear to stay away from the structures; I wonder why]");
                 }
 
-                if (FieldExplored == 'y') //If the player's already been to the fields
+                if (FieldExplored == true) //If the player's already been to the fields
                 {
                     Console.WriteLine("[I'm back in the slime field, and living slime is still everywhere]");
                     Console.WriteLine("[The shack still sits upon the hill further up the path]");
@@ -226,20 +260,20 @@ namespace HelloWorld
                     } //If slime engages
                 } //If not engaging
 
-                FieldExplored = 'y';
+                FieldExplored = true;
                 Console.Clear(); //Clears the screen
 
             } //If in the field and not in a battle
 
             if (area == "LabyrinthEntrance" && InBattle != true)
             {
-                if (LabyrinthEntranceExplored == 'n')
+                if (LabyrinthEntranceExplored == false)
                 {
                     Console.WriteLine("[I'm now in front of the small and very sturdy looking crypt]");
                     Console.WriteLine("[There's a decently large stone door, and a panel to the left of it]");
                     Console.WriteLine("[It has some text on it, good thing I can read]");
                 }
-                if (LabyrinthEntranceExplored == 'y')
+                if (LabyrinthEntranceExplored == true)
                 {
                     Console.WriteLine("[I'm at the entrance of the crypt]");
                 }
@@ -293,13 +327,13 @@ namespace HelloWorld
                         break;
                 } //Action Switch
 
-                LabyrinthEntranceExplored = 'y';
+                LabyrinthEntranceExplored = true;
                 Console.Clear(); //Clears the screen
             } // If at labrynth Entrance and not in a battle
 
             if (area == "LabyrinthEntryway" && InBattle != true)
             {
-                if (LabyrinthEntrywayExplored == 'n')
+                if (LabyrinthEntrywayExplored == false)
                 {
                     Console.WriteLine("[I've overpowered the big door and have entered the crypt, and descended a suprisingly medium sized flight of stairs]");
                     Console.WriteLine("[(Not sure that was the best idea)]");
@@ -310,7 +344,7 @@ namespace HelloWorld
                     Console.WriteLine("");
                     Console.WriteLine("[There's a doorway to the left, then there's a dead end right after a door to the right]");
                 }
-                if (LabyrinthEntrywayExplored == 'y')
+                if (LabyrinthEntrywayExplored == true)
                 {
                     Console.WriteLine("[I'm in the entryway of the Labyrinth]");
                     Console.WriteLine("");
@@ -333,13 +367,18 @@ namespace HelloWorld
                         break;
 
                     case '2': //Enter Stairway door
-                        area = "Labyrinth";
+                        oldLabyLocationX = labyXLocation;
+                        oldLabyLocationY = labyYLocation;
+
                         labyXLocation = 5;
                         labyYLocation = 25;
+
                         break;
 
                     case '3': //Enter Non-Stairway door
-                        area = "Labyrinth";
+                        oldLabyLocationX = labyXLocation;
+                        oldLabyLocationY = labyYLocation;
+
                         labyXLocation = 10;
                         labyYLocation = 22;
                         break;
@@ -385,18 +424,20 @@ namespace HelloWorld
                     Battle();
                 } //If slomibe engages
 
-                LabyrinthEntrywayExplored = 'y';
+                LabyrinthEntrywayExplored = true;
                 Console.Clear(); //Clears the screen
             } //If in Labyrinth Entryway and not in a battle
 
             if (area == "Labyrinth")
             {
 
+
+
             }
 
             if (area == "CastleGate" && InBattle != true)
             {
-                if (CastleGateExplored == 'n') //If the player hasn't been to the gate yet
+                if (CastleGateExplored == false) //If the player hasn't been to the gate yet
                 {
                     Console.WriteLine("[I'm now in front of the stone brick castle, it appears as if it had started to be taken down out of order, now that I look at it]");
                     Console.WriteLine("[That'd partially explain why the gate is down]");
@@ -405,7 +446,7 @@ namespace HelloWorld
                     Console.WriteLine("[There's a decently sized hole, looks as if the bricks were just... removed, rather than destroyed]");
                 }
 
-                if (CastleGateExplored == 'y') //If the player has been to the gate
+                if (CastleGateExplored == true) //If the player has been to the gate
                 {
                     Console.WriteLine("[I'm in front of the taken-over brick castle that has an odd 'entrance']");
                 }
@@ -444,13 +485,13 @@ namespace HelloWorld
                         break;
 
                 } //Action Switch
-                CastleGateExplored = 'y';
+                CastleGateExplored = true;
                 Console.Clear();
             } //If in CastleGate and not in a battle
 
             if (area == "CastleEntry" && InBattle != true)
             {
-                if (CastleEntryExplored == 'n') //If the player hasn't entered the Castle before
+                if (CastleEntryExplored == false) //If the player hasn't entered the Castle before
                 {
                     Console.WriteLine("[I've entered the castle; it looks relatively normal]");
                     Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
@@ -458,7 +499,7 @@ namespace HelloWorld
                     Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
                 }
 
-                if (CastleEntryExplored == 'y') //If the player has entered the castle already
+                if (CastleEntryExplored == true) //If the player has entered the castle already
                 {
                     Console.WriteLine("[I'm in the entryway of the castle]");
                 }
@@ -505,14 +546,14 @@ namespace HelloWorld
                         break;
                 } //Action Switch
 
-                CastleEntryExplored = 'y';
+                CastleEntryExplored = true;
                 Console.Clear(); //Clears the screen
             } //If in CastleEntry
 
             if (area == "    " && InBattle != true)
             {
 
-                if (Explored == 'n') //If the player hasn't entered the Void before
+                if (Explored == false) //If the player hasn't entered the Void before
                 {
                     Console.WriteLine("[I've entered the doorless doorway; it feels like a throne room]");
                     Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
@@ -526,7 +567,7 @@ namespace HelloWorld
                     Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
                 }
 
-                if (Explored == 'y') //If the player has entered the Void
+                if (Explored == true) //If the player has entered the Void
                 {
                     Console.WriteLine("[I'm in the     ]");
                 }
@@ -586,7 +627,7 @@ namespace HelloWorld
                         break;
                 } //Action Switch
 
-                Explored = 'y';
+                Explored = true;
                 Console.Clear(); //Clears the screen
             } //If in Void
         } //Update
@@ -1143,7 +1184,7 @@ namespace HelloWorld
                     }
                     else
                     {
-                        styleName = "None";
+                        styleName = "Fool";
                     }
                     break;
 
@@ -1233,7 +1274,7 @@ namespace HelloWorld
                     }
                     else
                     {
-                        styleName = "None";
+                        styleName = "Fool";
                     }
                     break;
 
@@ -1324,7 +1365,7 @@ namespace HelloWorld
                     }
                     else
                     {
-                        styleName = "None";
+                        styleName = "Fool";
                     }
                     break;
             } //Style Key Switch
@@ -1462,11 +1503,11 @@ namespace HelloWorld
             if (enemyName == "Slombie")
             {
                 //Stats
-                battleEnemyHealth = r.Next(50, 100); //Randomizes the health of the slombie so they don't all have the same stats
-                enemyHeal = 10;
-                enemyDamageMult = 1;
+                battleEnemyHealth = r.Next(50, 100); //Randomizes the health of the slombie so they don't have the same stats
+                enemyHeal = 15;
+                enemyDamageMult = r.Next((int)0.8f, (int)1.4f); //Randomizes the damage of the slombie so they don't have the same stats
                 battleEnemyDefense = 10;
-                enemyRegen = 5;
+                enemyRegen = 2;
 
                 //Messages
                 enemyAppearMessage = "[There's a posessed corpse in here!]";
