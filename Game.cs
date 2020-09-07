@@ -76,6 +76,7 @@ namespace HelloWorld
         int oldLabyLocationX;
         int oldLabyLocationY;
         ///Wall length declarations
+        int minWallLength = 1;
         int maxWallLength = 4;
         int wallSouthLength;
         int wallNorthLength;
@@ -98,8 +99,18 @@ namespace HelloWorld
         int doorNorthChance;
         int doorEastChance;
         int doorWestChance;
-        ///
+        ///Coordinate variables for the doors, if they exist
+        int doorSouthX;
+        int doorSouthY;
 
+        int doorNorthX;
+        int doorNorthY;
+
+        int doorEastX;
+        int doorEastY;
+
+        int doorWestX;
+        int doorWestY;
 
         public void Run()
         {
@@ -430,7 +441,16 @@ namespace HelloWorld
 
             if (area == "Labyrinth")
             {
+                //Generates the wall lengths
+                wallSouthLength = r.Next(minWallLength, maxWallLength);
+                wallNorthLength = r.Next(minWallLength, maxWallLength);
+                wallEastLength = r.Next(minWallLength, maxWallLength);
+                wallWestLength = r.Next(minWallLength, maxWallLength);
 
+                doorSouthChance = r.Next(0, 100);
+                doorNorthChance = r.Next(0, 100);
+                doorEastChance = r.Next(0, 100);
+                doorWestChance = r.Next(0, 100);
 
 
             }
