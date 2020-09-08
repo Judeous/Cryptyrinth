@@ -70,35 +70,40 @@ namespace HelloWorld
 
         //Labyrinth Declarations
         ///Sets the locations to the EntryWay door location
-        int labyYLocation = 26; 
-        int labyXLocation = 7;
+        int labyLocationX = 7;
+        int labyLocationY = 26;
         ///For a Back action
         int oldLabyLocationX;
         int oldLabyLocationY;
+        char facingDirection;
         ///Wall length declarations
+        string roomShape;
+        string roomType;
         int minWallLength = 1;
         int maxWallLength = 4;
-        int wallSouthLength;
-        int wallNorthLength;
-        int wallEastLength;
-        int wallWestLength;
-        ///Borders for when a door exists
-        int wallSouthLeftBorder;
-        int wallSouthRightBorder;
+        int wallXLengths;
+        int wallYLengths;
+        ///Borders for walls
+        int wallSouthY;
+        int wallNorthY;
+        int wallXWBorders;
+        int wallXEBorders;
 
-        int wallNorthLeftBorder;
-        int wallNorthRightBorder;
-
-        int wallEastFrontBorder;
-        int wallEastBackBorder;
-
-        int wallWestFrontBorder;
-        int wallWestBackBorder;
+        int wallEastY;
+        int wallWestY;
+        int wallYNBorders;
+        int wallYSBorders;
         ///Variables used for randomizing the appearance of respective doors
         int doorSouthChance;
         int doorNorthChance;
         int doorEastChance;
         int doorWestChance;
+        ///Bools for doors
+        bool CanEscape = false;
+        bool DoorSouthExists = false;
+        bool DoorNorthExists = false;
+        bool DoorEastExists = false;
+        bool DoorWestExists = false;
         ///Coordinate variables for the doors, if they exist
         int doorSouthX;
         int doorSouthY;
@@ -159,7 +164,7 @@ namespace HelloWorld
                 Console.WriteLine("[Press the number to continue]");
                 Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
-                switch(action)
+                switch (action)
                 {
                     case '1': //Redecide Style/Specialty
                         DecideSpecialty();
@@ -217,7 +222,7 @@ namespace HelloWorld
                 Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
 
-                switch(action)
+                switch (action)
                 {
                     case '1': //Go to Shack
                         area = "Shack";
@@ -297,7 +302,7 @@ namespace HelloWorld
                 Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
 
-                switch(action)
+                switch (action)
                 {
                     case '1': //Go to Field
                         area = "Field";
@@ -371,27 +376,30 @@ namespace HelloWorld
                 Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
 
-                switch(action)
+                switch (action)
                 {
                     case '1': //Exit the Labyrinth
                         area = "LabyrinthEntrance";
                         break;
 
-                    case '2': //Enter Stairway door
-                        oldLabyLocationX = labyXLocation;
-                        oldLabyLocationY = labyYLocation;
+                    case '2': //Enter West door
+                        facingDirection = 'w';
+                        oldLabyLocationX = labyLocationX;
+                        oldLabyLocationY = labyLocationY;
 
-                        labyXLocation = 5;
-                        labyYLocation = 25;
-
+                        labyLocationX = 5;
+                        labyLocationY = 25;
+                        GenerateRoom();
                         break;
 
-                    case '3': //Enter Non-Stairway door
-                        oldLabyLocationX = labyXLocation;
-                        oldLabyLocationY = labyYLocation;
+                    case '3': //Enter East door
+                        facingDirection = 'e';
+                        oldLabyLocationX = labyLocationX;
+                        oldLabyLocationY = labyLocationY;
 
-                        labyXLocation = 10;
-                        labyYLocation = 22;
+                        labyLocationX = 9;
+                        labyLocationY = 22;
+                        GenerateRoom();
                         break;
 
                     case '4': //Check out table
@@ -439,21 +447,126 @@ namespace HelloWorld
                 Console.Clear(); //Clears the screen
             } //If in Labyrinth Entryway and not in a battle
 
-            if (area == "Labyrinth")
+            if (area == "Labyrinth" && InBattle == false)
             {
-                //Generates the wall lengths
-                wallSouthLength = r.Next(minWallLength, maxWallLength);
-                wallNorthLength = r.Next(minWallLength, maxWallLength);
-                wallEastLength = r.Next(minWallLength, maxWallLength);
-                wallWestLength = r.Next(minWallLength, maxWallLength);
+                if (LabyrinthExplored == false) //If the player hasn't been in the labyrinth yet
+                {
+                    Console.WriteLine("[I've exited the labyrinth entryway]");
+                    Console.WriteLine("[I think I'm already lost; these rooms seem to be made as I go through them]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[If these can confuse me this badly, then there's no way the slombies could make their way out of this]");
+                    Console.WriteLine("[Speaking of, I think I can hear them in the surrounding rooms]");
+                    Console.WriteLine("");
+                }
 
-                doorSouthChance = r.Next(0, 100);
-                doorNorthChance = r.Next(0, 100);
-                doorEastChance = r.Next(0, 100);
-                doorWestChance = r.Next(0, 100);
+                if (LabyrinthExplored == true) //If the player has been in the labyrinth
+                {
+                    Console.WriteLine("[I'm in the slimy labyrinth]");
+                    Console.WriteLine("[I'm not sure I remember where I am]");
+                    Console.WriteLine("");
+
+                }
+
+                LabyrinthRoomText();
+                Console.WriteLine("[What do I do?]");
+                LabyrinthActionText();
+
+                Console.WriteLine("[1: ]\n[2: ]\n[3: ]\n[4: ]\n[5: Go Back]\n[9: 9 Menu]");
+
+                Console.WriteLine("");
+                Console.WriteLine("[Press the number to continue]");
+                Console.Write("> ");
+                char action = Console.ReadKey().KeyChar;
+
+                switch (action)
+                {
+                    case '1': //South
+                        if (DoorSouthExists == true)
+                        {
+                            oldLabyLocationX = labyLocationX;
+                            oldLabyLocationY = labyLocationY;
+
+                            labyLocationX = doorSouthX;
+                            labyLocationY = doorSouthY;
+                        }
+                        else
+                        {
+                            Console.WriteLine("[I'm staring at the South wall. Insightful]");
+                        }
+                        break; //Case 1
+
+                    case '2': //North
+                        if (DoorNorthExists == true)
+                        {
+                            oldLabyLocationX = labyLocationX;
+                            oldLabyLocationY = labyLocationY;
+
+                            labyLocationX = doorNorthX;
+                            labyLocationY = doorNorthY;
+                        }
+                        else
+                        {
+                            Console.WriteLine("[I'm staring at the North wall. Insightful]");
+                        }
+                        break;
+
+                    case '3': //East
+                        if (DoorEastExists == true)
+                        {
+                            if (CanEscape == true)
+                            {
+                                area = "LabyrinthEntryway";
+                            }
+                            else
+                            {
+                                oldLabyLocationX = labyLocationX;
+                                oldLabyLocationY = labyLocationY;
+
+                                labyLocationX = doorEastX;
+                                labyLocationY = doorEastY;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("[I'm staring at the East wall. Insightful]");
+                        }
+                        break;
+
+                    case '4': //West
+                        if (DoorEastExists == true)
+                        {
+                            if (CanEscape == true)
+                            {
+                                area = "LabyrinthEntryway";
+                            }
+                            else
+                            {
+                                oldLabyLocationX = labyLocationX;
+                                oldLabyLocationY = labyLocationY;
+
+                                labyLocationX = doorNorthX;
+                                labyLocationY = doorNorthY;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("[I'm staring at the West wall. Insightful]");
+                        }
+                        break;
+
+                    case '5': //Go Back
+                        labyLocationX = oldLabyLocationX;
+                        labyLocationY = oldLabyLocationY;
+                        break;
 
 
-            }
+                    case '9': //Nine Menu
+                        NineMenu();
+                        break;
+                } //Action Switch
+
+
+            } //If in Labyrinth and not in a battle
 
             if (area == "CastleGate" && InBattle != true)
             {
@@ -600,7 +713,7 @@ namespace HelloWorld
                 Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
 
-                switch(action)
+                switch (action)
                 {
                     case '1': //Exit the Void
                         area = "CastleEntry";
@@ -759,7 +872,7 @@ namespace HelloWorld
 
                         if (enemyAction == 4)
                         {
-                            Console.WriteLine(enemyNothingMessage); 
+                            Console.WriteLine(enemyNothingMessage);
                         } //If enemy does Nothing
                         break;
 
@@ -834,7 +947,7 @@ namespace HelloWorld
 
                         if (enemyAction == 4)
                         {
-                            Console.WriteLine(enemyNothingMessage); 
+                            Console.WriteLine(enemyNothingMessage);
                         } //If enemy also does Nothing
                         break;
 
@@ -1446,7 +1559,7 @@ namespace HelloWorld
             Console.Write("> ");
             char action = Console.ReadKey().KeyChar;
 
-            switch(action)
+            switch (action)
             {
                 case '1': //Change Name
                     GetName();
@@ -1457,6 +1570,8 @@ namespace HelloWorld
                     break;
 
                 case '3': //Return to game
+                    //This is a facade
+                    //I did not need to make this
                     break;
 
                 case '0': //Quit
@@ -1477,6 +1592,626 @@ namespace HelloWorld
                     break;
             } //Action Switch
         } //9 Menu function
+
+        void GenerateRoom()
+        {
+            //Sets the door's existance and can escape bool to false by default
+            DoorSouthExists = false;
+            DoorNorthExists = false;
+            DoorEastExists = false;
+            DoorWestExists = false;
+            CanEscape = false;
+
+            //Generates the wall lengths
+            wallXLengths = r.Next(minWallLength, maxWallLength);
+            wallYLengths = r.Next(minWallLength, maxWallLength);
+
+            //Calculates wall border locations based off the direction the player is facing
+            if (facingDirection == 's')
+            {
+                if (wallXLengths == 1)
+                {
+                    wallXWBorders = labyLocationX;
+                    wallXEBorders = labyLocationX;
+                } //If x Wall lengths are 1
+
+                if (wallXLengths == 2)
+                {
+                    wallXWBorders = r.Next(labyLocationX, labyLocationX + 1);
+                    if (wallXWBorders == labyLocationX)
+                    {
+                        wallXEBorders = labyLocationX + 1;
+                    }
+                    else
+                    {
+                        wallXEBorders = labyLocationX;
+                    }
+                } //If x Wall lengths are 2
+
+                if (wallXLengths == 3)
+                {
+                    wallXWBorders = labyLocationX - 1;
+                    wallXEBorders = labyLocationX + 1;
+
+                } //If x Wall lengths are 3
+
+                if (wallXLengths == 4)
+                {
+                    wallXWBorders = r.Next(labyLocationX - 1, labyLocationX - 2);
+                    if (wallXWBorders == labyLocationX - 1)
+                    {
+                        wallXEBorders = labyLocationX + 2;
+                    }
+                    else
+                    {
+                        wallXEBorders = labyLocationX + 1;
+                    }
+                } //If x Wall lengths are 4
+
+                //Sets south Wall's Y
+                wallSouthY = labyLocationY;
+
+                //Calculates & assigns east and west wall borders
+                wallYSBorders = labyLocationY;
+                wallYNBorders = labyLocationY + wallYLengths;
+            } //If facing South
+
+            if (facingDirection == 'n')
+            {
+                if (wallXLengths == 1)
+                {
+                    wallXWBorders = labyLocationX;
+                    wallXEBorders = labyLocationX;
+                } //If north Wall length is 1
+
+                if (wallXLengths == 2)
+                {
+                    wallXWBorders = r.Next(labyLocationX, labyLocationX + 1);
+                    if (wallXWBorders == labyLocationX)
+                    {
+                        wallXEBorders = labyLocationX + 1;
+                    }
+                    else
+                    {
+                        wallXEBorders = labyLocationX;
+                    }
+                } //If north Wall length is 2
+
+                if (wallXLengths == 3)
+                {
+                    wallXWBorders = labyLocationX - 1;
+                    wallXEBorders = labyLocationX + 1;
+                } //If north Wall length is 3
+
+                if (wallXLengths == 4)
+                {
+                    wallXWBorders = r.Next(labyLocationX - 1, labyLocationX - 2);
+                    if (wallXWBorders == labyLocationX - 1)
+                    {
+                        wallXEBorders = labyLocationX + 2;
+                    }
+                    else
+                    {
+                        wallXEBorders = labyLocationX + 1;
+                    }
+                } //If north Wall length is 4
+
+                //Sets north Wall's Y
+                wallNorthY = labyLocationY;
+
+                //Calculates & assigns east and west wall borders
+                wallYSBorders = labyLocationY;
+                wallYNBorders = labyLocationY + wallYLengths;
+            } //If facing North
+
+            if (facingDirection == 'e')
+            {
+                if (wallYLengths == 1) //Tiny s/n
+                {
+                    wallYNBorders = labyLocationY;
+                    wallYSBorders = labyLocationY;
+                } //If east Wall length is 1
+
+                else if (wallYLengths == 2) //small s/n
+                {
+                    wallYNBorders = r.Next(labyLocationY, labyLocationY + 1);
+                    if (wallYNBorders == labyLocationY)
+                    {
+                        wallYSBorders = labyLocationY + 1;
+                    }
+                    else
+                    {
+                        wallYSBorders = labyLocationY;
+                    }
+                } //If east Wall length is 2
+
+                else if (wallYLengths == 3) //decent s/n
+                {
+                    wallYNBorders = labyLocationY - 1;
+                    wallYSBorders = labyLocationY + 1;
+                } //If east Wall length is 3
+
+                else if (wallYLengths == 4) //large s/n
+                {
+                    wallYNBorders = r.Next(labyLocationY - 1, labyLocationY - 2);
+                    if (wallYNBorders == labyLocationY - 1)
+                    {
+                        wallYSBorders = labyLocationY + 2;
+                    }
+                    else
+                    {
+                        wallYSBorders = labyLocationY + 1;
+                    }
+                } //If east Wall length is 4
+
+                else if (labyLocationX == 5 && labyLocationY == 25)
+                {
+                    CanEscape = true;
+                }
+
+                //Calculates & assigns south and north wall borders
+                wallXWBorders = labyLocationX;
+                wallXEBorders = labyLocationX + wallXLengths;
+            } //If facing East
+
+            if (facingDirection == 'w')
+            {
+                if (wallYLengths == 1) //Tiny s/n
+                {
+                    wallYNBorders = labyLocationY;
+                    wallYSBorders = labyLocationY;
+                } //If west Wall length is 1
+
+                else if (wallYLengths == 2) //small s/n
+                {
+                    wallYNBorders = r.Next(labyLocationY, labyLocationY + 1);
+                    if (wallYNBorders == labyLocationY)
+                    {
+                        wallYSBorders = labyLocationY + 1;
+                    }
+                    else
+                    {
+                        wallYSBorders = labyLocationY;
+                    }
+                } //If east Wall length is 2
+
+                else if (wallYLengths == 3) //decent s/n
+                {
+                    wallYNBorders = labyLocationY - 1;
+                    wallYSBorders = labyLocationY + 1;
+                } //If east Wall length is 3
+
+                else if (wallYLengths == 4) //large s/n
+                {
+                    wallYNBorders = r.Next(labyLocationY - 1, labyLocationY - 2);
+                    if (wallYNBorders == labyLocationY - 1)
+                    {
+                        wallYSBorders = labyLocationY + 2;
+                    }
+                    else
+                    {
+                        wallYSBorders = labyLocationY + 1;
+                    }
+                } //If west Wall length is 4
+
+                if (labyLocationX == 9 && labyLocationY == 22)
+                {
+                    CanEscape = true;
+                }
+
+                //Calculates & assigns south and north wall borders
+                wallXWBorders = labyLocationX;
+                wallXEBorders = labyLocationX + wallXLengths;
+            } //If facing West
+
+            if (labyLocationX == 9 && labyLocationY == 22)
+            {
+                CanEscape = true;
+            }
+
+            if (DoorSouthExists == true)
+            {
+                doorSouthY = r.Next(wallXWBorders, wallXEBorders);
+                doorSouthX = wallSouthY;
+            }
+
+            if (DoorNorthExists == true)
+            {
+                doorNorthY = r.Next(wallXWBorders, wallXEBorders);
+                doorNorthX = wallNorthY;
+            }
+
+            if (DoorEastExists == true)
+            {
+                doorEastX = r.Next(wallYSBorders, wallYNBorders);
+                doorEastY = wallEastY;
+            }
+
+            if (DoorWestExists == true)
+            {
+                doorWestX = r.Next(wallYSBorders, wallYNBorders);
+                doorWestY = wallWestY;
+            }
+
+
+            //Chances for a door on each wall
+            doorSouthChance = r.Next(0, 100);
+            doorNorthChance = r.Next(0, 100);
+            doorEastChance = r.Next(0, 100);
+            doorWestChance = r.Next(0, 100);
+
+            if (doorSouthChance >= 75)
+            {
+                DoorSouthExists = true;
+            }
+
+            if (doorNorthChance >= 75)
+            {
+                DoorNorthExists = true;
+            }
+
+            if (doorEastChance >= 75)
+            {
+                DoorEastExists = true;
+            }
+
+            if (doorWestChance >= 75)
+            {
+                DoorWestExists = true;
+            }
+
+            RoomSizeAssigner();
+
+        } //Generate Room function
+
+        void RoomSizeAssigner()
+        {
+            if (wallXLengths == 1) //1x
+            {
+                if (wallYLengths == 1) //1x1
+                {
+                    roomShape = "1x1";
+                    roomType = "square";
+                }
+                else if (wallYLengths == 2) //1x2
+                {
+                    roomShape = "1x2";
+                    roomType = "rectangle";
+                }
+                else if (wallYLengths == 3) //1x3
+                {
+                    roomShape = "1x3";
+                    roomType = "hallway";
+                }
+                else if (wallYLengths == 4) //1x4
+                {
+                    roomShape = "1x4";
+                    roomType = "hallway";
+                }
+            } //1x
+
+            else if (wallXLengths == 2) //2x
+            {
+                if (wallYLengths == 1) //2x1
+                {
+                    roomShape = "1x2";
+                    roomType = "rectangle";
+                }
+                else if (wallYLengths == 2) //2x2
+                {
+                    roomShape = "2x2";
+                    roomType = "square";
+                }
+                else if (wallYLengths == 3) //2x3
+                {
+                    roomShape = "2x3";
+                    roomType = "rectangle";
+                }
+                else if (wallYLengths == 4) //2x4
+                {
+                    roomShape = "2x4";
+                    roomType = "hallway";
+                }
+            } //2x
+
+            else if (wallXLengths == 3) //Decent East/West
+            {
+                if (wallYLengths == 1) //3x1
+                {
+                    roomShape = "1x3";
+                    roomType = "hallway";
+                }
+                else if (wallYLengths == 2) //3x2
+                {
+                    roomShape = "2x3";
+                    roomType = "rectangle";
+                }
+                else if (wallYLengths == 3) //3x3
+                {
+                    roomShape = "3x3";
+                    roomType = "square";
+                }
+                else if (wallYLengths == 4) //3x4
+                {
+                    roomShape = "3x4";
+                    roomType = "rectangle";
+                }
+            } //3x
+
+            else if (wallXLengths == 4) //4x
+            {
+                if (wallYLengths == 1) //4x1
+                {
+                    roomShape = "1x4";
+                    roomType = "hallway";
+                }
+                else if (wallYLengths == 2) //4x2
+                {
+                    roomShape = "2x4";
+                    roomType = "hallway";
+                }
+                else if (wallYLengths == 3) //4x3
+                {
+                    roomShape = "3x4";
+                    roomType = "rectangle";
+                }
+                else if (wallYLengths == 4) //4x4
+                {
+                    roomShape = "4x4";
+                    roomType = "square";
+                }
+            } //4x
+
+        } //Labyrinth Text function
+
+        void LabyrinthRoomText()
+        {
+            if (roomShape == "1x1")
+            {
+                Console.WriteLine("[This is a very cramped room]");
+                Console.WriteLine("");
+            }
+            else if (roomShape == "1x2")
+            {
+                Console.WriteLine("[I'm in a small hallway]");
+                Console.WriteLine("");
+            }
+            else if (roomShape == "1x3")
+            {
+                Console.WriteLine("[I'm in a decent hallway]");
+                Console.WriteLine("");
+            }
+            else if (roomShape == "1x4")
+            {
+                Console.WriteLine("[I'm in a long hallway]");
+                Console.WriteLine("");
+            }
+            else if (roomShape == "2x2")
+            {
+                Console.WriteLine("[I'm in a small square room]");
+                Console.WriteLine("");
+            }
+            else if (roomShape == "2x3")
+            {
+                Console.WriteLine("[I'm in a small rectangular room]");
+                Console.WriteLine("");
+            }
+            else if (roomShape == "2x4")
+            {
+                Console.WriteLine("[I'm in a wide hallway]");
+                Console.WriteLine("");
+            }
+            else if (roomShape == "3x3")
+            {
+                Console.WriteLine("[I'm in a decently sized square room]");
+                Console.WriteLine("");
+            }
+            else if (roomShape == "3x4")
+            {
+                Console.WriteLine("[I'm in a large rectangular room]");
+                Console.WriteLine("");
+            }
+            else if (roomShape == "4x4")
+            {
+                Console.WriteLine("[I'm in a large square room]");
+                Console.WriteLine("");
+            }
+
+            if (DoorSouthExists)
+            {
+                if (roomType == "square")
+                {
+                    Console.WriteLine("[There's a door on the South wall of the room]");
+                    Console.WriteLine("");
+                } //if square room
+
+                else if (roomType =="rectangle")
+                {
+                    if (wallXLengths > wallYLengths) //If East/West walls make it a rectangle
+                    {
+                        Console.WriteLine("[There's a door on the South end of the room]");
+                        Console.WriteLine("");
+                    }
+                    if (wallYLengths > wallXLengths) //If South/North walls make it a rectangle
+                    {
+                        Console.WriteLine("[There's a door on the South side of the room]");
+                        Console.WriteLine("");
+                    }
+                } //if rectangle room
+
+                else if (roomType == "hallway")
+                {
+                    if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                    {
+                        Console.WriteLine("[There's a door on the South wall of the hallway]");
+                        Console.WriteLine("");
+                    }
+                    if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                    {
+                        Console.WriteLine("[There's a door on the South end]");
+                        Console.WriteLine("");
+                    }
+                } //if hallway
+            } //South Door
+
+            if (DoorNorthExists)
+            {
+                if (roomType == "square")
+                {
+                    Console.WriteLine("[There's a door on the North wall of the room]");
+                    Console.WriteLine("");
+                } //if square room
+
+                else if (roomType == "rectangle")
+                {
+                    if (wallXLengths > wallYLengths) //If East/West walls make it a rectangle
+                    {
+                        Console.WriteLine("[There's a door on the North end of the room]");
+                        Console.WriteLine("");
+                    }
+                    if (wallYLengths > wallXLengths) //If South/North walls make it a rectangle
+                    {
+                        Console.WriteLine("[There's a door on the North side of the room]");
+                        Console.WriteLine("");
+                    }
+                } //if rectangle room
+
+                else if (roomType == "hallway")
+                {
+                    if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                    {
+                        Console.WriteLine("[There's a door on the North end of the hallway]");
+                        Console.WriteLine("");
+                    }
+                    if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                    {
+                        Console.WriteLine("[There's a door on the North side]");
+                        Console.WriteLine("");
+                    }
+                } //if hallway
+            } //North Door
+
+            if (DoorEastExists)
+            {
+                if (roomType == "square")
+                {
+                    Console.WriteLine("[There's a door on the East wall of the room]");
+                    Console.WriteLine("");
+                } //if square room
+
+                else if (roomType == "rectangle")
+                {
+                    if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                    {
+                        Console.WriteLine("[There's a door on the East side of the room]");
+                        Console.WriteLine("");
+                    }
+                    if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                    {
+                        Console.WriteLine("[There's a door on the East end of the room]");
+                        Console.WriteLine("");
+                    }
+                } //if rectangle room
+
+                else if (roomType == "hallway")
+                {
+                    if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                    {
+                        Console.WriteLine("[There's a door on the East wall of the hallway]");
+                        Console.WriteLine("");
+                    }
+                    if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                    {
+                        Console.WriteLine("[There's a door on the East end]");
+                        Console.WriteLine("");
+                    }
+                } //if hallway
+            } //East Door
+
+            if (DoorWestExists)
+            {
+                if (roomType == "square")
+                {
+                    Console.WriteLine("[There's a door on the West wall of the room]");
+                    Console.WriteLine("");
+                } //if square room
+
+                else if (roomType == "rectangle")
+                {
+                    if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                    {
+                        Console.WriteLine("[There's a door on the West side of the room]");
+                        Console.WriteLine("");
+                    }
+                    if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                    {
+                        Console.WriteLine("[There's a door on the West end of the room]");
+                        Console.WriteLine("");
+                    }
+                } //if rectangle room
+
+                else if (roomType == "hallway")
+                {
+                    if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                    {
+                        Console.WriteLine("[There's a door on the West wall of the hallway]");
+                        Console.WriteLine("");
+                    }
+                    if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                    {
+                        Console.WriteLine("[There's a door on the West end]");
+                        Console.WriteLine("");
+                    }
+                } //if hallway
+            } //West Door
+        } //Labyrinth Room Text
+
+        void LabyrinthActionText()
+        {
+            if (DoorSouthExists) //South
+            {
+                Console.WriteLine("[1: Go South]");
+            }
+            else
+            {
+                Console.WriteLine("[1: Look at Southern Wall]");
+            } //South
+
+            if (DoorNorthExists) //North
+            {
+                Console.WriteLine("[2: Go North]");
+            }
+            else
+            {
+                Console.WriteLine("[2: Look at Northern Wall]");
+            } //North
+
+            if (DoorEastExists) //East
+            {
+                Console.WriteLine("[3: Go East]");
+            }
+            else if (CanEscape == true)
+            {
+                Console.WriteLine("[3: Escape]");
+            }
+            else
+            {
+                Console.WriteLine("[3: Look at Eastern Wall]");
+            } //East
+
+            if (DoorWestExists) //West
+            {
+                Console.WriteLine("[4: Go West]");
+            }
+            else if (CanEscape == true)
+            {
+                Console.WriteLine("[4: Escape]");
+            }
+            else
+            {
+                Console.WriteLine("[4: Look at Western Wall]");
+            } //West
+        } //Labyrinth Action function
 
         void EnemySetup()
         {
