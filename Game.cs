@@ -1744,11 +1744,6 @@ namespace HelloWorld
                     }
                 } //If east Wall length is 4
 
-                else if (labyLocationX == 5 && labyLocationY == 25)
-                {
-                    CanEscape = true;
-                }
-
                 //Calculates & assigns south and north wall borders
                 wallXWBorders = labyLocationX;
                 wallXEBorders = labyLocationX + wallXLengths;
@@ -1794,17 +1789,27 @@ namespace HelloWorld
                     }
                 } //If west Wall length is 4
 
-                if (labyLocationX == 9 && labyLocationY == 22)
-                {
-                    CanEscape = true;
-                }
-
                 //Calculates & assigns south and north wall borders
                 wallXWBorders = labyLocationX;
                 wallXEBorders = labyLocationX + wallXLengths;
             } //If facing West
 
-            if (labyLocationX == 9 && labyLocationY == 22)
+            if (labyLocationX == 9 && labyLocationY == 22) //Just Entered East Door Condition
+            {
+                CanEscape = true;
+            }
+
+            if (doorEastX == 5 && doorEastY == 25)
+            {
+                CanEscape = true;
+            }
+
+            else if (labyLocationX == 5 && labyLocationY == 25) //Just Entered West Door Condition
+            {
+                CanEscape = true;
+            }
+
+            if (doorWestX == 5 && doorWestY == 25)
             {
                 CanEscape = true;
             }
@@ -2186,26 +2191,26 @@ namespace HelloWorld
                 Console.WriteLine("[2: Look at Northern Wall]");
             } //North
 
-            if (DoorEastExists) //East
-            {
-                Console.WriteLine("[3: Go East]");
-            }
-            else if (CanEscape == true)
+            if (CanEscape == true)
             {
                 Console.WriteLine("[3: Escape]");
+            }
+            else if (DoorEastExists) //East
+            {
+                Console.WriteLine("[3: Go East]");
             }
             else
             {
                 Console.WriteLine("[3: Look at Eastern Wall]");
             } //East
 
-            if (DoorWestExists) //West
-            {
-                Console.WriteLine("[4: Go West]");
-            }
-            else if (CanEscape == true)
+            if (CanEscape == true) //West
             {
                 Console.WriteLine("[4: Escape]");
+            }
+            else if (DoorWestExists)
+            {
+                Console.WriteLine("[4: Go West]");
             }
             else
             {
