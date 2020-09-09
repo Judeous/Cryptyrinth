@@ -885,7 +885,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + enemyName + " disagrees!]");
                             Console.WriteLine("");
 
-                            battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+                            battlePlayerHealth = Heal(battlePlayerHealth, battlePlayerDefense, playerHeal);
                             Pause();
 
                             Console.WriteLine(enemyAttackMessage);
@@ -894,16 +894,16 @@ namespace HelloWorld
 
                         else if (enemyAction == 2) //If the enemy is blocking
                         {
-                            Console.WriteLine(enemyDefendMessage);
+                            Console.WriteLine(enemyUselessDefenseMessage);
 
-                            battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+                            battlePlayerHealth = Heal(battlePlayerHealth, battlePlayerDefense, playerHeal);
                             Pause();
                         } //If enemy Blocks
 
                         else if (enemyAction == 3) //If the enemy is healing
                         {
                             Console.WriteLine(enemyHealMessage);
-                            battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+                            battlePlayerHealth = Heal(battlePlayerHealth, battlePlayerDefense, playerHeal);
                             Pause();
 
                             battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
@@ -914,7 +914,7 @@ namespace HelloWorld
                         {
                             Console.WriteLine(enemyNothingMessage);
 
-                            battlePlayerHealth = Heal(name, battlePlayerHealth, battlePlayerDefense, playerHeal);
+                            battlePlayerHealth = Heal(battlePlayerHealth, battlePlayerDefense, playerHeal);
                             Pause();
                         } //If enemy does Nothing
                         break;
@@ -1184,7 +1184,36 @@ namespace HelloWorld
 
         } //Death Check function
 
-        float Heal(string name, float health, float defense, float heal)
+        float Heal(float health, float defense, float heal) //Player Heal
+        {
+            Console.WriteLine("");
+
+            if (health > 0)
+            {
+                if (heal < 5) //If player can't heal (If the heal would return less than 5 hp)
+                {
+                    Console.WriteLine("[I can't heal!]");
+                }
+
+                else if (heal >= 5)
+                {
+                    Console.WriteLine(name + " [Pre-Heal]"); //Stats before heal
+                    Console.WriteLine(health + " HP <<");
+                    Console.WriteLine(defense + " Def ");
+
+                    Pause();
+
+                    health += heal; //The heal
+
+                    Console.WriteLine(name + " [Post-Heal]"); //Stats after heal
+                    Console.WriteLine(health + " HP <<");
+                    Console.WriteLine(defense + " Def");
+                }
+            } //If enemy alive
+            return health;
+        } //Player Heal function
+
+        float Heal(string name, float health, float defense, float heal) //Enemy Heal
         {
             Console.WriteLine("");
 
@@ -1211,7 +1240,7 @@ namespace HelloWorld
                 }
             } //If enemy alive
             return health;
-        } //Heal function
+        } //Enemy Heal function
 
         void DecideSpecialty()
         {
