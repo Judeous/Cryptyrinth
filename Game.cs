@@ -40,9 +40,10 @@ namespace HelloWorld
         string enemyAppearMessage = "An enemy appears!";
         string enemyAttackMessage = "The enemy is attacking!";
         string enemyDefendMessage = "The enemy is defending!";
-        string enemyNoDefenseMessage = "The enemy's defense was knocked aside!";
-        string enemyNothingMessage = "The enemy does nothing...";
+        string enemyNoDefenseMessage = "The enemy has nothing to defend with!";
+        string enemyDefenseDestroyedMessage = "The enemy's defense was knocked aside!";
         string enemyUselessDefenseMessage = "The enemy is defending...";
+        string enemyNothingMessage = "The enemy does nothing...";
         string enemyHealMessage = "The enemy is healing!";
         string enemyDeathMessage = "The enemy was unmade";
 
@@ -842,9 +843,9 @@ namespace HelloWorld
                         {
                             if (battleEnemyHealth > 0) //If the enemy isn't dead
                             {
+                                Console.WriteLine("[" + enemyName + " is retaliating!]");
                                 Pause();
                                 Console.Clear(); //Clears the screen
-                                Console.WriteLine("[" + enemyName + " is retaliating!]");
                                 battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
                             }
                         } // If enemy Retaliates
@@ -983,11 +984,39 @@ namespace HelloWorld
                     Console.Write("[Press any key to end this round");
                     if (battleEnemyHealth > 0 && battlePlayerHealth > 0) //If both entities have health
                     {
-                        Console.WriteLine("; regen will be applied]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[" + name + ": " + battlePlayerHealth + " + " + healthRegen + "]");
-                        Console.WriteLine("[" + enemyName + ": " + battleEnemyHealth + " + " + enemyRegen + "]");
-                    }
+                        //Neither regen
+                        if (battleEnemyHealth >= battleEnemyMaxHP && battlePlayerHealth >= battlePlayerMaxHP)
+                        {
+                            Console.WriteLine("; regen won't be applied]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[" + name + ": " + battlePlayerHealth + "]");
+                            Console.WriteLine("[" + enemyName + ": " + battleEnemyHealth + "]");
+                        }
+                        //Only Enemy regens
+                        else if (battleEnemyHealth < battleEnemyMaxHP && battlePlayerHealth >= battlePlayerMaxHP)
+                        {
+                            Console.WriteLine("; regen will be applied]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[" + name + ": " + battlePlayerHealth + "]");
+                            Console.WriteLine("[" + enemyName + ": " + battleEnemyHealth + " + " + enemyRegen + "]");
+                        }
+                        //Only Player regens
+                        else if (battleEnemyHealth >= battleEnemyMaxHP && battlePlayerHealth < battlePlayerMaxHP)
+                        {
+                            Console.WriteLine("; regen will be applied]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[" + name + ": " + battlePlayerHealth + " + " + healthRegen + "]");
+                            Console.WriteLine("[" + enemyName + ": " + battleEnemyHealth + "]");
+                        }
+                        //Both regen
+                        else if (battleEnemyHealth <= battleEnemyMaxHP && battlePlayerHealth <= battlePlayerMaxHP)
+                        {
+                            Console.WriteLine("; regen will be applied]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[" + name + ": " + battlePlayerHealth + " + " + healthRegen + "]");
+                            Console.WriteLine("[" + enemyName + ": " + battleEnemyHealth + " + " + enemyRegen + "]");
+                        }
+                    } //If both entities live
                     else //Closes the text if regen won't be applied
                     {
                         Console.WriteLine("]");
@@ -998,7 +1027,7 @@ namespace HelloWorld
                     Console.Clear(); //Clears the screen
                     battlePlayerHealth = Regeneration(battlePlayerHealth, battlePlayerMaxHP, healthRegen); //Regenerates player
                     battleEnemyHealth = Regeneration(battleEnemyHealth, battleEnemyMaxHP, enemyRegen); //Regenerates Enemy
-                }
+                } //If in battle
 
 
                 if (battlePlayerHealth <= 0) //If the player lost
@@ -1016,9 +1045,10 @@ namespace HelloWorld
                     Console.WriteLine("");
                     Console.WriteLine("Congratulations, you won!");
                     Pause();
+                    Console.Clear(); //Clears the screen
+
                     GainExperience();
 
-                    Console.Clear(); //Clears the screen
                     if (level == 10)
                     {
                         Console.Clear(); //Clears the screen
@@ -1152,7 +1182,7 @@ namespace HelloWorld
                 battleEnemyDefense -= battlePlayerDamage; //Player's attack on enemy's defense
                 if (battleEnemyDefense <= 0) //If defense falls
                 {
-                    Console.WriteLine("[" + enemyName + "'s defense was knocked aside!]");
+                    Console.WriteLine(enemyDefenseDestroyedMessage);
                     battleEnemyDefense = 0; //Sets defense back to 0
 
                     Console.WriteLine(enemyName + " [Post-Strike]"); //Enemy's stats after player's attack
@@ -1896,12 +1926,12 @@ namespace HelloWorld
             if (DoorEastExists == true)
             {
                 doorEastX = wallEastX;
-                doorEastY = r.Next(wallYSBorders, wallYNBorders);
+                doorEastY = r.Next(wallYNBorders, wallYSBorders);
             }
             if (DoorWestExists == true)
             {
                 doorWestX = wallWestX;
-                doorWestY = r.Next(wallYSBorders, wallYNBorders);
+                doorWestY = r.Next(wallYNBorders, wallYSBorders);
             }
 
             RoomSizeAssigner();
@@ -2273,11 +2303,12 @@ namespace HelloWorld
                 enemyDeathMessage = "[The slime melts into the ground]";
                 enemyAttackMessage = "[The slime is attacking!]";
                 enemyDefendMessage = "[The slime forms a defensive layer!]";
-                enemyNoDefenseMessage = "[The defensive layer was knocked away!]";
-                enemyNothingMessage = "[The slime does nothing...]";
+                enemyNoDefenseMessage = "[The defensive layer is too thin!]";
+                enemyDefenseDestroyedMessage = "[The defensive layer was knocked away!]";
                 enemyUselessDefenseMessage = "[The slime shows it's defensive layer...]";
+                enemyNothingMessage = "[The slime does nothing...]";
                 enemyHealMessage = "[The slime is growing!]";
-            } //If the enemy is a slime
+            } //If the enemy is Slime
 
             if (enemyName == "Nothing")
             {
@@ -2293,9 +2324,10 @@ namespace HelloWorld
                 enemyDeathMessage = "[Nothing stopped existing]";
                 enemyAttackMessage = "[Nothing is attacking me]";
                 enemyDefendMessage = "[Nothing is defending itself]";
-                enemyNoDefenseMessage = "[Nothing's defense was shattered]";
-                enemyNothingMessage = "[Nothing happens]";
+                enemyNoDefenseMessage = "[Nothing has no defense]";
+                enemyDefenseDestroyedMessage = "[Nothing's defense was shattered]";
                 enemyUselessDefenseMessage = "[Nothing defends itself]";
+                enemyNothingMessage = "[Nothing happens]";
                 enemyHealMessage = "[Nothing is healing]";
             } //If the enemy is Nothing
 
@@ -2314,14 +2346,15 @@ namespace HelloWorld
                 enemyDeathMessage = "[The slime leaves the corpse and sinks to the floor]";
                 enemyAttackMessage = "[The slombie is attacking!]";
                 enemyDefendMessage = "[The slime forms a shield before the corpse!]";
-                enemyNoDefenseMessage = "[The shield was torn away!]";
-                enemyNothingMessage = "[The slombie does nothing...]";
+                enemyNoDefenseMessage = "[The shield is malformed!]";
+                enemyDefenseDestroyedMessage = "[The shield was torn away!]";
                 enemyUselessDefenseMessage = "[The slime forms a shield as a response...]";
+                enemyNothingMessage = "[The slombie does nothing...]";
                 enemyHealMessage = "[More slime is entering the body from the floor!]";
-            }
+            } //If enemy is Slombie
 
             //Calculates experience to be gained if player wins
-            enemyExperience = (int)(battleEnemyHealth * enemyDamageMult);
+            enemyExperience = (int)(battleEnemyHealth * enemyDamageMult) + enemyDamage + battleEnemyDefense;
 
             //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
             battleEnemyMaxHP = battleEnemyHealth;
@@ -2337,7 +2370,6 @@ namespace HelloWorld
 
             currentExperience += enemyExperience;
 
-            Console.WriteLine("");
             Console.WriteLine("Current Exp: " + currentExperience + "/" + experienceRequirement);
             Pause();
             Console.Clear(); //Clears the screen
