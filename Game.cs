@@ -8,30 +8,34 @@ namespace HelloWorld
     {
         //Player Declarations
         string name;
-        float health = 100; //Sets player's health
-        float healthRegen = 8; //Sets the rate the player regens at
-        float playerDefense = 10; //Sets the player's base defense
+        int health = 100; //Sets player's health
+        int healthRegen = 8; //Sets the rate the player regens at
+        int playerDefense = 10; //Sets the player's base defense
         int level = 1;
-        float battlePlayerHealth;
-        float battlePlayerMaxHP;
-        float playerHeal = 5;
-        float battlePlayerDefense;
-        float battlePlayerDamage;
+        int currentExperience = 0;
+        int experienceRequirement;
+        int battlePlayerHealth;
+        int battlePlayerMaxHP;
+        int playerHeal = 5;
+        int battlePlayerDefense;
+        int battlePlayerDamage;
 
-        float basePlayerHeal = 5; //Sets the base heal
+        int basePlayerHeal = 5; //Sets the base heal
         float playerDamageMult = 1; //Sets the base player damage multiplier that changes based on specialty
-        float playerDamage = 9; //base damage
+        int playerDamage = 9; //base damage
+        int playerDamageAdd; //base damage addition
 
         //Enemy Declarations
         string enemyName = "None";
-        float enemyRegen = 2; //Sets the base enemy regen
-        float battleEnemyHealth;
-        float battleEnemyMaxHP;
-        float battleEnemyDefense;
-        float enemyHeal = 5; //Sets the base enemy heal
-        float enemyDamageMult = 1; //Sets the base enemy damage multiplier
-        float baseEnemyDamage = 8; //Sets the base enemy damage
-        float enemyDamage;
+        int enemyExperience;
+        int enemyRegen; //Sets the base enemy regen
+        int battleEnemyHealth;
+        int battleEnemyMaxHP;
+        int battleEnemyDefense;
+        int enemyHeal = 5; //Sets the base enemy heal
+        float enemyDamageMult = 1.0f; //Sets the base enemy damage multiplier
+        int baseEnemyDamage = 8; //Sets the base enemy damage
+        int enemyDamage;
 
         string enemyAppearMessage = "An enemy appears!";
         string enemyAttackMessage = "The enemy is attacking!";
@@ -89,8 +93,8 @@ namespace HelloWorld
         int wallXWBorders;
         int wallXEBorders;
 
-        int wallEastY;
-        int wallWestY;
+        int wallEastX;
+        int wallWestX;
         int wallYNBorders;
         int wallYSBorders;
         ///Variables used for randomizing the appearance of respective doors
@@ -105,6 +109,12 @@ namespace HelloWorld
         bool DoorEastExists = false;
         bool DoorWestExists = false;
         ///Coordinate variables for the doors, if they exist
+        int escapeDoorWY = 25;
+        int escapeDoorWX = 5;
+
+        int escapeDoorEY = 22;
+        int escapeDoorEX = 9;
+
         int doorSouthX;
         int doorSouthY;
 
@@ -833,6 +843,7 @@ namespace HelloWorld
                             if (battleEnemyHealth > 0) //If the enemy isn't dead
                             {
                                 Pause();
+                                Console.Clear(); //Clears the screen
                                 Console.WriteLine("[" + enemyName + " is retaliating!]");
                                 battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
                             }
@@ -843,6 +854,7 @@ namespace HelloWorld
                             if (battleEnemyHealth > 0) //If the enemy isn't dead
                             {
                                 Pause();
+                                Console.Clear(); //Clears the screen
                                 Console.WriteLine(enemyHealMessage);
                                 battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
                             }
@@ -887,6 +899,7 @@ namespace HelloWorld
 
                             battlePlayerHealth = Heal(battlePlayerHealth, battlePlayerDefense, playerHeal);
                             Pause();
+                            Console.Clear(); //Clears the screen
 
                             Console.WriteLine(enemyAttackMessage);
                             battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
@@ -895,6 +908,8 @@ namespace HelloWorld
                         else if (enemyAction == 2) //If the enemy is blocking
                         {
                             Console.WriteLine(enemyUselessDefenseMessage);
+                            Pause();
+                            Console.Clear(); //Clears the screen
 
                             battlePlayerHealth = Heal(battlePlayerHealth, battlePlayerDefense, playerHeal);
                             Pause();
@@ -905,6 +920,7 @@ namespace HelloWorld
                             Console.WriteLine(enemyHealMessage);
                             battlePlayerHealth = Heal(battlePlayerHealth, battlePlayerDefense, playerHeal);
                             Pause();
+                            Console.Clear(); //Clears the screen
 
                             battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
                             Pause();
@@ -913,6 +929,8 @@ namespace HelloWorld
                         else if (enemyAction == 4)
                         {
                             Console.WriteLine(enemyNothingMessage);
+                            Pause();
+                            Console.Clear(); //Clears the screen
 
                             battlePlayerHealth = Heal(battlePlayerHealth, battlePlayerDefense, playerHeal);
                             Pause();
@@ -925,6 +943,9 @@ namespace HelloWorld
                         if (enemyAction <= 1) //If the enemy is attacking
                         {
                             Console.WriteLine(enemyAttackMessage);
+                            Pause();
+                            Console.Clear(); //Clears the screen
+
                             battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
                             Pause();
                             if (GameOver == true)
@@ -992,27 +1013,12 @@ namespace HelloWorld
                 if (battleEnemyHealth <= 0) //If the player won
                 {
                     Console.WriteLine(enemyDeathMessage);
-                    Console.WriteLine("The battle has ended");
                     Console.WriteLine("");
                     Console.WriteLine("Congratulations, you won!");
-                    Console.WriteLine("");
-                    Console.WriteLine("You've gained a level!");
                     Pause();
+                    GainExperience();
 
                     Console.Clear(); //Clears the screen
-                    Console.WriteLine("Current Level: " + level);
-                    Console.WriteLine("Pre Level up:");
-                    Pause();
-                    StatCheck();
-
-                    level++;
-                    StatCalculation();
-                    Console.WriteLine("Current Level: " + level);
-
-                    Console.WriteLine("Post Level up:");
-                    Pause();
-                    StatCheck();
-
                     if (level == 10)
                     {
                         Console.Clear(); //Clears the screen
@@ -1043,7 +1049,7 @@ namespace HelloWorld
             Console.WriteLine("");
         }
 
-        float Regeneration(float currentHealth, float maxHP, float healthRegen)
+        int Regeneration(int currentHealth, int maxHP, int healthRegen)
         {
             if (currentHealth < maxHP && currentHealth > 0) //Checks to see if the entity's hp is lower than max and higher than 0
             {
@@ -1058,7 +1064,7 @@ namespace HelloWorld
             return currentHealth;
         } //Regen Function
 
-        float DirectAttack(float damage, float health, float defense, string victimName)
+        int DirectAttack(int damage, int health, int defense, string victimName)
         {
             Console.WriteLine("");
 
@@ -1130,7 +1136,7 @@ namespace HelloWorld
 
             if (battleEnemyDefense == 0)
             {
-                Console.WriteLine("[" + enemyName + " can't block]");
+                Console.WriteLine(enemyNoDefenseMessage);
                 battleEnemyHealth = DirectAttack(playerDamage, battleEnemyHealth, battleEnemyDefense, enemyName);
             } //If player has no defense
 
@@ -1182,9 +1188,11 @@ namespace HelloWorld
                 Pause();
             }
 
+            Pause();
+            Console.Clear(); //Clears the screen
         } //Death Check function
 
-        float Heal(float health, float defense, float heal) //Player Heal
+        int Heal(int health, int defense, int heal) //Player Heal
         {
             Console.WriteLine("");
 
@@ -1213,7 +1221,7 @@ namespace HelloWorld
             return health;
         } //Player Heal function
 
-        float Heal(string name, float health, float defense, float heal) //Enemy Heal
+        int Heal(string name, int health, int defense, int heal) //Enemy Heal
         {
             Console.WriteLine("");
 
@@ -1246,6 +1254,7 @@ namespace HelloWorld
         {
             Console.Clear(); //Clears the screen
             Console.WriteLine("Welcome, " + name + ", what is your style of battle?");
+            Console.WriteLine("");
             Console.WriteLine("[1: Magic]\n[2: Warrior]\n[3: Trickery]");
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
@@ -1287,10 +1296,10 @@ namespace HelloWorld
                     Console.WriteLine("");
 
                     Console.WriteLine("Battle Mage [3]");
-                    Console.WriteLine("Base Health = 80");
+                    Console.WriteLine("Base Health = 70");
                     Console.WriteLine("Base Regen = 10");
                     Console.WriteLine("Base Heal = 8");
-                    Console.WriteLine("Damage Mult = 1.2");
+                    Console.WriteLine("Damage Mult = 1.3");
                     Console.WriteLine("Base Defense = 11");
                     Console.WriteLine("");
                     Console.WriteLine("");
@@ -1328,10 +1337,10 @@ namespace HelloWorld
                     }
                     else if (specialtyKey == '3') //Battle Mage
                     {
-                        health = 75;
+                        health = 70;
                         healthRegen = 10;
                         basePlayerHeal = 8;
-                        playerDamageMult = 1.2f;
+                        playerDamageMult = 1.3f;
                         playerDefense = 11;
                         specialty = "Battle Mage";
                     }
@@ -1539,7 +1548,9 @@ namespace HelloWorld
             Console.Clear(); //Clears the screen
 
             Console.WriteLine("This is who I am:");
-            Console.WriteLine("Name: " + name); //This and next few lines are just to show to the player their stats
+            //This and next few lines are just to show to the player their stats
+            Console.WriteLine("Name: " + name); 
+            Console.WriteLine("Experience: " + currentExperience + "/" + experienceRequirement);
             Console.WriteLine("Health: " + battlePlayerHealth);
             Console.WriteLine("Regen: " + healthRegen);
             Console.WriteLine("Heal: " + playerHeal);
@@ -1557,6 +1568,7 @@ namespace HelloWorld
         {
             Console.Clear(); //Clears the screen
             Console.WriteLine("What is your name?");
+            Console.WriteLine("");
             Console.WriteLine("[Press Enter to enter your name]");
             Console.Write("> My name is ");
             name = Console.ReadLine(); //Gets the player's name
@@ -1564,9 +1576,10 @@ namespace HelloWorld
             Console.Clear(); //Clears the screen
 
             Console.WriteLine(name + " is your name?");
-            Console.WriteLine("[Press the number to continue]");
+            Console.WriteLine("");
             Console.WriteLine("[1: Yes]\n[2: No]");
             Console.WriteLine("");
+            Console.WriteLine("[Press the number to continue]");
             Console.Write("> ");
             char action = Console.ReadKey().KeyChar;
 
@@ -1582,7 +1595,6 @@ namespace HelloWorld
             Console.WriteLine("9 Menu");
             Console.WriteLine("");
             Console.WriteLine("[1: Change Name]\n[2: Check Stats]\n[3: Return to Game]\n[0: Quit]");
-            Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
             Console.Write("> ");
@@ -1823,75 +1835,73 @@ namespace HelloWorld
                 wallXEBorders = labyLocationX + wallXLengths;
             } //If facing West
 
-            if (labyLocationX == 9 && labyLocationY == 22) //Just Entered East Door Condition
+            //Just Entered East Door Condition
+            if (labyLocationX == escapeDoorEX && labyLocationY == escapeDoorEY) 
             {
                 CanEscape = true;
             }
 
-            if (doorEastX == 5 && doorEastY == 25)
+            //Just Entered West Door Condition
+            else if (labyLocationX == 5 && labyLocationY == 25) 
             {
                 CanEscape = true;
             }
 
-            else if (labyLocationX == 5 && labyLocationY == 25) //Just Entered West Door Condition
+            //If the East wall borders contain the West Entry Door
+            if (wallYSBorders <= escapeDoorWY && wallYNBorders >= escapeDoorWY)
             {
                 CanEscape = true;
             }
 
-            if (doorWestX == 5 && doorWestY == 25)
+            //If the West wall borders contain the East Entry Door
+            if (wallYSBorders <= escapeDoorEY && wallYNBorders >= escapeDoorEY)
             {
                 CanEscape = true;
             }
-
-            if (DoorSouthExists == true)
-            {
-                doorSouthY = r.Next(wallXWBorders, wallXEBorders);
-                doorSouthX = wallSouthY;
-            }
-
-            if (DoorNorthExists == true)
-            {
-                doorNorthY = r.Next(wallXWBorders, wallXEBorders);
-                doorNorthX = wallNorthY;
-            }
-
-            if (DoorEastExists == true)
-            {
-                doorEastX = r.Next(wallYSBorders, wallYNBorders);
-                doorEastY = wallEastY;
-            }
-
-            if (DoorWestExists == true)
-            {
-                doorWestX = r.Next(wallYSBorders, wallYNBorders);
-                doorWestY = wallWestY;
-            }
-
 
             //Chances for a door on each wall
-            doorSouthChance = r.Next(0, 100);
-            doorNorthChance = r.Next(0, 100);
-            doorEastChance = r.Next(0, 100);
-            doorWestChance = r.Next(0, 100);
+            doorSouthChance = r.Next(1, 100);
+            doorNorthChance = r.Next(1, 100);
+            doorEastChance = r.Next(1, 100);
+            doorWestChance = r.Next(1, 100);
 
             if (doorSouthChance >= 75)
             {
                 DoorSouthExists = true;
             }
-
             if (doorNorthChance >= 75)
             {
                 DoorNorthExists = true;
             }
-
             if (doorEastChance >= 75)
             {
                 DoorEastExists = true;
             }
-
             if (doorWestChance >= 75)
             {
                 DoorWestExists = true;
+            }
+
+            //Puts doors on walls if they exist
+            if (DoorSouthExists == true)
+            {
+                doorSouthY = r.Next(wallXWBorders, wallXEBorders);
+                doorSouthX = wallSouthY;
+            }
+            if (DoorNorthExists == true)
+            {
+                doorNorthY = r.Next(wallXWBorders, wallXEBorders);
+                doorNorthX = wallNorthY;
+            }
+            if (DoorEastExists == true)
+            {
+                doorEastX = wallEastX;
+                doorEastY = r.Next(wallYSBorders, wallYNBorders);
+            }
+            if (DoorWestExists == true)
+            {
+                doorWestX = wallWestX;
+                doorWestY = r.Next(wallYSBorders, wallYNBorders);
             }
 
             RoomSizeAssigner();
@@ -2255,7 +2265,7 @@ namespace HelloWorld
                 battleEnemyHealth = r.Next(5, 20); //Randomizes the health of the slime so they don't all have the same stats
                 enemyHeal = 15;
                 enemyDamageMult = 0.5f;
-                battleEnemyDefense = 10;
+                battleEnemyDefense = r.Next(5, 15);
                 enemyRegen = 5;
 
                 //Messages
@@ -2263,7 +2273,7 @@ namespace HelloWorld
                 enemyDeathMessage = "[The slime melts into the ground]";
                 enemyAttackMessage = "[The slime is attacking!]";
                 enemyDefendMessage = "[The slime forms a defensive layer!]";
-                enemyNoDefenseMessage = "[The slime's defensive layer was knocked away!]";
+                enemyNoDefenseMessage = "[The defensive layer was knocked away!]";
                 enemyNothingMessage = "[The slime does nothing...]";
                 enemyUselessDefenseMessage = "[The slime shows it's defensive layer...]";
                 enemyHealMessage = "[The slime is growing!]";
@@ -2292,9 +2302,10 @@ namespace HelloWorld
             if (enemyName == "Slombie")
             {
                 //Stats
-                battleEnemyHealth = r.Next(50, 100); //Randomizes the health of the slombie so they don't have the same stats
+                battleEnemyHealth = r.Next(50, 100); //Randomized health
                 enemyHeal = 15;
-                enemyDamageMult = r.Next((int)0.8f, (int)1.4f); //Randomizes the damage of the slombie so they don't have the same stats
+                enemyDamageMult = r.Next(8, 14); //Damage multiplier is somewhere between the lowest and highest player damage multx10
+                enemyDamageMult /= 10; //Then divided by 10
                 battleEnemyDefense = 10;
                 enemyRegen = 2;
 
@@ -2309,20 +2320,112 @@ namespace HelloWorld
                 enemyHealMessage = "[More slime is entering the body from the floor!]";
             }
 
-            //Calculates enemy damage and adjusts max health
-            battleEnemyMaxHP = battleEnemyHealth; //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
-            enemyDamage = baseEnemyDamage * enemyDamageMult; //Sets the total enemy damage based on the base damage and multiplier
+            //Calculates experience to be gained if player wins
+            enemyExperience = (int)(battleEnemyHealth * enemyDamageMult);
 
+            //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
+            battleEnemyMaxHP = battleEnemyHealth;
 
+            //Sets the total enemy damage based on the base damage and multiplier
+            enemyDamage = (int)(baseEnemyDamage * enemyDamageMult); 
         } //Enemy Setup function
+
+        void GainExperience()
+        {
+            Console.WriteLine("Experience gained: " + enemyExperience);
+            Console.WriteLine("");
+
+            currentExperience += enemyExperience;
+
+            Console.WriteLine("");
+            Console.WriteLine("Current Exp: " + currentExperience + "/" + experienceRequirement);
+            Pause();
+            Console.Clear(); //Clears the screen
+
+            if (currentExperience >= experienceRequirement)
+            {
+                LevelUp();
+            }
+        } //Gain Experience function
+
+        void LevelUp()
+        {
+            while (currentExperience >= experienceRequirement)
+            {
+                Console.WriteLine("You've gained a level!");
+                Console.WriteLine("What would you like to level up?");
+                Console.WriteLine("");
+                Console.WriteLine("[+5 to any of your stats]");
+                Console.WriteLine("[1: Health]\n[2: Regen]\n[3: Heal]\n[4: Defense]\n[5: Damage]\n[6: Split Evenly]");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("[Press the number to continue]");
+                Console.Write("> ");
+                char action = Console.ReadKey().KeyChar;
+
+                switch (action)
+                {
+                    case '1': //Health
+                        battlePlayerHealth += 5;
+                        break;
+
+                    case '2': //Regen
+                        healthRegen += 5;
+                        break;
+
+                    case '3': //Heal
+                        playerHeal += 5;
+                        break;
+
+                    case '4': //Defense
+                        battlePlayerDefense += 5;
+                        break;
+
+                    case '5': //Damage
+                        playerDamageAdd += 5;
+                        break;
+
+                    case '6': //Everything
+                        battlePlayerHealth++;
+                        healthRegen++;
+                        playerHeal++;
+                        battlePlayerDamage++;
+                        playerDamage++;
+                        break;
+
+                    default:
+                        LevelUp();
+                        break;
+                } //Action Switch
+
+                //If action is valid
+                if (action == 1 || action == 2 || action == 3 || action == 4 || action == 5 || action == 6)
+                {
+                    level++;
+                    currentExperience -= experienceRequirement;
+                    StatCalculation();
+                }
+            } //While the player is leveling up
+        } //Level Up function
 
         void StatCalculation()
         {
+            experienceRequirement = level * 30;
+            //The Experience Requirement is 30x the player's level
             battlePlayerDefense = playerDefense + level;
-            battlePlayerHealth = (battlePlayerDefense * 1 / 2) + health + level; //The base health with the addition of level plus half the defense makes the max player health
-            battlePlayerMaxHP = battlePlayerHealth; //Sets the max in-battle health for the player so they don't regenerate to unholy levels
-            battlePlayerDamage = (level + playerDamage) * playerDamageMult; //Sets the total damage based on the player's level, base damage, and the damage mutliplier
-            playerHeal = basePlayerHeal + level; //Adds the player's level to the amount they heal
+
+            //Player's defense is the base defense with the player's level added
+            battlePlayerHealth = (battlePlayerDefense * 1 / 2) + health + level;
+
+            //The base health with the addition of level plus half the defense makes the max player health
+            battlePlayerMaxHP = battlePlayerHealth;
+
+            //Sets the max in-battle health for the player so they don't regenerate to unholy levels
+            battlePlayerDamage = (int)((level + playerDamage + playerDamageAdd) * playerDamageMult);
+
+            //Sets the total damage based on the player's level, base damage, and the damage mutliplier
+            playerHeal = basePlayerHeal + level;
+            //Adds the player's level to the amount they heal
         } //Stat Calculation function
     }//Game
 }//HelloWorld
