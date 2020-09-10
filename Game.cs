@@ -202,7 +202,7 @@ namespace HelloWorld
                 Console.Clear(); //Clears the screen
             } //If at the Shack and not in a battle
 
-            if (area == "Field" && InBattle != true)
+            else if (area == "Field" && InBattle != true)
             {
                 if (FieldExplored == false) //If the player hasn't been to the fields
                 {
@@ -292,7 +292,7 @@ namespace HelloWorld
 
             } //If in the field and not in a battle
 
-            if (area == "LabyrinthEntrance" && InBattle != true)
+            else if (area == "LabyrinthEntrance" && InBattle != true)
             {
                 if (LabyrinthEntranceExplored == false)
                 {
@@ -358,7 +358,7 @@ namespace HelloWorld
                 Console.Clear(); //Clears the screen
             } // If at labrynth Entrance and not in a battle
 
-            if (area == "LabyrinthEntryway" && InBattle != true)
+            else if (area == "LabyrinthEntryway" && InBattle != true)
             {
                 if (LabyrinthEntrywayExplored == false)
                 {
@@ -394,6 +394,7 @@ namespace HelloWorld
                         break;
 
                     case '2': //Enter West door
+                        area = "Labyrinth";
                         facingDirection = 'w';
                         oldLabyLocationX = labyLocationX;
                         oldLabyLocationY = labyLocationY;
@@ -401,9 +402,11 @@ namespace HelloWorld
                         labyLocationX = 5;
                         labyLocationY = 25;
                         GenerateRoom();
+                        DoorEastExists = true;
                         break;
 
                     case '3': //Enter East door
+                        area = "Labyrinth";
                         facingDirection = 'e';
                         oldLabyLocationX = labyLocationX;
                         oldLabyLocationY = labyLocationY;
@@ -411,6 +414,7 @@ namespace HelloWorld
                         labyLocationX = 9;
                         labyLocationY = 22;
                         GenerateRoom();
+                        DoorWestExists = true;
                         break;
 
                     case '4': //Check out table
@@ -446,9 +450,6 @@ namespace HelloWorld
                 int SlombieApproach = r.Next(1, 8); //Chance for a slombie to engage
                 if (SlombieApproach == 1) //If a slombie engages
                 {
-                    Console.Clear(); //Clears the screen
-                    Console.WriteLine("");
-                    Pause();
                     enemyName = "Slombie";
                     InBattle = true;
                     Battle();
@@ -458,7 +459,7 @@ namespace HelloWorld
                 Console.Clear(); //Clears the screen
             } //If in Labyrinth Entryway and not in a battle
 
-            if (area == "Labyrinth" && InBattle == false)
+            else if (area == "Labyrinth" && InBattle == false)
             {
                 if (LabyrinthExplored == false) //If the player hasn't been in the labyrinth yet
                 {
@@ -470,7 +471,7 @@ namespace HelloWorld
                     Console.WriteLine("");
                 }
 
-                if (LabyrinthExplored == true) //If the player has been in the labyrinth
+                else if (LabyrinthExplored == true) //If the player has been in the labyrinth
                 {
                     Console.WriteLine("[I'm in the slimy labyrinth]");
                     Console.WriteLine("[I'm not sure I remember where I am]");
@@ -480,10 +481,8 @@ namespace HelloWorld
 
                 LabyrinthRoomText();
                 Console.WriteLine("[What do I do?]");
+                Console.WriteLine("");
                 LabyrinthActionText();
-
-                Console.WriteLine("[1: ]\n[2: ]\n[3: ]\n[4: ]\n[5: Go Back]\n[9: 9 Menu]");
-
                 Console.WriteLine("");
                 Console.WriteLine("[Press the number to continue]");
                 Console.Write("> ");
@@ -539,29 +538,30 @@ namespace HelloWorld
                         }
                         else
                         {
+
                             Console.WriteLine("[I'm staring at the East wall. Insightful]");
+                            Pause();
                         }
                         break;
 
                     case '4': //West
+                        if (CanEscape == true)
+                        {
+                            area = "LabyrinthEntryway";
+                        }
                         if (DoorEastExists == true)
                         {
-                            if (CanEscape == true)
-                            {
-                                area = "LabyrinthEntryway";
-                            }
-                            else
-                            {
-                                oldLabyLocationX = labyLocationX;
-                                oldLabyLocationY = labyLocationY;
+                            oldLabyLocationX = labyLocationX;
+                            oldLabyLocationY = labyLocationY;
 
-                                labyLocationX = doorNorthX;
-                                labyLocationY = doorNorthY;
-                            }
+                            labyLocationX = doorNorthX;
+                            labyLocationY = doorNorthY;
                         }
                         else
                         {
+                            Console.Clear();
                             Console.WriteLine("[I'm staring at the West wall. Insightful]");
+                            Pause();
                         }
                         break;
 
@@ -575,11 +575,11 @@ namespace HelloWorld
                         NineMenu();
                         break;
                 } //Action Switch
-
-
+                LabyrinthExplored = true;
+                Console.Clear();
             } //If in Labyrinth and not in a battle
 
-            if (area == "CastleGate" && InBattle != true)
+            else if (area == "CastleGate" && InBattle != true)
             {
                 if (CastleGateExplored == false) //If the player hasn't been to the gate yet
                 {
@@ -633,7 +633,7 @@ namespace HelloWorld
                 Console.Clear();
             } //If in CastleGate and not in a battle
 
-            if (area == "CastleEntry" && InBattle != true)
+            else if (area == "CastleEntry" && InBattle != true)
             {
                 if (CastleEntryExplored == false) //If the player hasn't entered the Castle before
                 {
@@ -694,7 +694,7 @@ namespace HelloWorld
                 Console.Clear(); //Clears the screen
             } //If in CastleEntry
 
-            if (area == "    " && InBattle != true)
+            else if (area == "    " && InBattle != true)
             {
 
                 if (Explored == false) //If the player hasn't entered the Void before
@@ -839,26 +839,20 @@ namespace HelloWorld
                             battleEnemyHealth = DirectAttack(battlePlayerDamage, battleEnemyHealth, battleEnemyDefense, enemyName);
                         } //If enemy isn't blocking
 
-                        if (enemyAction <= 1) //If the enemy is attacking after player attack
+                        if (enemyAction <= 1 && battleEnemyHealth > 0) //If the enemy is attacking after player attack & not dead
                         {
-                            if (battleEnemyHealth > 0) //If the enemy isn't dead
-                            {
-                                Console.WriteLine("[" + enemyName + " is retaliating!]");
-                                Pause();
-                                Console.Clear(); //Clears the screen
-                                battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
-                            }
+                            Console.WriteLine("[" + enemyName + " is retaliating!]");
+                            Pause();
+                            Console.Clear(); //Clears the screen
+                            battlePlayerHealth = DirectAttack(enemyDamage, battlePlayerHealth, battlePlayerDefense, name);
                         } // If enemy Retaliates
 
-                        if (enemyAction == 3) //If the enemy is healing
+                        else if (enemyAction == 3 && battleEnemyHealth > 0) //If the enemy is healing & not dead
                         {
-                            if (battleEnemyHealth > 0) //If the enemy isn't dead
-                            {
-                                Pause();
-                                Console.Clear(); //Clears the screen
-                                Console.WriteLine(enemyHealMessage);
-                                battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
-                            }
+                            Console.WriteLine(enemyHealMessage);
+                            Pause();
+                            Console.Clear(); //Clears the screen
+                            battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
                         } //If enemy Heals after attack
                         break;
 
@@ -871,19 +865,19 @@ namespace HelloWorld
                             PlayerDefendedAttack();
                         } //If enemy Attacks
 
-                        if (enemyAction == 2)
+                        else if (enemyAction == 2)
                         {
                             Console.WriteLine(enemyUselessDefenseMessage);
                         } //If enemy mirrors Block
 
-                        if (enemyAction == 3) //If the enemy is healing
+                        else if (enemyAction == 3) //If the enemy is healing
                         {
                             Console.WriteLine(enemyHealMessage);
                             battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
                         } //If enemy Heals
 
 
-                        if (enemyAction == 4)
+                        else if (enemyAction == 4)
                         {
                             Console.WriteLine(enemyNothingMessage);
                         } //If enemy does Nothing
@@ -955,19 +949,19 @@ namespace HelloWorld
                             }
                         } // If enemy Attacks
 
-                        if (enemyAction == 2)
+                        else if (enemyAction == 2)
                         {
                             Console.WriteLine(enemyUselessDefenseMessage);
                         } //If enemy Blocks
 
-                        if (enemyAction == 3) //If the enemy is healing
+                        else if (enemyAction == 3) //If the enemy is healing
                         {
                             Console.WriteLine(enemyHealMessage);
                             battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
                             Pause();
                         } //If enemy Heals
 
-                        if (enemyAction == 4)
+                        else if (enemyAction == 4)
                         {
                             Console.WriteLine(enemyNothingMessage);
                         } //If enemy also does Nothing
@@ -1103,8 +1097,6 @@ namespace HelloWorld
                 Console.WriteLine(victimName + "[Pre-Strike]"); //Stats before being struck
                 Console.WriteLine(health + " HP <<");
                 Console.WriteLine(defense + " Def");
-                Console.WriteLine("");
-
                 Pause();
 
                 health -= damage;  //The Attack
@@ -1134,8 +1126,6 @@ namespace HelloWorld
                 Console.WriteLine(name + "[Pre-Strike]"); //Player's stats before being struck
                 Console.WriteLine(battlePlayerHealth + " HP ");
                 Console.WriteLine(battlePlayerDefense + " Def <<");
-                Console.WriteLine("");
-
                 Pause();
 
                 battlePlayerDefense -= enemyDamage; //Enemy's attack on player's defense
@@ -1175,8 +1165,6 @@ namespace HelloWorld
                 Console.WriteLine(enemyName + "[Pre-Strike]"); //Enemy's stats before being struck
                 Console.WriteLine(battleEnemyHealth + " HP ");
                 Console.WriteLine(battleEnemyDefense + " Def <<");
-                Console.WriteLine("");
-
                 Pause();
 
                 battleEnemyDefense -= battlePlayerDamage; //Player's attack on enemy's defense
@@ -1208,14 +1196,12 @@ namespace HelloWorld
             {
                 Console.WriteLine(name + " was unmade");
                 InBattle = false;
-                Pause();
             }
 
             if (battleEnemyHealth <= 0)
             {
                 Console.WriteLine(enemyDeathMessage);
                 InBattle = false;
-                Pause();
             }
 
             Pause();
@@ -1288,7 +1274,6 @@ namespace HelloWorld
             Console.WriteLine("[1: Magic]\n[2: Warrior]\n[3: Trickery]");
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
-
             Console.Write("> My style is ");
             char styleKey = Console.ReadKey().KeyChar;
             char specialtyKey;
@@ -1303,8 +1288,6 @@ namespace HelloWorld
 
                     Console.WriteLine("What is your specialty?");
                     Console.WriteLine("[1: Warder]\n[2: Atronach]\n[3: Battle Mage]\n[4: Priest]");
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.WriteLine("");
                     Console.WriteLine("");
 
                     Console.WriteLine("Warder [1]");
@@ -1343,6 +1326,7 @@ namespace HelloWorld
                     Console.WriteLine("");
                     Console.WriteLine("");
 
+                    Console.WriteLine("[Press the number to continue]");
                     Console.Write("> My specialty is ");
                     specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Magic
 
@@ -1394,8 +1378,6 @@ namespace HelloWorld
 
                     Console.WriteLine("What is your specialty?");
                     Console.WriteLine("[1: Tank]\n[2: Berserker]\n[3: Shielder]\n[4: Knight]");
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.WriteLine("");
                     Console.WriteLine("");
 
                     Console.WriteLine("Tank [1]");
@@ -1434,6 +1416,7 @@ namespace HelloWorld
                     Console.WriteLine("");
                     Console.WriteLine("");
 
+                    Console.WriteLine("[Press the number to continue]");
                     Console.Write("> My specialty is ");
                     specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Knight
 
@@ -1484,8 +1467,6 @@ namespace HelloWorld
 
                     Console.WriteLine("What is your specialty?");
                     Console.WriteLine("[1: Assassin]\n[2: Martial Artist]\n[3: Ninja\n[4: Rogue]");
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.WriteLine("");
                     Console.WriteLine("");
 
                     Console.WriteLine("Assassin [1]");
@@ -1524,6 +1505,7 @@ namespace HelloWorld
                     Console.WriteLine("");
                     Console.WriteLine("");
 
+                    Console.WriteLine("[Press the number to continue]");
                     Console.Write("> My specialty is ");
                     specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Trickster
 
@@ -1650,6 +1632,7 @@ namespace HelloWorld
                     Console.WriteLine("Are you sure you want to leave?");
                     Console.WriteLine("");
                     Console.WriteLine("[1: Yes]\n[2: No]");
+                    Console.WriteLine("");
                     Console.WriteLine("[Press the number to continue]");
                     Console.Write("> ");
                     action = Console.ReadKey().KeyChar;
@@ -1890,24 +1873,24 @@ namespace HelloWorld
             }
 
             //Chances for a door on each wall
-            doorSouthChance = r.Next(1, 100);
-            doorNorthChance = r.Next(1, 100);
-            doorEastChance = r.Next(1, 100);
-            doorWestChance = r.Next(1, 100);
+            doorSouthChance = r.Next(1, 50);
+            doorNorthChance = r.Next(1, 50);
+            doorEastChance = r.Next(1, 50);
+            doorWestChance = r.Next(1, 50);
 
-            if (doorSouthChance >= 75)
+            if (doorSouthChance >= 25)
             {
                 DoorSouthExists = true;
             }
-            if (doorNorthChance >= 75)
+            if (doorNorthChance >= 25)
             {
                 DoorNorthExists = true;
             }
-            if (doorEastChance >= 75)
+            if (doorEastChance >= 25)
             {
                 DoorEastExists = true;
             }
-            if (doorWestChance >= 75)
+            if (doorWestChance >= 25)
             {
                 DoorWestExists = true;
             }
@@ -2382,14 +2365,14 @@ namespace HelloWorld
 
         void LevelUp()
         {
-            while (currentExperience >= experienceRequirement)
+            do
             {
                 Console.WriteLine("You've gained a level!");
                 Console.WriteLine("What would you like to level up?");
                 Console.WriteLine("");
                 Console.WriteLine("[+5 to any of your stats]");
-                Console.WriteLine("[1: Health]\n[2: Regen]\n[3: Heal]\n[4: Defense]\n[5: Damage]\n[6: Split Evenly]");
                 Console.WriteLine("");
+                Console.WriteLine("[1: Health]\n[2: Regen]\n[3: Heal]\n[4: Defense]\n[5: Damage]\n[6: Split Evenly]");
                 Console.WriteLine("");
                 Console.WriteLine("[Press the number to continue]");
                 Console.Write("> ");
@@ -2431,13 +2414,15 @@ namespace HelloWorld
                 } //Action Switch
 
                 //If action is valid
-                if (action == 1 || action == 2 || action == 3 || action == 4 || action == 5 || action == 6)
+                if (action == '1' || action == '2' || action == '3' || action == '4' || action == '5' || action == '6')
                 {
                     level++;
                     currentExperience -= experienceRequirement;
                     StatCalculation();
                 }
+                Console.Clear();
             } //While the player is leveling up
+            while (currentExperience >= experienceRequirement);
         } //Level Up function
 
         void StatCalculation()
