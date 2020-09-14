@@ -10,23 +10,35 @@ namespace HelloWorld
         {
             //Player Declarations
             public string name;
+
+            //Level
             public int health;
             public int healthRegen;
-            public int playerDefense;
+
+            //Experience/Level
             public int level;
             public int currentExperience;
             public int experienceRequirement;
-            public int battlePlayerHealth;
-            public int battlePlayerMaxHP;
-            public int playerHeal;
-            public int battlePlayerDefense;
-            public int battlePlayerDamage;
 
-            public int basePlayerHeal;
-            public float playerDamageMult;
-            public int playerDamage;
-            public int playerDamageAdd;
+            //Health
+            public int totalHealth;
+            public int MaxHealth;
 
+            //Healing
+            public int baseHeal;
+            public int heal;
+
+            //Defense
+            public int defense;
+            public int battleDefense;
+
+            //Damage
+            public int totalDamage;
+            public float damageMultiplier;
+            public int damageAddition;
+            public int baseDamage;
+
+            //Specialty/Style
             public string specialty;
             public string styleName;
 
@@ -873,14 +885,14 @@ namespace HelloWorld
         {
             player.health = 100;
             player.healthRegen = 4;
-            player.playerDefense = 10;
+            player.defense = 10;
             player.level = 1;
             player.currentExperience = 0;
-            player.playerHeal = 5;
+            player.heal = 5;
 
-            player.basePlayerHeal = 5;
-            player.playerDamageMult = 1;
-            player.playerDamage = 9;
+            player.baseHeal = 5;
+            player.damageMultiplier = 1;
+            player.baseDamage = 9;
 
             player.styleName = "Fool";
             player.specialty = "Foolishness";
@@ -925,18 +937,18 @@ namespace HelloWorld
 
             Console.WriteLine(player1.name + ": " +  player1.specialty); //This and the next line show player 1's stats
 
-            Console.WriteLine(player1.battlePlayerHealth + " HP");
-            Console.WriteLine(player1.playerHeal + " Healing");
-            Console.WriteLine(player1.battlePlayerDamage + " Atk");
-            Console.WriteLine(player1.battlePlayerDefense + " Def");
+            Console.WriteLine(player1.totalHealth + " HP");
+            Console.WriteLine(player1.heal + " Healing");
+            Console.WriteLine(player1.totalDamage + " Atk");
+            Console.WriteLine(player1.battleDefense + " Def");
 
             Console.WriteLine("");
 
             Console.WriteLine(player2.name + ": " + player2.specialty); //This and the next line show player 2's stats
-            Console.WriteLine(player2.battlePlayerHealth + " HP");
-            Console.WriteLine(player2.playerHeal + " Healing");
-            Console.WriteLine(player2.battlePlayerDamage + " Atk");
-            Console.WriteLine(player2.battlePlayerDefense + " Def");
+            Console.WriteLine(player2.totalHealth + " HP");
+            Console.WriteLine(player2.heal + " Healing");
+            Console.WriteLine(player2.totalDamage + " Atk");
+            Console.WriteLine(player2.battleDefense + " Def");
             Console.WriteLine("");
             Console.WriteLine("");
         } //Pvp Stat Display function
@@ -981,28 +993,28 @@ namespace HelloWorld
                             Console.WriteLine("[" + player2.name + " is blocking!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            player2.battlePlayerDefense = PlayerDefendedAttack(ref player2, player1.battlePlayerDamage);
+                            player2.battleDefense = PlayerDefendedAttack(ref player2, player1.totalDamage);
                         } //If player 2 blocks
 
                         else //Whether the enemy is Attacking, Healing, or doing Nothing
                         {
-                            player2.battlePlayerHealth = DirectAttack(ref player2, ref player1);
+                            player2.totalHealth = DirectAttack(ref player2, ref player1);
                         } //If player 2 isn't blocking
 
-                        if (player2action <= '1' && player2.battlePlayerHealth > 0) //If the enemy is attacking after player attack & not dead
+                        if (player2action <= '1' && player2.totalHealth > 0) //If the enemy is attacking after player attack & not dead
                         {
                             Console.WriteLine("[" + player2.name + " is retaliating!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            player1.battlePlayerHealth = DirectAttack(ref player1, ref player2);
+                            player1.totalHealth = DirectAttack(ref player1, ref player2);
                         } // If enemy Retaliates
 
-                        else if (player2action == '3' && player2.battlePlayerHealth > 0) //If the enemy is healing & not dead
+                        else if (player2action == '3' && player2.totalHealth > 0) //If the enemy is healing & not dead
                         {
                             Console.WriteLine("[" + player2.name + " is healing!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            player2.battlePlayerHealth = Heal(player2.name, player2.battlePlayerHealth, player2.battlePlayerDefense, player2.playerHeal);
+                            player2.totalHealth = Heal(player2.name, player2.totalHealth, player2.battleDefense, player2.heal);
                         } //If enemy Heals after attack
                         break;
 
@@ -1014,7 +1026,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + player2.name + " is attacking!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            player1.battlePlayerDefense = PlayerDefendedAttack(ref player1, player2.battlePlayerDamage);
+                            player1.battleDefense = PlayerDefendedAttack(ref player1, player2.totalDamage);
                         } //If enemy Attacks
 
                         else if (player2action == '2')
@@ -1029,7 +1041,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + player2.name + " is healing!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            player2.battlePlayerHealth = Heal(player2.name, player2.battlePlayerHealth, player2.battlePlayerDefense, player2.playerHeal);
+                            player2.totalHealth = Heal(player2.name, player2.totalHealth, player2.battleDefense, player2.heal);
                         } //If enemy Heals
 
 
@@ -1050,13 +1062,13 @@ namespace HelloWorld
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            player1.battlePlayerHealth = Heal(player1.battlePlayerHealth, player1.battlePlayerDefense, player1.playerHeal, player1.name);
+                            player1.totalHealth = Heal(player1.totalHealth, player1.battleDefense, player1.heal, player1.name);
                             Console.Clear(); //Clears the screen
 
                             Console.WriteLine("[" + player2.name + " is attacking!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            player1.battlePlayerHealth = DirectAttack(ref player1, ref player2);
+                            player1.totalHealth = DirectAttack(ref player1, ref player2);
                         } //If enemy Attacks
 
                         else if (player2action == '2') //If the enemy is blocking
@@ -1065,7 +1077,7 @@ namespace HelloWorld
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            player1.battlePlayerHealth = Heal(player1.battlePlayerHealth, player1.battlePlayerDefense, player1.playerHeal, player1.name);
+                            player1.totalHealth = Heal(player1.totalHealth, player1.battleDefense, player1.heal, player1.name);
                             Pause();
                             Console.Clear(); //Clears the screen
                         } //If enemy Blocks
@@ -1073,11 +1085,11 @@ namespace HelloWorld
                         else if (player2action == '3') //If the enemy is healing
                         {
                             Console.WriteLine("[" + player2.name + " is healing!]");
-                            player1.battlePlayerHealth = Heal(player1.battlePlayerHealth, player1.battlePlayerDefense, player1.playerHeal, player1.name);
+                            player1.totalHealth = Heal(player1.totalHealth, player1.battleDefense, player1.heal, player1.name);
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            player2.battlePlayerHealth = Heal(player2.name, player2.battlePlayerHealth, player2.battlePlayerDefense, player2.playerHeal);
+                            player2.totalHealth = Heal(player2.name, player2.totalHealth, player2.battleDefense, player2.heal);
                             Pause();
                         } //If player 2 also Heals
 
@@ -1087,7 +1099,7 @@ namespace HelloWorld
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            player1.battlePlayerHealth = Heal(player1.battlePlayerHealth, player1.battlePlayerDefense, player1.playerHeal, player1.name);
+                            player1.totalHealth = Heal(player1.totalHealth, player1.battleDefense, player1.heal, player1.name);
                             Pause();
                         } //If enemy does Nothing
                         break;
@@ -1101,7 +1113,7 @@ namespace HelloWorld
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            player1.battlePlayerHealth = DirectAttack(ref player1, ref player2);
+                            player1.totalHealth = DirectAttack(ref player1, ref player2);
                             Pause();
                             if (GameOver == true)
                             {
@@ -1121,7 +1133,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + player2.name + " is healing!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            player2.battlePlayerHealth = Heal(player2.name, player2.battlePlayerHealth, player2.battlePlayerDefense, player2.playerHeal);
+                            player2.totalHealth = Heal(player2.name, player2.totalHealth, player2.battleDefense, player2.heal);
                             Pause();
                         } //If enemy Heals
 
@@ -1142,39 +1154,39 @@ namespace HelloWorld
                 {
                     Console.WriteLine("");
                     Console.Write("[Press any key to end this round");
-                    if (player2.battlePlayerHealth > 0 && player1.battlePlayerHealth > 0) //If both players have health
+                    if (player2.totalHealth > 0 && player1.totalHealth > 0) //If both players have health
                     {
                         //Neither regen
-                        if (player2.battlePlayerHealth >= player2.battlePlayerMaxHP && player1.battlePlayerHealth >= player1.battlePlayerMaxHP)
+                        if (player2.totalHealth >= player2.MaxHealth && player1.totalHealth >= player1.MaxHealth)
                         {
                             Console.WriteLine("; regen won't be applied]");
                             Console.WriteLine("");
-                            Console.WriteLine("[" + player1.name + ": " + player1.battlePlayerHealth + "]");
-                            Console.WriteLine("[" + player2.name + ": " + player2.battlePlayerHealth + "]");
+                            Console.WriteLine("[" + player1.name + ": " + player1.totalHealth + "]");
+                            Console.WriteLine("[" + player2.name + ": " + player2.totalHealth + "]");
                         }
                         //Only 2 regens
-                        else if (player2.battlePlayerHealth < player2.battlePlayerMaxHP && player1.battlePlayerHealth >= player1.battlePlayerMaxHP)
+                        else if (player2.totalHealth < player2.MaxHealth && player1.totalHealth >= player1.MaxHealth)
                         {
                             Console.WriteLine("; regen will be applied]");
                             Console.WriteLine("");
-                            Console.WriteLine("[" + player1.name + ": " + player1.battlePlayerHealth + "]");
-                            Console.WriteLine("[" + player2.name + ": " + player2.battlePlayerHealth + " + " + player2.healthRegen + "]");
+                            Console.WriteLine("[" + player1.name + ": " + player1.totalHealth + "]");
+                            Console.WriteLine("[" + player2.name + ": " + player2.totalHealth + " + " + player2.healthRegen + "]");
                         }
                         //Only 1 regens
-                        else if (player2.battlePlayerHealth >= player2.battlePlayerMaxHP && player1.battlePlayerHealth < player1.battlePlayerMaxHP)
+                        else if (player2.totalHealth >= player2.MaxHealth && player1.totalHealth < player1.MaxHealth)
                         {
                             Console.WriteLine("; regen will be applied]");
                             Console.WriteLine("");
-                            Console.WriteLine("[" + player1.name + ": " + player1.battlePlayerHealth + " + " + player1.healthRegen + "]");
-                            Console.WriteLine("[" + player2.name + ": " + player2.battlePlayerHealth + "]");
+                            Console.WriteLine("[" + player1.name + ": " + player1.totalHealth + " + " + player1.healthRegen + "]");
+                            Console.WriteLine("[" + player2.name + ": " + player2.totalHealth + "]");
                         }
                         //Both regen
-                        else if (player2.battlePlayerHealth <= player2.battlePlayerMaxHP && player1.battlePlayerHealth <= player1.battlePlayerMaxHP)
+                        else if (player2.totalHealth <= player2.MaxHealth && player1.totalHealth <= player1.MaxHealth)
                         {
                             Console.WriteLine("; regen will be applied]");
                             Console.WriteLine("");
-                            Console.WriteLine("[" + player1.name + ": " + player1.battlePlayerHealth + " + " + player1.healthRegen + "]");
-                            Console.WriteLine("[" + player2.name + ": " + player2.battlePlayerHealth + " + " + player2.healthRegen + "]");
+                            Console.WriteLine("[" + player1.name + ": " + player1.totalHealth + " + " + player1.healthRegen + "]");
+                            Console.WriteLine("[" + player2.name + ": " + player2.totalHealth + " + " + player2.healthRegen + "]");
                         }
                     } //If both live
                     else //Closes the text if regen won't be applied due to one entity being dead
@@ -1187,12 +1199,12 @@ namespace HelloWorld
                     Pause();
                     Console.Clear(); //Clears the screen
 
-                    player1.battlePlayerHealth = Regeneration(player1.battlePlayerHealth, player1.battlePlayerMaxHP, player1.healthRegen); //Regenerates player 1
-                    player2.battlePlayerHealth = Regeneration(player2.battlePlayerHealth, player2.battlePlayerMaxHP, player2.healthRegen); //Regenerates player 2
+                    player1.totalHealth = Regeneration(player1.totalHealth, player1.MaxHealth, player1.healthRegen); //Regenerates player 1
+                    player2.totalHealth = Regeneration(player2.totalHealth, player2.MaxHealth, player2.healthRegen); //Regenerates player 2
                 } //If in battle
 
 
-                if (player1.battlePlayerHealth <= 0) //If player 2 won
+                if (player1.totalHealth <= 0) //If player 2 won
                 {
                     Console.WriteLine("The battle has ended");
                     Console.WriteLine("");
@@ -1238,10 +1250,10 @@ namespace HelloWorld
                 Console.WriteLine("");
 
                 Console.WriteLine(player1.name); //This and the next line show player's name and health
-                Console.WriteLine(player1.battlePlayerHealth + " HP");
-                Console.WriteLine(player1.playerHeal + " Healing");
-                Console.WriteLine(player1.battlePlayerDamage + " Atk");
-                Console.WriteLine(player1.battlePlayerDefense + " Def");
+                Console.WriteLine(player1.totalHealth + " HP");
+                Console.WriteLine(player1.heal + " Healing");
+                Console.WriteLine(player1.totalDamage + " Atk");
+                Console.WriteLine(player1.battleDefense + " Def");
 
                 Console.WriteLine("");
 
@@ -1276,7 +1288,7 @@ namespace HelloWorld
 
                         else //Whether the enemy is Attacking, Healing, or doing Nothing
                         {
-                            battleEnemyHealth = DirectAttack(player1.battlePlayerDamage, battleEnemyHealth, battleEnemyDefense, enemyName);
+                            battleEnemyHealth = DirectAttack(player1.totalDamage, battleEnemyHealth, battleEnemyDefense, enemyName);
                         } //If enemy isn't blocking
 
                         if (enemyAction <= 1 && battleEnemyHealth > 0) //If the enemy is attacking after player attack & not dead
@@ -1284,7 +1296,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + enemyName + " is retaliating!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            player1.battlePlayerHealth = DirectAttack(enemyDamage, player1.battlePlayerHealth, player1.battlePlayerDefense, player1.name);
+                            player1.totalHealth = DirectAttack(enemyDamage, player1.totalHealth, player1.battleDefense, player1.name);
                         } // If enemy Retaliates
 
                         else if (enemyAction == 3 && battleEnemyHealth > 0) //If the enemy is healing & not dead
@@ -1302,7 +1314,7 @@ namespace HelloWorld
                         if (enemyAction <= 1)
                         {
                             Console.WriteLine(enemyAttackMessage);
-                            player1.battlePlayerDefense = PlayerDefendedAttack(ref player1, enemyDamage);
+                            player1.battleDefense = PlayerDefendedAttack(ref player1, enemyDamage);
                         } //If enemy Attacks
 
                         else if (enemyAction == 2)
@@ -1332,12 +1344,12 @@ namespace HelloWorld
                             Console.WriteLine("[" + enemyName + " disagrees!]");
                             Console.WriteLine("");
 
-                            player1.battlePlayerHealth = Heal(player1.battlePlayerHealth, player1.battlePlayerDefense, player1.playerHeal, player1.name);
+                            player1.totalHealth = Heal(player1.totalHealth, player1.battleDefense, player1.heal, player1.name);
                             Pause();
                             Console.Clear(); //Clears the screen
 
                             Console.WriteLine(enemyAttackMessage);
-                            player1.battlePlayerHealth = DirectAttack(enemyDamage, player1.battlePlayerHealth, player1.battlePlayerDefense, player1.name);
+                            player1.totalHealth = DirectAttack(enemyDamage, player1.totalHealth, player1.battleDefense, player1.name);
                         } //If enemy Attacks
 
                         else if (enemyAction == 2) //If the enemy is blocking
@@ -1346,14 +1358,14 @@ namespace HelloWorld
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            player1.battlePlayerHealth = Heal(player1.battlePlayerHealth, player1.battlePlayerDefense, player1.playerHeal, player1.name);
+                            player1.totalHealth = Heal(player1.totalHealth, player1.battleDefense, player1.heal, player1.name);
                             Pause();
                         } //If enemy Blocks
 
                         else if (enemyAction == 3) //If the enemy is healing
                         {
                             Console.WriteLine(enemyHealMessage);
-                            player1.battlePlayerHealth = Heal(player1.battlePlayerHealth, player1.battlePlayerDefense, player1.playerHeal, player1.name);
+                            player1.totalHealth = Heal(player1.totalHealth, player1.battleDefense, player1.heal, player1.name);
                             Pause();
                             Console.Clear(); //Clears the screen
 
@@ -1367,7 +1379,7 @@ namespace HelloWorld
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            player1.battlePlayerHealth = Heal(player1.battlePlayerHealth, player1.battlePlayerDefense, player1.playerHeal, player1.name);
+                            player1.totalHealth = Heal(player1.totalHealth, player1.battleDefense, player1.heal, player1.name);
                             Pause();
                         } //If enemy does Nothing
                         break;
@@ -1381,7 +1393,7 @@ namespace HelloWorld
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            player1.battlePlayerHealth = DirectAttack(enemyDamage, player1.battlePlayerHealth, player1.battlePlayerDefense, player1.name);
+                            player1.totalHealth = DirectAttack(enemyDamage, player1.totalHealth, player1.battleDefense, player1.name);
                             Pause();
                             if (GameOver == true)
                             {
@@ -1416,38 +1428,38 @@ namespace HelloWorld
                 {
                     Console.WriteLine("");
                     Console.Write("[Press any key to end this round");
-                    if (battleEnemyHealth > 0 && player1.battlePlayerHealth > 0) //If both entities have health
+                    if (battleEnemyHealth > 0 && player1.totalHealth > 0) //If both entities have health
                     {
                         //Neither regen
-                        if (battleEnemyHealth >= battleEnemyMaxHP && player1.battlePlayerHealth >= player1.battlePlayerMaxHP)
+                        if (battleEnemyHealth >= battleEnemyMaxHP && player1.totalHealth >= player1.MaxHealth)
                         {
                             Console.WriteLine("; regen won't be applied]");
                             Console.WriteLine("");
-                            Console.WriteLine("[" + player1.name + ": " + player1.battlePlayerHealth + "]");
+                            Console.WriteLine("[" + player1.name + ": " + player1.totalHealth + "]");
                             Console.WriteLine("[" + enemyName + ": " + battleEnemyHealth + "]");
                         }
                         //Only Enemy regens
-                        else if (battleEnemyHealth < battleEnemyMaxHP && player1.battlePlayerHealth >= player1.battlePlayerMaxHP)
+                        else if (battleEnemyHealth < battleEnemyMaxHP && player1.totalHealth >= player1.MaxHealth)
                         {
                             Console.WriteLine("; regen will be applied]");
                             Console.WriteLine("");
-                            Console.WriteLine("[" + player1.name + ": " + player1.battlePlayerHealth + "]");
+                            Console.WriteLine("[" + player1.name + ": " + player1.totalHealth + "]");
                             Console.WriteLine("[" + enemyName + ": " + battleEnemyHealth + " + " + enemyRegen + "]");
                         }
                         //Only Player regens
-                        else if (battleEnemyHealth >= battleEnemyMaxHP && player1.battlePlayerHealth < player1.battlePlayerMaxHP)
+                        else if (battleEnemyHealth >= battleEnemyMaxHP && player1.totalHealth < player1.MaxHealth)
                         {
                             Console.WriteLine("; regen will be applied]");
                             Console.WriteLine("");
-                            Console.WriteLine("[" + player1.name + ": " + player1.battlePlayerHealth + " + " + player1.healthRegen + "]");
+                            Console.WriteLine("[" + player1.name + ": " + player1.totalHealth + " + " + player1.healthRegen + "]");
                             Console.WriteLine("[" + enemyName + ": " + battleEnemyHealth + "]");
                         }
                         //Both regen
-                        else if (battleEnemyHealth <= battleEnemyMaxHP && player1.battlePlayerHealth <= player1.battlePlayerMaxHP)
+                        else if (battleEnemyHealth <= battleEnemyMaxHP && player1.totalHealth <= player1.MaxHealth)
                         {
                             Console.WriteLine("; regen will be applied]");
                             Console.WriteLine("");
-                            Console.WriteLine("[" + player1.name + ": " + player1.battlePlayerHealth + " + " + player1.healthRegen + "]");
+                            Console.WriteLine("[" + player1.name + ": " + player1.totalHealth + " + " + player1.healthRegen + "]");
                             Console.WriteLine("[" + enemyName + ": " + battleEnemyHealth + " + " + enemyRegen + "]");
                         }
                     } //If both entities live
@@ -1458,12 +1470,12 @@ namespace HelloWorld
 
                     Console.Clear(); //Clears the screen
 
-                    player1.battlePlayerHealth = Regeneration(player1.battlePlayerHealth, player1.battlePlayerMaxHP, player1.healthRegen); //Regenerates player
+                    player1.totalHealth = Regeneration(player1.totalHealth, player1.MaxHealth, player1.healthRegen); //Regenerates player
                     battleEnemyHealth = Regeneration(battleEnemyHealth, battleEnemyMaxHP, enemyRegen); //Regenerates Enemy
                 } //If in battle
 
 
-                if (player1.battlePlayerHealth <= 0) //If the player lost
+                if (player1.totalHealth <= 0) //If the player lost
                 {
                     Console.WriteLine("The battle has ended");
                     Pause();
@@ -1557,21 +1569,21 @@ namespace HelloWorld
             if (defender.health > 0)
             {
                 Console.WriteLine(defender.name + "[Pre-Strike]"); //Stats before being struck
-                Console.WriteLine(defender.battlePlayerHealth + " HP <<");
-                Console.WriteLine(defender.battlePlayerDefense + " Def");
+                Console.WriteLine(defender.totalHealth + " HP <<");
+                Console.WriteLine(defender.battleDefense + " Def");
                 Pause();
 
-                defender.battlePlayerHealth -= attacker.battlePlayerDamage;  //The Attack
+                defender.totalHealth -= attacker.totalDamage;  //The Attack
 
                 Console.WriteLine(defender.name + " [Post-Strike]"); //Stats after being struck
-                Console.WriteLine(defender.battlePlayerHealth + " HP <<");
-                Console.WriteLine(defender.battlePlayerDefense + " Def");
+                Console.WriteLine(defender.totalHealth + " HP <<");
+                Console.WriteLine(defender.battleDefense + " Def");
                 Console.WriteLine("");
                 Pause();
 
                 DeathCheck(player1);
             } //If enemy alive
-            return defender.battlePlayerHealth;
+            return defender.totalHealth;
         } //Player Direct Attack Function
 
 
@@ -1580,28 +1592,28 @@ namespace HelloWorld
         {
             Console.WriteLine("");
 
-            if (player.battlePlayerDefense == 0)
+            if (player.battleDefense == 0)
             {
                 Console.WriteLine("[" + player.name + " can't block!]");
-                player.battlePlayerHealth = DirectAttack(attackerDamage, player.battlePlayerHealth, player.battlePlayerDefense, player.name);
+                player.totalHealth = DirectAttack(attackerDamage, player.totalHealth, player.battleDefense, player.name);
             } //If player has no defense
 
             else
             {
                 Console.WriteLine(player.name + "[Pre-Strike]"); //Player's stats before being struck
-                Console.WriteLine(player.battlePlayerHealth + " HP ");
-                Console.WriteLine(player.battlePlayerDefense + " Def <<");
+                Console.WriteLine(player.totalHealth + " HP ");
+                Console.WriteLine(player.battleDefense + " Def <<");
                 Pause();
 
-                player.battlePlayerDefense -= attackerDamage; //Enemy's attack on player's defense
-                if (player.battlePlayerDefense <= 0) //If defense falls
+                player.battleDefense -= attackerDamage; //Enemy's attack on player's defense
+                if (player.battleDefense <= 0) //If defense falls
                 {
                     Console.WriteLine("[The defense was knocked aside!]");
-                    player.battlePlayerDefense = 0; //Sets defense back to 0
+                    player.battleDefense = 0; //Sets defense back to 0
 
                     Console.WriteLine(player.name + " [Post-Strike]"); //Player's stats after enemy's attack
-                    Console.WriteLine(player.battlePlayerHealth + " HP");
-                    Console.WriteLine(player.battlePlayerDefense + " Def <<");
+                    Console.WriteLine(player.totalHealth + " HP");
+                    Console.WriteLine(player.battleDefense + " Def <<");
                     Pause();
                 }
 
@@ -1610,12 +1622,12 @@ namespace HelloWorld
                     Console.WriteLine("[The attack was successfully blocked!]");
 
                     Console.WriteLine(player.name + " [Post-Strike]"); //Player's stats after enemy's attack
-                    Console.WriteLine(player.battlePlayerHealth + " HP");
-                    Console.WriteLine(player.battlePlayerDefense + " Def <<");
+                    Console.WriteLine(player.totalHealth + " HP");
+                    Console.WriteLine(player.battleDefense + " Def <<");
                     Pause();
                 }
             } //If player has defense
-            return player.battlePlayerDefense;
+            return player.battleDefense;
         } //Player Defended Attack function
 
         void EnemyDefendedAttack()
@@ -1625,7 +1637,7 @@ namespace HelloWorld
             if (battleEnemyDefense == 0)
             {
                 Console.WriteLine(enemyNoDefenseMessage);
-                battleEnemyHealth = DirectAttack(player1.playerDamage, battleEnemyHealth, battleEnemyDefense, enemyName);
+                battleEnemyHealth = DirectAttack(player1.baseDamage, battleEnemyHealth, battleEnemyDefense, enemyName);
             } //If player has no defense
 
             else
@@ -1635,7 +1647,7 @@ namespace HelloWorld
                 Console.WriteLine(battleEnemyDefense + " Def <<");
                 Pause();
 
-                battleEnemyDefense -= player1.battlePlayerDamage; //Player's attack on enemy's defense
+                battleEnemyDefense -= player1.totalDamage; //Player's attack on enemy's defense
                 if (battleEnemyDefense <= 0) //If defense falls
                 {
                     Console.WriteLine(enemyDefenseDestroyedMessage);
@@ -1659,7 +1671,7 @@ namespace HelloWorld
 
         void DeathCheck(Player player)
         {
-            if (player.battlePlayerHealth <= 0) //Checks to see if player was killed by the attack
+            if (player.totalHealth <= 0) //Checks to see if player was killed by the attack
             {
                 Console.WriteLine(player.name + " was unmade");
                 InBattle = false;
@@ -1801,36 +1813,36 @@ namespace HelloWorld
                     {
                         player.health = 90;
                         player.healthRegen = 4;
-                        player.basePlayerHeal = 6;
-                        player.playerDamageMult = 1;
-                        player.playerDefense = 24;
+                        player.baseHeal = 6;
+                        player.damageMultiplier = 1;
+                        player.defense = 24;
                         player.specialty = "Warder";
                     }
                     else if (specialtyKey == '2') //Atronach
                     {
                         player.health = 160;
                         player.healthRegen = 2;
-                        player.basePlayerHeal = 0;
-                        player.playerDamageMult = 0.8f;
-                        player.playerDefense = 8;
+                        player.baseHeal = 0;
+                        player.damageMultiplier = 0.8f;
+                        player.defense = 8;
                         player.specialty = "Atronach";
                     }
                     else if (specialtyKey == '3') //Battle Mage
                     {
                         player.health = 70;
                         player.healthRegen = 5;
-                        player.basePlayerHeal = 8;
-                        player.playerDamageMult = 1.3f;
-                        player.playerDefense = 11;
+                        player.baseHeal = 8;
+                        player.damageMultiplier = 1.3f;
+                        player.defense = 11;
                         player.specialty = "Battle Mage";
                     }
                     else if (specialtyKey == '4') //Priest
                     {
                         player.health = 70;
                         player.healthRegen = 4;
-                        player.basePlayerHeal = 15;
-                        player.playerDamageMult = 0.9f;
-                        player.playerDefense = 9;
+                        player.baseHeal = 15;
+                        player.damageMultiplier = 0.9f;
+                        player.defense = 9;
                         player.specialty = "Priest";
                     }
                     else
@@ -1890,36 +1902,36 @@ namespace HelloWorld
                     {
                         player.health = 120;
                         player.healthRegen = 4;
-                        player.basePlayerHeal = 0;
-                        player.playerDamageMult = 0.8f;
-                        player.playerDefense = 16;
+                        player.baseHeal = 0;
+                        player.damageMultiplier = 0.8f;
+                        player.defense = 16;
                         player.specialty = "Tank";
                     }
                     else if (specialtyKey == '2') //Berserker
                     {
                         player.health = 90;
                         player.healthRegen = 3;
-                        player.basePlayerHeal = 0;
-                        player.playerDamageMult = 1.2f;
-                        player.playerDefense = 13;
+                        player.baseHeal = 0;
+                        player.damageMultiplier = 1.2f;
+                        player.defense = 13;
                         player.specialty = "Berserker";
                     }
                     else if (specialtyKey == '3') //Shielder
                     {
                         player.health = 100;
                         player.healthRegen = 2;
-                        player.basePlayerHeal = 5;
-                        player.playerDamageMult = 0.9f;
-                        player.playerDefense = 30;
+                        player.baseHeal = 5;
+                        player.damageMultiplier = 0.9f;
+                        player.defense = 30;
                         player.specialty = "Shielder";
                     }
                     else if (specialtyKey == '4') //Knight
                     {
                         player.health = 110;
                         player.healthRegen = 4;
-                        player.basePlayerHeal = 0;
-                        player.playerDamageMult = 1.1f;
-                        player.playerDefense = 15;
+                        player.baseHeal = 0;
+                        player.damageMultiplier = 1.1f;
+                        player.defense = 15;
                         player.specialty = "Knight";
                     }
                     else
@@ -1979,27 +1991,27 @@ namespace HelloWorld
                     {
                         player.health = 70;
                         player.healthRegen = 4;
-                        player.basePlayerHeal = 0;
-                        player.playerDamageMult = 1.35f;
-                        player.playerDefense = 6;
+                        player.baseHeal = 0;
+                        player.damageMultiplier = 1.35f;
+                        player.defense = 6;
                         player.specialty = "Assassin";
                     }
                     else if (specialtyKey == '2') //Martial Artist
                     {
                         player.health = 80;
                         player.healthRegen = 6;
-                        player.basePlayerHeal = 5;
-                        player.playerDamageMult = 1.2f;
-                        player.playerDefense = 10;
+                        player.baseHeal = 5;
+                        player.damageMultiplier = 1.2f;
+                        player.defense = 10;
                         player.specialty = "Martial Artist";
                     }
                     else if (specialtyKey == '3') //Ninja
                     {
                         player.health = 65;
                         player.healthRegen = 4;
-                        player.basePlayerHeal = 5;
-                        player.playerDamageMult = 1.4f;
-                        player.playerDefense = 5;
+                        player.baseHeal = 5;
+                        player.damageMultiplier = 1.4f;
+                        player.defense = 5;
                         player.specialty = "Ninja";
                     }
 
@@ -2007,9 +2019,9 @@ namespace HelloWorld
                     {
                         player.health = 70;
                         player.healthRegen = 4;
-                        player.basePlayerHeal = 0;
-                        player.playerDamageMult = 1.3f;
-                        player.playerDefense = 3;
+                        player.baseHeal = 0;
+                        player.damageMultiplier = 1.3f;
+                        player.defense = 3;
                         player.specialty = "Rogue";
                     }
                     else
@@ -2029,11 +2041,11 @@ namespace HelloWorld
             //This and next few lines are just to show to the player their stats
             Console.WriteLine("Name: " + player.name); 
             Console.WriteLine("Experience: " + player.currentExperience + "/" + player.experienceRequirement);
-            Console.WriteLine("Health: " + player.battlePlayerHealth);
+            Console.WriteLine("Health: " + player.totalHealth);
             Console.WriteLine("Regen: " + player.healthRegen);
-            Console.WriteLine("Heal: " + player.playerHeal);
-            Console.WriteLine("Defense: " + player.battlePlayerDefense);
-            Console.WriteLine("Attack: " + player.battlePlayerDamage);
+            Console.WriteLine("Heal: " + player.heal);
+            Console.WriteLine("Defense: " + player.battleDefense);
+            Console.WriteLine("Attack: " + player.totalDamage);
             Console.WriteLine("Level: " + player.level);
             Console.WriteLine("Style: " + player.styleName);
             Console.WriteLine("Specialty: " + player.specialty);
@@ -2848,7 +2860,7 @@ namespace HelloWorld
                 switch (action)
                 {
                     case '1': //Health
-                        player1.battlePlayerHealth += 5;
+                        player1.totalHealth += 5;
                         break;
 
                     case '2': //Regen
@@ -2856,23 +2868,23 @@ namespace HelloWorld
                         break;
 
                     case '3': //Heal
-                        player1.playerHeal += 5;
+                        player1.heal += 5;
                         break;
 
                     case '4': //Defense
-                        player1.battlePlayerDefense += 5;
+                        player1.battleDefense += 5;
                         break;
 
                     case '5': //Damage
-                        player1.playerDamageAdd += 5;
+                        player1.damageAddition += 5;
                         break;
 
                     case '6': //Everything
-                        player1.battlePlayerHealth++;
+                        player1.totalHealth++;
                         player1.healthRegen++;
-                        player1.playerHeal++;
-                        player1.battlePlayerDamage++;
-                        player1.playerDamage++;
+                        player1.heal++;
+                        player1.totalDamage++;
+                        player1.baseDamage++;
                         break;
 
                     default:
@@ -2896,19 +2908,19 @@ namespace HelloWorld
         {
             player.experienceRequirement = player.level * 30;
             //The Experience Requirement is 30x the player's level
-            player.battlePlayerDefense = player.playerDefense + player.level;
+            player.battleDefense = player.defense + player.level;
 
             //Player's defense is the base defense with the player's level added
-            player.battlePlayerHealth = (player.battlePlayerDefense * 1 / 2) + player.health + player.level;
+            player.totalHealth = (player.battleDefense * 1 / 2) + player.health + player.level;
 
             //The base health with the addition of level plus half the defense makes the max player health
-            player.battlePlayerMaxHP = player.battlePlayerHealth;
+            player.MaxHealth = player.totalHealth;
 
             //Sets the max in-battle health for the player so they don't regenerate to unholy levels
-            player.battlePlayerDamage = (int)((player.level + player.playerDamage + player.playerDamageAdd) * player.playerDamageMult);
+            player.totalDamage = (int)((player.level + player.baseDamage + player.damageAddition) * player.damageMultiplier);
 
             //Sets the total damage based on the player's level, base damage, and the damage mutliplier
-            player.playerHeal = player.basePlayerHeal + player.level;
+            player.heal = player.baseHeal + player.level;
             //Adds the player's level to the amount they heal
         } //Stat Calculation function
     }//Game
