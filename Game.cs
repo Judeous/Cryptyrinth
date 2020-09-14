@@ -993,20 +993,12 @@ namespace HelloWorld
                             Console.WriteLine("[" + player2.name + " is blocking!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-<<<<<<< HEAD
                             player2.battleDefense = PlayerDefendedAttack(ref player2, player1.totalDamage);
-=======
-                            player2.battlePlayerDefense = PlayerDefendedAttack(ref player2, player1.battlePlayerDamage);
->>>>>>> master
                         } //If player 2 blocks
 
                         else //Whether the enemy is Attacking, Healing, or doing Nothing
                         {
-<<<<<<< HEAD
                             player2.totalHealth = DirectAttack(ref player2, ref player1);
-=======
-                            player2.battlePlayerHealth = DirectAttack(ref player2, ref player1);
->>>>>>> master
                         } //If player 2 isn't blocking
 
                         if (player2action <= '1' && player2.totalHealth > 0) //If the enemy is attacking after player attack & not dead
@@ -1014,11 +1006,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + player2.name + " is retaliating!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-<<<<<<< HEAD
                             player1.totalHealth = DirectAttack(ref player1, ref player2);
-=======
-                            player1.battlePlayerHealth = DirectAttack(ref player1, ref player2);
->>>>>>> master
                         } // If enemy Retaliates
 
                         else if (player2action == '3' && player2.totalHealth > 0) //If the enemy is healing & not dead
@@ -1038,11 +1026,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + player2.name + " is attacking!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-<<<<<<< HEAD
                             player1.battleDefense = PlayerDefendedAttack(ref player1, player2.totalDamage);
-=======
-                            player1.battlePlayerDefense = PlayerDefendedAttack(ref player1, player2.battlePlayerDamage);
->>>>>>> master
                         } //If enemy Attacks
 
                         else if (player2action == '2')
@@ -1084,11 +1068,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + player2.name + " is attacking!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-<<<<<<< HEAD
                             player1.totalHealth = DirectAttack(ref player1, ref player2);
-=======
-                            player1.battlePlayerHealth = DirectAttack(ref player1, ref player2);
->>>>>>> master
                         } //If enemy Attacks
 
                         else if (player2action == '2') //If the enemy is blocking
@@ -1133,11 +1113,7 @@ namespace HelloWorld
                             Pause();
                             Console.Clear(); //Clears the screen
 
-<<<<<<< HEAD
                             player1.totalHealth = DirectAttack(ref player1, ref player2);
-=======
-                            player1.battlePlayerHealth = DirectAttack(ref player1, ref player2);
->>>>>>> master
                             Pause();
                             if (GameOver == true)
                             {
@@ -1338,11 +1314,7 @@ namespace HelloWorld
                         if (enemyAction <= 1)
                         {
                             Console.WriteLine(enemyAttackMessage);
-<<<<<<< HEAD
                             player1.battleDefense = PlayerDefendedAttack(ref player1, enemyDamage);
-=======
-                            player1.battlePlayerDefense = PlayerDefendedAttack(ref player1, enemyDamage);
->>>>>>> master
                         } //If enemy Attacks
 
                         else if (enemyAction == 2)
@@ -1593,7 +1565,6 @@ namespace HelloWorld
         int DirectAttack(ref Player defender, ref Player attacker)
         {
             Console.WriteLine("");
-<<<<<<< HEAD
 
             if (defender.health > 0)
             {
@@ -1614,31 +1585,6 @@ namespace HelloWorld
             } //If enemy alive
             return defender.totalHealth;
         } //Player Direct Attack Function
-
-=======
-
-            if (defender.health > 0)
-            {
-                Console.WriteLine(defender.name + "[Pre-Strike]"); //Stats before being struck
-                Console.WriteLine(defender.battlePlayerHealth + " HP <<");
-                Console.WriteLine(defender.battlePlayerDefense + " Def");
-                Pause();
-
-                defender.battlePlayerHealth -= attacker.battlePlayerDamage;  //The Attack
-
-                Console.WriteLine(defender.name + " [Post-Strike]"); //Stats after being struck
-                Console.WriteLine(defender.battlePlayerHealth + " HP <<");
-                Console.WriteLine(defender.battlePlayerDefense + " Def");
-                Console.WriteLine("");
-                Pause();
-
-                DeathCheck(player1);
-            } //If enemy alive
-            return defender.battlePlayerHealth;
-        } //Player Direct Attack Function
-
->>>>>>> master
-
 
         int PlayerDefendedAttack(ref Player player, int attackerDamage)
         {
