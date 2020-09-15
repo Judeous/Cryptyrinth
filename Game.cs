@@ -6,150 +6,111 @@ namespace HelloWorld
 {
     class Game
     {
-        public struct Player
-        {
-            //Player Declarations
-            public string name;
-
-            //Level
-            public int health;
-            public int healthRegen;
-
-            //Experience/Level
-            public int level;
-            public int currentExperience;
-            public int experienceRequirement;
-
-            //Health
-            public int totalHealth;
-            public int MaxHealth;
-
-            //Healing
-            public int baseHeal;
-            public int heal;
-
-            //Defense
-            public int defense;
-            public int battleDefense;
-
-            //Damage
-            public int totalDamage;
-            public float damageMultiplier;
-            public int damageAddition;
-            public int baseDamage;
-
-            //Specialty/Style
-            public string specialty;
-            public string styleName;
-
-            public bool IsBot;
-        } //Player struct
-
         Player player1;
         Player player2;
 
-        char gamemode = ' ';
+        public char gamemode = ' ';
 
         //Enemy Declarations
-        string enemyName = "None";
-        int enemyExperience;
-        int enemyRegen; //Sets the base enemy regen
-        int battleEnemyHealth;
-        int battleEnemyMaxHP;
-        int battleEnemyDefense;
-        int enemyHeal = 5; //Sets the base enemy heal
-        float enemyDamageMult = 1.0f; //Sets the base enemy damage multiplier
-        int baseEnemyDamage = 8; //Sets the base enemy damage
-        int enemyDamage;
+        public string enemyName = "None";
+        public int enemyExperience;
+        public int enemyRegen; //Sets the base enemy regen
+        public int battleEnemyHealth;
+        public int battleEnemyMaxHP;
+        public int battleEnemyDefense;
+        public int enemyHeal = 5; //Sets the base enemy heal
+        public float enemyDamageMult = 1.0f; //Sets the base enemy damage multiplier
+        public int baseEnemyDamage = 8; //Sets the base enemy damage
+        public int enemyDamage;
 
-        string enemyAppearMessage = "An enemy appears!";
-        string enemyAttackMessage = "The enemy is attacking!";
-        string enemyDefendMessage = "The enemy is defending!";
-        string enemyNoDefenseMessage = "The enemy has nothing to defend with!";
-        string enemyDefenseDestroyedMessage = "The enemy's defense was knocked aside!";
-        string enemyUselessDefenseMessage = "The enemy is defending...";
-        string enemyNothingMessage = "The enemy does nothing...";
-        string enemyHealMessage = "The enemy is healing!";
-        string enemyDeathMessage = "The enemy was unmade";
+        public string enemyAppearMessage = "An enemy appears!";
+        public string enemyAttackMessage = "The enemy is attacking!";
+        public string enemyDefendMessage = "The enemy is defending!";
+        public string enemyNoDefenseMessage = "The enemy has nothing to defend with!";
+        public string enemyDefenseDestroyedMessage = "The enemy's defense was knocked aside!";
+        public string enemyUselessDefenseMessage = "The enemy is defending...";
+        public string enemyNothingMessage = "The enemy does nothing...";
+        public string enemyHealMessage = "The enemy is healing!";
+        public string enemyDeathMessage = "The enemy was unmade";
 
 
         Random r = new Random(); //Sets a variable for a randomizer
 
-        bool GameOver = false;
-        bool InBattle = false;
-        int turncounter;
+        public bool GameOver = false;
+        public bool InBattle = false;
+        public int turncounter;
 
 
         string area = "Shack"; //Starting Location
 
         //Field Locations
-        bool ShackExplored = false;
-        bool FieldExplored = false;
-        bool LabyrinthEntranceExplored = false;
-        bool CastleGateExplored = false;
+        public bool ShackExplored = false;
+        public bool FieldExplored = false;
+        public bool LabyrinthEntranceExplored = false;
+        public bool CastleGateExplored = false;
 
         //Labyrinth Locations
         bool LabyrinthEntrywayExplored = false;
         bool LabyrinthExplored = false;
 
         //Castle Locations
-        bool CastleEntryExplored = false;
-        bool Explored = false;
+        public bool CastleEntryExplored = false;
+        public bool Explored = false;
 
         //Labyrinth Declarations
         ///Sets the locations to the EntryWay door location
-        int labyLocationX = 7;
-        int labyLocationY = 26;
+        public int labyLocationX = 7;
+        public int labyLocationY = 26;
         ///For a Back action
-        int oldLabyLocationX;
-        int oldLabyLocationY;
-        char facingDirection;
+        public int oldLabyLocationX;
+        public int oldLabyLocationY;
+        public char facingDirection;
         ///Wall length declarations
-        string roomShape;
-        string roomType;
-        int minWallLength = 1;
-        int maxWallLength = 4;
-        int wallXLengths;
-        int wallYLengths;
+        public string roomShape;
+        public string roomType;
+        public int minWallLength = 1;
+        public int maxWallLength = 4;
+        public int wallXLengths;
+        public int wallYLengths;
         ///Borders for walls
-        int wallSouthY;
-        int wallNorthY;
-        int wallXWBorders;
-        int wallXEBorders;
+        public int wallSouthY;
+        public int wallNorthY;
+        public int wallXWBorders;
+        public int wallXEBorders;
 
-        int wallEastX;
-        int wallWestX;
-        int wallYNBorders;
-        int wallYSBorders;
+        public int wallEastX;
+        public int wallWestX;
+        public int wallYNBorders;
+        public int wallYSBorders;
         ///Variables used for randomizing the appearance of respective doors
         int doorSouthChance;
-        int doorNorthChance;
-        int doorEastChance;
-        int doorWestChance;
+        public int doorNorthChance;
+        public int doorEastChance;
+        public int doorWestChance;
         ///Bools for doors
-        bool CanEscape = false;
-        bool DoorSouthExists = false;
-        bool DoorNorthExists = false;
-        bool DoorEastExists = false;
-        bool DoorWestExists = false;
+        public bool CanEscape = false;
+        public bool DoorSouthExists = false;
+        public bool DoorNorthExists = false;
+        public bool DoorEastExists = false;
+        public bool DoorWestExists = false;
         ///Coordinate variables for the doors, if they exist
-        int escapeDoorWY = 25;
-        int escapeDoorWX = 5;
+        public int escapeDoorWY = 25;
+        public int escapeDoorWX = 5;
 
-        int escapeDoorEY = 22;
-        int escapeDoorEX = 9;
+        public int escapeDoorEY = 22;
+        public int escapeDoorEX = 9;
 
-        int doorSouthX;
-        int doorSouthY;
+        public int doorSouthX;
+        public int doorSouthY;
 
-        int doorNorthX;
-        int doorNorthY;
+        public int doorNorthX;
+        public int doorNorthY;
 
-        int doorEastX;
-        int doorEastY;
+        public int doorEastX;
+        public int doorEastY;
 
-        int doorWestX;
-        int doorWestY;
+        public int doorWestX;
+        public int doorWestY;
 
         public void Run()
         {
@@ -168,20 +129,20 @@ namespace HelloWorld
             GetGamemode();
 
             //Player 1
-            PlayerInitialization(ref player1);
+            player1.PlayerInitialization();
             GetName(ref player1);
-            DecideSpecialty(ref player1);
-            StatCalculation(ref player1);
-            StatCheck(ref player1);
+            player1.DecideSpecialty();
+            player1.StatCalculation();
+            player1.StatCheck();
 
             if (gamemode == '2')
             {
                 //Player 2
-                PlayerInitialization(ref player2);
+                player2.PlayerInitialization();
                 GetName(ref player2);
-                DecideSpecialty(ref player2);
-                StatCalculation(ref player2);
-                StatCheck(ref player2);
+                player2.DecideSpecialty();
+                player2.StatCalculation();
+                player2.StatCheck();
             } //If doing PvP
         } //Start
 
@@ -215,7 +176,7 @@ namespace HelloWorld
                     switch (action)
                     {
                         case '1': //Redecide Style/Specialty
-                            DecideSpecialty(ref player1);
+                            player1.DecideSpecialty();
                             break;
 
                         case '2': //Go to the field
@@ -823,7 +784,7 @@ namespace HelloWorld
                 Console.Write("> ");
                 char action = Console.ReadKey().KeyChar;
 
-                switch(action)
+                switch (action)
                 {
                     case '1':
                         Console.Clear();
@@ -841,7 +802,7 @@ namespace HelloWorld
                         action = Console.ReadKey().KeyChar;
                         if (action == '1')
                         {
-                            DecideSpecialty(ref player1);
+                            player1.DecideSpecialty();
                         }
 
                         Console.Clear(); //Clears the screen
@@ -855,7 +816,7 @@ namespace HelloWorld
                         action = Console.ReadKey().KeyChar;
                         if (action == '1')
                         {
-                            DecideSpecialty(ref player2);
+                            player2.DecideSpecialty();
                         }
                         break;
 
@@ -881,24 +842,8 @@ namespace HelloWorld
 
         } //Update
 
-        void PlayerInitialization(ref Player player)
-        {
-            player.health = 100;
-            player.healthRegen = 4;
-            player.defense = 10;
-            player.level = 1;
-            player.currentExperience = 0;
-            player.heal = 5;
 
-            player.baseHeal = 5;
-            player.damageMultiplier = 1;
-            player.baseDamage = 9;
-
-            player.styleName = "Fool";
-            player.specialty = "Foolishness";
-        } //Player Initialization funciton
-
-        void GetGamemode()
+        public void GetGamemode()
         {
             do
             {
@@ -935,7 +880,7 @@ namespace HelloWorld
             Console.WriteLine("[Actions are being decided]");
             Console.WriteLine("");
 
-            Console.WriteLine(player1.name + ": " +  player1.specialty); //This and the next line show player 1's stats
+            Console.WriteLine(player1.name + ": " + player1.specialty); //This and the next line show player 1's stats
 
             Console.WriteLine(player1.totalHealth + " HP");
             Console.WriteLine(player1.heal + " Healing");
@@ -953,7 +898,7 @@ namespace HelloWorld
             Console.WriteLine("");
         } //Pvp Stat Display function
 
-        public void Battle(ref Player player1, ref Player player2) 
+        public void Battle(ref Player player1, ref Player player2)
         {
             while (InBattle == true)
             {
@@ -998,7 +943,8 @@ namespace HelloWorld
 
                         else //Whether the enemy is Attacking, Healing, or doing Nothing
                         {
-                            player2.totalHealth = DirectAttack(ref player2, ref player1);
+                            player1.DirectAttack(ref player2);
+                            IsDead(player2);
                         } //If player 2 isn't blocking
 
                         if (player2action <= '1' && player2.totalHealth > 0) //If the enemy is attacking after player attack & not dead
@@ -1006,7 +952,8 @@ namespace HelloWorld
                             Console.WriteLine("[" + player2.name + " is retaliating!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            player1.totalHealth = DirectAttack(ref player1, ref player2);
+                            player2.DirectAttack(ref player1);
+                            IsDead(player1);
                         } // If enemy Retaliates
 
                         else if (player2action == '3' && player2.totalHealth > 0) //If the enemy is healing & not dead
@@ -1068,7 +1015,8 @@ namespace HelloWorld
                             Console.WriteLine("[" + player2.name + " is attacking!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            player1.totalHealth = DirectAttack(ref player1, ref player2);
+                            player2.DirectAttack(ref player1);
+                            IsDead(player1);
                         } //If enemy Attacks
 
                         else if (player2action == '2') //If the enemy is blocking
@@ -1113,7 +1061,8 @@ namespace HelloWorld
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            player1.totalHealth = DirectAttack(ref player1, ref player2);
+                            player2.DirectAttack(ref player1);
+                            IsDead(player1);
                             Pause();
                             if (GameOver == true)
                             {
@@ -1508,13 +1457,26 @@ namespace HelloWorld
             } //InBattle bool
         } //Adventure Battle Function
 
+        public bool IsDead(Player player)
+        {
+            if (player.totalHealth > 0) //Checks to see if player was killed by the attack
+            {
+                return false;
+            }
+            else
+            {
+                Console.WriteLine(player.name + " was unmade");
+                return true;
+            }
+        } //Death Check function
+
         void End()
         {
             Console.WriteLine("Unfortunate; I had plans for you");
             Console.WriteLine("");
         }
 
-        void Pause()
+        public void Pause()
         {
             Console.WriteLine("");
             Console.WriteLine("[Press any key to continue]");
@@ -1523,7 +1485,7 @@ namespace HelloWorld
             Console.WriteLine("");
         }
 
-        int Regeneration(int currentHealth, int maxHP, int healthRegen)
+        public int Regeneration(int currentHealth, int maxHP, int healthRegen)
         {
             if (currentHealth < maxHP && currentHealth > 0) //Checks to see if the entity's hp is lower than max and higher than 0
             {
@@ -1538,7 +1500,7 @@ namespace HelloWorld
             return currentHealth;
         } //Regen Function
 
-        int DirectAttack(int damage, int health, int defense, string victimName)
+        public int DirectAttack(int damage, int health, int defense, string victimName)
         {
             Console.WriteLine("");
 
@@ -1557,36 +1519,13 @@ namespace HelloWorld
                 Console.WriteLine("");
                 Pause();
 
-                DeathCheck(player1);
+                IsDead(player1);
             } //If enemy alive
             return health;
-        } //DirectAttack Function
+        } //Direct Attack Function
 
-        int DirectAttack(ref Player defender, ref Player attacker)
-        {
-            Console.WriteLine("");
 
-            if (defender.health > 0)
-            {
-                Console.WriteLine(defender.name + "[Pre-Strike]"); //Stats before being struck
-                Console.WriteLine(defender.totalHealth + " HP <<");
-                Console.WriteLine(defender.battleDefense + " Def");
-                Pause();
-
-                defender.totalHealth -= attacker.totalDamage;  //The Attack
-
-                Console.WriteLine(defender.name + " [Post-Strike]"); //Stats after being struck
-                Console.WriteLine(defender.totalHealth + " HP <<");
-                Console.WriteLine(defender.battleDefense + " Def");
-                Console.WriteLine("");
-                Pause();
-
-                DeathCheck(player1);
-            } //If enemy alive
-            return defender.totalHealth;
-        } //Player Direct Attack Function
-
-        int PlayerDefendedAttack(ref Player player, int attackerDamage)
+        public int PlayerDefendedAttack(ref Player player, int attackerDamage)
         {
             Console.WriteLine("");
 
@@ -1628,7 +1567,7 @@ namespace HelloWorld
             return player.battleDefense;
         } //Player Defended Attack function
 
-        void EnemyDefendedAttack()
+        public void EnemyDefendedAttack()
         {
             Console.WriteLine("");
 
@@ -1667,24 +1606,7 @@ namespace HelloWorld
             } //If enemy has defense
         } //Enemy Defended Attack function
 
-        void DeathCheck(Player player)
-        {
-            if (player.totalHealth <= 0) //Checks to see if player was killed by the attack
-            {
-                Console.WriteLine(player.name + " was unmade");
-                InBattle = false;
-            }
-
-            if (battleEnemyHealth <= 0)
-            {
-                Console.WriteLine(enemyDeathMessage);
-                InBattle = false;
-            }
-
-            Console.Clear(); //Clears the screen
-        } //Death Check function
-
-        int Heal(int health, int defense, int heal, string name) //Player Heal
+        public int Heal(int health, int defense, int heal, string name) //Player Heal
         {
             Console.WriteLine("");
 
@@ -1713,7 +1635,7 @@ namespace HelloWorld
             return health;
         } //Player Heal function
 
-        int Heal(string name, int health, int defense, int heal) //Enemy Heal
+        public int Heal(string name, int health, int defense, int heal) //Enemy Heal
         {
             Console.WriteLine("");
 
@@ -1742,315 +1664,7 @@ namespace HelloWorld
             return health;
         } //Enemy Heal function
 
-        void DecideSpecialty(ref Player player)
-        {
-            Console.Clear(); //Clears the screen
-            Console.WriteLine("Welcome, " + player.name + ", what is your style of battle?");
-            Console.WriteLine("");
-            Console.WriteLine("[1: Magic]\n[2: Warrior]\n[3: Trickery]");
-            Console.WriteLine("");
-            Console.WriteLine("[Press the number to continue]");
-            Console.Write("> My style is ");
-            char styleKey = Console.ReadKey().KeyChar;
-            char specialtyKey;
 
-            Console.WriteLine("");
-            Console.Clear(); //Clears the screen
-
-            switch (styleKey)
-            {
-                case '1': //Magic
-                    player.styleName = "Magic"; //Sets the Style name
-
-                    Console.WriteLine("What is your specialty?");
-                    Console.WriteLine("[1: Warder]\n[2: Atronach]\n[3: Battle Mage]\n[4: Priest]");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Warder [1]");
-                    Console.WriteLine("Base Health = 90");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 6");
-                    Console.WriteLine("Damage Mult = 1");
-                    Console.WriteLine("Base Defense = 22");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Atronach [2]");
-                    Console.WriteLine("Base Health = 160");
-                    Console.WriteLine("Base Regen = 2");
-                    Console.WriteLine("Base Heal = 0");
-                    Console.WriteLine("Damage Mult = 0.8");
-                    Console.WriteLine("Base Defense = 8");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Battle Mage [3]");
-                    Console.WriteLine("Base Health = 70");
-                    Console.WriteLine("Base Regen = 5");
-                    Console.WriteLine("Base Heal = 8");
-                    Console.WriteLine("Damage Mult = 1.3");
-                    Console.WriteLine("Base Defense = 11");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Priest [4]");
-                    Console.WriteLine("Base Health = 75");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 15");
-                    Console.WriteLine("Damage Mult = 0.8");
-                    Console.WriteLine("Base Defense = 9");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> My specialty is ");
-                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Magic
-
-
-                    if (specialtyKey == '1') //Warder
-                    {
-                        player.health = 90;
-                        player.healthRegen = 4;
-                        player.baseHeal = 6;
-                        player.damageMultiplier = 1;
-                        player.defense = 24;
-                        player.specialty = "Warder";
-                    }
-                    else if (specialtyKey == '2') //Atronach
-                    {
-                        player.health = 160;
-                        player.healthRegen = 2;
-                        player.baseHeal = 0;
-                        player.damageMultiplier = 0.8f;
-                        player.defense = 8;
-                        player.specialty = "Atronach";
-                    }
-                    else if (specialtyKey == '3') //Battle Mage
-                    {
-                        player.health = 70;
-                        player.healthRegen = 5;
-                        player.baseHeal = 8;
-                        player.damageMultiplier = 1.3f;
-                        player.defense = 11;
-                        player.specialty = "Battle Mage";
-                    }
-                    else if (specialtyKey == '4') //Priest
-                    {
-                        player.health = 70;
-                        player.healthRegen = 4;
-                        player.baseHeal = 15;
-                        player.damageMultiplier = 0.9f;
-                        player.defense = 9;
-                        player.specialty = "Priest";
-                    }
-                    else
-                    {
-                        player.styleName = "Fool";
-                    }
-                    break;
-
-                case '2':
-                    player.styleName = "Warrior"; //Sets the Style name
-
-                    Console.WriteLine("What is your specialty?");
-                    Console.WriteLine("[1: Tank]\n[2: Berserker]\n[3: Shielder]\n[4: Knight]");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Tank [1]");
-                    Console.WriteLine("Base Health = 120");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 0");
-                    Console.WriteLine("Damage Mult = 0.8");
-                    Console.WriteLine("Base Defense = 16");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Berserker [2]");
-                    Console.WriteLine("Base Health = 90");
-                    Console.WriteLine("Base Regen = 3");
-                    Console.WriteLine("Base Heal = 0");
-                    Console.WriteLine("Damage Mult = 1.2");
-                    Console.WriteLine("Base Defense = 13");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Shielder [3]");
-                    Console.WriteLine("Base Health = 100");
-                    Console.WriteLine("Base Regen = 2");
-                    Console.WriteLine("Base Heal = 5");
-                    Console.WriteLine("Damage Mult = 0.9");
-                    Console.WriteLine("Base Defense = 30");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Knight [4]");
-                    Console.WriteLine("Base Health = 110");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 0");
-                    Console.WriteLine("Damage Mult = 1.1");
-                    Console.WriteLine("Base Defense = 15");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> My specialty is ");
-                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Knight
-
-                    if (specialtyKey == '1') //Tank
-                    {
-                        player.health = 120;
-                        player.healthRegen = 4;
-                        player.baseHeal = 0;
-                        player.damageMultiplier = 0.8f;
-                        player.defense = 16;
-                        player.specialty = "Tank";
-                    }
-                    else if (specialtyKey == '2') //Berserker
-                    {
-                        player.health = 90;
-                        player.healthRegen = 3;
-                        player.baseHeal = 0;
-                        player.damageMultiplier = 1.2f;
-                        player.defense = 13;
-                        player.specialty = "Berserker";
-                    }
-                    else if (specialtyKey == '3') //Shielder
-                    {
-                        player.health = 100;
-                        player.healthRegen = 2;
-                        player.baseHeal = 5;
-                        player.damageMultiplier = 0.9f;
-                        player.defense = 30;
-                        player.specialty = "Shielder";
-                    }
-                    else if (specialtyKey == '4') //Knight
-                    {
-                        player.health = 110;
-                        player.healthRegen = 4;
-                        player.baseHeal = 0;
-                        player.damageMultiplier = 1.1f;
-                        player.defense = 15;
-                        player.specialty = "Knight";
-                    }
-                    else
-                    {
-                        player.styleName = "Fool";
-                    }
-                    break;
-
-                case '3':
-                    player.styleName = "Trickster"; //Sets the Style name
-
-                    Console.WriteLine("What is your specialty?");
-                    Console.WriteLine("[1: Assassin]\n[2: Martial Artist]\n[3: Ninja\n[4: Rogue]");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Assassin [1]");
-                    Console.WriteLine("Base Health = 70");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 0");
-                    Console.WriteLine("Damage Mult = 1.35");
-                    Console.WriteLine("Base Defense = 6");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Martial Artist [2]");
-                    Console.WriteLine("Base Health = 80");
-                    Console.WriteLine("Base Regen = 6");
-                    Console.WriteLine("Base Heal = 5");
-                    Console.WriteLine("Damage Mult = 1.2");
-                    Console.WriteLine("Base Defense = 10");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Ninja [3]");
-                    Console.WriteLine("Base Health = 65");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 5");
-                    Console.WriteLine("Damage Mult = 1.4");
-                    Console.WriteLine("Base Defense = 5");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Rogue [4]");
-                    Console.WriteLine("Base Health = 70");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 0");
-                    Console.WriteLine("Damage Mult = 1.3");
-                    Console.WriteLine("Base Defense = 3");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> My specialty is ");
-                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Trickster
-
-                    if (specialtyKey == '1') //Assassin
-                    {
-                        player.health = 70;
-                        player.healthRegen = 4;
-                        player.baseHeal = 0;
-                        player.damageMultiplier = 1.35f;
-                        player.defense = 6;
-                        player.specialty = "Assassin";
-                    }
-                    else if (specialtyKey == '2') //Martial Artist
-                    {
-                        player.health = 80;
-                        player.healthRegen = 6;
-                        player.baseHeal = 5;
-                        player.damageMultiplier = 1.2f;
-                        player.defense = 10;
-                        player.specialty = "Martial Artist";
-                    }
-                    else if (specialtyKey == '3') //Ninja
-                    {
-                        player.health = 65;
-                        player.healthRegen = 4;
-                        player.baseHeal = 5;
-                        player.damageMultiplier = 1.4f;
-                        player.defense = 5;
-                        player.specialty = "Ninja";
-                    }
-
-                    else if (specialtyKey == '4') //Rogue
-                    {
-                        player.health = 70;
-                        player.healthRegen = 4;
-                        player.baseHeal = 0;
-                        player.damageMultiplier = 1.3f;
-                        player.defense = 3;
-                        player.specialty = "Rogue";
-                    }
-                    else
-                    {
-                        player.styleName = "Fool";
-                    }
-                    break;
-            } //Style Key Switch
-            Console.Clear(); //Clears the screen
-        } //Decide Specialty function
-
-        void StatCheck(ref Player player)
-        {
-            Console.Clear(); //Clears the screen
-
-            Console.WriteLine("This is who I am:");
-            //This and next few lines are just to show to the player their stats
-            Console.WriteLine("Name: " + player.name); 
-            Console.WriteLine("Experience: " + player.currentExperience + "/" + player.experienceRequirement);
-            Console.WriteLine("Health: " + player.totalHealth);
-            Console.WriteLine("Regen: " + player.healthRegen);
-            Console.WriteLine("Heal: " + player.heal);
-            Console.WriteLine("Defense: " + player.battleDefense);
-            Console.WriteLine("Attack: " + player.totalDamage);
-            Console.WriteLine("Level: " + player.level);
-            Console.WriteLine("Style: " + player.styleName);
-            Console.WriteLine("Specialty: " + player.specialty);
-
-            Pause();
-            Console.Clear(); //Clears the screen
-        } //Stat Check function
 
         void GetName(ref Player player)
         {
@@ -2095,7 +1709,7 @@ namespace HelloWorld
                     break;
 
                 case '2': //Check Stats
-                    StatCheck(ref player1);
+                    player1.StatCheck();
                     break;
 
                 case '3': //Return to game
@@ -2326,13 +1940,13 @@ namespace HelloWorld
             } //If facing West
 
             //Just Entered East Door Condition
-            if (labyLocationX == escapeDoorEX && labyLocationY == escapeDoorEY) 
+            if (labyLocationX == escapeDoorEX && labyLocationY == escapeDoorEY)
             {
                 CanEscape = true;
             }
 
             //Just Entered West Door Condition
-            else if (labyLocationX == 5 && labyLocationY == 25) 
+            else if (labyLocationX == 5 && labyLocationY == 25)
             {
                 CanEscape = true;
             }
@@ -2559,7 +2173,7 @@ namespace HelloWorld
                     Console.WriteLine("");
                 } //if square room
 
-                else if (roomType =="rectangle")
+                else if (roomType == "rectangle")
                 {
                     if (wallXLengths > wallYLengths) //If East/West walls make it a rectangle
                     {
@@ -2820,7 +2434,7 @@ namespace HelloWorld
             battleEnemyMaxHP = battleEnemyHealth;
 
             //Sets the total enemy damage based on the base damage and multiplier
-            enemyDamage = (int)(baseEnemyDamage * enemyDamageMult); 
+            enemyDamage = (int)(baseEnemyDamage * enemyDamageMult);
         } //Enemy Setup function
 
         void GainExperience()
@@ -2895,31 +2509,11 @@ namespace HelloWorld
                 {
                     player1.level++;
                     player1.currentExperience -= player1.experienceRequirement;
-                    StatCalculation(ref player1);
+                    player1.StatCalculation();
                 }
                 Console.Clear();
             } //While the player is leveling up
             while (player1.currentExperience >= player1.experienceRequirement);
         } //Level Up function
-
-        void StatCalculation(ref Player player)
-        {
-            player.experienceRequirement = player.level * 30;
-            //The Experience Requirement is 30x the player's level
-            player.battleDefense = player.defense + player.level;
-
-            //Player's defense is the base defense with the player's level added
-            player.totalHealth = (player.battleDefense * 1 / 2) + player.health + player.level;
-
-            //The base health with the addition of level plus half the defense makes the max player health
-            player.MaxHealth = player.totalHealth;
-
-            //Sets the max in-battle health for the player so they don't regenerate to unholy levels
-            player.totalDamage = (int)((player.level + player.baseDamage + player.damageAddition) * player.damageMultiplier);
-
-            //Sets the total damage based on the player's level, base damage, and the damage mutliplier
-            player.heal = player.baseHeal + player.level;
-            //Adds the player's level to the amount they heal
-        } //Stat Calculation function
-    }//Game
+    } //Game
 }//HelloWorld
