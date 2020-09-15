@@ -1793,10 +1793,11 @@ namespace HelloWorld
                     }
                 } //If x Wall lengths are 4
 
-                //Sets south Wall's Y
-                wallSouthY = labyLocationY;
+                //Sets east & west Walls' Y
+                wallEastX = wallXEBorders;
+                wallWestX = wallXWBorders;
 
-                //Calculates & assigns east and west wall borders
+                //Calculates & assigns south and north wall borders
                 wallYSBorders = labyLocationY;
                 wallYNBorders = labyLocationY + wallYLengths;
             } //If facing South
@@ -1841,12 +1842,15 @@ namespace HelloWorld
                     }
                 } //If north Wall length is 4
 
-                //Sets north Wall's Y
+                //Sets north & south Walls' Y
                 wallNorthY = labyLocationY;
+                wallSouthY = labyLocationY + wallYLengths;
 
                 //Calculates & assigns east and west wall borders
                 wallYSBorders = labyLocationY;
                 wallYNBorders = labyLocationY + wallYLengths;
+                wallEastX = wallXEBorders;
+                wallWestX = wallXWBorders;
             } //If facing North
 
             if (facingDirection == 'e')
@@ -1892,6 +1896,8 @@ namespace HelloWorld
                 //Calculates & assigns south and north wall borders
                 wallXWBorders = labyLocationX;
                 wallXEBorders = labyLocationX + wallXLengths;
+                wallEastX = labyLocationX;
+                wallWestX = labyLocationX + wallYLengths;
             } //If facing East
 
             if (facingDirection == 'w')
@@ -1937,6 +1943,8 @@ namespace HelloWorld
                 //Calculates & assigns south and north wall borders
                 wallXWBorders = labyLocationX;
                 wallXEBorders = labyLocationX + wallXLengths;
+                wallEastX = labyLocationX;
+                wallWestX = labyLocationX + wallYLengths;
             } //If facing West
 
             //Just Entered East Door Condition
