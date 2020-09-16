@@ -2196,134 +2196,134 @@ namespace HelloWorld
                     Console.WriteLine("[I'm in a large square room]");
                     Console.WriteLine("");
                     break;
-            } //Room Shape switch
+            } //Room Shape Text switch
 
             if (DoorSouthExists)
             {
-                if (roomType == "square")
+                switch(roomType)
                 {
-                    Console.WriteLine("[There's a door on the South wall of the room]");
-                } //if square room
+                    case "square":
+                        Console.WriteLine("[There's a door on the South wall of the room]");
+                        break;
 
-                else if (roomType == "rectangle")
-                {
-                    if (wallXLengths > wallYLengths) //If East/West walls make it a rectangle
-                    {
-                        Console.WriteLine("[There's a door on the South end of the room]");
-                    }
-                    if (wallYLengths > wallXLengths) //If South/North walls make it a rectangle
-                    {
-                        Console.WriteLine("[There's a door on the South side of the room]");
-                    }
-                } //if rectangle room
+                    case "rectangle":
+                        if (wallXLengths > wallYLengths) //If East/West walls make it a rectangle
+                        {
+                            Console.WriteLine("[There's a door on the South end of the room]");
+                        }
+                        else if (wallYLengths > wallXLengths) //If South/North walls make it a rectangle
+                        {
+                            Console.WriteLine("[There's a door on the South side of the room]");
+                        }
+                        break;
 
-                else if (roomType == "hallway")
-                {
-                    if (wallXLengths > wallYLengths) //If East/West walls make it a hall
-                    {
-                        Console.WriteLine("[There's a door on the South wall of the hallway]");
-                    }
-                    if (wallYLengths > wallXLengths) //If South/North walls make it a hall
-                    {
-                        Console.WriteLine("[There's a door on the South end]");
-                    }
-                } //if hallway
+                    case "hallway":
+                        if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                        {
+                            Console.WriteLine("[There's a door on the South wall of the hallway]");
+                        }
+                        else if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                        {
+                            Console.WriteLine("[There's a door on the South end]");
+                        }
+                        break;
+                } //Room Type switch
             } //South Door
 
             if (DoorNorthExists)
             {
-                if (roomType == "square")
+                switch(roomType)
                 {
-                    Console.WriteLine("[There's a door on the North wall of the room]");
-                } //if square room
+                    case "square":
+                        Console.WriteLine("[There's a door on the North wall of the room]");
+                        break;
 
-                else if (roomType == "rectangle")
-                {
-                    if (wallXLengths > wallYLengths) //If East/West walls make it a rectangle
-                    {
-                        Console.WriteLine("[There's a door on the North end of the room]");
-                    }
-                    if (wallYLengths > wallXLengths) //If South/North walls make it a rectangle
-                    {
-                        Console.WriteLine("[There's a door on the North side of the room]");
-                    }
-                } //if rectangle room
+                    case "rectangle":
+                        if (wallXLengths > wallYLengths) //If East/West walls make it a rectangle
+                        {
+                            Console.WriteLine("[There's a door on the North end of the room]");
+                        }
+                        else if (wallYLengths > wallXLengths) //If South/North walls make it a rectangle
+                        {
+                            Console.WriteLine("[There's a door on the North side of the room]");
+                        }
+                        break;
 
-                else if (roomType == "hallway")
-                {
-                    if (wallXLengths > wallYLengths) //If East/West walls make it a hall
-                    {
-                        Console.WriteLine("[There's a door on the North end of the hallway]");
-                    }
-                    if (wallYLengths > wallXLengths) //If South/North walls make it a hall
-                    {
-                        Console.WriteLine("[There's a door on the North side]");
-                    }
-                } //if hallway
+                    case "hallway":
+                        if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                        {
+                            Console.WriteLine("[There's a door on the North end of the hallway]");
+                        }
+                        else if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                        {
+                            Console.WriteLine("[There's a door on the North side]");
+                        }
+                        break;
+                } //Room Type switch
             } //North Door
 
             if (DoorEastExists)
             {
-                if (roomType == "square")
+                switch (roomType)
                 {
-                    Console.WriteLine("[There's a door on the East wall of the room]");
-                } //if square room
+                    case "square":
+                        Console.WriteLine("[There's a door on the East wall of the room]");
+                        break;
 
-                else if (roomType == "rectangle")
-                {
-                    if (wallXLengths > wallYLengths) //If East/West walls make it a hall
-                    {
-                        Console.WriteLine("[There's a door on the East side of the room]");
-                    }
-                    if (wallYLengths > wallXLengths) //If South/North walls make it a hall
-                    {
-                        Console.WriteLine("[There's a door on the East end of the room]");
-                    }
-                } //if rectangle room
+                    case "rectangle":
+                        if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                        {
+                            Console.WriteLine("[There's a door on the East side of the room]");
+                        }
+                        else if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                        {
+                            Console.WriteLine("[There's a door on the East end of the room]");
+                        }
+                        break;
 
-                else if (roomType == "hallway")
-                {
-                    if (wallXLengths > wallYLengths) //If East/West walls make it a hall
-                    {
-                        Console.WriteLine("[There's a door on the East wall of the hallway]");
-                    }
-                    if (wallYLengths > wallXLengths) //If South/North walls make it a hall
-                    {
-                        Console.WriteLine("[There's a door on the East end]");
-                    }
-                } //if hallway
+                    case "hallway":
+                        if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                        {
+                            Console.WriteLine("[There's a door on the East wall of the hallway]");
+                        }
+                        else if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                        {
+                            Console.WriteLine("[There's a door on the East end]");
+                        }
+                        break;
+                } //Room Type switch
             } //East Door
 
             if (DoorWestExists)
             {
-                if (roomType == "square")
+                switch (roomType)
                 {
-                    Console.WriteLine("[There's a door on the West wall of the room]");
-                } //if square room
+                    case "square":
+                        Console.WriteLine("[There's a door on the West wall of the room]");
+                        break;
 
-                else if (roomType == "rectangle")
-                {
-                    if (wallXLengths > wallYLengths) //If East/West walls make it a hall
-                    {
-                        Console.WriteLine("[There's a door on the West side of the room]");
-                    }
-                    if (wallYLengths > wallXLengths) //If South/North walls make it a hall
-                    {
-                        Console.WriteLine("[There's a door on the West end of the room]");
-                    }
-                } //if rectangle room
+                    case "rectangle":
+                        if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                        {
+                            Console.WriteLine("[There's a door on the West side of the room]");
+                        }
+                        else if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                        {
+                            Console.WriteLine("[There's a door on the West end of the room]");
+                        }
+                        break;
 
-                else if (roomType == "hallway")
-                {
-                    if (wallXLengths > wallYLengths) //If East/West walls make it a hall
-                    {
-                        Console.WriteLine("[There's a door on the West wall of the hallway]");
-                    }
-                    if (wallYLengths > wallXLengths) //If South/North walls make it a hall
-                    {
-                        Console.WriteLine("[There's a door on the West end]");
-                    }
-                } //if hallway
+                    case "hallway":
+                        if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                        {
+                            Console.WriteLine("[There's a door on the West wall of the hallway]");
+                        }
+                        else if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                        {
+                            Console.WriteLine("[There's a door on the West end]");
+                        }
+                        break;
+                } //Room Type switch
             } //West Door
         } //Labyrinth Room Text
 
