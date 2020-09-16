@@ -11,6 +11,8 @@ namespace HelloWorld
 
         public char gamemode = ' ';
 
+        public char action = ' ';
+
         //Enemy Declarations
         public string enemyName = "None";
         public int enemyExperience;
@@ -48,7 +50,6 @@ namespace HelloWorld
         public bool FieldExplored = false;
         public bool LabyrinthEntranceExplored = false;
         public bool CastleGateExplored = false;
-
         //Labyrinth Locations
         bool LabyrinthEntrywayExplored = false;
         bool LabyrinthExplored = false;
@@ -149,619 +150,568 @@ namespace HelloWorld
 
         void Update()
         {
-
-            if (gamemode == '1')
+            switch(gamemode)
             {
-                if (area == "Shack" && InBattle != true)
-                {
-                    if (ShackExplored == false) //If the player has seen these messages
+                case '1': //Adventure
+                    if (area == "Shack" && InBattle != true)
                     {
-                        Console.WriteLine("[I find myself upon a small hill outside of the shack whense I chose my class]");
-                        Console.WriteLine("[(Still not sure how that person changed my physical makeup)]");
-                        Console.WriteLine("[There's a path trailing from the shack into a dark grey field before me]");
-                        Console.WriteLine("[The field has blobs of slime scattered throughout it, murking around]");
-                    }
+                        if (ShackExplored == false) //If the player has seen these messages
+                        {
+                            Console.WriteLine("[I find myself upon a small hill outside of the shack whense I chose my class]");
+                            Console.WriteLine("[(Still not sure how that person changed my physical makeup)]");
+                            Console.WriteLine("[There's a path trailing from the shack into a dark grey field before me]");
+                            Console.WriteLine("[The field has blobs of slime scattered throughout it, murking around]");
+                        }
 
-                    if (ShackExplored == true) //If the player's been to the Shack
-                    {
-                        Console.WriteLine("[I'm back on the hill outside the shack]");
-                        Console.WriteLine("[(Still not sure how that person changed my physical makeup)]");
-                        Console.WriteLine("[The path stretches into the distance through the slime field before me]");
-                    }
-                    Console.WriteLine("");
-
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Re-enter the shack to change my style & specialty]\n[2: Follow the path down into the field]\n[3: Look around]\n[9: 9 Menu]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> ");
-                    char action = Console.ReadKey().KeyChar;
-                    switch (action)
-                    {
-                        case '1': //Redecide Style/Specialty
-                            player1.DecideSpecialty();
-                            break;
-
-                        case '2': //Go to the field
-                            area = "Field";
-                            break;
-
-                        case '3':
-                            Console.Clear(); //Clears the screen
-                            Console.WriteLine("[I'm on a small hill outside of the shack whense I chose my class in (Still not sure how that person changed my physical makeup)]");
-                            Console.WriteLine("[There's a path trailing from the shack into a dark grey field]");
-                            Console.WriteLine("[The field has slimes scattered throughout it, murking around]");
-                            Pause();
-                            break;
-
-                        case '9': //9 Menu
-                            NineMenu();
-                            break;
-                    } //Action Switch
-
-                    ShackExplored = true;
-                    Console.Clear(); //Clears the screen
-                } //If at the Shack and not in a battle
-
-                else if (area == "Field" && InBattle != true)
-                {
-                    if (FieldExplored == false) //If the player hasn't been to the fields
-                    {
-                        Console.WriteLine("[I'm at a T intersection in the path that cuts through the dark slimy field, and living slime is everywhere]");
-                        Console.WriteLine("[The shack is on a hill up the path]");
+                        else if (ShackExplored == true) //If the player's been to the Shack
+                        {
+                            Console.WriteLine("[I'm back on the hill outside the shack]");
+                            Console.WriteLine("[(Still not sure how that person changed my physical makeup)]");
+                            Console.WriteLine("[The path stretches into the distance through the slime field before me]");
+                        }
                         Console.WriteLine("");
-                        Console.WriteLine("[The fork off leads to a crypt with a stone door facing the path]");
+
+                        Console.WriteLine("[What do I do?]");
+                        Console.WriteLine("[1: Re-enter the shack to change my style & specialty]\n[2: Follow the path down into the field]\n[3: Look around]\n[9: 9 Menu]");
                         Console.WriteLine("");
-                        Console.WriteLine("[The non-fork part leads to a small castle far down the path]");
-                        Console.WriteLine("[The gate appears to be closed, though]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[The living slimes appear to stay away from the structures; I wonder why]");
-                    }
+                        Console.WriteLine("[Press the number to continue]");
+                        Console.Write("> ");
+                        action = Console.ReadKey().KeyChar;
+                        switch (action)
+                        {
+                            case '1': //Redecide Style/Specialty
+                                player1.DecideSpecialty();
+                                break;
 
-                    if (FieldExplored == true) //If the player's already been to the fields
+                            case '2': //Go to the field
+                                area = "Field";
+                                break;
+
+                            case '3':
+                                Console.Clear(); //Clears the screen
+                                Console.WriteLine("[I'm on a small hill outside of the shack whense I chose my class in (Still not sure how that person changed my physical makeup)]");
+                                Console.WriteLine("[There's a path trailing from the shack into a dark grey field]");
+                                Console.WriteLine("[The field has slimes scattered throughout it, murking around]");
+                                Pause();
+                                break;
+
+                            case '9': //9 Menu
+                                NineMenu();
+                                break;
+                        } //Action Switch
+
+                        ShackExplored = true;
+                        Console.Clear(); //Clears the screen
+                    } //If at the Shack and not in a battle
+
+                    else if (area == "Field" && InBattle != true)
                     {
-                        Console.WriteLine("[I'm back in the slime field, and living slime is still everywhere]");
-                        Console.WriteLine("[The shack still sits upon the hill further up the path]");
-                        Console.WriteLine("[The crypt is at the end of the forked part of the path]");
-                        Console.WriteLine("[The castle resides further down the path]");
-                    }
-                    Console.WriteLine("");
-
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Head to the hill with the shack atop it]\n[2: Head to the crypt]\n[3: Head towards the Castle]\n[4: Engage a slime]\n[5: Look around]\n[9: 9 Menu]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> ");
-                    char action = Console.ReadKey().KeyChar;
-
-                    switch (action)
-                    {
-                        case '1': //Go to Shack
-                            area = "Shack";
-                            break;
-
-                        case '2': //Go to Labyrinth
-                            area = "LabyrinthEntrance";
-                            break;
-
-                        case '3': //Go to Castle
-                            area = "CastleGate";
-                            break;
-
-                        case '4': //Engage a slime
-                            Console.Clear(); //Clears the screen
-                            Console.WriteLine("[I engage one of the many slimes]");
-                            Pause();
-                            enemyName = "Slime";
-                            InBattle = true;
-                            Battle();
-                            break;
-
-                        case '5': //Look around
-                            Console.Clear(); //Clears the screen
-                            Console.WriteLine("[I'm at a fork in a path that cuts through a dark grey slime field, and there's living mounds of the slime murking around]");
+                        if (FieldExplored == false) //If the player hasn't been to the fields
+                        {
+                            Console.WriteLine("[I'm at a T intersection in the path that cuts through the dark slimy field, and living slime is everywhere]");
                             Console.WriteLine("[The shack is on a hill up the path]");
                             Console.WriteLine("");
-                            Console.WriteLine("[There's a crypt at the end of the forked part of the path]");
+                            Console.WriteLine("[The fork off leads to a crypt with a stone door facing the path]");
                             Console.WriteLine("");
-                            Console.WriteLine("[There's a castle far down the path]");
-                            Console.WriteLine("[The gate appears to be closed]");
+                            Console.WriteLine("[The non-fork part leads to a small castle far down the path]");
+                            Console.WriteLine("[The gate appears to be closed, though]");
                             Console.WriteLine("");
                             Console.WriteLine("[The living slimes appear to stay away from the structures; I wonder why]");
-                            Pause();
-                            break;
+                        }
 
-                        case '9': //Nine Menu
-                            NineMenu();
-                            break;
-
-                    } //Action Switch
-
-                    if (action != '4') //Makes it so two engagements don't occur at once
-                    {
-                        int SlimeApproach = r.Next(1, 5); //Chance for a slime to engage
-                        if (SlimeApproach == 1) //If a slime engages
+                        if (FieldExplored == true) //If the player's already been to the fields
                         {
-                            enemyName = "Slime";
+                            Console.WriteLine("[I'm back in the slime field, and living slime is still everywhere]");
+                            Console.WriteLine("[The shack still sits upon the hill further up the path]");
+                            Console.WriteLine("[The crypt is at the end of the forked part of the path]");
+                            Console.WriteLine("[The castle resides further down the path]");
+                        }
+                        Console.WriteLine("");
+
+                        Console.WriteLine("[What do I do?]");
+                        Console.WriteLine("[1: Head to the hill with the shack atop it]\n[2: Head to the crypt]\n[3: Head towards the Castle]\n[4: Engage a slime]\n[5: Look around]\n[9: 9 Menu]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[Press the number to continue]");
+                        Console.Write("> ");
+                        action = Console.ReadKey().KeyChar;
+
+                        switch (action)
+                        {
+                            case '1': //Go to Shack
+                                area = "Shack";
+                                break;
+
+                            case '2': //Go to Labyrinth
+                                area = "LabyrinthEntrance";
+                                break;
+
+                            case '3': //Go to Castle
+                                area = "CastleGate";
+                                break;
+
+                            case '4': //Engage a slime
+                                Console.Clear(); //Clears the screen
+                                Console.WriteLine("[I engage one of the many slimes]");
+                                Pause();
+                                enemyName = "Slime";
+                                InBattle = true;
+                                Battle();
+                                break;
+
+                            case '5': //Look around
+                                Console.Clear(); //Clears the screen
+                                Console.WriteLine("[I'm at a fork in a path that cuts through a dark grey slime field, and there's living mounds of the slime murking around]");
+                                Console.WriteLine("[The shack is on a hill up the path]");
+                                Console.WriteLine("");
+                                Console.WriteLine("[There's a crypt at the end of the forked part of the path]");
+                                Console.WriteLine("");
+                                Console.WriteLine("[There's a castle far down the path]");
+                                Console.WriteLine("[The gate appears to be closed]");
+                                Console.WriteLine("");
+                                Console.WriteLine("[The living slimes appear to stay away from the structures; I wonder why]");
+                                Pause();
+                                break;
+
+                            case '9': //Nine Menu
+                                NineMenu();
+                                break;
+
+                        } //Action Switch
+
+                        if (action != '4') //Makes it so two engagements don't occur at once
+                        {
+                            int SlimeApproach = r.Next(1, 5); //Chance for a slime to engage
+                            if (SlimeApproach == 1) //If a slime engages
+                            {
+                                enemyName = "Slime";
+                                InBattle = true;
+                                Battle();
+                            } //If slime engages
+                        } //If not engaging
+
+                        FieldExplored = true;
+                        Console.Clear(); //Clears the screen
+
+                    } //If in the field and not in a battle
+
+                    else if (area == "LabyrinthEntrance" && InBattle != true)
+                    {
+                        if (LabyrinthEntranceExplored == false)
+                        {
+                            Console.WriteLine("[I'm now in front of the small and very sturdy looking crypt]");
+                            Console.WriteLine("[There's a decently large stone door, and a panel to the left of it]");
+                            Console.WriteLine("[It has some text on it, good thing I can read]");
+                        }
+                        if (LabyrinthEntranceExplored == true)
+                        {
+                            Console.WriteLine("[I'm at the entrance of the crypt]");
+                        }
+                        Console.WriteLine("");
+
+                        Console.WriteLine("[What do I do?]");
+                        Console.WriteLine("[1: Head back to the fork in the field]\n[2: Enter the Crypt]\n[3: Read the panel]\n[4: Look around]\n[9: 9 Menu]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[Press the number to continue]");
+                        Console.Write("> ");
+                        action = Console.ReadKey().KeyChar;
+
+                        switch (action)
+                        {
+                            case '1': //Go to Field
+                                area = "Field";
+                                break;
+
+                            case '2': //Enter the Labyrinth
+                                area = "LabyrinthEntryway";
+                                break;
+
+                            case '3': //Read the Panel
+                                Console.Clear(); //Clears the screen
+                                Console.WriteLine("[Those who die within these fields do not stay down for long]");
+                                Console.WriteLine("[Slime is attracted to corpses; it will inhabit those who have died, 'bringing them back to life' in a sense]");
+                                Console.WriteLine("[This causes many problems, even with coffins]");
+                                Console.WriteLine("");
+                                Console.WriteLine("[This is a labyrinth]");
+                                Console.WriteLine("[Those who have died are put into this labyrinth, to roam indefinitely]");
+                                Console.WriteLine("");
+                                Console.WriteLine("[To those who live and wish to enter: Do so at your own risk]");
+                                Console.WriteLine("[Those whose corpses have been desecrated by slime are no longer the people they once were]");
+                                Console.WriteLine("[They are akin to the living slime that roam the surrounding fields]");
+                                Console.WriteLine("");
+                                Console.WriteLine("[These slimes are the result of the slime attempting to posess a corpse too small]");
+                                Console.WriteLine("[The slime instead surrounds it, corroding the corpse]");
+                                Pause();
+                                break;
+
+                            case '4': //Look around
+                                Console.Clear(); //Clears the screen
+                                Console.WriteLine("[I'm in front of the small, very sturdy looking stone crypt]");
+                                Console.WriteLine("[It has a decently large stone door, with a panel (Also stone) to the left of it]");
+                                Console.WriteLine("[The panel has text describing what's inside and why]");
+                                Pause();
+                                break;
+
+                            case '9': //Nine Menu
+                                NineMenu();
+                                break;
+                        } //Action Switch
+
+                        LabyrinthEntranceExplored = true;
+                        Console.Clear(); //Clears the screen
+                    } // If at labrynth Entrance and not in a battle
+
+                    else if (area == "LabyrinthEntryway" && InBattle != true)
+                    {
+                        if (LabyrinthEntrywayExplored == false)
+                        {
+                            Console.WriteLine("[I've overpowered the big door and have entered the crypt, and descended a suprisingly medium sized flight of stairs]");
+                            Console.WriteLine("[(Not sure that was the best idea)]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[This is definitely a labyrinth, seeing it from the inside]");
+                            Console.WriteLine("[There's a familiar dark grey tint to the semi-fancily stone tiled floor]");
+                            Console.WriteLine("[I think I can hear uneven footsteps against the understandably slimy tiles somewhere deeper within]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[There's a doorway to the left, then there's a dead end just beyond a door to the right]");
+                        }
+                        if (LabyrinthEntrywayExplored == true)
+                        {
+                            Console.WriteLine("[I'm in the entryway of the Labyrinth]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[There's a doorway next to the entry stairway]");
+                            Console.WriteLine("[On the opposite side of the stairway, there's another doorway next to a space with a table]");
+                        }
+                        Console.WriteLine("");
+
+                        Console.WriteLine("[What do I do?]");
+                        Console.WriteLine("[1: Head up the flight of stairs and exit the Crypt/Labyrinth]\n[2: Enter the door next to the entry stairway]\n[3: Enter the door opposite the stairway]\n[4: Check out the table]\n[5: Look around]\n[9: 9 Menu]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[Press the number to continue]");
+                        Console.Write("> ");
+                        action = Console.ReadKey().KeyChar;
+
+                        switch (action)
+                        {
+                            case '1': //Exit the Labyrinth
+                                area = "LabyrinthEntrance";
+                                break;
+
+                            case '2': //Enter West door
+                                area = "Labyrinth";
+                                facingDirection = 'w';
+                                oldLabyLocationX = labyLocationX;
+                                oldLabyLocationY = labyLocationY;
+
+                                labyLocationX = 5;
+                                labyLocationY = 25;
+                                GenerateRoom();
+                                DoorEastExists = true;
+                                break;
+
+                            case '3': //Enter East door
+                                area = "Labyrinth";
+                                facingDirection = 'e';
+                                oldLabyLocationX = labyLocationX;
+                                oldLabyLocationY = labyLocationY;
+
+                                labyLocationX = 9;
+                                labyLocationY = 22;
+                                GenerateRoom();
+                                DoorWestExists = true;
+                                break;
+
+                            case '4': //Check out table
+                                Console.Clear(); //Clears the screen
+                                Console.WriteLine("[There's nothing on the table; I would have seen it earlier if there was]");
+                                Pause();
+                                break;
+
+                            case '5': //Look around
+                                Console.Clear(); //Clears the screen
+                                Console.WriteLine("[The very medium sized flight of stairs leads to the surface]");
+                                Console.WriteLine("[The panel was right about this being a labyrinth]");
+                                Console.WriteLine("");
+                                Console.WriteLine("[The floor is stone, but chiseled into semi-fancy tiles, which is all covered in a relatively thin layer of slime]");
+                                Console.WriteLine("");
+                                Console.WriteLine("[I can hear uneven footstept from deeper within the labyrinth]");
+                                Console.WriteLine("[Likely one of the repurposed dead the panel mentioned]");
+                                Console.WriteLine("");
+                                Console.WriteLine("[I'm in a mostly rectangular room, the stairway is in the center of one end]");
+                                Console.WriteLine("[On the opposite end, to the right, there's a small square space, with a round stone table in the center of it]");
+                                Console.WriteLine("");
+                                Console.WriteLine("[To the left of the entrance, (When I first enter the Labyrinth/Crypt) there's a doorway to the right, with another door of stone]");
+                                Console.WriteLine("[Right before the small space and to the right, there's another door]");
+
+                                Pause();
+                                break;
+
+                            case '9': //Nine Menu
+                                NineMenu();
+                                break;
+                        } //Action Switch
+
+                        int SlombieApproach = r.Next(1, 8); //Chance for a slombie to engage
+                        if (SlombieApproach == 1) //If a slombie engages
+                        {
+                            enemyName = "Slombie";
                             InBattle = true;
                             Battle();
-                        } //If slime engages
-                    } //If not engaging
+                        } //If slomibe engages
 
-                    FieldExplored = true;
-                    Console.Clear(); //Clears the screen
+                        LabyrinthEntrywayExplored = true;
+                        Console.Clear(); //Clears the screen
+                    } //If in Labyrinth Entryway and not in a battle
 
-                } //If in the field and not in a battle
-
-                else if (area == "LabyrinthEntrance" && InBattle != true)
-                {
-                    if (LabyrinthEntranceExplored == false)
+                    else if (area == "Labyrinth" && InBattle == false)
                     {
-                        Console.WriteLine("[I'm now in front of the small and very sturdy looking crypt]");
-                        Console.WriteLine("[There's a decently large stone door, and a panel to the left of it]");
-                        Console.WriteLine("[It has some text on it, good thing I can read]");
-                    }
-                    if (LabyrinthEntranceExplored == true)
-                    {
-                        Console.WriteLine("[I'm at the entrance of the crypt]");
-                    }
-                    Console.WriteLine("");
-
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Head back to the fork in the field]\n[2: Enter the Crypt]\n[3: Read the panel]\n[4: Look around]\n[9: 9 Menu]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> ");
-                    char action = Console.ReadKey().KeyChar;
-
-                    switch (action)
-                    {
-                        case '1': //Go to Field
-                            area = "Field";
-                            break;
-
-                        case '2': //Enter the Labyrinth
-                            area = "LabyrinthEntryway";
-                            break;
-
-                        case '3': //Read the Panel
-                            Console.Clear(); //Clears the screen
-                            Console.WriteLine("[Those who die within these fields do not stay down for long]");
-                            Console.WriteLine("[Slime is attracted to corpses; it will inhabit those who have died, 'bringing them back to life' in a sense]");
-                            Console.WriteLine("[This causes many problems, even with coffins]");
+                        if (LabyrinthExplored == false) //If the player hasn't been in the labyrinth yet
+                        {
+                            Console.WriteLine("[I've exited the labyrinth entryway]");
+                            Console.WriteLine("[I think I'm already lost; these rooms seem to be made as I go through them]");
                             Console.WriteLine("");
-                            Console.WriteLine("[This is a labyrinth]");
-                            Console.WriteLine("[Those who have died are put into this labyrinth, to roam indefinitely]");
+                            Console.WriteLine("[If these can confuse me this badly, then there's no way the slombies could make their way out of this]");
+                            Console.WriteLine("[Speaking of, I think I can hear them in the surrounding rooms]");
                             Console.WriteLine("");
-                            Console.WriteLine("[To those who live and wish to enter: Do so at your own risk]");
-                            Console.WriteLine("[Those whose corpses have been desecrated by slime are no longer the people they once were]");
-                            Console.WriteLine("[They are akin to the living slime that roam the surrounding fields]");
+                        }
+
+                        else if (LabyrinthExplored == true) //If the player has been in the labyrinth
+                        {
+                            Console.WriteLine("[I'm in the slimy labyrinth]");
+                            Console.WriteLine("[I'm not sure I remember where I am]");
                             Console.WriteLine("");
-                            Console.WriteLine("[These slimes are the result of the slime attempting to posess a corpse too small]");
-                            Console.WriteLine("[The slime instead surrounds it, corroding the corpse]");
-                            Pause();
-                            break;
 
-                        case '4': //Look around
-                            Console.Clear(); //Clears the screen
-                            Console.WriteLine("[I'm in front of the small, very sturdy looking stone crypt]");
-                            Console.WriteLine("[It has a decently large stone door, with a panel (Also stone) to the left of it]");
-                            Console.WriteLine("[The panel has text describing what's inside and why]");
-                            Pause();
-                            break;
+                        }
 
-                        case '9': //Nine Menu
-                            NineMenu();
-                            break;
-                    } //Action Switch
-
-                    LabyrinthEntranceExplored = true;
-                    Console.Clear(); //Clears the screen
-                } // If at labrynth Entrance and not in a battle
-
-                else if (area == "LabyrinthEntryway" && InBattle != true)
-                {
-                    if (LabyrinthEntrywayExplored == false)
-                    {
-                        Console.WriteLine("[I've overpowered the big door and have entered the crypt, and descended a suprisingly medium sized flight of stairs]");
-                        Console.WriteLine("[(Not sure that was the best idea)]");
+                        LabyrinthRoomText();
                         Console.WriteLine("");
-                        Console.WriteLine("[This is definitely a labyrinth, seeing it from the inside]");
-                        Console.WriteLine("[There's a familiar dark grey tint to the semi-fancily stone tiled floor]");
-                        Console.WriteLine("[I think I can hear uneven footsteps against the understandably slimy tiles somewhere deeper within]");
+                        Console.WriteLine("[What do I do?]");
                         Console.WriteLine("");
-                        Console.WriteLine("[There's a doorway to the left, then there's a dead end just beyond a door to the right]");
-                    }
-                    if (LabyrinthEntrywayExplored == true)
-                    {
-                        Console.WriteLine("[I'm in the entryway of the Labyrinth]");
+                        LabyrinthActionText();
                         Console.WriteLine("");
-                        Console.WriteLine("[There's a doorway next to the entry stairway]");
-                        Console.WriteLine("[On the opposite side of the stairway, there's another doorway next to a space with a table]");
-                    }
-                    Console.WriteLine("");
+                        Console.WriteLine("[Press the number to continue]");
+                        Console.Write("> ");
+                        action = ' ';
+                        action = Console.ReadKey().KeyChar;
 
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Head up the flight of stairs and exit the Crypt/Labyrinth]\n[2: Enter the door next to the entry stairway]\n[3: Enter the door opposite the stairway]\n[4: Check out the table]\n[5: Look around]\n[9: 9 Menu]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> ");
-                    char action = Console.ReadKey().KeyChar;
-
-                    switch (action)
-                    {
-                        case '1': //Exit the Labyrinth
-                            area = "LabyrinthEntrance";
-                            break;
-
-                        case '2': //Enter West door
-                            area = "Labyrinth";
-                            facingDirection = 'w';
-                            oldLabyLocationX = labyLocationX;
-                            oldLabyLocationY = labyLocationY;
-
-                            labyLocationX = 5;
-                            labyLocationY = 25;
-                            GenerateRoom();
-                            DoorEastExists = true;
-                            break;
-
-                        case '3': //Enter East door
-                            area = "Labyrinth";
-                            facingDirection = 'e';
-                            oldLabyLocationX = labyLocationX;
-                            oldLabyLocationY = labyLocationY;
-
-                            labyLocationX = 9;
-                            labyLocationY = 22;
-                            GenerateRoom();
-                            DoorWestExists = true;
-                            break;
-
-                        case '4': //Check out table
-                            Console.Clear(); //Clears the screen
-                            Console.WriteLine("[There's nothing on the table; I would have seen it earlier if there was]");
-                            Pause();
-                            break;
-
-                        case '5': //Look around
-                            Console.Clear(); //Clears the screen
-                            Console.WriteLine("[The very medium sized flight of stairs leads to the surface]");
-                            Console.WriteLine("[The panel was right about this being a labyrinth]");
-                            Console.WriteLine("");
-                            Console.WriteLine("[The floor is stone, but chiseled into semi-fancy tiles, which is all covered in a relatively thin layer of slime]");
-                            Console.WriteLine("");
-                            Console.WriteLine("[I can hear uneven footstept from deeper within the labyrinth]");
-                            Console.WriteLine("[Likely one of the repurposed dead the panel mentioned]");
-                            Console.WriteLine("");
-                            Console.WriteLine("[I'm in a mostly rectangular room, the stairway is in the center of one end]");
-                            Console.WriteLine("[On the opposite end, to the right, there's a small square space, with a round stone table in the center of it]");
-                            Console.WriteLine("");
-                            Console.WriteLine("[To the left of the entrance, (When I first enter the Labyrinth/Crypt) there's a doorway to the right, with another door of stone]");
-                            Console.WriteLine("[Right before the small space and to the right, there's another door]");
-
-                            Pause();
-                            break;
-
-                        case '9': //Nine Menu
-                            NineMenu();
-                            break;
-                    } //Action Switch
-
-                    int SlombieApproach = r.Next(1, 8); //Chance for a slombie to engage
-                    if (SlombieApproach == 1) //If a slombie engages
-                    {
-                        enemyName = "Slombie";
-                        InBattle = true;
-                        Battle();
-                    } //If slomibe engages
-
-                    LabyrinthEntrywayExplored = true;
-                    Console.Clear(); //Clears the screen
-                } //If in Labyrinth Entryway and not in a battle
-
-                else if (area == "Labyrinth" && InBattle == false)
-                {
-                    if (LabyrinthExplored == false) //If the player hasn't been in the labyrinth yet
-                    {
-                        Console.WriteLine("[I've exited the labyrinth entryway]");
-                        Console.WriteLine("[I think I'm already lost; these rooms seem to be made as I go through them]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[If these can confuse me this badly, then there's no way the slombies could make their way out of this]");
-                        Console.WriteLine("[Speaking of, I think I can hear them in the surrounding rooms]");
-                        Console.WriteLine("");
-                    }
-
-                    else if (LabyrinthExplored == true) //If the player has been in the labyrinth
-                    {
-                        Console.WriteLine("[I'm in the slimy labyrinth]");
-                        Console.WriteLine("[I'm not sure I remember where I am]");
-                        Console.WriteLine("");
-
-                    }
-
-                    LabyrinthRoomText();
-                    Console.WriteLine("");
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("");
-                    LabyrinthActionText();
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> ");
-                    char action = Console.ReadKey().KeyChar;
-
-                    switch (action)
-                    {
-                        case '1': //South
-                            if (DoorSouthExists == true)
-                            {
-                                oldLabyLocationX = labyLocationX;
-                                oldLabyLocationY = labyLocationY;
-
-                                labyLocationX = doorSouthX;
-                                labyLocationY = doorSouthY;
-                                GenerateRoom();
-                            }
-                            else
-                            {
-                                Console.WriteLine("[I'm staring at the South wall. Insightful]");
-                                Pause();
-                            }
-                            break; //Case 1
-
-                        case '2': //North
-                            if (DoorNorthExists == true)
-                            {
-                                oldLabyLocationX = labyLocationX;
-                                oldLabyLocationY = labyLocationY;
-
-                                labyLocationX = doorNorthX;
-                                labyLocationY = doorNorthY;
-                                GenerateRoom();
-                            }
-                            else
-                            {
-                                Console.WriteLine("[I'm staring at the North wall. Insightful]");
-                                Pause();
-                            }
-                            break;
-
-                        case '3': //East
-                            if (DoorEastExists == true)
-                            {
-                                if (CanEscapeE == true)
-                                {
-                                    area = "LabyrinthEntryway";
-                                }
-                                else
+                        switch (action)
+                        {
+                            case '1': //South
+                                if (DoorSouthExists == true)
                                 {
                                     oldLabyLocationX = labyLocationX;
                                     oldLabyLocationY = labyLocationY;
 
-                                    labyLocationX = doorEastX;
-                                    labyLocationY = doorEastY;
+                                    labyLocationX = doorSouthX;
+                                    labyLocationY = doorSouthY;
                                     GenerateRoom();
                                 }
-                            }
-                            else
-                            {
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("[I'm staring at the South wall. Insightful]");
+                                    Pause();
+                                }
+                                break; //Case 1
 
-                                Console.WriteLine("[I'm staring at the East wall. Insightful]");
-                                Pause();
-                            }
-                            break;
+                            case '2': //North
+                                if (DoorNorthExists == true)
+                                {
+                                    oldLabyLocationX = labyLocationX;
+                                    oldLabyLocationY = labyLocationY;
 
-                        case '4': //West
-                            if (CanEscapeW == true)
-                            {
-                                area = "LabyrinthEntryway";
-                            }
-                            if (DoorEastExists == true)
-                            {
-                                oldLabyLocationX = labyLocationX;
-                                oldLabyLocationY = labyLocationY;
+                                    labyLocationX = doorNorthX;
+                                    labyLocationY = doorNorthY;
+                                    GenerateRoom();
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("[I'm staring at the North wall. Insightful]");
+                                    Pause();
+                                }
+                                break;
 
-                                labyLocationX = doorWestX;
-                                labyLocationY = doorWestY;
-                                GenerateRoom();
-                            }
-                            else
-                            {
-                                Console.Clear();
-                                Console.WriteLine("[I'm staring at the West wall. Insightful]");
-                                Pause();
-                            }
-                            break;
+                            case '3': //East
+                                if (DoorEastExists == true)
+                                {
+                                    if (CanEscapeE == true)
+                                    {
+                                        area = "LabyrinthEntryway";
+                                    }
+                                    else
+                                    {
+                                        oldLabyLocationX = labyLocationX;
+                                        oldLabyLocationY = labyLocationY;
 
-                        case '5': //Go Back
-                            labyLocationX = oldLabyLocationX;
-                            labyLocationY = oldLabyLocationY;
-                            break;
+                                        labyLocationX = doorEastX;
+                                        labyLocationY = doorEastY;
+                                        GenerateRoom();
+                                    }
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("[I'm staring at the East wall. Insightful]");
+                                    Pause();
+                                }
+                                break;
+
+                            case '4': //West
+                                if (CanEscapeW == true)
+                                {
+                                    area = "LabyrinthEntryway";
+                                }
+                                if (DoorEastExists == true)
+                                {
+                                    oldLabyLocationX = labyLocationX;
+                                    oldLabyLocationY = labyLocationY;
+
+                                    labyLocationX = doorWestX;
+                                    labyLocationY = doorWestY;
+                                    GenerateRoom();
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("[I'm staring at the West wall. Insightful]");
+                                    Pause();
+                                }
+                                break;
+
+                            case '5': //Go Back
+                                labyLocationX = oldLabyLocationX;
+                                labyLocationY = oldLabyLocationY;
+                                break;
 
 
-                        case '9': //Nine Menu
-                            NineMenu();
-                            break;
-                    } //Action Switch
-                    LabyrinthExplored = true;
-                    Console.Clear();
-                } //If in Labyrinth and not in a battle
+                            case '9': //Nine Menu
+                                NineMenu();
+                                break;
+                        } //Action Switch
+                        LabyrinthExplored = true;
+                        Console.Clear();
+                    } //If in Labyrinth and not in a battle
 
-                else if (area == "CastleGate" && InBattle != true)
-                {
-                    if (CastleGateExplored == false) //If the player hasn't been to the gate yet
+                    else if (area == "CastleGate" && InBattle != true)
                     {
-                        Console.WriteLine("[I'm now in front of the stone brick castle, it appears as if it had started to be taken down out of order, now that I look at it]");
-                        Console.WriteLine("[That'd partially explain why the gate is down]");
-                        Console.WriteLine("[If this castle Was taken over by force, why would it not have been repaired by the new inhabitants?]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[There's a decently sized hole, looks as if the bricks were just... removed, rather than destroyed]");
-                    }
-
-                    if (CastleGateExplored == true) //If the player has been to the gate
-                    {
-                        Console.WriteLine("[I'm in front of the taken-over brick castle that has an odd 'entrance']");
-                    }
-
-                    Console.WriteLine("");
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Return to the fork in the path]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[9: 9 Menu]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> ");
-                    char action = Console.ReadKey().KeyChar;
-
-                    switch (action)
-                    {
-                        case '1': //Return to field
-                            area = "Field";
-                            break;
-
-                        case '2': //Go to castle
-                            area = "CastleEntry";
-                            break;
-
-
-                        case '3': //Look around
-                            Console.Clear(); //Clears the screen
-                            Console.WriteLine("[I'm in front of the stone brick castle, it appears as if it had started to be taken down out of order]");
+                        if (CastleGateExplored == false) //If the player hasn't been to the gate yet
+                        {
+                            Console.WriteLine("[I'm now in front of the stone brick castle, it appears as if it had started to be taken down out of order, now that I look at it]");
                             Console.WriteLine("[That'd partially explain why the gate is down]");
                             Console.WriteLine("[If this castle Was taken over by force, why would it not have been repaired by the new inhabitants?]");
                             Console.WriteLine("");
-                            Console.WriteLine("[There's a decently-sized hole in the side, looks as if the bricks were just... removed, rather than destroyed]");
-                            Pause();
-                            break;
+                            Console.WriteLine("[There's a decently sized hole, looks as if the bricks were just... removed, rather than destroyed]");
+                        }
 
-                        case '9': //Nine Menu
-                            NineMenu();
-                            break;
+                        if (CastleGateExplored == true) //If the player has been to the gate
+                        {
+                            Console.WriteLine("[I'm in front of the taken-over brick castle that has an odd 'entrance']");
+                        }
 
-                    } //Action Switch
-                    CastleGateExplored = true;
-                    Console.Clear();
-                } //If in CastleGate and not in a battle
+                        Console.WriteLine("");
+                        Console.WriteLine("[What do I do?]");
+                        Console.WriteLine("[1: Return to the fork in the path]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[9: 9 Menu]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[Press the number to continue]");
+                        Console.Write("> ");
+                        action = Console.ReadKey().KeyChar;
 
-                else if (area == "CastleEntry" && InBattle != true)
-                {
-                    if (CastleEntryExplored == false) //If the player hasn't entered the Castle before
-                    {
-                        Console.WriteLine("[I've entered the castle; it looks relatively normal]");
-                        Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
-                        Console.WriteLine("[One of these disturbances include a doorway without a door that Has hinges for one, but not the door itself]");
-                        Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
-                    }
+                        switch (action)
+                        {
+                            case '1': //Return to field
+                                area = "Field";
+                                break;
 
-                    if (CastleEntryExplored == true) //If the player has entered the castle already
-                    {
-                        Console.WriteLine("[I'm in the entryway of the castle]");
-                    }
+                            case '2': //Go to castle
+                                area = "CastleEntry";
+                                break;
 
-                    Console.WriteLine("");
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Exit the castle]\n\n[3: Look around]\n[9: 9 Menu]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> ");
-                    char action = Console.ReadKey().KeyChar;
 
-                    switch (action)
-                    {
-                        case '1': //Exit the castle
-                            area = "CastleGate";
-                            break;
-
-                        case '2': //Enter the Void
-                            if (player1.level < 10)
-                            {
+                            case '3': //Look around
                                 Console.Clear(); //Clears the screen
-                                Console.WriteLine("[The doorless doorway doesn't lead anywhere, perhaps I should leave]");
+                                Console.WriteLine("[I'm in front of the stone brick castle, it appears as if it had started to be taken down out of order]");
+                                Console.WriteLine("[That'd partially explain why the gate is down]");
+                                Console.WriteLine("[If this castle Was taken over by force, why would it not have been repaired by the new inhabitants?]");
+                                Console.WriteLine("");
+                                Console.WriteLine("[There's a decently-sized hole in the side, looks as if the bricks were just... removed, rather than destroyed]");
                                 Pause();
-                            }
+                                break;
 
-                            if (player1.level >= 10)
-                            {
-                                area = "    ";
-                            }
-                            break;
+                            case '9': //Nine Menu
+                                NineMenu();
+                                break;
 
-                        case '3': //Look around
-                            Console.Clear(); //Clears the screen
-                            Console.WriteLine("[I'm inside the castle; it looks semi-normal]");
+                        } //Action Switch
+                        CastleGateExplored = true;
+                        Console.Clear();
+                    } //If in CastleGate and not in a battle
+
+                    else if (area == "CastleEntry" && InBattle != true)
+                    {
+                        if (CastleEntryExplored == false) //If the player hasn't entered the Castle before
+                        {
+                            Console.WriteLine("[I've entered the castle; it looks relatively normal]");
                             Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
                             Console.WriteLine("[One of these disturbances include a doorway without a door that Has hinges for one, but not the door itself]");
                             Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
-                            Pause();
-                            break;
+                        }
 
-                        case '9': //Nine Menu
-                            NineMenu();
-                            break;
-                    } //Action Switch
+                        if (CastleEntryExplored == true) //If the player has entered the castle already
+                        {
+                            Console.WriteLine("[I'm in the entryway of the castle]");
+                        }
 
-                    CastleEntryExplored = true;
-                    Console.Clear(); //Clears the screen
-                } //If in CastleEntry
-
-                else if (area == "    " && InBattle != true)
-                {
-
-                    if (Explored == false) //If the player hasn't entered the Void before
-                    {
-                        Console.WriteLine("[I've entered the doorless doorway; it feels like a throne room]");
-                        Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
-                        Console.WriteLine("[They're moving, but they think nothing of me]");
-                        Console.WriteLine("[There's a doorway without a door that Has hinges for one, but not the door itself]");
                         Console.WriteLine("");
-                        Console.WriteLine("[One of them are sitting in the throne]");
-                        Console.WriteLine("[It's not moving, but I think nothing of it]");
+                        Console.WriteLine("[What do I do?]");
+                        Console.WriteLine("[1: Exit the castle]\n\n[3: Look around]\n[9: 9 Menu]");
                         Console.WriteLine("");
-                        Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
-                        Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
-                    }
+                        Console.WriteLine("[Press the number to continue]");
+                        Console.Write("> ");
+                        action = Console.ReadKey().KeyChar;
 
-                    if (Explored == true) //If the player has entered the Void
+                        switch (action)
+                        {
+                            case '1': //Exit the castle
+                                area = "CastleGate";
+                                break;
+
+                            case '2': //Enter the Void
+                                if (player1.level < 10)
+                                {
+                                    Console.Clear(); //Clears the screen
+                                    Console.WriteLine("[The doorless doorway doesn't lead anywhere, perhaps I should leave]");
+                                    Pause();
+                                }
+
+                                if (player1.level >= 10)
+                                {
+                                    area = "    ";
+                                }
+                                break;
+
+                            case '3': //Look around
+                                Console.Clear(); //Clears the screen
+                                Console.WriteLine("[I'm inside the castle; it looks semi-normal]");
+                                Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
+                                Console.WriteLine("[One of these disturbances include a doorway without a door that Has hinges for one, but not the door itself]");
+                                Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
+                                Pause();
+                                break;
+
+                            case '9': //Nine Menu
+                                NineMenu();
+                                break;
+                        } //Action Switch
+
+                        CastleEntryExplored = true;
+                        Console.Clear(); //Clears the screen
+                    } //If in CastleEntry
+
+                    else if (area == "    " && InBattle != true)
                     {
-                        Console.WriteLine("[I'm in the     ]");
-                    }
 
-                    Console.WriteLine("");
-                    Console.WriteLine("[What do I do?]");
-                    Console.WriteLine("[1: Enter the doorless doorway]\n[2: Nothing]\n[3: Engage Nothing]\n[4: Engage Nothing in the throne]\n[5: Look around]\n[9: 9 Menu]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> ");
-                    char action = Console.ReadKey().KeyChar;
-
-                    switch (action)
-                    {
-                        case '1': //Exit the Void
-                            area = "CastleEntry";
-                            break;
-
-                        case '2': //Nothing
-
-                            break;
-
-                        case '3': //Engage Nothing
-                            Console.Clear(); //Clears the screen
-                            Console.WriteLine("[I engage Nothing]");
-                            Pause();
-                            enemyName = "Nothing";
-                            InBattle = true;
-                            Battle();
-                            break;
-
-                        case '4': //Engage Nothing in the throne
-                            Console.Clear(); //Clears the screen
-                            Console.WriteLine("[I engage Nothing in the throne]");
-                            Pause();
-                            enemyName = "Nothing";
-                            InBattle = true;
-                            Battle();
-                            break;
-
-                        case '5': //Look around
-                            Console.WriteLine("[This area feels like a throne room]");
+                        if (Explored == false) //If the player hasn't entered the Void before
+                        {
+                            Console.WriteLine("[I've entered the doorless doorway; it feels like a throne room]");
                             Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
                             Console.WriteLine("[They're moving, but they think nothing of me]");
                             Console.WriteLine("[There's a doorway without a door that Has hinges for one, but not the door itself]");
@@ -771,85 +721,137 @@ namespace HelloWorld
                             Console.WriteLine("");
                             Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
                             Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
-                            Pause();
+                        }
+
+                        if (Explored == true) //If the player has entered the Void
+                        {
+                            Console.WriteLine("[I'm in the     ]");
+                        }
+
+                        Console.WriteLine("");
+                        Console.WriteLine("[What do I do?]");
+                        Console.WriteLine("[1: Enter the doorless doorway]\n[2: Nothing]\n[3: Engage Nothing]\n[4: Engage Nothing in the throne]\n[5: Look around]\n[9: 9 Menu]");
+                        Console.WriteLine("");
+                        Console.WriteLine("[Press the number to continue]");
+                        Console.Write("> ");
+                        action = Console.ReadKey().KeyChar;
+
+                        switch (action)
+                        {
+                            case '1': //Exit the Void
+                                area = "CastleEntry";
+                                break;
+
+                            case '2': //Nothing
+
+                                break;
+
+                            case '3': //Engage Nothing
+                                Console.Clear(); //Clears the screen
+                                Console.WriteLine("[I engage Nothing]");
+                                Pause();
+                                enemyName = "Nothing";
+                                InBattle = true;
+                                Battle();
+                                break;
+
+                            case '4': //Engage Nothing in the throne
+                                Console.Clear(); //Clears the screen
+                                Console.WriteLine("[I engage Nothing in the throne]");
+                                Pause();
+                                enemyName = "Nothing";
+                                InBattle = true;
+                                Battle();
+                                break;
+
+                            case '5': //Look around
+                                Console.WriteLine("[This area feels like a throne room]");
+                                Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
+                                Console.WriteLine("[They're moving, but they think nothing of me]");
+                                Console.WriteLine("[There's a doorway without a door that Has hinges for one, but not the door itself]");
+                                Console.WriteLine("");
+                                Console.WriteLine("[One of them are sitting in the throne]");
+                                Console.WriteLine("[It's not moving, but I think nothing of it]");
+                                Console.WriteLine("");
+                                Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
+                                Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
+                                Pause();
+                                break;
+
+                            case '9': //Nine Menu
+                                NineMenu();
+                                break;
+                        } //Action Switch
+
+                        Explored = true;
+                        Console.Clear(); //Clears the screen
+                    } //If in Void
+                    break; //If in Adventure Mode
+
+                case '2': //PvP
+                    Console.WriteLine("[What do you want to do?]");
+                    Console.WriteLine("[1: Battle]\n[2: Reselect Specialties]\n[0: Quit]");
+                    Console.WriteLine("");
+                    Console.WriteLine("[Press the number to continue]");
+                    Console.Write("> ");
+                    action = Console.ReadKey().KeyChar;
+
+                    switch (action)
+                    {
+                        case '1':
+                            Console.Clear();
+                            InBattle = true;
+                            Battle(ref player1, ref player2);
                             break;
 
-                        case '9': //Nine Menu
-                            NineMenu();
+                        case '2': //Reselect Specialties
+                            Console.WriteLine("Player 1, do you want to re-select your specialty?");
+                            Console.WriteLine("");
+                            Console.WriteLine("[1: Yes]\n[2: No]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[Press the number to continue]");
+                            Console.Write("> ");
+                            action = Console.ReadKey().KeyChar;
+                            if (action == '1')
+                            {
+                                player1.DecideSpecialty();
+                            }
+
+                            Console.Clear(); //Clears the screen
+
+                            Console.WriteLine("Player 2, do you want to re-select your specialty?");
+                            Console.WriteLine("");
+                            Console.WriteLine("[1: Yes]\n[2: No]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[Press the number to continue]");
+                            Console.Write("> ");
+                            action = Console.ReadKey().KeyChar;
+                            if (action == '1')
+                            {
+                                player2.DecideSpecialty();
+                            }
+                            break;
+
+                        case '0': //Quit
+                            Console.Clear(); //Clears the screen
+                            Console.WriteLine("Are you sure you want to leave?");
+                            Console.WriteLine("");
+                            Console.WriteLine("[1: Yes]\n[2: No]");
+                            Console.WriteLine("");
+                            Console.WriteLine("[Press the number to continue]");
+                            Console.Write("> ");
+                            action = Console.ReadKey().KeyChar;
+                            if (action == '1') //Change Name
+                            {
+                                GameOver = true;
+                            }
+                            break;
+                        default:
+                            Console.Clear();
                             break;
                     } //Action Switch
-
-                    Explored = true;
-                    Console.Clear(); //Clears the screen
-                } //If in Void
-            } //If in Adventure
-
-            else if (gamemode == '2')
-            {
-
-                Console.WriteLine("[What do you want to do?]");
-                Console.WriteLine("[1: Battle]\n[2: Reselect Specialties]\n[0: Quit]");
-                Console.WriteLine("");
-                Console.WriteLine("[Press the number to continue]");
-                Console.Write("> ");
-                char action = Console.ReadKey().KeyChar;
-
-                switch (action)
-                {
-                    case '1':
-                        Console.Clear();
-                        InBattle = true;
-                        Battle(ref player1, ref player2);
-                        break;
-
-                    case '2': //Reselect Specialties
-                        Console.WriteLine("Player 1, do you want to re-select your specialty?");
-                        Console.WriteLine("");
-                        Console.WriteLine("[1: Yes]\n[2: No]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[Press the number to continue]");
-                        Console.Write("> ");
-                        action = Console.ReadKey().KeyChar;
-                        if (action == '1')
-                        {
-                            player1.DecideSpecialty();
-                        }
-
-                        Console.Clear(); //Clears the screen
-
-                        Console.WriteLine("Player 2, do you want to re-select your specialty?");
-                        Console.WriteLine("");
-                        Console.WriteLine("[1: Yes]\n[2: No]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[Press the number to continue]");
-                        Console.Write("> ");
-                        action = Console.ReadKey().KeyChar;
-                        if (action == '1')
-                        {
-                            player2.DecideSpecialty();
-                        }
-                        break;
-
-                    case '0': //Quit
-                        Console.Clear(); //Clears the screen
-                        Console.WriteLine("Are you sure you want to leave?");
-                        Console.WriteLine("");
-                        Console.WriteLine("[1: Yes]\n[2: No]");
-                        Console.WriteLine("");
-                        Console.WriteLine("[Press the number to continue]");
-                        Console.Write("> ");
-                        action = Console.ReadKey().KeyChar;
-                        if (action == '1') //Change Name
-                        {
-                            GameOver = true;
-                        }
-                        break;
-                    default:
-                        Console.Clear();
-                        break;
-                } //Action Switch
-            } //If PvP
-
+                    break; //If in PvP Mode
+            } //Gamemode switch
         } //Update
 
 
@@ -863,7 +865,7 @@ namespace HelloWorld
                 Console.WriteLine("");
                 Console.WriteLine("[Press the number to continue]");
                 Console.Write("> ");
-                char action = Console.ReadKey().KeyChar;
+                action = Console.ReadKey().KeyChar;
 
                 switch (action)
                 {
@@ -1231,7 +1233,7 @@ namespace HelloWorld
                 Console.WriteLine("");
                 Console.WriteLine("[Press the number to continue]");
                 Console.Write("> ");
-                char action = Console.ReadKey().KeyChar;
+                action = Console.ReadKey().KeyChar;
                 switch (action)
                 {
                     case '1': //If player Attacks
@@ -1252,6 +1254,7 @@ namespace HelloWorld
 
                         if (enemyAction <= 1 && battleEnemyHealth > 0) //If the enemy is attacking after player attack & not dead
                         {
+                            Console.Clear();
                             Console.WriteLine("[" + enemyName + " is retaliating!]");
                             Pause();
                             Console.Clear(); //Clears the screen
@@ -1529,7 +1532,11 @@ namespace HelloWorld
                 Console.WriteLine(health + " HP <<");
                 Console.WriteLine(defense + " Def");
                 Console.WriteLine("");
-                Pause();
+                
+                if (health > 0)
+                {
+                    Pause();
+                }
 
                 IsDead(player1);
             } //If enemy alive
@@ -1595,6 +1602,7 @@ namespace HelloWorld
                 Console.WriteLine(battleEnemyHealth + " HP ");
                 Console.WriteLine(battleEnemyDefense + " Def <<");
                 Pause();
+                Console.WriteLine("");
 
                 battleEnemyDefense -= player1.totalDamage; //Player's attack on enemy's defense
                 if (battleEnemyDefense <= 0) //If defense falls
@@ -1677,8 +1685,6 @@ namespace HelloWorld
             return health;
         } //Enemy Heal function
 
-
-
         void GetName(ref Player player)
         {
             char action;
@@ -1713,7 +1719,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
             Console.Write("> ");
-            char action = Console.ReadKey().KeyChar;
+            action = Console.ReadKey().KeyChar;
 
             switch (action)
             {
@@ -1751,7 +1757,7 @@ namespace HelloWorld
             } //Action Switch
         } //9 Menu function
 
-        void GenerateRoom()
+        public void GenerateRoom()
         {
             //Sets the door's existance and can escape bool to false by default
             DoorSouthExists = false;
@@ -1766,200 +1772,196 @@ namespace HelloWorld
             wallYLengths = r.Next(minWallLength, maxWallLength);
 
             //Calculates wall border locations based off the direction the player is facing
-            if (facingDirection == 's')
+
+            switch(facingDirection)
             {
-                if (wallXLengths == 1)
-                {
-                    wallXWBorders = labyLocationX;
-                    wallXEBorders = labyLocationX;
-                } //If x Wall lengths are 1
-
-                if (wallXLengths == 2)
-                {
-                    wallXWBorders = r.Next(labyLocationX, labyLocationX + 1);
-                    if (wallXWBorders == labyLocationX)
+                case 's': //If facing South
+                    switch (wallXLengths)
                     {
-                        wallXEBorders = labyLocationX + 1;
-                    }
-                    else
-                    {
-                        wallXEBorders = labyLocationX;
-                    }
-                } //If x Wall lengths are 2
+                        case 1: //If wall lengths are 1
+                            wallXWBorders = labyLocationX;
+                            wallXEBorders = labyLocationX;
+                            break;
 
-                if (wallXLengths == 3)
-                {
-                    wallXWBorders = labyLocationX - 1;
-                    wallXEBorders = labyLocationX + 1;
+                        case 2: //If wall lengths are 2
+                            wallXWBorders = r.Next(labyLocationX, labyLocationX + 1);
+                            if (wallXWBorders == labyLocationX)
+                            {
+                                wallXEBorders = labyLocationX + 1;
+                            }
+                            else
+                            {
+                                wallXEBorders = labyLocationX;
+                            }
+                            break;
 
-                } //If x Wall lengths are 3
+                        case 3: //If wall lengths are 3
+                            wallXWBorders = labyLocationX - 1;
+                            wallXEBorders = labyLocationX + 1;
+                            break;
 
-                if (wallXLengths == 4)
-                {
-                    wallXWBorders = r.Next(labyLocationX - 1, labyLocationX - 2);
-                    if (wallXWBorders == labyLocationX - 1)
-                    {
-                        wallXEBorders = labyLocationX + 2;
-                    }
-                    else
-                    {
-                        wallXEBorders = labyLocationX + 1;
-                    }
-                } //If x Wall lengths are 4
+                        case 4: //If wall lengths are 4
+                            wallXWBorders = r.Next(labyLocationX - 1, labyLocationX - 2);
+                            if (wallXWBorders == labyLocationX - 1)
+                            {
+                                wallXEBorders = labyLocationX + 2;
+                            }
+                            else
+                            {
+                                wallXEBorders = labyLocationX + 1;
+                            }
+                            break;
+                    } //Wall border setters
 
-                //Sets east & west Walls' Y
-                wallEastX = wallXEBorders;
-                wallWestX = wallXWBorders;
+                    //Sets east & west Walls' Y
+                    wallEastX = wallXEBorders;
+                    wallWestX = wallXWBorders;
 
-                //Calculates & assigns south and north wall borders
-                wallYSBorders = labyLocationY;
-                wallYNBorders = labyLocationY + wallYLengths;
-            } //If facing South
-
-            if (facingDirection == 'n')
-            {
-                if (wallXLengths == 1)
-                {
-                    wallXWBorders = labyLocationX;
-                    wallXEBorders = labyLocationX;
-                } //If north Wall length is 1
-
-                if (wallXLengths == 2)
-                {
-                    wallXWBorders = r.Next(labyLocationX, labyLocationX + 1);
-                    if (wallXWBorders == labyLocationX)
-                    {
-                        wallXEBorders = labyLocationX + 1;
-                    }
-                    else
-                    {
-                        wallXEBorders = labyLocationX;
-                    }
-                } //If north Wall length is 2
-
-                if (wallXLengths == 3)
-                {
-                    wallXWBorders = labyLocationX - 1;
-                    wallXEBorders = labyLocationX + 1;
-                } //If north Wall length is 3
-
-                if (wallXLengths == 4)
-                {
-                    wallXWBorders = r.Next(labyLocationX - 1, labyLocationX - 2);
-                    if (wallXWBorders == labyLocationX - 1)
-                    {
-                        wallXEBorders = labyLocationX + 2;
-                    }
-                    else
-                    {
-                        wallXEBorders = labyLocationX + 1;
-                    }
-                } //If north Wall length is 4
-
-                //Sets north & south Walls' Y
-                wallNorthY = labyLocationY;
-                wallSouthY = labyLocationY + wallYLengths;
-
-                //Calculates & assigns east and west wall borders
-                wallYSBorders = labyLocationY;
-                wallYNBorders = labyLocationY + wallYLengths;
-                wallEastX = wallXEBorders;
-                wallWestX = wallXWBorders;
-            } //If facing North
-
-            if (facingDirection == 'e')
-            {
-                if (wallYLengths == 1) //Tiny s/n
-                {
-                    wallYNBorders = labyLocationY;
+                    //Calculates & assigns south and north wall borders
                     wallYSBorders = labyLocationY;
-                } //If east Wall length is 1
+                    wallYNBorders = labyLocationY + wallYLengths;
+                    break;
 
-                else if (wallYLengths == 2) //small s/n
-                {
-                    wallYNBorders = r.Next(labyLocationY, labyLocationY + 1);
-                    if (wallYNBorders == labyLocationY)
+                case 'n': //If facing North
+                    switch (wallXLengths)
                     {
-                        wallYSBorders = labyLocationY + 1;
-                    }
-                    else
-                    {
-                        wallYSBorders = labyLocationY;
-                    }
-                } //If east Wall length is 2
+                        case 1:  //If wall lengths are 1
+                            wallXWBorders = labyLocationX;
+                            wallXEBorders = labyLocationX;
+                            break;
 
-                else if (wallYLengths == 3) //decent s/n
-                {
-                    wallYNBorders = labyLocationY - 1;
-                    wallYSBorders = labyLocationY + 1;
-                } //If east Wall length is 3
+                        case 2: //If wall lengths are 2
+                            wallXWBorders = r.Next(labyLocationX, labyLocationX + 1);
+                            if (wallXWBorders == labyLocationX)
+                            {
+                                wallXEBorders = labyLocationX + 1;
+                            }
+                            else
+                            {
+                                wallXEBorders = labyLocationX;
+                            }
+                            break;
 
-                else if (wallYLengths == 4) //large s/n
-                {
-                    wallYNBorders = r.Next(labyLocationY - 1, labyLocationY - 2);
-                    if (wallYNBorders == labyLocationY - 1)
-                    {
-                        wallYSBorders = labyLocationY + 2;
-                    }
-                    else
-                    {
-                        wallYSBorders = labyLocationY + 1;
-                    }
-                } //If east Wall length is 4
+                        case 3: //If wall lengths are 3
+                            wallXWBorders = labyLocationX - 1;
+                            wallXEBorders = labyLocationX + 1;
+                            break;
 
-                //Calculates & assigns south and north wall borders
-                wallXWBorders = labyLocationX;
-                wallXEBorders = labyLocationX + wallXLengths;
-                wallEastX = labyLocationX;
-                wallWestX = labyLocationX + wallYLengths;
-            } //If facing East
+                        case 4: //If wall lengths are 4
+                            wallXWBorders = r.Next(labyLocationX - 1, labyLocationX - 2);
+                            if (wallXWBorders == labyLocationX - 1)
+                            {
+                                wallXEBorders = labyLocationX + 2;
+                            }
+                            else
+                            {
+                                wallXEBorders = labyLocationX + 1;
+                            }
+                            break;
+                    } //Wall border setters
 
-            if (facingDirection == 'w')
-            {
-                if (wallYLengths == 1) //Tiny s/n
-                {
-                    wallYNBorders = labyLocationY;
+                    //Sets north & south Walls' Y
+                    wallNorthY = labyLocationY;
+                    wallSouthY = labyLocationY + wallYLengths;
+
+                    //Calculates & assigns east and west wall borders
                     wallYSBorders = labyLocationY;
-                } //If west Wall length is 1
+                    wallYNBorders = labyLocationY + wallYLengths;
+                    wallEastX = wallXEBorders;
+                    wallWestX = wallXWBorders;
+                    break;
 
-                else if (wallYLengths == 2) //small s/n
-                {
-                    wallYNBorders = r.Next(labyLocationY, labyLocationY + 1);
-                    if (wallYNBorders == labyLocationY)
+                case 'e': //If facing East
+                    switch (wallYLengths)
                     {
-                        wallYSBorders = labyLocationY + 1;
-                    }
-                    else
-                    {
-                        wallYSBorders = labyLocationY;
-                    }
-                } //If east Wall length is 2
+                        case 1: //If wall lengths are 1
+                            wallYNBorders = labyLocationY;
+                            wallYSBorders = labyLocationY;
+                            break;
 
-                else if (wallYLengths == 3) //decent s/n
-                {
-                    wallYNBorders = labyLocationY - 1;
-                    wallYSBorders = labyLocationY + 1;
-                } //If east Wall length is 3
+                        case 2: //If wall lengths are 2
+                            wallYNBorders = r.Next(labyLocationY, labyLocationY + 1);
+                            if (wallYNBorders == labyLocationY)
+                            {
+                                wallYSBorders = labyLocationY + 1;
+                            }
+                            else
+                            {
+                                wallYSBorders = labyLocationY;
+                            }
+                            break;
 
-                else if (wallYLengths == 4) //large s/n
-                {
-                    wallYNBorders = r.Next(labyLocationY - 1, labyLocationY - 2);
-                    if (wallYNBorders == labyLocationY - 1)
-                    {
-                        wallYSBorders = labyLocationY + 2;
-                    }
-                    else
-                    {
-                        wallYSBorders = labyLocationY + 1;
-                    }
-                } //If west Wall length is 4
+                        case 3: //If wall lengths are 3
+                            wallYNBorders = labyLocationY - 1;
+                            wallYSBorders = labyLocationY + 1;
+                            break;
 
-                //Calculates & assigns south and north wall borders
-                wallXWBorders = labyLocationX;
-                wallXEBorders = labyLocationX + wallXLengths;
-                wallEastX = labyLocationX;
-                wallWestX = labyLocationX + wallYLengths;
-            } //If facing West
+                        case 4: //If wall lengths are 4
+                            wallYNBorders = r.Next(labyLocationY - 1, labyLocationY - 2);
+                            if (wallYNBorders == labyLocationY - 1)
+                            {
+                                wallYSBorders = labyLocationY + 2;
+                            }
+                            else
+                            {
+                                wallYSBorders = labyLocationY + 1;
+                            }
+                            break;
+                    } //Wall border setters
+
+                    //Calculates & assigns south and north wall borders
+                    wallXWBorders = labyLocationX;
+                    wallXEBorders = labyLocationX + wallXLengths;
+                    wallEastX = labyLocationX;
+                    wallWestX = labyLocationX + wallYLengths;
+
+                    break;
+
+                case 'w': //If facing West
+                    switch (wallYLengths)
+                    {
+                        case 1: //If wall lengths are 1
+                            wallYNBorders = labyLocationY;
+                            wallYSBorders = labyLocationY;
+                            break;
+
+                        case 2: //If wall lengths are 2
+                            wallYNBorders = r.Next(labyLocationY, labyLocationY + 1);
+                            if (wallYNBorders == labyLocationY)
+                            {
+                                wallYSBorders = labyLocationY + 1;
+                            }
+                            else
+                            {
+                                wallYSBorders = labyLocationY;
+                            }
+                            break;
+
+                        case 3: //If wall lengths are 3
+                            wallYNBorders = labyLocationY - 1;
+                            wallYSBorders = labyLocationY + 1;
+                            break;
+
+                        case 4: //If wall lengths are 4
+                            wallYNBorders = r.Next(labyLocationY - 1, labyLocationY - 2);
+                            if (wallYNBorders == labyLocationY - 1)
+                            {
+                                wallYSBorders = labyLocationY + 2;
+                            }
+                            else
+                            {
+                                wallYSBorders = labyLocationY + 1;
+                            }
+                            break;
+                    } //Wall border setters
+
+                    //Calculates & assigns south and north wall borders
+                    wallXWBorders = labyLocationX;
+                    wallXEBorders = labyLocationX + wallXLengths;
+                    wallEastX = labyLocationX;
+                    wallWestX = labyLocationX + wallYLengths;
+                    break;
+            } //Facing Direction switch
 
             //Just Entered East Door Condition
             if (labyLocationX == escapeDoorEX && labyLocationY == escapeDoorEY)
@@ -1968,7 +1970,7 @@ namespace HelloWorld
             }
 
             //Just Entered West Door Condition
-            else if (labyLocationX == 5 && labyLocationY == 25)
+            else if (labyLocationX == escapeDoorWX && labyLocationY == escapeDoorWY)
             {
                 CanEscapeE = true;
             }
@@ -1980,7 +1982,7 @@ namespace HelloWorld
             }
 
             //If the West wall borders contain the East Escape Door
-            if (wallYSBorders <= escapeDoorEY && wallYNBorders >= escapeDoorEY)
+            else if (wallYSBorders <= escapeDoorEY && wallYNBorders >= escapeDoorEY)
             {
                 CanEscapeE = true;
             }
@@ -2031,161 +2033,170 @@ namespace HelloWorld
             }
 
             RoomSizeAssigner();
-
         } //Generate Room function
 
         void RoomSizeAssigner()
         {
-            if (wallXLengths == 1) //1x
+            switch(wallXLengths)
             {
-                if (wallYLengths == 1) //1x1
-                {
-                    roomShape = "1x1";
-                    roomType = "square";
-                }
-                else if (wallYLengths == 2) //1x2
-                {
-                    roomShape = "1x2";
-                    roomType = "rectangle";
-                }
-                else if (wallYLengths == 3) //1x3
-                {
-                    roomShape = "1x3";
-                    roomType = "hallway";
-                }
-                else if (wallYLengths == 4) //1x4
-                {
-                    roomShape = "1x4";
-                    roomType = "hallway";
-                }
-            } //1x
+                case 1: //1x
 
-            else if (wallXLengths == 2) //2x
-            {
-                if (wallYLengths == 1) //2x1
-                {
-                    roomShape = "1x2";
-                    roomType = "rectangle";
-                }
-                else if (wallYLengths == 2) //2x2
-                {
-                    roomShape = "2x2";
-                    roomType = "square";
-                }
-                else if (wallYLengths == 3) //2x3
-                {
-                    roomShape = "2x3";
-                    roomType = "rectangle";
-                }
-                else if (wallYLengths == 4) //2x4
-                {
-                    roomShape = "2x4";
-                    roomType = "hallway";
-                }
-            } //2x
+                    switch(wallYLengths)
+                    {
+                        case 1: //1y
+                            roomShape = "1x1";
+                            roomType = "square";
+                            break;
 
-            else if (wallXLengths == 3) //Decent East/West
-            {
-                if (wallYLengths == 1) //3x1
-                {
-                    roomShape = "1x3";
-                    roomType = "hallway";
-                }
-                else if (wallYLengths == 2) //3x2
-                {
-                    roomShape = "2x3";
-                    roomType = "rectangle";
-                }
-                else if (wallYLengths == 3) //3x3
-                {
-                    roomShape = "3x3";
-                    roomType = "square";
-                }
-                else if (wallYLengths == 4) //3x4
-                {
-                    roomShape = "3x4";
-                    roomType = "rectangle";
-                }
-            } //3x
+                        case 2://2y
+                            roomShape = "1x2";
+                            roomType = "rectangle";
+                            break;
 
-            else if (wallXLengths == 4) //4x
-            {
-                if (wallYLengths == 1) //4x1
-                {
-                    roomShape = "1x4";
-                    roomType = "hallway";
-                }
-                else if (wallYLengths == 2) //4x2
-                {
-                    roomShape = "2x4";
-                    roomType = "hallway";
-                }
-                else if (wallYLengths == 3) //4x3
-                {
-                    roomShape = "3x4";
-                    roomType = "rectangle";
-                }
-                else if (wallYLengths == 4) //4x4
-                {
-                    roomShape = "4x4";
-                    roomType = "square";
-                }
-            } //4x
+                        case 3://3y
+                            roomShape = "1x3";
+                            roomType = "hallway";
+                            break;
+
+                        case 4://4y
+                            roomShape = "1x4";
+                            roomType = "hallway";
+                            break;
+                    } //Y wall length
+                    break; //1x
+
+                case 2: //2x
+                    switch (wallYLengths)
+                    {
+                        case 1: //1y
+                            roomShape = "1x2";
+                            roomType = "rectangle";
+                            break;
+
+                        case 2://2y
+                            roomShape = "2x2";
+                            roomType = "square";
+                            break;
+
+                        case 3://3y
+                            roomShape = "2x3";
+                            roomType = "rectangle";
+                            break;
+
+                        case 4://4y
+                            roomShape = "2x4";
+                            roomType = "hallway";
+                            break;
+                    } //Y wall length
+                    break; //2x
+
+                case 3: //3x
+                    switch (wallYLengths)
+                    {
+                        case 1: //1y
+                            roomShape = "1x3";
+                            roomType = "hallway";
+                            break;
+
+                        case 2://2y
+                            roomShape = "2x3";
+                            roomType = "rectangle";
+                            break;
+
+                        case 3://3y
+                            roomShape = "3x3";
+                            roomType = "square";
+                            break;
+
+                        case 4://4y
+                            roomShape = "3x4";
+                            roomType = "rectangle";
+                            break;
+                    } //Y wall length
+                    break; //3x
+
+                case 4: //4x
+                    switch (wallYLengths)
+                    {
+                        case 1: //1y
+                            roomShape = "1x4";
+                            roomType = "hallway";
+                            break;
+
+                        case 2://2y
+                            roomShape = "2x4";
+                            roomType = "hallway";
+                            break;
+
+                        case 3://3y
+                            roomShape = "3x4";
+                            roomType = "rectangle";
+                            break;
+
+                        case 4://4y
+                            roomShape = "4x4";
+                            roomType = "square";
+                            break;
+                    } //Y wall length
+                    break; //4x
+            } //X wall length
 
         } //Labyrinth Text function
 
         void LabyrinthRoomText()
         {
-            if (roomShape == "1x1")
+            switch(roomShape)
             {
-                Console.WriteLine("[This is a very cramped room]");
-                Console.WriteLine("");
-            }
-            else if (roomShape == "1x2")
-            {
-                Console.WriteLine("[I'm in a small hallway]");
-                Console.WriteLine("");
-            }
-            else if (roomShape == "1x3")
-            {
-                Console.WriteLine("[I'm in a decent hallway]");
-                Console.WriteLine("");
-            }
-            else if (roomShape == "1x4")
-            {
-                Console.WriteLine("[I'm in a long hallway]");
-                Console.WriteLine("");
-            }
-            else if (roomShape == "2x2")
-            {
-                Console.WriteLine("[I'm in a small square room]");
-                Console.WriteLine("");
-            }
-            else if (roomShape == "2x3")
-            {
-                Console.WriteLine("[I'm in a small rectangular room]");
-                Console.WriteLine("");
-            }
-            else if (roomShape == "2x4")
-            {
-                Console.WriteLine("[I'm in a wide hallway]");
-                Console.WriteLine("");
-            }
-            else if (roomShape == "3x3")
-            {
-                Console.WriteLine("[I'm in a decently sized square room]");
-                Console.WriteLine("");
-            }
-            else if (roomShape == "3x4")
-            {
-                Console.WriteLine("[I'm in a large rectangular room]");
-                Console.WriteLine("");
-            }
-            else if (roomShape == "4x4")
-            {
-                Console.WriteLine("[I'm in a large square room]");
-                Console.WriteLine("");
-            }
+                case "1x1":
+                    Console.WriteLine("[This is a very cramped room]");
+                    Console.WriteLine("");
+                    break;
+
+                case "1x2":
+                    Console.WriteLine("[I'm in a small hallway]");
+                    Console.WriteLine("");
+                    break;
+
+                case "1x3":
+                    Console.WriteLine("[I'm in a decent hallway]");
+                    Console.WriteLine("");
+                    break;
+
+                case "1x4":
+                    Console.WriteLine("[I'm in a long hallway]");
+                    Console.WriteLine("");
+                    break;
+
+                case "2x2":
+                    Console.WriteLine("[I'm in a small square room]");
+                    Console.WriteLine("");
+                    break;
+
+                case "2x3":
+                    Console.WriteLine("[I'm in a small rectangular room]");
+                    Console.WriteLine("");
+                    break;
+
+                case "2x4":
+                    Console.WriteLine("[I'm in a wide hallway]");
+                    Console.WriteLine("");
+                    break;
+
+                case "3x3":
+                    Console.WriteLine("[I'm in a decently sized square room]");
+                    Console.WriteLine("");
+                    break;
+
+                case "3x4":
+                    Console.WriteLine("[I'm in a large rectangular room]");
+                    Console.WriteLine("");
+                    break;
+
+                case "4x4":
+                    Console.WriteLine("[I'm in a large square room]");
+                    Console.WriteLine("");
+                    break;
+            } //Room Shape switch
 
             if (DoorSouthExists)
             {
@@ -2376,69 +2387,70 @@ namespace HelloWorld
 
         void EnemySetup()
         {
-            if (enemyName == "Slime")
+
+            switch(enemyName)
             {
-                //Stats
-                battleEnemyHealth = r.Next(5, 20); //Randomizes the health of the slime so they don't all have the same stats
-                enemyHeal = 15;
-                enemyDamageMult = 0.5f;
-                battleEnemyDefense = r.Next(5, 15);
-                enemyRegen = 5;
+                case "Slime":
+                    //Stats
+                    battleEnemyHealth = r.Next(5, 20); //Randomizes the health of the slime so they don't all have the same stats
+                    enemyHeal = 15;
+                    enemyDamageMult = 0.5f;
+                    battleEnemyDefense = r.Next(5, 15);
+                    enemyRegen = 5;
 
-                //Messages
-                enemyAppearMessage = "[A slime becomes hostile!]";
-                enemyDeathMessage = "[The slime melts into the ground]";
-                enemyAttackMessage = "[The slime is attacking!]";
-                enemyDefendMessage = "[The slime forms a defensive layer!]";
-                enemyNoDefenseMessage = "[The defensive layer is too thin!]";
-                enemyDefenseDestroyedMessage = "[The defensive layer was knocked away!]";
-                enemyUselessDefenseMessage = "[The slime shows it's defensive layer...]";
-                enemyNothingMessage = "[The slime does nothing...]";
-                enemyHealMessage = "[The slime is growing!]";
-            } //If the enemy is Slime
+                    //Messages
+                    enemyAppearMessage = "[A slime becomes hostile!]";
+                    enemyDeathMessage = "[The slime melts into the ground]";
+                    enemyAttackMessage = "[The slime is attacking!]";
+                    enemyDefendMessage = "[The slime forms a defensive layer!]";
+                    enemyNoDefenseMessage = "[The defensive layer is too thin!]";
+                    enemyDefenseDestroyedMessage = "[The defensive layer was knocked away!]";
+                    enemyUselessDefenseMessage = "[The slime shows it's defensive layer...]";
+                    enemyNothingMessage = "[The slime does nothing...]";
+                    enemyHealMessage = "[The slime is growing!]";
+                    break;
 
-            if (enemyName == "Nothing")
-            {
-                //Stats
-                battleEnemyHealth = 150;
-                enemyHeal = 20;
-                enemyDamageMult = 3;
-                battleEnemyDefense = 40;
-                enemyRegen = 15;
+                case "Nothing":
+                    //Stats
+                    battleEnemyHealth = 150;
+                    enemyHeal = 20;
+                    enemyDamageMult = 3;
+                    battleEnemyDefense = 40;
+                    enemyRegen = 15;
 
-                //Messages
-                enemyAppearMessage = "[Nothing is approaching!]";
-                enemyDeathMessage = "[Nothing stopped existing]";
-                enemyAttackMessage = "[Nothing is attacking me]";
-                enemyDefendMessage = "[Nothing is defending itself]";
-                enemyNoDefenseMessage = "[Nothing has no defense]";
-                enemyDefenseDestroyedMessage = "[Nothing's defense was shattered]";
-                enemyUselessDefenseMessage = "[Nothing defends itself]";
-                enemyNothingMessage = "[Nothing happens]";
-                enemyHealMessage = "[Nothing is healing]";
-            } //If the enemy is Nothing
+                    //Messages
+                    enemyAppearMessage = "[Nothing is approaching!]";
+                    enemyDeathMessage = "[Nothing stopped existing]";
+                    enemyAttackMessage = "[Nothing is attacking me]";
+                    enemyDefendMessage = "[Nothing is defending itself]";
+                    enemyNoDefenseMessage = "[Nothing has no defense]";
+                    enemyDefenseDestroyedMessage = "[Nothing's defense was shattered]";
+                    enemyUselessDefenseMessage = "[Nothing defends itself]";
+                    enemyNothingMessage = "[Nothing happens]";
+                    enemyHealMessage = "[Nothing is healing]";
+                    break;
 
-            if (enemyName == "Slombie")
-            {
-                //Stats
-                battleEnemyHealth = r.Next(50, 100); //Randomized health
-                enemyHeal = 15;
-                enemyDamageMult = r.Next(8, 14); //Damage multiplier is somewhere between the lowest and highest player damage multx10
-                enemyDamageMult /= 10; //Then divided by 10
-                battleEnemyDefense = 10;
-                enemyRegen = 2;
+                case "Slombie":
+                    //Stats
+                    battleEnemyHealth = r.Next(50, 100); //Randomized health
+                    enemyHeal = 15;
+                    enemyDamageMult = r.Next(8, 14); //Damage multiplier is somewhere between the lowest and highest player damage multx10
+                    enemyDamageMult /= 10; //Then divided by 10
+                    battleEnemyDefense = 10;
+                    enemyRegen = 2;
 
-                //Messages
-                enemyAppearMessage = "[There's a posessed corpse in here!]";
-                enemyDeathMessage = "[The slime leaves the corpse and sinks to the floor]";
-                enemyAttackMessage = "[The slombie is attacking!]";
-                enemyDefendMessage = "[The slime forms a shield before the corpse!]";
-                enemyNoDefenseMessage = "[The shield is malformed!]";
-                enemyDefenseDestroyedMessage = "[The shield was torn away!]";
-                enemyUselessDefenseMessage = "[The slime forms a shield as a response...]";
-                enemyNothingMessage = "[The slombie does nothing...]";
-                enemyHealMessage = "[More slime is entering the body from the floor!]";
-            } //If enemy is Slombie
+                    //Messages
+                    enemyAppearMessage = "[There's a posessed corpse in here!]";
+                    enemyDeathMessage = "[The slime leaves the corpse and sinks to the floor]";
+                    enemyAttackMessage = "[The slombie is attacking!]";
+                    enemyDefendMessage = "[The slime forms a shield before the corpse!]";
+                    enemyNoDefenseMessage = "[The shield is malformed!]";
+                    enemyDefenseDestroyedMessage = "[The shield was torn away!]";
+                    enemyUselessDefenseMessage = "[The slime forms a shield as a response...]";
+                    enemyNothingMessage = "[The slombie does nothing...]";
+                    enemyHealMessage = "[More slime is entering the body from the floor!]";
+                    break;
+            } //Setup Switch
 
             //Calculates experience to be gained if player wins
             enemyExperience = (int)(battleEnemyHealth * enemyDamageMult) + enemyDamage + battleEnemyDefense;
@@ -2480,7 +2492,7 @@ namespace HelloWorld
                 Console.WriteLine("");
                 Console.WriteLine("[Press the number to continue]");
                 Console.Write("> ");
-                char action = Console.ReadKey().KeyChar;
+                action = Console.ReadKey().KeyChar;
 
                 switch (action)
                 {

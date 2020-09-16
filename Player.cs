@@ -149,47 +149,48 @@ namespace HelloWorld
                     Console.Write("> My specialty is ");
                     specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Magic
 
+                    switch (specialtyKey)
+                    {
+                        case '1': //Warder
+                            health = 90;
+                            healthRegen = 4;
+                            baseHeal = 6;
+                            damageMultiplier = 1;
+                            defense = 24;
+                            specialty = "Warder";
+                            break;
 
-                    if (specialtyKey == '1') //Warder
-                    {
-                        health = 90;
-                        healthRegen = 4;
-                        baseHeal = 6;
-                        damageMultiplier = 1;
-                        defense = 24;
-                        specialty = "Warder";
-                    }
-                    else if (specialtyKey == '2') //Atronach
-                    {
-                        health = 160;
-                        healthRegen = 2;
-                        baseHeal = 0;
-                        damageMultiplier = 0.8f;
-                        defense = 8;
-                        specialty = "Atronach";
-                    }
-                    else if (specialtyKey == '3') //Battle Mage
-                    {
-                        health = 70;
-                        healthRegen = 5;
-                        baseHeal = 8;
-                        damageMultiplier = 1.3f;
-                        defense = 11;
-                        specialty = "Battle Mage";
-                    }
-                    else if (specialtyKey == '4') //Priest
-                    {
-                        health = 70;
-                        healthRegen = 4;
-                        baseHeal = 15;
-                        damageMultiplier = 0.9f;
-                        defense = 9;
-                        specialty = "Priest";
-                    }
-                    else
-                    {
-                        styleName = "Fool";
-                    }
+                        case '2': //Atronach
+                            health = 160;
+                            healthRegen = 2;
+                            baseHeal = 0;
+                            damageMultiplier = 0.8f;
+                            defense = 8;
+                            specialty = "Atronach";
+                            break;
+
+                        case '3': //Battle Mage
+                            health = 70;
+                            healthRegen = 5;
+                            baseHeal = 8;
+                            damageMultiplier = 1.3f;
+                            defense = 11;
+                            specialty = "Battle Mage";
+                            break;
+
+                        case '4': //Priest
+                            health = 70;
+                            healthRegen = 4;
+                            baseHeal = 15;
+                            damageMultiplier = 0.9f;
+                            defense = 9;
+                            specialty = "Priest";
+                            break;
+
+                        default:
+                            styleName = "Fool";
+                            break;
+                    } //Specialty switch
                     break;
 
                 case '2':
@@ -239,45 +240,47 @@ namespace HelloWorld
                     Console.Write("> My specialty is ");
                     specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Knight
 
-                    if (specialtyKey == '1') //Tank
+                    switch(specialtyKey)
                     {
-                        health = 120;
-                        healthRegen = 4;
-                        baseHeal = 0;
-                        damageMultiplier = 0.8f;
-                        defense = 16;
-                        specialty = "Tank";
-                    }
-                    else if (specialtyKey == '2') //Berserker
-                    {
-                        health = 90;
-                        healthRegen = 3;
-                        baseHeal = 0;
-                        damageMultiplier = 1.2f;
-                        defense = 13;
-                        specialty = "Berserker";
-                    }
-                    else if (specialtyKey == '3') //Shielder
-                    {
-                        health = 100;
-                        healthRegen = 2;
-                        baseHeal = 5;
-                        damageMultiplier = 0.9f;
-                        defense = 30;
-                        specialty = "Shielder";
-                    }
-                    else if (specialtyKey == '4') //Knight
-                    {
-                        health = 110;
-                        healthRegen = 4;
-                        baseHeal = 0;
-                        damageMultiplier = 1.1f;
-                        defense = 15;
-                        specialty = "Knight";
-                    }
-                    else
-                    {
-                        styleName = "Fool";
+                        case '1': //Tank
+                            health = 120;
+                            healthRegen = 4;
+                            baseHeal = 0;
+                            damageMultiplier = 0.8f;
+                            defense = 16;
+                            specialty = "Tank";
+                            break;
+
+                        case '2': //Beserker
+                            health = 90;
+                            healthRegen = 3;
+                            baseHeal = 0;
+                            damageMultiplier = 1.2f;
+                            defense = 13;
+                            specialty = "Berserker";
+                            break;
+
+                        case '3': //Shielder
+                            health = 100;
+                            healthRegen = 2;
+                            baseHeal = 5;
+                            damageMultiplier = 0.9f;
+                            defense = 30;
+                            specialty = "Shielder";
+                            break;
+
+                        case '4': //Knight
+                            health = 110;
+                            healthRegen = 4;
+                            baseHeal = 0;
+                            damageMultiplier = 1.1f;
+                            defense = 15;
+                            specialty = "Knight";
+                            break;
+
+                        default:
+                            styleName = "Fool";
+                            break;
                     }
                     break;
 
@@ -328,47 +331,49 @@ namespace HelloWorld
                     Console.Write("> My specialty is ");
                     specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Trickster
 
-                    if (specialtyKey == '1') //Assassin
+                    switch (specialtyKey)
                     {
-                        health = 70;
-                        healthRegen = 4;
-                        baseHeal = 0;
-                        damageMultiplier = 1.35f;
-                        defense = 6;
-                        specialty = "Assassin";
-                    }
-                    else if (specialtyKey == '2') //Martial Artist
-                    {
-                        health = 80;
-                        healthRegen = 6;
-                        baseHeal = 5;
-                        damageMultiplier = 1.2f;
-                        defense = 10;
-                        specialty = "Martial Artist";
-                    }
-                    else if (specialtyKey == '3') //Ninja
-                    {
-                        health = 65;
-                        healthRegen = 4;
-                        baseHeal = 5;
-                        damageMultiplier = 1.4f;
-                        defense = 5;
-                        specialty = "Ninja";
+                        case '1':
+                            health = 70;
+                            healthRegen = 4;
+                            baseHeal = 0;
+                            damageMultiplier = 1.35f;
+                            defense = 6;
+                            specialty = "Assassin";
+                            break;
+
+                        case '2':
+                            health = 80;
+                            healthRegen = 6;
+                            baseHeal = 5;
+                            damageMultiplier = 1.2f;
+                            defense = 10;
+                            specialty = "Martial Artist";
+                            break;
+
+                        case '3':
+                            health = 65;
+                            healthRegen = 4;
+                            baseHeal = 5;
+                            damageMultiplier = 1.4f;
+                            defense = 5;
+                            specialty = "Ninja";
+                            break;
+
+                        case '4':
+                            health = 70;
+                            healthRegen = 4;
+                            baseHeal = 0;
+                            damageMultiplier = 1.3f;
+                            defense = 3;
+                            specialty = "Rogue";
+                            break;
+
+                        default:
+                            styleName = "Fool";
+                            break;
                     }
 
-                    else if (specialtyKey == '4') //Rogue
-                    {
-                        health = 70;
-                        healthRegen = 4;
-                        baseHeal = 0;
-                        damageMultiplier = 1.3f;
-                        defense = 3;
-                        specialty = "Rogue";
-                    }
-                    else
-                    {
-                        styleName = "Fool";
-                    }
                     break;
             } //Style Key Switch
             Console.Clear(); //Clears the screen
@@ -386,7 +391,7 @@ namespace HelloWorld
             //The base health with the addition of level plus half the defense makes the max player health
             MaxHealth = totalHealth;
 
-            //Sets the max in-battle health for the player so they don't regenerate to unholy levels
+            //Calculates total damage for the player
             totalDamage = (int)((level + baseDamage + damageAddition) * damageMultiplier);
 
             //Sets the total damage based on the player's level, base damage, and the damage mutliplier
