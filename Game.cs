@@ -890,7 +890,7 @@ namespace HelloWorld
             Console.WriteLine("[Actions are being decided]");
             Console.WriteLine("");
 
-            Console.WriteLine(player1.name + ": " + player1.specialty); //This and the next line show player 1's stats
+            Console.WriteLine(player1.name + ": " + player1.specialty); //This and the next few lines show player 1's stats
 
             Console.WriteLine(player1.totalHealth + " HP");
             Console.WriteLine(player1.heal + " Healing");
@@ -899,7 +899,7 @@ namespace HelloWorld
 
             Console.WriteLine("");
 
-            Console.WriteLine(player2.name + ": " + player2.specialty); //This and the next line show player 2's stats
+            Console.WriteLine(player2.name + ": " + player2.specialty); //This and the next few lines show player 2's stats
             Console.WriteLine(player2.totalHealth + " HP");
             Console.WriteLine(player2.heal + " Healing");
             Console.WriteLine(player2.totalDamage + " Atk");
@@ -916,7 +916,7 @@ namespace HelloWorld
 
                 PvpStatDisplay();
 
-                Console.WriteLine("Player 1");
+                Console.WriteLine(player1.name);
                 Console.WriteLine("[What do I do?]");
                 Console.WriteLine("[1: Attack, 2: Block, 3: Heal, 4: Nothing]");
                 Console.WriteLine("");
@@ -928,7 +928,7 @@ namespace HelloWorld
 
                 PvpStatDisplay();
 
-                Console.WriteLine("Player 2");
+                Console.WriteLine(player2.name);
                 Console.WriteLine("[What do I do?]");
                 Console.WriteLine("[1: Attack, 2: Block, 3: Heal, 4: Nothing]");
                 Console.WriteLine("");
@@ -1208,7 +1208,7 @@ namespace HelloWorld
                 Console.WriteLine("[Actions are being decided]");
                 Console.WriteLine("");
 
-                Console.WriteLine(player1.name); //This and the next line show player's name and health
+                Console.WriteLine(player1.name + ": " + player1.specialty); //This and the next few lines show the player's stats
                 Console.WriteLine(player1.totalHealth + " HP");
                 Console.WriteLine(player1.heal + " Healing");
                 Console.WriteLine(player1.totalDamage + " Atk");
