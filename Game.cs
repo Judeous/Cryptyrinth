@@ -174,12 +174,7 @@ namespace HelloWorld
                                 }
                                 Console.WriteLine("");
 
-                                Console.WriteLine("[What do I do?]");
-                                Console.WriteLine("[1: Re-enter the shack to change my style & specialty]\n[2: Follow the path down into the field]\n[3: Look around]\n[9: 9 Menu]");
-                                Console.WriteLine("");
-                                Console.WriteLine("[Press the number to continue]");
-                                Console.Write("> ");
-                                action = Console.ReadKey().KeyChar;
+                                GetAction(ref action, "[What do I do?]", "[1: Re-enter the shack to change my style & specialty]", "[2: Follow the path down into the field]", "[3: Look around]", "[9: 9 Menu]");
                                 switch (action)
                                 {
                                     case '1': //Redecide Style/Specialty
@@ -230,13 +225,7 @@ namespace HelloWorld
                                 }
                                 Console.WriteLine("");
 
-                                Console.WriteLine("[What do I do?]");
-                                Console.WriteLine("[1: Head to the hill with the shack atop it]\n[2: Head to the crypt]\n[3: Head towards the Castle]\n[4: Engage a slime]\n[5: Look around]\n[9: 9 Menu]");
-                                Console.WriteLine("");
-                                Console.WriteLine("[Press the number to continue]");
-                                Console.Write("> ");
-                                action = Console.ReadKey().KeyChar;
-
+                                GetAction(ref action, "[What do I do?]", "[1: Head to the hill with the shack atop it]", "[2: Head to the crypt]", "[3: Head towards the Castle]", "[4: Engage a slime]", "[5: Look around]", "[9: 9 Menu]");
                                 switch (action)
                                 {
                                     case '1': //Go to Shack
@@ -308,13 +297,7 @@ namespace HelloWorld
                                 }
                                 Console.WriteLine("");
 
-                                Console.WriteLine("[What do I do?]");
-                                Console.WriteLine("[1: Head back to the fork in the field]\n[2: Enter the Crypt]\n[3: Read the panel]\n[4: Look around]\n[9: 9 Menu]");
-                                Console.WriteLine("");
-                                Console.WriteLine("[Press the number to continue]");
-                                Console.Write("> ");
-                                action = Console.ReadKey().KeyChar;
-
+                                GetAction(ref action, "[What do I do?]", "[1: Head back to the fork in the field]", "[2: Enter the Crypt]", "[3: Read the panel]", "[4: Look around]", "[9: 9 Menu]");
                                 switch (action)
                                 {
                                     case '1': //Go to Field
@@ -381,13 +364,7 @@ namespace HelloWorld
                                 }
                                 Console.WriteLine("");
 
-                                Console.WriteLine("[What do I do?]");
-                                Console.WriteLine("[1: Head up the flight of stairs and exit the Crypt/Labyrinth]\n[2: Enter the door next to the entry stairway]\n[3: Enter the door opposite the stairway]\n[4: Check out the table]\n[5: Look around]\n[9: 9 Menu]");
-                                Console.WriteLine("");
-                                Console.WriteLine("[Press the number to continue]");
-                                Console.Write("> ");
-                                action = Console.ReadKey().KeyChar;
-
+                                GetAction(ref action, "[What do I do?]", "[1: Head up the flight of stairs and exit the Crypt/Labyrinth]", "[2: Enter the door next to the entry stairway]", "[3: Enter the door opposite the stairway]", "[4: Check out the table]", "[5: Look around]", "[9: 9 Menu]");
                                 switch (action)
                                 {
                                     case '1': //Exit the Labyrinth
@@ -656,14 +633,7 @@ namespace HelloWorld
                                     Console.WriteLine("[I'm in the entryway of the castle]");
                                 }
 
-                                Console.WriteLine("");
-                                Console.WriteLine("[What do I do?]");
-                                Console.WriteLine("[1: Exit the castle]\n\n[3: Look around]\n[9: 9 Menu]");
-                                Console.WriteLine("");
-                                Console.WriteLine("[Press the number to continue]");
-                                Console.Write("> ");
-                                action = Console.ReadKey().KeyChar;
-
+                                GetAction(ref action, "[What do I do?]", "[1: Exit the castle]", "           ", "[3: Look around]", "[9: 9 Menu]");
                                 switch (action)
                                 {
                                     case '1': //Exit the castle
@@ -722,14 +692,7 @@ namespace HelloWorld
                                     Console.WriteLine("[I'm in the     ]");
                                 }
 
-                                Console.WriteLine("");
-                                Console.WriteLine("[What do I do?]");
-                                Console.WriteLine("[1: Enter the doorless doorway]\n[2: Nothing]\n[3: Engage Nothing]\n[4: Engage Nothing in the throne]\n[5: Look around]\n[9: 9 Menu]");
-                                Console.WriteLine("");
-                                Console.WriteLine("[Press the number to continue]");
-                                Console.Write("> ");
-                                action = Console.ReadKey().KeyChar;
-
+                                GetAction(ref action, "[What do I do?]", "[1: Enter the doorless doorway]", "[2: Nothing]", "[3: Engage Nothing]", "[4: Engage Nothing in the throne]", "[5: Look around]", "[9: 9 Menu]");
                                 switch (action)
                                 {
                                     case '1': //Exit the Void
@@ -785,13 +748,8 @@ namespace HelloWorld
                     break; //Adventure Mode
 
                 case '2': //PvP
-                    Console.WriteLine("[What do you want to do?]");
-                    Console.WriteLine("[1: Battle]\n[2: Reselect Specialties]\n[0: Quit]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> ");
-                    action = Console.ReadKey().KeyChar;
 
+                    GetAction(ref action, "[What do you want to do?]", "[1: Battle]", "[2: Reselect Specialties]", "[0: Quit]");
                     switch (action)
                     {
                         case '1':
@@ -801,27 +759,14 @@ namespace HelloWorld
                             break;
 
                         case '2': //Reselect Specialties
-                            Console.WriteLine("Player 1, do you want to re-select your specialty?");
-                            Console.WriteLine("");
-                            Console.WriteLine("[1: Yes]\n[2: No]");
-                            Console.WriteLine("");
-                            Console.WriteLine("[Press the number to continue]");
-                            Console.Write("> ");
-                            action = Console.ReadKey().KeyChar;
+                            GetAction(ref action, "[Player 1, do you want to re-select your specialty?]", "[1: Yes]", "[2: No]");
                             if (action == '1')
                             {
                                 player1.DecideSpecialty();
                             }
 
                             Console.Clear(); //Clears the screen
-
-                            Console.WriteLine("Player 2, do you want to re-select your specialty?");
-                            Console.WriteLine("");
-                            Console.WriteLine("[1: Yes]\n[2: No]");
-                            Console.WriteLine("");
-                            Console.WriteLine("[Press the number to continue]");
-                            Console.Write("> ");
-                            action = Console.ReadKey().KeyChar;
+                            GetAction(ref action, "[Player 2, do you want to re-select your specialty?]", "[1: Yes]", "[2: No]");
                             if (action == '1')
                             {
                                 player2.DecideSpecialty();
@@ -830,13 +775,7 @@ namespace HelloWorld
 
                         case '0': //Quit
                             Console.Clear(); //Clears the screen
-                            Console.WriteLine("Are you sure you want to leave?");
-                            Console.WriteLine("");
-                            Console.WriteLine("[1: Yes]\n[2: No]");
-                            Console.WriteLine("");
-                            Console.WriteLine("[Press the number to continue]");
-                            Console.Write("> ");
-                            action = Console.ReadKey().KeyChar;
+                            GetAction(ref action, "[Are you sure your want to exit?]", "[1: Yes]", "[2: No]");
                             if (action == '1') //Change Name
                             {
                                 GameOver = true;
@@ -855,14 +794,7 @@ namespace HelloWorld
         {
             do
             {
-                Console.WriteLine("What gamemode would you like to play in?");
-                Console.WriteLine("");
-                Console.WriteLine("[1: Adventure]\n[2: PvP]");
-                Console.WriteLine("");
-                Console.WriteLine("[Press the number to continue]");
-                Console.Write("> ");
-                action = Console.ReadKey().KeyChar;
-
+                GetAction(ref action, "What gamemode would you like to play in?", "[1: Adventure]", "[2: PvP]");
                 switch (action)
                 {
                     case '1':
@@ -914,25 +846,17 @@ namespace HelloWorld
 
                 PvpStatDisplay();
 
+                char player1action = ' ';
+
                 Console.WriteLine(player1.name);
-                Console.WriteLine("[What do I do?]");
-                Console.WriteLine("[1: Attack, 2: Block, 3: Heal, 4: Nothing]");
-                Console.WriteLine("");
-                Console.WriteLine("[Press the number to continue]");
-                Console.Write("> ");
-                char player1action = Console.ReadKey().KeyChar;
+                GetAction(ref player1action, "[What do I do?]", "[1: Attack]", "[2: Block]", "[3: Heal]", "[4: Nothing]");
 
                 Console.Clear();
 
                 PvpStatDisplay();
-
+                char player2action = ' ';
                 Console.WriteLine(player2.name);
-                Console.WriteLine("[What do I do?]");
-                Console.WriteLine("[1: Attack, 2: Block, 3: Heal, 4: Nothing]");
-                Console.WriteLine("");
-                Console.WriteLine("[Press the number to continue]");
-                Console.Write("> ");
-                char player2action = Console.ReadKey().KeyChar;
+                GetAction(ref player2action, "[What do I do?]", "[1: Attack]", "[2: Block]", "[3: Heal]", "[4: Nothing]");
 
                 switch (player1action)
                 {
@@ -1224,12 +1148,7 @@ namespace HelloWorld
 
                 int enemyAction = r.Next(0, 4); //Decides the enemy's action
 
-                Console.WriteLine("[What do I do?]");
-                Console.WriteLine("[1: Attack, 2: Block, 3: Heal, 4: Nothing]");
-                Console.WriteLine("");
-                Console.WriteLine("[Press the number to continue]");
-                Console.Write("> ");
-                action = Console.ReadKey().KeyChar;
+                GetAction(ref action, "[What do I do?]", "[1: Attack]", "[2: Block]", "[3: Heal]", "[4: Nothing]");
                 switch (action)
                 {
                     case '1': //If player Attacks
@@ -1682,7 +1601,7 @@ namespace HelloWorld
 
         void GetName(ref Player player)
         {
-            char action;
+            char action = ' ';
             do
             {
                 Console.Clear(); //Clears the screen
@@ -1694,13 +1613,8 @@ namespace HelloWorld
 
                 Console.Clear(); //Clears the screen
 
-                Console.WriteLine(player.name + " is your name?");
-                Console.WriteLine("");
-                Console.WriteLine("[1: Yes]\n[2: No]");
-                Console.WriteLine("");
-                Console.WriteLine("[Press the number to continue]");
-                Console.Write("> ");
-                action = Console.ReadKey().KeyChar;
+                Console.Write(player.name);
+                GetAction(ref action, " is your name?", "[1: Yes]", "[2: No]");
             }
             while (action != '1');
         } //Get Name function
@@ -1708,14 +1622,7 @@ namespace HelloWorld
         void NineMenu()
         {
             Console.Clear(); //Clears the screen
-            Console.WriteLine("9 Menu");
-            Console.WriteLine("");
-            Console.WriteLine("[1: Change Name]\n[2: Check Stats]\n[3: Return to Game]\n[0: Quit]");
-            Console.WriteLine("");
-            Console.WriteLine("[Press the number to continue]");
-            Console.Write("> ");
-            action = Console.ReadKey().KeyChar;
-
+            GetAction(ref action, "9 Menu", "[1: Change Name]", "[2: Check Stats]", "[3: Return to Game]", "[0: Quit]");
             switch (action)
             {
                 case '1': //Change Name
@@ -1733,13 +1640,7 @@ namespace HelloWorld
 
                 case '0': //Quit
                     Console.Clear(); //Clears the screen
-                    Console.WriteLine("Are you sure you want to leave?");
-                    Console.WriteLine("");
-                    Console.WriteLine("[1: Yes]\n[2: No]");
-                    Console.WriteLine("");
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> ");
-                    action = Console.ReadKey().KeyChar;
+                    GetAction(ref action, "Are you sure you want to leave?", "[1: Yes]", "[2: No]");
                     if (action == '1') //Change Name
                     {
                         GameOver = true;
@@ -2372,10 +2273,6 @@ namespace HelloWorld
             {
                 Console.WriteLine("[5: Go Back]");
             } //If player didn't just enter the labyrinth
-            else
-            {
-                Console.WriteLine("[5: Go back to Entryway]");
-            } //If player did just enter the labyrinth
 
             Console.WriteLine("[9: Nine Menu]");
         } //Labyrinth Action function
@@ -2479,16 +2376,7 @@ namespace HelloWorld
             do
             {
                 Console.WriteLine("You've gained a level!");
-                Console.WriteLine("What would you like to level up?");
-                Console.WriteLine("");
-                Console.WriteLine("[+5 to any of your stats]");
-                Console.WriteLine("");
-                Console.WriteLine("[1: Health]\n[2: Regen]\n[3: Heal]\n[4: Defense]\n[5: Damage]\n[6: Split Evenly]");
-                Console.WriteLine("");
-                Console.WriteLine("[Press the number to continue]");
-                Console.Write("> ");
-                action = Console.ReadKey().KeyChar;
-
+                GetAction(ref action, "What would you like to level up?", "[1: Health]", "[2: Regen]", "[3: Heal]", "[4: Defense]", "[5: Damage]", "[6: Split Evenly]");
                 switch (action)
                 {
                     case '1': //Health
@@ -2536,9 +2424,11 @@ namespace HelloWorld
             while (player1.currentExperience >= player1.experienceRequirement);
         } //Level Up function
 
-        char GetAction(char choice, string query, string option1, string option2)
+        public char GetAction(ref char choice, string query, string option1, string option2)
         {
             Console.WriteLine(query);
+
+            Console.WriteLine("");
 
             Console.WriteLine(option1);
 
@@ -2551,9 +2441,11 @@ namespace HelloWorld
             return choice;
         } //Get Action 2 options
 
-        char GetAction(char choice, string query, string option1, string option2, string option3)
+        public char GetAction(ref char choice, string query, string option1, string option2, string option3)
         {
             Console.WriteLine(query);
+
+            Console.WriteLine("");
 
             Console.WriteLine(option1);
 
@@ -2568,9 +2460,11 @@ namespace HelloWorld
             return choice;
         } //Get Action 3 options
 
-        char GetAction(char choice, string query, string option1, string option2, string option3, string option4)
+        public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4)
         {
             Console.WriteLine(query);
+
+            Console.WriteLine("");
 
             Console.WriteLine(option1);
 
@@ -2587,9 +2481,11 @@ namespace HelloWorld
             return choice;
         } //Get Action 4 options
 
-        char GetAction(char choice, string query, string option1, string option2, string option3, string option4, string option5)
+        public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4, string option5)
         {
             Console.WriteLine(query);
+
+            Console.WriteLine("");
 
             Console.WriteLine(option1);
 
@@ -2609,9 +2505,11 @@ namespace HelloWorld
             return choice;
         } //Get Action 5 options
 
-        char GetAction(char choice, string query, string option1, string option2, string option3, string option4, string option5, string option6)
+        public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4, string option5, string option6)
         {
             Console.WriteLine(query);
+
+            Console.WriteLine("");
 
             Console.WriteLine(option1);
 
@@ -2632,9 +2530,11 @@ namespace HelloWorld
             return choice;
         } //Get Action 6 options
 
-        char GetAction(char choice, string query, string option1, string option2, string option3, string option4, string option5, string option6, string option7)
+        public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4, string option5, string option6, string option7)
         {
             Console.WriteLine(query);
+
+            Console.WriteLine("");
 
             Console.WriteLine(option1);
 
@@ -2657,9 +2557,11 @@ namespace HelloWorld
             return choice;
         } //Get Action 7 options
 
-        char GetAction(char choice, string query, string option1, string option2, string option3, string option4, string option5, string option6, string option7, string option8)
+        public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4, string option5, string option6, string option7, string option8)
         {
             Console.WriteLine(query);
+
+            Console.WriteLine("");
 
             Console.WriteLine(option1);
 
