@@ -1290,7 +1290,6 @@ namespace HelloWorld
                             battleEnemyHealth = Heal(enemyName, battleEnemyHealth, battleEnemyDefense, enemyHeal);
                         } //If enemy Heals
 
-
                         else if (enemyAction == 4)
                         {
                             Console.WriteLine(enemyNothingMessage);

@@ -83,8 +83,6 @@ namespace HelloWorld
             return defender.totalHealth;
         } //Player Direct Attack Function
 
-
-
         public void DecideSpecialty()
         {
             Console.Clear(); //Clears the screen
