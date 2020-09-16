@@ -279,7 +279,7 @@ namespace HelloWorld
                         default:
                             styleName = "Fool";
                             break;
-                    }
+                    } //Specialty key switch
                     break;
 
                 case '3':
@@ -370,7 +370,7 @@ namespace HelloWorld
                         default:
                             styleName = "Fool";
                             break;
-                    }
+                    } //Specialty key switch
 
                     break;
             } //Style Key Switch
