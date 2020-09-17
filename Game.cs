@@ -2416,6 +2416,307 @@ namespace HelloWorld
             while (player1.currentExperience >= player1.experienceRequirement);
         } //Level Up function
 
+        public void DecideSpecialty(ref Player player)
+        {
+            string name = GetName();
+            string styleName = "Fool";
+
+            int health = 100;
+            int healthRegen = 4;
+            int baseHeal = 10;
+            float damageMultiplier = 1;
+            int defense = 10;
+            string specialty = "Fool";
+
+            Console.Clear(); //Clears the screen
+            Console.WriteLine("Welcome, " + name);
+            char specialtyKey = ' ';
+            char styleKey = ' ';
+
+            Console.WriteLine("");
+            Console.Clear(); //Clears the screen
+
+            GetAction(ref specialtyKey, ", what is your style of battle?", "[1: Magic]", "[2: Warrior]", "[3: Trickery]");
+
+            switch (styleKey)
+            {
+                case '1': //Magic
+                    styleName = "Magic"; //Sets the Style name
+
+                    Console.WriteLine("What is your specialty?");
+                    Console.WriteLine("[1: Warder]\n[2: Atronach]\n[3: Battle Mage]\n[4: Priest]");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Warder [1]");
+                    Console.WriteLine("Base Health = 90");
+                    Console.WriteLine("Base Regen = 4");
+                    Console.WriteLine("Base Heal = 6");
+                    Console.WriteLine("Damage Mult = 1");
+                    Console.WriteLine("Base Defense = 22");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Atronach [2]");
+                    Console.WriteLine("Base Health = 160");
+                    Console.WriteLine("Base Regen = 2");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 0.8");
+                    Console.WriteLine("Base Defense = 8");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Battle Mage [3]");
+                    Console.WriteLine("Base Health = 70");
+                    Console.WriteLine("Base Regen = 5");
+                    Console.WriteLine("Base Heal = 8");
+                    Console.WriteLine("Damage Mult = 1.3");
+                    Console.WriteLine("Base Defense = 11");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Priest [4]");
+                    Console.WriteLine("Base Health = 75");
+                    Console.WriteLine("Base Regen = 4");
+                    Console.WriteLine("Base Heal = 15");
+                    Console.WriteLine("Damage Mult = 0.8");
+                    Console.WriteLine("Base Defense = 9");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("[Press the number to continue]");
+                    Console.Write("> My specialty is "); 
+                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Magic
+
+                    switch (specialtyKey)
+                    {
+                        case '1': //Warder
+                            health = 90;
+                            healthRegen = 4;
+                            baseHeal = 6;
+                            damageMultiplier = 1;
+                            defense = 24;
+                            specialty = "Warder";
+                            break;
+
+                        case '2': //Atronach
+                            health = 160;
+                            healthRegen = 2;
+                            baseHeal = 0;
+                            damageMultiplier = 0.8f;
+                            defense = 8;
+                            specialty = "Atronach";
+                            break;
+
+                        case '3': //Battle Mage
+                            health = 70;
+                            healthRegen = 5;
+                            baseHeal = 8;
+                            damageMultiplier = 1.3f;
+                            defense = 11;
+                            specialty = "Battle Mage";
+                            break;
+
+                        case '4': //Priest
+                            health = 70;
+                            healthRegen = 4;
+                            baseHeal = 15;
+                            damageMultiplier = 0.9f;
+                            defense = 9;
+                            specialty = "Priest";
+                            break;
+
+                        default:
+                            styleName = "Fool";
+                            break;
+                    } //Specialty switch
+                    break;
+
+                case '2':
+                    styleName = "Warrior"; //Sets the Style name
+
+                    Console.WriteLine("What is your specialty?");
+                    Console.WriteLine("[1: Tank]\n[2: Berserker]\n[3: Shielder]\n[4: Knight]");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Tank [1]");
+                    Console.WriteLine("Base Health = 120");
+                    Console.WriteLine("Base Regen = 4");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 0.8");
+                    Console.WriteLine("Base Defense = 16");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Berserker [2]");
+                    Console.WriteLine("Base Health = 90");
+                    Console.WriteLine("Base Regen = 3");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1.2");
+                    Console.WriteLine("Base Defense = 13");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Shielder [3]");
+                    Console.WriteLine("Base Health = 100");
+                    Console.WriteLine("Base Regen = 2");
+                    Console.WriteLine("Base Heal = 5");
+                    Console.WriteLine("Damage Mult = 0.9");
+                    Console.WriteLine("Base Defense = 30");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Knight [4]");
+                    Console.WriteLine("Base Health = 110");
+                    Console.WriteLine("Base Regen = 4");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1.1");
+                    Console.WriteLine("Base Defense = 15");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("[Press the number to continue]");
+                    Console.Write("> My specialty is "); 
+                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Knight
+
+                    switch (specialtyKey)
+                    {
+                        case '1': //Tank
+                            health = 120;
+                            healthRegen = 4;
+                            baseHeal = 0;
+                            damageMultiplier = 0.8f;
+                            defense = 16;
+                            specialty = "Tank";
+                            break;
+
+                        case '2': //Beserker
+                            health = 90;
+                            healthRegen = 3;
+                            baseHeal = 0;
+                            damageMultiplier = 1.2f;
+                            defense = 13;
+                            specialty = "Berserker";
+                            break;
+
+                        case '3': //Shielder
+                            health = 100;
+                            healthRegen = 2;
+                            baseHeal = 5;
+                            damageMultiplier = 0.9f;
+                            defense = 30;
+                            specialty = "Shielder";
+                            break;
+
+                        case '4': //Knight
+                            health = 110;
+                            healthRegen = 4;
+                            baseHeal = 0;
+                            damageMultiplier = 1.1f;
+                            defense = 15;
+                            specialty = "Knight";
+                            break;
+
+                        default:
+                            styleName = "Fool";
+                            break;
+                    } //Specialty key switch
+                    break;
+
+                case '3':
+                    styleName = "Trickster"; //Sets the Style name
+
+                    Console.WriteLine("What is your specialty?");
+                    Console.WriteLine("[1: Assassin]\n[2: Martial Artist]\n[3: Ninja\n[4: Rogue]");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Assassin [1]");
+                    Console.WriteLine("Base Health = 70");
+                    Console.WriteLine("Base Regen = 4");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1.35");
+                    Console.WriteLine("Base Defense = 6");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Martial Artist [2]");
+                    Console.WriteLine("Base Health = 80");
+                    Console.WriteLine("Base Regen = 6");
+                    Console.WriteLine("Base Heal = 5");
+                    Console.WriteLine("Damage Mult = 1.2");
+                    Console.WriteLine("Base Defense = 10");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Ninja [3]");
+                    Console.WriteLine("Base Health = 65");
+                    Console.WriteLine("Base Regen = 4");
+                    Console.WriteLine("Base Heal = 5");
+                    Console.WriteLine("Damage Mult = 1.4");
+                    Console.WriteLine("Base Defense = 5");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("Rogue [4]");
+                    Console.WriteLine("Base Health = 70");
+                    Console.WriteLine("Base Regen = 4");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1.3");
+                    Console.WriteLine("Base Defense = 3");
+                    Console.WriteLine("");
+                    Console.WriteLine("");
+
+                    Console.WriteLine("[Press the number to continue]");
+                    Console.Write("> My specialty is "); 
+                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Trickster
+
+                    switch (specialtyKey)
+                    {
+                        case '1':
+                            health = 70;
+                            healthRegen = 4;
+                            baseHeal = 0;
+                            damageMultiplier = 1.35f;
+                            defense = 6;
+                            specialty = "Assassin";
+                            break;
+
+                        case '2':
+                            health = 80;
+                            healthRegen = 6;
+                            baseHeal = 5;
+                            damageMultiplier = 1.2f;
+                            defense = 10;
+                            specialty = "Martial Artist";
+                            break;
+
+                        case '3':
+                            health = 65;
+                            healthRegen = 4;
+                            baseHeal = 5;
+                            damageMultiplier = 1.4f;
+                            defense = 5;
+                            specialty = "Ninja";
+                            break;
+
+                        case '4':
+                            health = 70;
+                            healthRegen = 4;
+                            baseHeal = 0;
+                            damageMultiplier = 1.3f;
+                            defense = 3;
+                            specialty = "Rogue";
+                            break;
+
+                        default:
+                            styleName = "Fool";
+                            break;
+                    } //Specialty key switch
+                    break;
+            } //Style Key Switch
+            Console.Clear(); //Clears the screen
+            player = new Player(name, health, healthRegen, baseHeal, damageMultiplier, defense, styleName, specialty);
+        } //Decide Specialty function
+
         public char GetAction(ref char choice, string query, string option1, string option2)
         {
             Console.WriteLine(query);
@@ -2577,309 +2878,5 @@ namespace HelloWorld
             choice = Console.ReadKey().KeyChar;
             return choice;
         } //Get Action 7 options
-
-        public void DecideSpecialty(ref Player player)
-        {
-            string name = GetName();
-            string styleName = "Fool";
-
-            int health = 100;
-            int healthRegen = 4;
-            int baseHeal = 10;
-            float damageMultiplier = 1;
-            int defense = 10;
-            string specialty = "Fool";
-
-            Console.Clear(); //Clears the screen
-            Console.WriteLine("Welcome, " + name + ", what is your style of battle?");
-            Console.WriteLine("");
-            Console.WriteLine("[1: Magic]\n[2: Warrior]\n[3: Trickery]");
-            Console.WriteLine("");
-            Console.WriteLine("[Press the number to continue]");
-            Console.Write("> My style is ");
-            char styleKey = Console.ReadKey().KeyChar;
-            char specialtyKey;
-
-            Console.WriteLine("");
-            Console.Clear(); //Clears the screen
-
-            switch (styleKey)
-            {
-                case '1': //Magic
-                    styleName = "Magic"; //Sets the Style name
-
-                    Console.WriteLine("What is your specialty?");
-                    Console.WriteLine("[1: Warder]\n[2: Atronach]\n[3: Battle Mage]\n[4: Priest]");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Warder [1]");
-                    Console.WriteLine("Base Health = 90");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 6");
-                    Console.WriteLine("Damage Mult = 1");
-                    Console.WriteLine("Base Defense = 22");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Atronach [2]");
-                    Console.WriteLine("Base Health = 160");
-                    Console.WriteLine("Base Regen = 2");
-                    Console.WriteLine("Base Heal = 0");
-                    Console.WriteLine("Damage Mult = 0.8");
-                    Console.WriteLine("Base Defense = 8");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Battle Mage [3]");
-                    Console.WriteLine("Base Health = 70");
-                    Console.WriteLine("Base Regen = 5");
-                    Console.WriteLine("Base Heal = 8");
-                    Console.WriteLine("Damage Mult = 1.3");
-                    Console.WriteLine("Base Defense = 11");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Priest [4]");
-                    Console.WriteLine("Base Health = 75");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 15");
-                    Console.WriteLine("Damage Mult = 0.8");
-                    Console.WriteLine("Base Defense = 9");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> My specialty is ");
-                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Magic
-
-                    switch (specialtyKey)
-                    {
-                        case '1': //Warder
-                            health = 90;
-                            healthRegen = 4;
-                            baseHeal = 6;
-                            damageMultiplier = 1;
-                            defense = 24;
-                            specialty = "Warder";
-                            break;
-
-                        case '2': //Atronach
-                            health = 160;
-                            healthRegen = 2;
-                            baseHeal = 0;
-                            damageMultiplier = 0.8f;
-                            defense = 8;
-                            specialty = "Atronach";
-                            break;
-
-                        case '3': //Battle Mage
-                            health = 70;
-                            healthRegen = 5;
-                            baseHeal = 8;
-                            damageMultiplier = 1.3f;
-                            defense = 11;
-                            specialty = "Battle Mage";
-                            break;
-
-                        case '4': //Priest
-                            health = 70;
-                            healthRegen = 4;
-                            baseHeal = 15;
-                            damageMultiplier = 0.9f;
-                            defense = 9;
-                            specialty = "Priest";
-                            break;
-
-                        default:
-                            styleName = "Fool";
-                            break;
-                    } //Specialty switch
-                    break;
-
-                case '2':
-                    styleName = "Warrior"; //Sets the Style name
-
-                    Console.WriteLine("What is your specialty?");
-                    Console.WriteLine("[1: Tank]\n[2: Berserker]\n[3: Shielder]\n[4: Knight]");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Tank [1]");
-                    Console.WriteLine("Base Health = 120");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 0");
-                    Console.WriteLine("Damage Mult = 0.8");
-                    Console.WriteLine("Base Defense = 16");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Berserker [2]");
-                    Console.WriteLine("Base Health = 90");
-                    Console.WriteLine("Base Regen = 3");
-                    Console.WriteLine("Base Heal = 0");
-                    Console.WriteLine("Damage Mult = 1.2");
-                    Console.WriteLine("Base Defense = 13");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Shielder [3]");
-                    Console.WriteLine("Base Health = 100");
-                    Console.WriteLine("Base Regen = 2");
-                    Console.WriteLine("Base Heal = 5");
-                    Console.WriteLine("Damage Mult = 0.9");
-                    Console.WriteLine("Base Defense = 30");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Knight [4]");
-                    Console.WriteLine("Base Health = 110");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 0");
-                    Console.WriteLine("Damage Mult = 1.1");
-                    Console.WriteLine("Base Defense = 15");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> My specialty is ");
-                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Knight
-
-                    switch (specialtyKey)
-                    {
-                        case '1': //Tank
-                            health = 120;
-                            healthRegen = 4;
-                            baseHeal = 0;
-                            damageMultiplier = 0.8f;
-                            defense = 16;
-                            specialty = "Tank";
-                            break;
-
-                        case '2': //Beserker
-                            health = 90;
-                            healthRegen = 3;
-                            baseHeal = 0;
-                            damageMultiplier = 1.2f;
-                            defense = 13;
-                            specialty = "Berserker";
-                            break;
-
-                        case '3': //Shielder
-                            health = 100;
-                            healthRegen = 2;
-                            baseHeal = 5;
-                            damageMultiplier = 0.9f;
-                            defense = 30;
-                            specialty = "Shielder";
-                            break;
-
-                        case '4': //Knight
-                            health = 110;
-                            healthRegen = 4;
-                            baseHeal = 0;
-                            damageMultiplier = 1.1f;
-                            defense = 15;
-                            specialty = "Knight";
-                            break;
-
-                        default:
-                            styleName = "Fool";
-                            break;
-                    } //Specialty key switch
-                    break;
-
-                case '3':
-                    styleName = "Trickster"; //Sets the Style name
-
-                    Console.WriteLine("What is your specialty?");
-                    Console.WriteLine("[1: Assassin]\n[2: Martial Artist]\n[3: Ninja\n[4: Rogue]");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Assassin [1]");
-                    Console.WriteLine("Base Health = 70");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 0");
-                    Console.WriteLine("Damage Mult = 1.35");
-                    Console.WriteLine("Base Defense = 6");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Martial Artist [2]");
-                    Console.WriteLine("Base Health = 80");
-                    Console.WriteLine("Base Regen = 6");
-                    Console.WriteLine("Base Heal = 5");
-                    Console.WriteLine("Damage Mult = 1.2");
-                    Console.WriteLine("Base Defense = 10");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Ninja [3]");
-                    Console.WriteLine("Base Health = 65");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 5");
-                    Console.WriteLine("Damage Mult = 1.4");
-                    Console.WriteLine("Base Defense = 5");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("Rogue [4]");
-                    Console.WriteLine("Base Health = 70");
-                    Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 0");
-                    Console.WriteLine("Damage Mult = 1.3");
-                    Console.WriteLine("Base Defense = 3");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-
-                    Console.WriteLine("[Press the number to continue]");
-                    Console.Write("> My specialty is ");
-                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Trickster
-
-                    switch (specialtyKey)
-                    {
-                        case '1':
-                            health = 70;
-                            healthRegen = 4;
-                            baseHeal = 0;
-                            damageMultiplier = 1.35f;
-                            defense = 6;
-                            specialty = "Assassin";
-                            break;
-
-                        case '2':
-                            health = 80;
-                            healthRegen = 6;
-                            baseHeal = 5;
-                            damageMultiplier = 1.2f;
-                            defense = 10;
-                            specialty = "Martial Artist";
-                            break;
-
-                        case '3':
-                            health = 65;
-                            healthRegen = 4;
-                            baseHeal = 5;
-                            damageMultiplier = 1.4f;
-                            defense = 5;
-                            specialty = "Ninja";
-                            break;
-
-                        case '4':
-                            health = 70;
-                            healthRegen = 4;
-                            baseHeal = 0;
-                            damageMultiplier = 1.3f;
-                            defense = 3;
-                            specialty = "Rogue";
-                            break;
-
-                        default:
-                            styleName = "Fool";
-                            break;
-                    } //Specialty key switch
-                    break;
-            } //Style Key Switch
-            Console.Clear(); //Clears the screen
-            player = new Player(name, health, healthRegen, baseHeal, damageMultiplier, defense, styleName, specialty);
-        } //Decide Specialty function
     } //Game
 }//HelloWorld
