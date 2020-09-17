@@ -177,20 +177,22 @@ namespace HelloWorld
                         switch (area)
                         {
                             case "Shack":
-                                if (ShackExplored == false) //If the player has seen these messages
-                                {
-                                    Console.WriteLine("[I find myself upon a small hill outside of the shack whense I chose my class]");
-                                    Console.WriteLine("[(Still not sure how that person changed my physical makeup)]");
-                                    Console.WriteLine("[There's a path trailing from the shack into a dark grey field before me]");
-                                    Console.WriteLine("[The field has blobs of slime scattered throughout it, murking around]");
-                                }
 
-                                else if (ShackExplored == true) //If the player's been to the Shack
+                                switch(ShackExplored)
                                 {
-                                    Console.WriteLine("[I'm back on the hill outside the shack]");
-                                    Console.WriteLine("[(Still not sure how that person changed my physical makeup)]");
-                                    Console.WriteLine("[The path stretches into the distance through the slime field before me]");
-                                }
+                                    case true:
+                                        Console.WriteLine("[I'm back on the hill outside the shack]");
+                                        Console.WriteLine("[(Still not sure how that person changed my physical makeup)]");
+                                        Console.WriteLine("[The path stretches into the distance through the slime field before me]");
+                                        break;
+
+                                    case false:
+                                        Console.WriteLine("[I find myself upon a small hill outside of the shack whense I chose my class]");
+                                        Console.WriteLine("[(Still not sure how that person changed my physical makeup)]");
+                                        Console.WriteLine("[There's a path trailing from the shack into a dark grey field before me]");
+                                        Console.WriteLine("[The field has blobs of slime scattered throughout it, murking around]");
+                                        break;
+                                } //Shack Explored switch
                                 Console.WriteLine("");
 
                                 GetAction(ref action, "[What do I do?]", "[1: Re-enter the shack to change my style & specialty]", "[2: Follow the path down into the field]", "[3: Look around]", "[9: 9 Menu]");
@@ -303,16 +305,18 @@ namespace HelloWorld
                                 break;
 
                             case "LabyrinthEntrance":
-                                if (LabyrinthEntranceExplored == false)
+                                switch (LabyrinthEntranceExplored)
                                 {
-                                    Console.WriteLine("[I'm now in front of the small and very sturdy looking crypt]");
-                                    Console.WriteLine("[There's a decently large stone door, and a panel to the left of it]");
-                                    Console.WriteLine("[It has some text on it, good thing I can read]");
-                                }
-                                if (LabyrinthEntranceExplored == true)
-                                {
-                                    Console.WriteLine("[I'm at the entrance of the crypt]");
-                                }
+                                    case true:
+                                        Console.WriteLine("[I'm at the entrance of the crypt]");
+                                        break;
+
+                                    case false:
+                                        Console.WriteLine("[I'm now in front of the small and very sturdy looking crypt]");
+                                        Console.WriteLine("[There's a decently large stone door, and a panel to the left of it]");
+                                        Console.WriteLine("[It has some text on it, good thing I can read]");
+                                        break;
+                                } //Labyrinth Entrance Explored switch
                                 Console.WriteLine("");
 
                                 GetAction(ref action, "[What do I do?]", "[1: Head back to the fork in the field]", "[2: Enter the Crypt]", "[3: Read the panel]", "[4: Look around]", "[9: 9 Menu]");
@@ -362,24 +366,26 @@ namespace HelloWorld
                                 break;
 
                             case "LabyrinthEntryway":
-                                if (LabyrinthEntrywayExplored == false)
+                                switch (LabyrinthEntrywayExplored)
                                 {
-                                    Console.WriteLine("[I've overpowered the big door and have entered the crypt, and descended a suprisingly medium sized flight of stairs]");
-                                    Console.WriteLine("[(Not sure that was the best idea)]");
-                                    Console.WriteLine("");
-                                    Console.WriteLine("[This is definitely a labyrinth, seeing it from the inside]");
-                                    Console.WriteLine("[There's a familiar dark grey tint to the semi-fancily stone tiled floor]");
-                                    Console.WriteLine("[I think I can hear uneven footsteps against the understandably slimy tiles somewhere deeper within]");
-                                    Console.WriteLine("");
-                                    Console.WriteLine("[There's a doorway to the left, then there's a dead end just beyond a door to the right]");
-                                }
-                                if (LabyrinthEntrywayExplored == true)
-                                {
-                                    Console.WriteLine("[I'm in the entryway of the Labyrinth]");
-                                    Console.WriteLine("");
-                                    Console.WriteLine("[There's a doorway next to the entry stairway]");
-                                    Console.WriteLine("[On the opposite side of the stairway, there's another doorway next to a space with a table]");
-                                }
+                                    case true:
+                                        Console.WriteLine("[I'm in the entryway of the Labyrinth]");
+                                        Console.WriteLine("");
+                                        Console.WriteLine("[There's a doorway next to the entry stairway]");
+                                        Console.WriteLine("[On the opposite side of the stairway, there's another doorway next to a space with a table]");
+                                        break;
+
+                                    case false:
+                                        Console.WriteLine("[I've overpowered the big door and have entered the crypt, and descended a suprisingly medium sized flight of stairs]");
+                                        Console.WriteLine("[(Not sure that was the best idea)]");
+                                        Console.WriteLine("");
+                                        Console.WriteLine("[This is definitely a labyrinth, seeing it from the inside]");
+                                        Console.WriteLine("[There's a familiar dark grey tint to the semi-fancily stone tiled floor]");
+                                        Console.WriteLine("[I think I can hear uneven footsteps against the understandably slimy tiles somewhere deeper within]");
+                                        Console.WriteLine("");
+                                        Console.WriteLine("[There's a doorway to the left, then there's a dead end just beyond a door to the right]");
+                                        break;
+                                } //Labyrinth Entryway Explored switch
                                 Console.WriteLine("");
 
                                 GetAction(ref action, "[What do I do?]", "[1: Head up the flight of stairs and exit the Crypt/Labyrinth]", "[2: Enter the door next to the entry stairway]", "[3: Enter the door opposite the stairway]", "[4: Check out the table]", "[5: Look around]", "[9: 9 Menu]");
@@ -456,23 +462,22 @@ namespace HelloWorld
                                 break;
 
                             case "Labyrinth":
-                                if (LabyrinthExplored == false) //If the player hasn't been in the labyrinth yet
+                                switch (LabyrinthExplored)
                                 {
-                                    Console.WriteLine("[I've exited the labyrinth entryway]");
-                                    Console.WriteLine("[I think I'm already lost; these rooms seem to be made as I go through them]");
-                                    Console.WriteLine("");
-                                    Console.WriteLine("[If these can confuse me this badly, then there's no way the slombies could make their way out of this]");
-                                    Console.WriteLine("[Speaking of, I think I can hear them in the surrounding rooms]");
-                                    Console.WriteLine("");
-                                }
+                                    case true:
+                                        Console.WriteLine("[I'm in the slimy labyrinth]");
+                                        Console.WriteLine("[I'm not sure I remember where I am]");
+                                        break;
 
-                                else if (LabyrinthExplored == true) //If the player has been in the labyrinth
-                                {
-                                    Console.WriteLine("[I'm in the slimy labyrinth]");
-                                    Console.WriteLine("[I'm not sure I remember where I am]");
-                                    Console.WriteLine("");
-
-                                }
+                                    case false:
+                                        Console.WriteLine("[I've exited the labyrinth entryway]");
+                                        Console.WriteLine("[I think I'm already lost; these rooms seem to be made as I go through them]");
+                                        Console.WriteLine("");
+                                        Console.WriteLine("[If these can confuse me this badly, then there's no way the slombies could make their way out of this]");
+                                        Console.WriteLine("[Speaking of, I think I can hear them in the surrounding rooms]");
+                                        break;
+                                } //Labyrinth Explored switch
+                                Console.WriteLine("");
 
                                 LabyrinthRoomText();
                                 Console.WriteLine("");
@@ -585,21 +590,22 @@ namespace HelloWorld
                                 break;
 
                             case "CastleGate":
-                                if (CastleGateExplored == false) //If the player hasn't been to the gate yet
+                                switch (CastleGateExplored)
                                 {
-                                    Console.WriteLine("[I'm now in front of the stone brick castle, it appears as if it had started to be taken down out of order, now that I look at it]");
-                                    Console.WriteLine("[That'd partially explain why the gate is down]");
-                                    Console.WriteLine("[If this castle Was taken over by force, why would it not have been repaired by the new inhabitants?]");
-                                    Console.WriteLine("");
-                                    Console.WriteLine("[There's a decently sized hole, looks as if the bricks were just... removed, rather than destroyed]");
-                                }
+                                    case true:
+                                        Console.WriteLine("[I'm in front of the taken-over brick castle that has an odd 'entrance']");
+                                        break;
 
-                                if (CastleGateExplored == true) //If the player has been to the gate
-                                {
-                                    Console.WriteLine("[I'm in front of the taken-over brick castle that has an odd 'entrance']");
-                                }
-
+                                    case false:
+                                        Console.WriteLine("[I'm now in front of the stone brick castle, it appears as if it had started to be taken down out of order, now that I look at it]");
+                                        Console.WriteLine("[That'd partially explain why the gate is down]");
+                                        Console.WriteLine("[If this castle Was taken over by force, why would it not have been repaired by the new inhabitants?]");
+                                        Console.WriteLine("");
+                                        Console.WriteLine("[There's a decently sized hole, looks as if the bricks were just... removed, rather than destroyed]");
+                                        break;
+                                } //Castle Gate Explored switch
                                 Console.WriteLine("");
+
                                 Console.WriteLine("[What do I do?]");
                                 Console.WriteLine("[1: Return to the fork in the path]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[9: 9 Menu]");
                                 Console.WriteLine("");
@@ -638,18 +644,20 @@ namespace HelloWorld
                                 break;
 
                             case "CastleEntry":
-                                if (CastleEntryExplored == false) //If the player hasn't entered the Castle before
+                                switch (CastleGateExplored)
                                 {
-                                    Console.WriteLine("[I've entered the castle; it looks relatively normal]");
-                                    Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
-                                    Console.WriteLine("[One of these disturbances include a doorway without a door that Has hinges for one, but not the door itself]");
-                                    Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
-                                }
+                                    case true:
+                                        Console.WriteLine("[I'm in the entryway of the castle]");
+                                        break;
 
-                                if (CastleEntryExplored == true) //If the player has entered the castle already
-                                {
-                                    Console.WriteLine("[I'm in the entryway of the castle]");
-                                }
+                                    case false:
+                                        Console.WriteLine("[I've entered the castle; it looks relatively normal]");
+                                        Console.WriteLine("[The only disturbances are where things appear to have been entirely removed without interfering with the surrounding objects]");
+                                        Console.WriteLine("[One of these disturbances include a doorway without a door that Has hinges for one, but not the door itself]");
+                                        Console.WriteLine("[The doorless doorway doesn't lead anywhere, but I think nothing of it]");
+                                        break;
+                                } //Castle Gate Explored switch
+                                Console.WriteLine("");
 
                                 GetAction(ref action, "[What do I do?]", "[1: Exit the castle]", "           ", "[3: Look around]", "[9: 9 Menu]");
                                 switch (action)
@@ -691,24 +699,26 @@ namespace HelloWorld
                                 break;
 
                             case "    ":
-                                if (Explored == false) //If the player hasn't entered the Void before
+                                switch (Explored)
                                 {
-                                    Console.WriteLine("[I've entered the doorless doorway; it feels like a throne room]");
-                                    Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
-                                    Console.WriteLine("[They're moving, but they think nothing of me]");
-                                    Console.WriteLine("[There's a doorway without a door that Has hinges for one, but not the door itself]");
-                                    Console.WriteLine("");
-                                    Console.WriteLine("[One of them are sitting in the throne]");
-                                    Console.WriteLine("[It's not moving, but I think nothing of it]");
-                                    Console.WriteLine("");
-                                    Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
-                                    Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
-                                }
+                                    case true:
+                                        Console.WriteLine("[I'm in the     ]");
+                                        break;
 
-                                if (Explored == true) //If the player has entered the Void
-                                {
-                                    Console.WriteLine("[I'm in the     ]");
-                                }
+                                    case false:
+                                        Console.WriteLine("[I've entered the doorless doorway; it feels like a throne room]");
+                                        Console.WriteLine("[There's Nothing everywhere, but I think nothing of it]");
+                                        Console.WriteLine("[They're moving, but they think nothing of me]");
+                                        Console.WriteLine("[There's a doorway without a door that Has hinges for one, but not the door itself]");
+                                        Console.WriteLine("");
+                                        Console.WriteLine("[One of them are sitting in the throne]");
+                                        Console.WriteLine("[It's not moving, but I think nothing of it]");
+                                        Console.WriteLine("");
+                                        Console.WriteLine("[The doorless doorway leads to the Castle's entryway]");
+                                        Console.WriteLine("[The doored doorway leads to somewhere I can't see, 'seeing' that I can't see through solid objects]");
+                                        break;
+                                } //Void Explored switch
+                                Console.WriteLine("");
 
                                 GetAction(ref action, "[What do I do?]", "[1: Enter the doorless doorway]", "[2: Nothing]", "[3: Engage Nothing]", "[4: Engage Nothing in the throne]", "[5: Look around]", "[9: 9 Menu]");
                                 switch (action)

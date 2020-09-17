@@ -141,22 +141,22 @@ namespace HelloWorld
 
         public void StatCalculation()
         {
-            experienceRequirement = level * 30;
             //The Experience Requirement is 30x the player's level
-            totalDefense = defense + level;
+            experienceRequirement = level * 30;
 
             //Player's defense is the base defense with the player's level added
-            totalHealth = ((totalDefense * 1 / 2) + baseHealth + healthAddition + level);
+            totalDefense = (int)(((defense + defenseAddition) * defenseMultiplier) + level);
 
             //The base health with the addition of level plus half the defense makes the max player health
+            totalHealth = (int)((((totalDefense * 1 / 2) + baseHealth + healthAddition) * healthMultiplier) + level);
+
             MaxHealth = totalHealth;
 
-            //Calculates total damage for the player
-            totalDamage = (int)((level + baseDamage + damageAddition) * damageMultiplier);
-
             //Sets the total damage based on the player's level, base damage, and the damage mutliplier
-            totalHeal = baseHeal + level;
+            totalDamage = (int)(((baseDamage + damageAddition) * damageMultiplier) + level);
+
             //Adds the player's level to the amount they heal
+            totalHeal = (int)(((baseHeal + healAddition) * healMultiplier) + level);
         } //Stat Calculation function
 
         public void StatCheck()
