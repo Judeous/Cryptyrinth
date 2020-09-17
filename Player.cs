@@ -9,9 +9,6 @@ namespace HelloWorld
         //Player Declarations
         public string name;
 
-        //Level
-        public int health;
-        public int healthRegen;
 
         //Experience/Level
         public int level;
@@ -21,20 +18,32 @@ namespace HelloWorld
         //Health
         public int totalHealth;
         public int MaxHealth;
+        public int healthAddition;
+        public int healthMultiplier;
+        public int baseHealth;
+
+        //Regen
+        public int healthRegen;
+        public int healthRegenAddition;
+        public int healthRegenMultiplier;
 
         //Healing
+        public int totalHeal;
         public int baseHeal;
-        public int heal;
+        public int healAddition;
+        public int healMultiplier;
 
         //Defense
         public int defense;
-        public int battleDefense;
+        public int totalDefense;
+        public int defenseAddition;
+        public int defenseMultiplier;
 
         //Damage
         public int totalDamage;
+        public int baseDamage;
         public float damageMultiplier;
         public int damageAddition;
-        public int baseDamage;
 
         //Specialty/Style
         public string specialty;
@@ -49,7 +58,23 @@ namespace HelloWorld
         public void EquipItem(int itemIndex)
         {
             Item currentItem = inventory[itemIndex];
-            baseDamage += currentItem.damageBoost;
+
+
+
+            healthAddition += currentItem.healthAddition;
+            healthMultiplier += currentItem.healthMultipiler;
+
+            healthRegenAddition += currentItem.healthRegenAddition;
+            healthRegenMultiplier *= currentItem.healthRegenMultiplier;
+
+            healAddition += currentItem.healAddition;
+            healMultiplier += currentItem.healMultiplier;
+
+            defenseAddition += currentItem.defenseAddition;
+            defenseMultiplier += currentItem.defenseMultiplier;
+
+            baseDamage += currentItem.damageAddition;
+            damageMultiplier += currentItem.damageMultBoost;
         }
 
         public void AddToInventory(Item item, int invLocation)
@@ -59,12 +84,12 @@ namespace HelloWorld
 
         public Player()
         {
-            health = 100;
+            baseHealth = 100;
             healthRegen = 4;
             defense = 10;
             level = 1;
             currentExperience = 0;
-            heal = 5;
+            totalHeal = 5;
 
             baseHeal = 5;
             damageMultiplier = 1;
@@ -82,7 +107,7 @@ namespace HelloWorld
             level = 1;
             currentExperience = 0;
             baseDamage = 9;
-            health = healthVal;
+            baseHealth = healthVal;
             healthRegen = healthRegenVal;
             baseHeal = healVal;
             damageMultiplier = damagemultVal;
@@ -95,18 +120,18 @@ namespace HelloWorld
         {
             Console.WriteLine("");
 
-            if (defender.health > 0)
+            if (defender.baseHealth > 0)
             {
                 Console.WriteLine(defender.name + "[Pre-Strike]"); //Stats before being struck
                 Console.WriteLine(defender.totalHealth + " HP <<");
-                Console.WriteLine(defender.battleDefense + " Def");
+                Console.WriteLine(defender.totalDefense + " Def");
                 Pause();
 
                 defender.totalHealth -= totalDamage;  //The Attack
 
                 Console.WriteLine(defender.name + " [Post-Strike]"); //Stats after being struck
                 Console.WriteLine(defender.totalHealth + " HP <<");
-                Console.WriteLine(defender.battleDefense + " Def");
+                Console.WriteLine(defender.totalDefense + " Def");
                 Console.WriteLine("");
                 Pause();
 
@@ -118,10 +143,10 @@ namespace HelloWorld
         {
             experienceRequirement = level * 30;
             //The Experience Requirement is 30x the player's level
-            battleDefense = defense + level;
+            totalDefense = defense + level;
 
             //Player's defense is the base defense with the player's level added
-            totalHealth = (battleDefense * 1 / 2) + health + level;
+            totalHealth = ((totalDefense * 1 / 2) + baseHealth + healthAddition + level);
 
             //The base health with the addition of level plus half the defense makes the max player health
             MaxHealth = totalHealth;
@@ -130,7 +155,7 @@ namespace HelloWorld
             totalDamage = (int)((level + baseDamage + damageAddition) * damageMultiplier);
 
             //Sets the total damage based on the player's level, base damage, and the damage mutliplier
-            heal = baseHeal + level;
+            totalHeal = baseHeal + level;
             //Adds the player's level to the amount they heal
         } //Stat Calculation function
 
@@ -144,8 +169,8 @@ namespace HelloWorld
             Console.WriteLine("Experience: " + currentExperience + "/" + experienceRequirement);
             Console.WriteLine("Health: " + totalHealth);
             Console.WriteLine("Regen: " + healthRegen);
-            Console.WriteLine("Heal: " + heal);
-            Console.WriteLine("Defense: " + battleDefense);
+            Console.WriteLine("Heal: " + totalHeal);
+            Console.WriteLine("Defense: " + totalDefense);
             Console.WriteLine("Attack: " + totalDamage);
             Console.WriteLine("Level: " + level);
             Console.WriteLine("Style: " + styleName);
@@ -164,7 +189,5 @@ namespace HelloWorld
             Console.ReadKey();  //Pauses
             Console.WriteLine("");
         }
-
-
     } //Player Class
 } //Hello World
