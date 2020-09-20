@@ -177,7 +177,7 @@ namespace HelloWorld
                 {
                     Console.WriteLine("Atk Add: " + inventory[i].damageAddition);
                 }
-                if (inventory[i].healthMultiplier != 0)
+                if (inventory[i].healthMultiplier != 1)
                 {
                     Console.WriteLine("Atk Mult: " + inventory[i].damageMultiplier);
                 }
@@ -186,7 +186,7 @@ namespace HelloWorld
                 {
                     Console.WriteLine("Reg Add: " + inventory[i].healthRegenAddition);
                 }
-                if (inventory[i].healthRegenMultiplier != 0)
+                if (inventory[i].healthRegenMultiplier != 1)
                 {
                     Console.WriteLine("Reg Mult: " + inventory[i].healthRegenMultiplier);
                 }
@@ -195,7 +195,7 @@ namespace HelloWorld
                 {
                     Console.WriteLine("Heal Add: " + inventory[i].healAddition);
                 }
-                if (inventory[i].healMultiplier != 0)
+                if (inventory[i].healMultiplier != 1)
                 {
                     Console.WriteLine("Heal Mult: " + inventory[i].healMultiplier);
                 }
@@ -204,7 +204,7 @@ namespace HelloWorld
                 {
                     Console.WriteLine("Def Add: " + inventory[i].defenseAddition);
                 }
-                if (inventory[i].defenseMultiplier > 0)
+                if (inventory[i].defenseMultiplier > 1)
                 {
                     Console.WriteLine("Def Mult: " + inventory[i].defenseMultiplier);
                 }
@@ -283,6 +283,7 @@ namespace HelloWorld
             //The base health with the addition of level plus half the defense makes the max player health
             totalHealth = (int)((((totalDefense * 1 / 2) + baseHealth + currentItem.healthAddition) * currentItem.healthMultiplier) + level);
 
+            //Sets the max health to prevent health from regenerating past this limit
             MaxHealth = totalHealth;
 
             //Sets the total damage based on the player's level, base damage, and the damage mutliplier

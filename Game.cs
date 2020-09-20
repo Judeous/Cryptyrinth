@@ -49,8 +49,11 @@ namespace HelloWorld
             baseDagger.damageMultiplier = 1;
         }
 
-        public void FirstWeapon(Item item)
+        public void FirstWeapon(Player player, Item item)
         {
+            //Gets the inventory because it's private
+            Item[] inventory = player.GetInventory();
+
             action = GetAction(ref action, "Which weapon would you like?", "Staff", "Sword", "Dagger", "[Take all of them]");
 
             switch(action)
@@ -77,6 +80,8 @@ namespace HelloWorld
 
         public void OpenInventory(Player player)
         {
+            Item[] inventory = player.GetInventory();
+
 
         }
 
