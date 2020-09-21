@@ -234,16 +234,16 @@ namespace HelloWorld
 
             //Player 1
             DecideSpecialty(ref player1);
+            player1.NothingInitializer();
             player1.StatCalculation();
-
             player1.StatCheck();
 
             if (gamemode == '2')
             {
                 //Player 2
                 DecideSpecialty(ref player2);
+                player2.NothingInitializer();
                 player2.StatCalculation();
-
                 player2.StatCheck();
             } //If doing PvP
         } //Start
@@ -2539,12 +2539,9 @@ namespace HelloWorld
             string specialty = "Fool";
 
             Console.Clear(); //Clears the screen
-            Console.WriteLine("Welcome, " + name);
+            Console.Write("Welcome, " + name);
             char specialtyKey = ' ';
             char styleKey = ' ';
-
-            Console.WriteLine("");
-            Console.Clear(); //Clears the screen
 
             styleKey = GetAction(ref specialtyKey, ", what is your style of battle?", "[1: Magic]", "[2: Warrior]", "[3: Trickery]");
 

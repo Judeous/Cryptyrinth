@@ -60,7 +60,7 @@ namespace HelloWorld
         public bool HasItemEquipped;
 
         private Item nothing;
-        public void nothingInitializer()
+        public void NothingInitializer()
         {
             nothing.healthAddition = 0;
             healthMultiplier = 1;
@@ -230,6 +230,7 @@ namespace HelloWorld
             specialty = "Foolishness";
 
             inventory = new Item[inventorySize];
+            currentWeapon = nothing;
         } //Constructor
 
         public Player(string nameVal, int healthVal, int healthRegenVal, int healVal, float damagemultVal, int defenseVal, string style, string specialtyVal)
@@ -245,9 +246,8 @@ namespace HelloWorld
             defense = defenseVal;
             styleName = style;
             specialty = specialtyVal;
-
-            nothingInitializer();
-        }
+            currentWeapon = nothing;
+        } //Overload Constructor
 
         public int DirectAttack(ref Player defender)
         {
