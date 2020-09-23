@@ -1029,7 +1029,7 @@ namespace HelloWorld
                     break;
                 } //If player lost
 
-                else if (player2._baseHealth <= 0) //If player 1 won
+                else if (p2HP <= 0) //If player 1 won
                 {
                     Console.WriteLine("The battle has ended");
                     Console.WriteLine("");

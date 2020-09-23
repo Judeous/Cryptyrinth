@@ -19,8 +19,8 @@ namespace HelloWorld
         private int _totalHealth;
         private int _MaxHealth;
         private int _healthAddition;
-        public int _healthMultiplier = 1;
-        public int _baseHealth;
+        private int _healthMultiplier = 1;
+        private int _baseHealth;
 
         //Regen
         public int _healthRegen;
