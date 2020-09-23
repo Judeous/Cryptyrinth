@@ -7,104 +7,104 @@ namespace HelloWorld
     public class Player
     {
         //Player Declarations
-        public string name;
+        public string _name;
 
 
         //Experience/Level
-        public int level;
-        public int currentExperience;
-        public int experienceRequirement;
+        private int _level;
+        private int _currentExperience;
+        private int _experienceRequirement;
 
         //Health
-        public int totalHealth;
-        public int MaxHealth;
-        public int healthAddition;
-        public int healthMultiplier = 1;
-        public int baseHealth;
+        private int _totalHealth;
+        private int _MaxHealth;
+        private int _healthAddition;
+        public int _healthMultiplier = 1;
+        public int _baseHealth;
 
         //Regen
-        public int healthRegen;
-        public int healthRegenAddition;
-        public int healthRegenMultiplier = 1;
+        public int _healthRegen;
+        public int _healthRegenAddition;
+        public int _healthRegenMultiplier = 1;
 
         //Healing
-        public int totalHeal;
-        public int baseHeal;
-        public int healAddition;
-        public int healMultiplier = 1;
+        public int _totalHeal;
+        public int _baseHeal;
+        public int _healAddition;
+        public int _healMultiplier = 1;
 
         //Defense
-        public int defense;
-        public int totalDefense;
-        public int defenseAddition;
-        public int defenseMultiplier = 1;
+        public int _defense;
+        public int _totalDefense;
+        public int _defenseAddition;
+        public int _defenseMultiplier = 1;
 
         //Damage
-        public int totalDamage;
-        public int baseDamage;
-        public float damageMultiplier = 1;
-        public int damageAddition;
+        public int _totalDamage;
+        public int _baseDamage;
+        public float _damageMultiplier = 1;
+        public int _damageAddition;
 
         //Specialty/Style
-        public string specialty;
-        public string styleName;
+        public string _specialty;
+        public string _styleName;
 
         public bool IsBot;
 
         //Inventory
-        private Item[] inventory;
-        public int inventorySize = 10;
-        private Item currentWeapon;
-        private Item currentItem;
-        public bool HasWeaponEquipped;
-        public bool HasItemEquipped;
+        private Item[] _inventory;
+        public int _inventorySize = 10;
+        private Item _currentWeapon;
+        private Item _currentItem;
+        public bool _HasWeaponEquipped;
+        public bool _HasItemEquipped;
 
         private Item nothing;
         public void NothingInitializer()
         {
-            nothing.healthAddition = 0;
-            healthMultiplier = 1;
+            nothing._healthAddition = 0;
+            _healthMultiplier = 1;
 
-            healthRegenAddition = 0;
-            healthRegenMultiplier = 1;
+            _healthRegenAddition = 0;
+            _healthRegenMultiplier = 1;
 
-            healAddition = 0;
-            healMultiplier = 1;
+            _healAddition = 0;
+            _healMultiplier = 1;
 
-            defenseAddition = 0;
-            defenseMultiplier = 1;
+            _defenseAddition = 0;
+            _defenseMultiplier = 1;
 
-            nothing.damageAddition = 0;
-            nothing.damageMultiplier = 1;
+            nothing._damageAddition = 0;
+            nothing._damageMultiplier = 1;
         }
 
         public void AddToInventory(Item item, int invLocation)
         {
-            inventory[invLocation] = item;
+            _inventory[invLocation] = item;
         }
 
         public void EquipItem(Item item, int itemIndex)
         {
             Console.Clear();
 
-            item = inventory[itemIndex];
+            item = _inventory[itemIndex];
 
-            healthAddition += item.healthAddition;
-            healthMultiplier += item.healthMultiplier;
+            _healthAddition += item._healthAddition;
+            _healthMultiplier += item._healthMultiplier;
 
-            healthRegenAddition += item.healthRegenAddition;
-            healthRegenMultiplier += item.healthRegenMultiplier;
+            _healthRegenAddition += item._healthRegenAddition;
+            _healthRegenMultiplier += item._healthRegenMultiplier;
 
-            healAddition += item.healAddition;
-            healMultiplier += item.healMultiplier;
+            _healAddition += item._healAddition;
+            _healMultiplier += item._healMultiplier;
 
-            defenseAddition += item.defenseAddition;
-            defenseMultiplier += item.defenseMultiplier;
+            _defenseAddition += item._defenseAddition;
+            _defenseMultiplier += item._defenseMultiplier;
 
-            currentItem = item;
-            HasItemEquipped = true;
+            _currentItem = item;
+            _HasItemEquipped = true;
 
-            Console.WriteLine("[I've equipped the " + currentItem + "]");
+            Console.WriteLine("[I've equipped the " + _currentItem + "]");
             Pause();
         } //Equip Item
 
@@ -112,13 +112,13 @@ namespace HelloWorld
         {
             Console.Clear();
 
-            baseDamage += item.damageAddition;
-            damageMultiplier += item.damageMultiplier;
+            _baseDamage += item._damageAddition;
+            _damageMultiplier += item._damageMultiplier;
 
-            currentWeapon = item;
-            HasWeaponEquipped = true;
+            _currentWeapon = item;
+            _HasWeaponEquipped = true;
 
-            Console.WriteLine("[I've equipped the " + currentWeapon + "]");
+            Console.WriteLine("[I've equipped the " + _currentWeapon + "]");
             Pause();
         } //Equip Weapon
 
@@ -126,87 +126,87 @@ namespace HelloWorld
         {
             Console.Clear();
 
-            healthAddition -= currentItem.healthAddition;
-            healthMultiplier -= currentItem.healthMultiplier;
+            _healthAddition -= _currentItem._healthAddition;
+            _healthMultiplier -= _currentItem._healthMultiplier;
 
-            healthRegenAddition -= currentItem.healthRegenAddition;
-            healthRegenMultiplier -= currentItem.healthRegenMultiplier;
+            _healthRegenAddition -= _currentItem._healthRegenAddition;
+            _healthRegenMultiplier -= _currentItem._healthRegenMultiplier;
 
-            healAddition -= currentItem.healAddition;
-            healMultiplier -= currentItem.healMultiplier;
+            _healAddition -= _currentItem._healAddition;
+            _healMultiplier -= _currentItem._healMultiplier;
 
-            defenseAddition -= currentItem.defenseAddition;
-            defenseMultiplier -= currentItem.defenseMultiplier;
+            _defenseAddition -= _currentItem._defenseAddition;
+            _defenseMultiplier -= _currentItem._defenseMultiplier;
 
-            Console.WriteLine("[I've unequipped the " + currentItem + "]");
+            Console.WriteLine("[I've unequipped the " + _currentItem + "]");
 
-            currentItem = nothing;
-            HasItemEquipped = false;
+            _currentItem = nothing;
+            _HasItemEquipped = false;
 
         } //Unequip Item
 
         public void UnequipWeapon()
         {
-            Console.WriteLine("[I've unequipped the " + currentWeapon + "]");
-            if (currentWeapon.damageAddition > 0)
+            Console.WriteLine("[I've unequipped the " + _currentWeapon + "]");
+            if (_currentWeapon._damageAddition > 0)
             {
-                Console.WriteLine("[-" + currentWeapon.damageAddition + " damage");
+                Console.WriteLine("[-" + _currentWeapon._damageAddition + " damage");
             }
 
-            baseDamage -= currentItem.damageAddition;
-            damageMultiplier -= currentItem.damageMultiplier;
+            _baseDamage -= _currentItem._damageAddition;
+            _damageMultiplier -= _currentItem._damageMultiplier;
 
-            currentWeapon = nothing;
-            HasWeaponEquipped = false;
+            _currentWeapon = nothing;
+            _HasWeaponEquipped = false;
         } //unequip Weapon
 
         public Item[] GetInventory()
         {
-            return inventory;
+            return _inventory;
         }
 
         public void CheckInventory()
         {
-            for (int i = 0; i<inventory.Length; i++)
+            for (int i = 0; i < _inventory.Length; i++)
             {
-                Console.WriteLine((i + 1) + inventory[i].name + ": ");
+                Console.WriteLine((i + 1) + _inventory[i]._name + ": ");
 
                 //Will only print stats if the stat is changed by the item
                 //Health
-                if(inventory[i].healthAddition != 0)
+                if (_inventory[i]._healthAddition != 0)
                 {
-                    Console.WriteLine("Atk Add: " + inventory[i].damageAddition);
+                    Console.WriteLine("Atk Add: " + _inventory[i]._damageAddition);
                 }
-                if (inventory[i].healthMultiplier != 1)
+                if (_inventory[i]._healthMultiplier != 1)
                 {
-                    Console.WriteLine("Atk Mult: " + inventory[i].damageMultiplier);
+                    Console.WriteLine("Atk Mult: " + _inventory[i]._damageMultiplier);
                 }
                 //Regen
-                if (inventory[i].healthRegenAddition != 0)
+                if (_inventory[i]._healthRegenAddition != 0)
                 {
-                    Console.WriteLine("Reg Add: " + inventory[i].healthRegenAddition);
+                    Console.WriteLine("Reg Add: " + _inventory[i]._healthRegenAddition);
                 }
-                if (inventory[i].healthRegenMultiplier != 1)
+                if (_inventory[i]._healthRegenMultiplier != 1)
                 {
-                    Console.WriteLine("Reg Mult: " + inventory[i].healthRegenMultiplier);
+                    Console.WriteLine("Reg Mult: " + _inventory[i]._healthRegenMultiplier);
                 }
                 //Heal
-                if (inventory[i].healAddition != 0)
+                if (_inventory[i]._healAddition != 0)
                 {
-                    Console.WriteLine("Heal Add: " + inventory[i].healAddition);
+                    Console.WriteLine("Heal Add: " + _inventory[i]._healAddition);
                 }
-                if (inventory[i].healMultiplier != 1)
+                if (_inventory[i]._healMultiplier != 1)
                 {
-                    Console.WriteLine("Heal Mult: " + inventory[i].healMultiplier);
+                    Console.WriteLine("Heal Mult: " + _inventory[i]._healMultiplier);
                 }
                 //Defense
-                if (inventory[i].defenseAddition != 0)
+                if (_inventory[i]._defenseAddition != 0)
                 {
-                    Console.WriteLine("Def Add: " + inventory[i].defenseAddition);
+                    Console.WriteLine("Def Add: " + _inventory[i]._defenseAddition);
                 }
-                if (inventory[i].defenseMultiplier > 1)
+                if (_inventory[i]._defenseMultiplier > 1)
                 {
-                    Console.WriteLine("Def Mult: " + inventory[i].defenseMultiplier);
+                    Console.WriteLine("Def Mult: " + _inventory[i]._defenseMultiplier);
                 }
                 Console.WriteLine("");
             } //For every item
@@ -215,85 +215,156 @@ namespace HelloWorld
 
         public Player()
         {
-            baseHealth = 100;
-            healthRegen = 4;
-            defense = 10;
-            level = 1;
-            currentExperience = 0;
-            totalHeal = 5;
+            _baseHealth = 100;
+            _healthRegen = 4;
+            _defense = 10;
+            _level = 1;
+            _currentExperience = 0;
+            _totalHeal = 5;
 
-            baseHeal = 5;
-            damageMultiplier = 1;
-            baseDamage = 9;
+            _baseHeal = 5;
+            _damageMultiplier = 1;
+            _baseDamage = 9;
 
-            styleName = "Fool";
-            specialty = "Foolishness";
+            _styleName = "Fool";
+            _specialty = "Foolishness";
 
             NothingInitializer();
-            inventory = new Item[inventorySize];
-            currentWeapon = nothing;
-        } //Constructor
+            _inventory = new Item[_inventorySize];
+            _currentWeapon = nothing;
+        } //Initial Constructor
 
         public Player(string nameVal, int healthVal, int healthRegenVal, int healVal, float damagemultVal, int defenseVal, string style, string specialtyVal)
         {
-            name = nameVal;
-            level = 1;
-            currentExperience = 0;
-            baseDamage = 9;
-            baseHealth = healthVal;
-            healthRegen = healthRegenVal;
-            baseHeal = healVal;
-            damageMultiplier = damagemultVal;
-            defense = defenseVal;
-            styleName = style;
-            specialty = specialtyVal;
+            _name = nameVal;
+            _level = 1;
+            _currentExperience = 0;
+            _baseDamage = 9;
+            _baseHealth = healthVal;
+            _healthRegen = healthRegenVal;
+            _baseHeal = healVal;
+            _damageMultiplier = damagemultVal;
+            _defense = defenseVal;
+            _styleName = style;
+            _specialty = specialtyVal;
 
             NothingInitializer();
-            currentWeapon = nothing;
+            _currentWeapon = nothing;
         } //Overload Constructor
 
         public int DirectAttack(ref Player defender)
         {
             Console.WriteLine("");
 
-            if (defender.baseHealth > 0)
+            if (defender._baseHealth > 0)
             {
-                Console.WriteLine(defender.name + "[Pre-Strike]"); //Stats before being struck
-                Console.WriteLine(defender.totalHealth + " HP <<");
-                Console.WriteLine(defender.totalDefense + " Def");
+                Console.WriteLine(defender._name + "[Pre-Strike]"); //Stats before being struck
+                Console.WriteLine(defender._totalHealth + " HP <<");
+                Console.WriteLine(defender._totalDefense + " Def");
                 Pause();
 
-                defender.totalHealth -= totalDamage;  //The Attack
+                defender._totalHealth -= _totalDamage;  //The Attack
 
-                Console.WriteLine(defender.name + " [Post-Strike]"); //Stats after being struck
-                Console.WriteLine(defender.totalHealth + " HP <<");
-                Console.WriteLine(defender.totalDefense + " Def");
+                Console.WriteLine(defender._name + " [Post-Strike]"); //Stats after being struck
+                Console.WriteLine(defender._totalHealth + " HP <<");
+                Console.WriteLine(defender._totalDefense + " Def");
                 Console.WriteLine("");
                 Pause();
 
             } //If enemy alive
-            return defender.totalHealth;
+            return defender._totalHealth;
         } //Player Direct Attack Function
+
+        public void GainExperience(int gainedExp)
+        {
+            Console.WriteLine("Experience gained: " + gainedExp);
+            Console.WriteLine("");
+
+            _currentExperience += gainedExp;
+
+            Console.WriteLine("Current Exp: " + _currentExperience + "/" + _experienceRequirement);
+            Pause();
+            Console.Clear(); //Clears the screen
+
+            if (_currentExperience >= _experienceRequirement)
+            {
+                LevelUp();
+            }
+        } //Gain Experience function
+
+        public void LevelUp()
+        {
+            char _action = ' ';
+            do
+            {
+                do
+                {
+                    Console.WriteLine("You've gained a level!");
+                    _action = GetAction(ref _action, "What would you like to level up?", "[1: Health]", "[2: Regen]", "[3: Heal]", "[4: Defense]", "[5: Damage]", "[6: Split Evenly]");
+                    switch (_action)
+                    {
+                        case '1': //Health
+                            _totalHealth += 5;
+                            break;
+
+                        case '2': //Regen
+                            _healthRegen += 5;
+                            break;
+
+                        case '3': //Heal
+                            _totalHeal += 5;
+                            break;
+
+                        case '4': //Defense
+                            _totalDefense += 5;
+                            break;
+
+                        case '5': //Damage
+                            _damageAddition += 5;
+                            break;
+
+                        case '6': //Everything
+                            _totalHealth++;
+                            _healthRegen++;
+                            _totalHeal++;
+                            _totalDamage++;
+                            _baseDamage++;
+                            break;
+                    } //Action Switch
+                } //While action is invalid
+                while (_action != '1' || _action != '2' || _action != '3' || _action != '4' || _action != '5' || _action != '6');
+
+                //If action is valid
+                if (_action == '1' || _action == '2' || _action == '3' || _action == '4' || _action == '5' || _action == '6')
+                {
+                    _level++;
+                    _currentExperience -= _experienceRequirement;
+                    StatCalculation();
+                }
+                Console.Clear();
+            } //While the player is leveling up
+            while (_currentExperience >= _experienceRequirement);
+        } //Level Up function
 
         public void StatCalculation()
         {
             //The Experience Requirement is 30x the player's level
-            experienceRequirement = level * 30;
+            _experienceRequirement = _level * 30;
 
             //Player's defense is the base defense with the player's level added
-            totalDefense = (int)(((defense + currentItem.defenseAddition) * currentItem.defenseMultiplier) + level);
+            _totalDefense = (int)(((_defense + _currentItem._defenseAddition) * _currentItem._defenseMultiplier) + _level);
 
             //The base health with the addition of level plus half the defense makes the max player health
-            totalHealth = (int)((((totalDefense * 1 / 2) + baseHealth + currentItem.healthAddition) * currentItem.healthMultiplier) + level);
+            _totalHealth = (int)((((_totalDefense * 1 / 2) + _baseHealth + _currentItem._healthAddition) * _currentItem._healthMultiplier) + _level);
 
             //Sets the max health to prevent health from regenerating past this limit
-            MaxHealth = totalHealth;
+            _MaxHealth = _totalHealth;
 
             //Sets the total damage based on the player's level, base damage, and the damage mutliplier
-            totalDamage = (int)(((baseDamage + currentWeapon.damageAddition) * currentWeapon.damageMultiplier) + level);
+            _totalDamage = (int)(((_baseDamage + _currentWeapon._damageAddition) * _currentWeapon._damageMultiplier) + _level);
 
             //Adds the player's level to the amount they heal
-            totalHeal = (int)(((baseHeal + currentItem.healAddition) * currentItem.healMultiplier) + level);
+            _totalHeal = (int)(((_baseHeal + _currentItem._healAddition) * _currentItem._healMultiplier) + _level);
         } //Stat Calculation function
 
         public void StatCheck()
@@ -302,21 +373,142 @@ namespace HelloWorld
 
             Console.WriteLine("This is who I am:");
             //This and next few lines are just to show to the player their stats
-            Console.WriteLine("Name: " + name);
-            Console.WriteLine("Experience: " + currentExperience + "/" + experienceRequirement);
-            Console.WriteLine("Health: " + totalHealth);
-            Console.WriteLine("Regen: " + healthRegen);
-            Console.WriteLine("Heal: " + totalHeal);
-            Console.WriteLine("Defense: " + totalDefense);
-            Console.WriteLine("Attack: " + totalDamage);
-            Console.WriteLine("Level: " + level);
-            Console.WriteLine("Style: " + styleName);
-            Console.WriteLine("Specialty: " + specialty);
+            Console.WriteLine("Name: " + _name);
+            Console.WriteLine("Experience: " + _currentExperience + "/" + _experienceRequirement);
+            Console.WriteLine("Health: " + _totalHealth);
+            Console.WriteLine("Regen: " + _healthRegen);
+            Console.WriteLine("Heal: " + _totalHeal);
+            Console.WriteLine("Defense: " + _totalDefense);
+            Console.WriteLine("Attack: " + _totalDamage);
+            Console.WriteLine("Level: " + _level);
+            Console.WriteLine("Style: " + _styleName);
+            Console.WriteLine("Specialty: " + _specialty);
 
             Pause();
             Console.Clear(); //Clears the screen
         } //Stat Check function
 
+        public int GetLevel()
+        {
+            return _level;
+        } //Level Getter
+
+        public int GetHealth()
+        {
+            return _totalHealth;
+        } //Health Getter
+
+        public int GetMaxHealth()
+        {
+            return _MaxHealth;
+        }
+
+        public char GetAction(ref char choice, string query, string option1, string option2)
+        {
+            Console.WriteLine(query);
+
+            Console.WriteLine("");
+
+            Console.WriteLine(option1);
+
+            Console.WriteLine(option2);
+
+            Console.WriteLine("");
+            Console.WriteLine("[Press the number to continue]");
+            Console.Write("> ");
+            choice = Console.ReadKey().KeyChar;
+
+            return choice;
+        } //Get Action 2 options
+
+        public char GetAction(ref char choice, string query, string option1, string option2, string option3)
+        {
+            Console.WriteLine(query);
+
+            Console.WriteLine("");
+
+            Console.WriteLine(option1);
+
+            Console.WriteLine(option2);
+
+            Console.WriteLine(option3);
+
+            Console.WriteLine("");
+            Console.WriteLine("[Press the number to continue]");
+            Console.Write("> ");
+            choice = Console.ReadKey().KeyChar;
+            return choice;
+        } //Get Action 3 options
+
+        public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4)
+        {
+            Console.WriteLine(query);
+
+            Console.WriteLine("");
+
+            Console.WriteLine(option1);
+
+            Console.WriteLine(option2);
+
+            Console.WriteLine(option3);
+
+            Console.WriteLine(option4);
+
+            Console.WriteLine("");
+            Console.WriteLine("[Press the number to continue]");
+            Console.Write("> ");
+            choice = Console.ReadKey().KeyChar;
+            return choice;
+        } //Get Action 4 options
+
+        public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4, string option5)
+        {
+            Console.WriteLine(query);
+
+            Console.WriteLine("");
+
+            Console.WriteLine(option1);
+
+            Console.WriteLine(option2);
+
+            Console.WriteLine(option3);
+
+            Console.WriteLine(option4);
+
+            Console.WriteLine(option5);
+
+
+            Console.WriteLine("");
+            Console.WriteLine("[Press the number to continue]");
+            Console.Write("> ");
+            choice = Console.ReadKey().KeyChar;
+            return choice;
+        } //Get Action 5 options
+
+        public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4, string option5, string option6)
+        {
+            Console.WriteLine(query);
+
+            Console.WriteLine("");
+
+            Console.WriteLine(option1);
+
+            Console.WriteLine(option2);
+
+            Console.WriteLine(option3);
+
+            Console.WriteLine(option4);
+
+            Console.WriteLine(option5);
+
+            Console.WriteLine(option6);
+
+            Console.WriteLine("");
+            Console.WriteLine("[Press the number to continue]");
+            Console.Write("> ");
+            choice = Console.ReadKey().KeyChar;
+            return choice;
+        } //Get Action 6 options
 
         void Pause()
         {

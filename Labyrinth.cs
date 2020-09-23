@@ -8,34 +8,34 @@ namespace HelloWorld
     {
         //Labyrinth Declarations
         ///Sets the locations to the EntryWay door location
-        public int labyLocationX = 7;
-        public int labyLocationY = 26;
+        public int _labyLocationX = 7;
+        public int _labyLocationY = 26;
         ///For a Back action
-        public int oldLabyLocationX;
-        public int oldLabyLocationY;
-        public char facingDirection;
+        public int _oldLabyLocationX;
+        public int _oldLabyLocationY;
+        public char _facingDirection;
         ///Wall length declarations
-        public string roomShape;
-        public string roomType;
-        public int minWallLength = 1;
-        public int maxWallLength = 4;
-        public int wallXLengths;
-        public int wallYLengths;
+        public string _roomShape;
+        public string _roomType;
+        public int _minWallLength = 1;
+        public int _maxWallLength = 4;
+        public int _wallXLengths;
+        public int _wallYLengths;
         ///Borders for walls
-        public int wallSouthY;
-        public int wallNorthY;
-        public int wallXWBorders;
-        public int wallXEBorders;
+        public int _wallSouthY;
+        public int _wallNorthY;
+        public int _wallXWBorders;
+        public int _wallXEBorders;
 
-        public int wallEastX;
-        public int wallWestX;
-        public int wallYNBorders;
-        public int wallYSBorders;
+        public int _wallEastX;
+        public int _wallWestX;
+        public int _wallYNBorders;
+        public int _wallYSBorders;
         ///Variables used for randomizing the appearance of respective doors
-        int doorSouthChance;
-        public int doorNorthChance;
-        public int doorEastChance;
-        public int doorWestChance;
+        public int _doorSouthChance;
+        public int _doorNorthChance;
+        public int _doorEastChance;
+        public int _doorWestChance;
         ///Bools for doors
         public bool CanEscapeE = false;
         public bool CanEscapeW = false;
@@ -44,23 +44,23 @@ namespace HelloWorld
         public bool DoorEastExists = false;
         public bool DoorWestExists = false;
         ///Coordinate variables for the doors, if they exist
-        public int escapeDoorWY = 25;
-        public int escapeDoorWX = 5;
+        public int _escapeDoorWY = 25;
+        public int _escapeDoorWX = 5;
 
-        public int escapeDoorEY = 22;
-        public int escapeDoorEX = 9;
+        public int _escapeDoorEY = 22;
+        public int _escapeDoorEX = 9;
 
-        public int doorSouthX;
-        public int doorSouthY;
+        public int _doorSouthX;
+        public int _doorSouthY;
 
-        public int doorNorthX;
-        public int doorNorthY;
+        public int _doorNorthX;
+        public int _doorNorthY;
 
-        public int doorEastX;
-        public int doorEastY;
+        public int _doorEastX;
+        public int _doorEastY;
 
-        public int doorWestX;
-        public int doorWestY;
+        public int _doorWestX;
+        public int _doorWestY;
 
         Random r = new Random(); //Sets a variable for a randomizer
 
@@ -75,256 +75,256 @@ namespace HelloWorld
             CanEscapeW = false;
 
             //Generates the wall lengths
-            wallXLengths = r.Next(minWallLength, maxWallLength);
-            wallYLengths = r.Next(minWallLength, maxWallLength);
+            _wallXLengths = r.Next(_minWallLength, _maxWallLength);
+            _wallYLengths = r.Next(_minWallLength, _maxWallLength);
 
             //Calculates wall border locations based off the direction the player is facing
 
-            switch (facingDirection)
+            switch (_facingDirection)
             {
                 case 's': //If facing South
-                    switch (wallXLengths)
+                    switch (_wallXLengths)
                     {
                         case 1: //If wall lengths are 1
-                            wallXWBorders = labyLocationX;
-                            wallXEBorders = labyLocationX;
+                            _wallXWBorders = _labyLocationX;
+                            _wallXEBorders = _labyLocationX;
                             break;
 
                         case 2: //If wall lengths are 2
-                            wallXWBorders = r.Next(labyLocationX, labyLocationX + 1);
-                            if (wallXWBorders == labyLocationX)
+                            _wallXWBorders = r.Next(_labyLocationX, _labyLocationX + 1);
+                            if (_wallXWBorders == _labyLocationX)
                             {
-                                wallXEBorders = labyLocationX + 1;
+                                _wallXEBorders = _labyLocationX + 1;
                             }
                             else
                             {
-                                wallXEBorders = labyLocationX;
+                                _wallXEBorders = _labyLocationX;
                             }
                             break;
 
                         case 3: //If wall lengths are 3
-                            wallXWBorders = labyLocationX - 1;
-                            wallXEBorders = labyLocationX + 1;
+                            _wallXWBorders = _labyLocationX - 1;
+                            _wallXEBorders = _labyLocationX + 1;
                             break;
 
                         case 4: //If wall lengths are 4
-                            wallXWBorders = r.Next(labyLocationX - 1, labyLocationX - 2);
-                            if (wallXWBorders == labyLocationX - 1)
+                            _wallXWBorders = r.Next(_labyLocationX - 1, _labyLocationX - 2);
+                            if (_wallXWBorders == _labyLocationX - 1)
                             {
-                                wallXEBorders = labyLocationX + 2;
+                                _wallXEBorders = _labyLocationX + 2;
                             }
                             else
                             {
-                                wallXEBorders = labyLocationX + 1;
+                                _wallXEBorders = _labyLocationX + 1;
                             }
                             break;
                     } //Wall border setters
 
                     //Sets east & west Walls' Y
-                    wallEastX = wallXEBorders;
-                    wallWestX = wallXWBorders;
+                    _wallEastX = _wallXEBorders;
+                    _wallWestX = _wallXWBorders;
 
                     //Calculates & assigns south and north wall borders
-                    wallYSBorders = labyLocationY;
-                    wallYNBorders = labyLocationY + wallYLengths;
+                    _wallYSBorders = _labyLocationY;
+                    _wallYNBorders = _labyLocationY + _wallYLengths;
                     break;
 
                 case 'n': //If facing North
-                    switch (wallXLengths)
+                    switch (_wallXLengths)
                     {
                         case 1:  //If wall lengths are 1
-                            wallXWBorders = labyLocationX;
-                            wallXEBorders = labyLocationX;
+                            _wallXWBorders = _labyLocationX;
+                            _wallXEBorders = _labyLocationX;
                             break;
 
                         case 2: //If wall lengths are 2
-                            wallXWBorders = r.Next(labyLocationX, labyLocationX + 1);
-                            if (wallXWBorders == labyLocationX)
+                            _wallXWBorders = r.Next(_labyLocationX, _labyLocationX + 1);
+                            if (_wallXWBorders == _labyLocationX)
                             {
-                                wallXEBorders = labyLocationX + 1;
+                                _wallXEBorders = _labyLocationX + 1;
                             }
                             else
                             {
-                                wallXEBorders = labyLocationX;
+                                _wallXEBorders = _labyLocationX;
                             }
                             break;
 
                         case 3: //If wall lengths are 3
-                            wallXWBorders = labyLocationX - 1;
-                            wallXEBorders = labyLocationX + 1;
+                            _wallXWBorders = _labyLocationX - 1;
+                            _wallXEBorders = _labyLocationX + 1;
                             break;
 
                         case 4: //If wall lengths are 4
-                            wallXWBorders = r.Next(labyLocationX - 1, labyLocationX - 2);
-                            if (wallXWBorders == labyLocationX - 1)
+                            _wallXWBorders = r.Next(_labyLocationX - 1, _labyLocationX - 2);
+                            if (_wallXWBorders == _labyLocationX - 1)
                             {
-                                wallXEBorders = labyLocationX + 2;
+                                _wallXEBorders = _labyLocationX + 2;
                             }
                             else
                             {
-                                wallXEBorders = labyLocationX + 1;
+                                _wallXEBorders = _labyLocationX + 1;
                             }
                             break;
                     } //Wall border setters
 
                     //Sets north & south Walls' Y
-                    wallNorthY = labyLocationY;
-                    wallSouthY = labyLocationY + wallYLengths;
+                    _wallNorthY = _labyLocationY;
+                    _wallSouthY = _labyLocationY + _wallYLengths;
 
                     //Calculates & assigns east and west wall borders
-                    wallYSBorders = labyLocationY;
-                    wallYNBorders = labyLocationY + wallYLengths;
-                    wallEastX = wallXEBorders;
-                    wallWestX = wallXWBorders;
+                    _wallYSBorders = _labyLocationY;
+                    _wallYNBorders = _labyLocationY + _wallYLengths;
+                    _wallEastX = _wallXEBorders;
+                    _wallWestX = _wallXWBorders;
                     break;
 
                 case 'e': //If facing East
-                    switch (wallYLengths)
+                    switch (_wallYLengths)
                     {
                         case 1: //If wall lengths are 1
-                            wallYNBorders = labyLocationY;
-                            wallYSBorders = labyLocationY;
+                            _wallYNBorders = _labyLocationY;
+                            _wallYSBorders = _labyLocationY;
                             break;
 
                         case 2: //If wall lengths are 2
-                            wallYNBorders = r.Next(labyLocationY, labyLocationY + 1);
-                            if (wallYNBorders == labyLocationY)
+                            _wallYNBorders = r.Next(_labyLocationY, _labyLocationY + 1);
+                            if (_wallYNBorders == _labyLocationY)
                             {
-                                wallYSBorders = labyLocationY + 1;
+                                _wallYSBorders = _labyLocationY + 1;
                             }
                             else
                             {
-                                wallYSBorders = labyLocationY;
+                                _wallYSBorders = _labyLocationY;
                             }
                             break;
 
                         case 3: //If wall lengths are 3
-                            wallYNBorders = labyLocationY - 1;
-                            wallYSBorders = labyLocationY + 1;
+                            _wallYNBorders = _labyLocationY - 1;
+                            _wallYSBorders = _labyLocationY + 1;
                             break;
 
                         case 4: //If wall lengths are 4
-                            wallYNBorders = r.Next(labyLocationY - 1, labyLocationY - 2);
-                            if (wallYNBorders == labyLocationY - 1)
+                            _wallYNBorders = r.Next(_labyLocationY - 1, _labyLocationY - 2);
+                            if (_wallYNBorders == _labyLocationY - 1)
                             {
-                                wallYSBorders = labyLocationY + 2;
+                                _wallYSBorders = _labyLocationY + 2;
                             }
                             else
                             {
-                                wallYSBorders = labyLocationY + 1;
+                                _wallYSBorders = _labyLocationY + 1;
                             }
                             break;
                     } //Wall border setters
 
                     //Calculates & assigns south and north wall borders
-                    wallXWBorders = labyLocationX;
-                    wallXEBorders = labyLocationX + wallXLengths;
-                    wallEastX = labyLocationX;
-                    wallWestX = labyLocationX + wallYLengths;
+                    _wallXWBorders = _labyLocationX;
+                    _wallXEBorders = _labyLocationX + _wallXLengths;
+                    _wallEastX = _labyLocationX;
+                    _wallWestX = _labyLocationX + _wallYLengths;
 
                     break;
 
                 case 'w': //If facing West
-                    switch (wallYLengths)
+                    switch (_wallYLengths)
                     {
                         case 1: //If wall lengths are 1
-                            wallYNBorders = labyLocationY;
-                            wallYSBorders = labyLocationY;
+                            _wallYNBorders = _labyLocationY;
+                            _wallYSBorders = _labyLocationY;
                             break;
 
                         case 2: //If wall lengths are 2
-                            wallYNBorders = r.Next(labyLocationY, labyLocationY + 1);
-                            if (wallYNBorders == labyLocationY)
+                            _wallYNBorders = r.Next(_labyLocationY, _labyLocationY + 1);
+                            if (_wallYNBorders == _labyLocationY)
                             {
-                                wallYSBorders = labyLocationY + 1;
+                                _wallYSBorders = _labyLocationY + 1;
                             }
                             else
                             {
-                                wallYSBorders = labyLocationY;
+                                _wallYSBorders = _labyLocationY;
                             }
                             break;
 
                         case 3: //If wall lengths are 3
-                            wallYNBorders = labyLocationY - 1;
-                            wallYSBorders = labyLocationY + 1;
+                            _wallYNBorders = _labyLocationY - 1;
+                            _wallYSBorders = _labyLocationY + 1;
                             break;
 
                         case 4: //If wall lengths are 4
-                            wallYNBorders = r.Next(labyLocationY - 1, labyLocationY - 2);
-                            if (wallYNBorders == labyLocationY - 1)
+                            _wallYNBorders = r.Next(_labyLocationY - 1, _labyLocationY - 2);
+                            if (_wallYNBorders == _labyLocationY - 1)
                             {
-                                wallYSBorders = labyLocationY + 2;
+                                _wallYSBorders = _labyLocationY + 2;
                             }
                             else
                             {
-                                wallYSBorders = labyLocationY + 1;
+                                _wallYSBorders = _labyLocationY + 1;
                             }
                             break;
                     } //Wall border setters
 
                     //Calculates & assigns south and north wall borders
-                    wallXWBorders = labyLocationX;
-                    wallXEBorders = labyLocationX + wallXLengths;
-                    wallEastX = labyLocationX;
-                    wallWestX = labyLocationX + wallYLengths;
+                    _wallXWBorders = _labyLocationX;
+                    _wallXEBorders = _labyLocationX + _wallXLengths;
+                    _wallEastX = _labyLocationX;
+                    _wallWestX = _labyLocationX + _wallYLengths;
                     break;
             } //Facing Direction switch
 
             //Just Entered East Door Condition
-            if (labyLocationX == escapeDoorEX && labyLocationY == escapeDoorEY)
+            if (_labyLocationX == _escapeDoorEX && _labyLocationY == _escapeDoorEY)
             {
                 CanEscapeW = true;
             }
 
             //Just Entered West Door Condition
-            else if (labyLocationX == escapeDoorWX && labyLocationY == escapeDoorWY)
+            else if (_labyLocationX == _escapeDoorWX && _labyLocationY == _escapeDoorWY)
             {
                 CanEscapeE = true;
             }
 
             //If the East wall borders contain the West Escape Door
-            if (wallYSBorders <= escapeDoorWY && wallYNBorders >= escapeDoorWY)
+            if (_wallYSBorders <= _escapeDoorWY && _wallYNBorders >= _escapeDoorWY)
             {
                 CanEscapeW = true;
             }
 
             //If the West wall borders contain the East Escape Door
-            else if (wallYSBorders <= escapeDoorEY && wallYNBorders >= escapeDoorEY)
+            else if (_wallYSBorders <= _escapeDoorEY && _wallYNBorders >= _escapeDoorEY)
             {
                 CanEscapeE = true;
             }
 
             //Chances for a door on each wall
-            doorSouthChance = r.Next(1, 50);
-            doorNorthChance = r.Next(1, 50);
-            doorEastChance = r.Next(1, 50);
-            doorWestChance = r.Next(1, 50);
+            _doorSouthChance = r.Next(1, 50);
+            _doorNorthChance = r.Next(1, 50);
+            _doorEastChance = r.Next(1, 50);
+            _doorWestChance = r.Next(1, 50);
 
-            DoorSouthExists = doorSouthChance >= 25;
-            DoorNorthExists = doorNorthChance >= 25;
-            DoorEastExists = doorEastChance >= 25;
-            DoorWestExists = doorWestChance >= 25;
+            DoorSouthExists = _doorSouthChance >= 25;
+            DoorNorthExists = _doorNorthChance >= 25;
+            DoorEastExists = _doorEastChance >= 25;
+            DoorWestExists = _doorWestChance >= 25;
 
             //Puts doors on walls if they exist
             if (DoorSouthExists == true)
             {
-                doorSouthY = r.Next(wallXWBorders, wallXEBorders);
-                doorSouthX = wallSouthY;
+                _doorSouthY = r.Next(_wallXWBorders, _wallXEBorders);
+                _doorSouthX = _wallSouthY;
             }
             if (DoorNorthExists == true)
             {
-                doorNorthY = r.Next(wallXWBorders, wallXEBorders);
-                doorNorthX = wallNorthY;
+                _doorNorthY = r.Next(_wallXWBorders, _wallXEBorders);
+                _doorNorthX = _wallNorthY;
             }
             if (DoorEastExists == true)
             {
-                doorEastX = wallEastX;
-                doorEastY = r.Next(wallYNBorders, wallYSBorders);
+                _doorEastX = _wallEastX;
+                _doorEastY = r.Next(_wallYNBorders, _wallYSBorders);
             }
             if (DoorWestExists == true)
             {
-                doorWestX = wallWestX;
-                doorWestY = r.Next(wallYNBorders, wallYSBorders);
+                _doorWestX = _wallWestX;
+                _doorWestY = r.Next(_wallYNBorders, _wallYSBorders);
             }
 
             RoomSizeAssigner();
@@ -332,105 +332,105 @@ namespace HelloWorld
 
         public void RoomSizeAssigner()
         {
-            switch (wallXLengths)
+            switch (_wallXLengths)
             {
                 case 1: //1x
 
-                    switch (wallYLengths)
+                    switch (_wallYLengths)
                     {
                         case 1: //1y
-                            roomShape = "1x1";
-                            roomType = "square";
+                            _roomShape = "1x1";
+                            _roomType = "square";
                             break;
 
                         case 2://2y
-                            roomShape = "1x2";
-                            roomType = "rectangle";
+                            _roomShape = "1x2";
+                            _roomType = "rectangle";
                             break;
 
                         case 3://3y
-                            roomShape = "1x3";
-                            roomType = "hallway";
+                            _roomShape = "1x3";
+                            _roomType = "hallway";
                             break;
 
                         case 4://4y
-                            roomShape = "1x4";
-                            roomType = "hallway";
+                            _roomShape = "1x4";
+                            _roomType = "hallway";
                             break;
                     } //Y wall length
                     break; //1x
 
                 case 2: //2x
-                    switch (wallYLengths)
+                    switch (_wallYLengths)
                     {
                         case 1: //1y
-                            roomShape = "1x2";
-                            roomType = "rectangle";
+                            _roomShape = "1x2";
+                            _roomType = "rectangle";
                             break;
 
                         case 2://2y
-                            roomShape = "2x2";
-                            roomType = "square";
+                            _roomShape = "2x2";
+                            _roomType = "square";
                             break;
 
                         case 3://3y
-                            roomShape = "2x3";
-                            roomType = "rectangle";
+                            _roomShape = "2x3";
+                            _roomType = "rectangle";
                             break;
 
                         case 4://4y
-                            roomShape = "2x4";
-                            roomType = "hallway";
+                            _roomShape = "2x4";
+                            _roomType = "hallway";
                             break;
                     } //Y wall length
                     break; //2x
 
                 case 3: //3x
-                    switch (wallYLengths)
+                    switch (_wallYLengths)
                     {
                         case 1: //1y
-                            roomShape = "1x3";
-                            roomType = "hallway";
+                            _roomShape = "1x3";
+                            _roomType = "hallway";
                             break;
 
                         case 2://2y
-                            roomShape = "2x3";
-                            roomType = "rectangle";
+                            _roomShape = "2x3";
+                            _roomType = "rectangle";
                             break;
 
                         case 3://3y
-                            roomShape = "3x3";
-                            roomType = "square";
+                            _roomShape = "3x3";
+                            _roomType = "square";
                             break;
 
                         case 4://4y
-                            roomShape = "3x4";
-                            roomType = "rectangle";
+                            _roomShape = "3x4";
+                            _roomType = "rectangle";
                             break;
                     } //Y wall length
                     break; //3x
 
                 case 4: //4x
-                    switch (wallYLengths)
+                    switch (_wallYLengths)
                     {
                         case 1: //1y
-                            roomShape = "1x4";
-                            roomType = "hallway";
+                            _roomShape = "1x4";
+                            _roomType = "hallway";
                             break;
 
                         case 2://2y
-                            roomShape = "2x4";
-                            roomType = "hallway";
+                            _roomShape = "2x4";
+                            _roomType = "hallway";
                             break;
 
                         case 3://3y
-                            roomShape = "3x4";
-                            roomType = "rectangle";
+                            _roomShape = "3x4";
+                            _roomType = "rectangle";
                             break;
 
                         case 4://4y
-                            roomShape = "4x4";
-                            roomType = "square";
+                            _roomShape = "4x4";
+                            _roomType = "square";
                             break;
                     } //Y wall length
                     break; //4x
@@ -440,7 +440,7 @@ namespace HelloWorld
 
         public void LabyrinthRoomText()
         {
-            switch (roomShape)
+            switch (_roomShape)
             {
                 case "1x1":
                     Console.WriteLine("[This is a very cramped room]");
@@ -495,29 +495,29 @@ namespace HelloWorld
 
             if (DoorSouthExists)
             {
-                switch (roomType)
+                switch (_roomType)
                 {
                     case "square":
                         Console.WriteLine("[There's a door on the South wall of the room]");
                         break;
 
                     case "rectangle":
-                        if (wallXLengths > wallYLengths) //If East/West walls make it a rectangle
+                        if (_wallXLengths > _wallYLengths) //If East/West walls make it a rectangle
                         {
                             Console.WriteLine("[There's a door on the South end of the room]");
                         }
-                        else if (wallYLengths > wallXLengths) //If South/North walls make it a rectangle
+                        else if (_wallYLengths > _wallXLengths) //If South/North walls make it a rectangle
                         {
                             Console.WriteLine("[There's a door on the South side of the room]");
                         }
                         break;
 
                     case "hallway":
-                        if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                        if (_wallXLengths > _wallYLengths) //If East/West walls make it a hall
                         {
                             Console.WriteLine("[There's a door on the South wall of the hallway]");
                         }
-                        else if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                        else if (_wallYLengths > _wallXLengths) //If South/North walls make it a hall
                         {
                             Console.WriteLine("[There's a door on the South end]");
                         }
@@ -527,29 +527,29 @@ namespace HelloWorld
 
             if (DoorNorthExists)
             {
-                switch (roomType)
+                switch (_roomType)
                 {
                     case "square":
                         Console.WriteLine("[There's a door on the North wall of the room]");
                         break;
 
                     case "rectangle":
-                        if (wallXLengths > wallYLengths) //If East/West walls make it a rectangle
+                        if (_wallXLengths > _wallYLengths) //If East/West walls make it a rectangle
                         {
                             Console.WriteLine("[There's a door on the North end of the room]");
                         }
-                        else if (wallYLengths > wallXLengths) //If South/North walls make it a rectangle
+                        else if (_wallYLengths > _wallXLengths) //If South/North walls make it a rectangle
                         {
                             Console.WriteLine("[There's a door on the North side of the room]");
                         }
                         break;
 
                     case "hallway":
-                        if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                        if (_wallXLengths > _wallYLengths) //If East/West walls make it a hall
                         {
                             Console.WriteLine("[There's a door on the North end of the hallway]");
                         }
-                        else if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                        else if (_wallYLengths > _wallXLengths) //If South/North walls make it a hall
                         {
                             Console.WriteLine("[There's a door on the North side]");
                         }
@@ -559,29 +559,29 @@ namespace HelloWorld
 
             if (DoorEastExists)
             {
-                switch (roomType)
+                switch (_roomType)
                 {
                     case "square":
                         Console.WriteLine("[There's a door on the East wall of the room]");
                         break;
 
                     case "rectangle":
-                        if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                        if (_wallXLengths > _wallYLengths) //If East/West walls make it a hall
                         {
                             Console.WriteLine("[There's a door on the East side of the room]");
                         }
-                        else if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                        else if (_wallYLengths > _wallXLengths) //If South/North walls make it a hall
                         {
                             Console.WriteLine("[There's a door on the East end of the room]");
                         }
                         break;
 
                     case "hallway":
-                        if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                        if (_wallXLengths > _wallYLengths) //If East/West walls make it a hall
                         {
                             Console.WriteLine("[There's a door on the East wall of the hallway]");
                         }
-                        else if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                        else if (_wallYLengths > _wallXLengths) //If South/North walls make it a hall
                         {
                             Console.WriteLine("[There's a door on the East end]");
                         }
@@ -591,29 +591,29 @@ namespace HelloWorld
 
             if (DoorWestExists)
             {
-                switch (roomType)
+                switch (_roomType)
                 {
                     case "square":
                         Console.WriteLine("[There's a door on the West wall of the room]");
                         break;
 
                     case "rectangle":
-                        if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                        if (_wallXLengths > _wallYLengths) //If East/West walls make it a hall
                         {
                             Console.WriteLine("[There's a door on the West side of the room]");
                         }
-                        else if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                        else if (_wallYLengths > _wallXLengths) //If South/North walls make it a hall
                         {
                             Console.WriteLine("[There's a door on the West end of the room]");
                         }
                         break;
 
                     case "hallway":
-                        if (wallXLengths > wallYLengths) //If East/West walls make it a hall
+                        if (_wallXLengths > _wallYLengths) //If East/West walls make it a hall
                         {
                             Console.WriteLine("[There's a door on the West wall of the hallway]");
                         }
-                        else if (wallYLengths > wallXLengths) //If South/North walls make it a hall
+                        else if (_wallYLengths > _wallXLengths) //If South/North walls make it a hall
                         {
                             Console.WriteLine("[There's a door on the West end]");
                         }
@@ -668,7 +668,7 @@ namespace HelloWorld
                 Console.WriteLine("[4: Look at Western Wall]");
             } //West
 
-            if (labyLocationX != escapeDoorEX && labyLocationX != escapeDoorWX)
+            if (_labyLocationX != _escapeDoorEX && _labyLocationX != _escapeDoorWX)
             {
                 Console.WriteLine("[5: Go Back]");
             } //If player didn't just enter the labyrinth
@@ -680,11 +680,11 @@ namespace HelloWorld
         {
             if (DoorSouthExists == true)
             {
-                oldLabyLocationX = labyLocationX;
-                oldLabyLocationY = labyLocationY;
+                _oldLabyLocationX = _labyLocationX;
+                _oldLabyLocationY = _labyLocationY;
 
-                labyLocationX = doorSouthX;
-                labyLocationY = doorSouthY;
+                _labyLocationX = _doorSouthX;
+                _labyLocationY = _doorSouthY;
                 GenerateRoom();
             }
             else
@@ -699,11 +699,11 @@ namespace HelloWorld
         {
             if (DoorNorthExists == true)
             {
-                oldLabyLocationX = labyLocationX;
-                oldLabyLocationY = labyLocationY;
+                _oldLabyLocationX = _labyLocationX;
+                _oldLabyLocationY = _labyLocationY;
 
-                labyLocationX = doorNorthX;
-                labyLocationY = doorNorthY;
+                _labyLocationX = _doorNorthX;
+                _labyLocationY = _doorNorthY;
                 GenerateRoom();
             }
             else
@@ -718,11 +718,11 @@ namespace HelloWorld
         {
             if (DoorEastExists == true)
             {
-                oldLabyLocationX = labyLocationX;
-                oldLabyLocationY = labyLocationY;
+                _oldLabyLocationX = _labyLocationX;
+                _oldLabyLocationY = _labyLocationY;
 
-                labyLocationX = doorEastX;
-                labyLocationY = doorEastY;
+                _labyLocationX = _doorEastX;
+                _labyLocationY = _doorEastY;
                 GenerateRoom();
 
             }
@@ -738,11 +738,11 @@ namespace HelloWorld
         {
             if (DoorWestExists == true)
             {
-                oldLabyLocationX = labyLocationX;
-                oldLabyLocationY = labyLocationY;
+                _oldLabyLocationX = _labyLocationX;
+                _oldLabyLocationY = _labyLocationY;
 
-                labyLocationX = doorWestX;
-                labyLocationY = doorWestY;
+                _labyLocationX = _doorWestX;
+                _labyLocationY = _doorWestY;
                 GenerateRoom();
             }
             else
