@@ -1752,42 +1752,42 @@ namespace HelloWorld
         {
             do
             {
-                Console.WriteLine("You've gained a level!");
-                action = GetAction(ref action, "What would you like to level up?", "[1: Health]", "[2: Regen]", "[3: Heal]", "[4: Defense]", "[5: Damage]", "[6: Split Evenly]");
-                switch (action)
+                do
                 {
-                    case '1': //Health
-                        player1.totalHealth += 5;
-                        break;
+                    Console.WriteLine("You've gained a level!");
+                    action = GetAction(ref action, "What would you like to level up?", "[1: Health]", "[2: Regen]", "[3: Heal]", "[4: Defense]", "[5: Damage]", "[6: Split Evenly]");
+                    switch (action)
+                    {
+                        case '1': //Health
+                            player1.totalHealth += 5;
+                            break;
 
-                    case '2': //Regen
-                        player1.healthRegen += 5;
-                        break;
+                        case '2': //Regen
+                            player1.healthRegen += 5;
+                            break;
 
-                    case '3': //Heal
-                        player1.totalHeal += 5;
-                        break;
+                        case '3': //Heal
+                            player1.totalHeal += 5;
+                            break;
 
-                    case '4': //Defense
-                        player1.totalDefense += 5;
-                        break;
+                        case '4': //Defense
+                            player1.totalDefense += 5;
+                            break;
 
-                    case '5': //Damage
-                        player1.damageAddition += 5;
-                        break;
+                        case '5': //Damage
+                            player1.damageAddition += 5;
+                            break;
 
-                    case '6': //Everything
-                        player1.totalHealth++;
-                        player1.healthRegen++;
-                        player1.totalHeal++;
-                        player1.totalDamage++;
-                        player1.baseDamage++;
-                        break;
-
-                    default:
-                        LevelUp();
-                        break;
-                } //Action Switch
+                        case '6': //Everything
+                            player1.totalHealth++;
+                            player1.healthRegen++;
+                            player1.totalHeal++;
+                            player1.totalDamage++;
+                            player1.baseDamage++;
+                            break;
+                    } //Action Switch
+                } //While action is invalid
+                while (action != '1' || action != '2' || action != '3' || action != '4' || action != '5' || action != '6');
 
                 //If action is valid
                 if (action == '1' || action == '2' || action == '3' || action == '4' || action == '5' || action == '6')
