@@ -229,6 +229,7 @@ namespace HelloWorld
             styleName = "Fool";
             specialty = "Foolishness";
 
+            NothingInitializer();
             inventory = new Item[inventorySize];
             currentWeapon = nothing;
         } //Constructor
@@ -246,6 +247,8 @@ namespace HelloWorld
             defense = defenseVal;
             styleName = style;
             specialty = specialtyVal;
+
+            NothingInitializer();
             currentWeapon = nothing;
         } //Overload Constructor
 
