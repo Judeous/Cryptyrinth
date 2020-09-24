@@ -7,7 +7,7 @@ namespace HelloWorld
     public class Player
     {
         //Player Declarations
-        public string _name;
+        private string _name;
 
 
         //Experience/Level
@@ -41,25 +41,27 @@ namespace HelloWorld
 
         //Damage
         private int _totalDamage;
-        public int _baseDamage;
-        public float _damageMultiplier = 1;
-        public int _damageAddition;
+        private int _baseDamage;
+        private float _damageMultiplier = 1;
+        private int _damageAddition;
 
         //Specialty/Style
-        public string _specialty;
-        public string _styleName;
-
-        public bool IsBot;
+        private string _specialty;
+        private string _styleName;
 
         //Inventory
         private Item[] _inventory;
-        public int _inventorySize = 10;
+        private int _inventorySize = 10;
+
         private Item _currentWeapon;
+        private bool _HasWeaponEquipped;
         private Item _currentItem;
-        public bool _HasWeaponEquipped;
-        public bool _HasItemEquipped;
+        private bool _HasItemEquipped;
 
         private Item nothing;
+
+        public bool IsBot;
+
         public void NothingInitializer()
         {
             nothing._healthAddition = 0;
@@ -388,6 +390,10 @@ namespace HelloWorld
             Console.Clear(); //Clears the screen
         } //Stat Check function
 
+        public string GetName()
+        {
+            return _name;
+        }
         public int GetLevel()
         {
             return _level;
@@ -421,6 +427,11 @@ namespace HelloWorld
         public int GetDamage()
         {
             return _totalDamage;
+        }
+
+        public string GetSpecialty()
+        {
+            return _specialty;
         }
 
         public char GetAction(ref char choice, string query, string option1, string option2)
