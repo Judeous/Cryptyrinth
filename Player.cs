@@ -23,24 +23,24 @@ namespace HelloWorld
         private int _baseHealth;
 
         //Regen
-        public int _healthRegen;
-        public int _healthRegenAddition;
-        public int _healthRegenMultiplier = 1;
+        private int _healthRegen;
+        private int _healthRegenAddition;
+        private int _healthRegenMultiplier = 1;
 
         //Healing
-        public int _totalHeal;
-        public int _baseHeal;
-        public int _healAddition;
-        public int _healMultiplier = 1;
+        private int _totalHeal;
+        private int _baseHeal;
+        private int _healAddition;
+        private int _healMultiplier = 1;
 
         //Defense
-        public int _defense;
-        public int _totalDefense;
-        public int _defenseAddition;
-        public int _defenseMultiplier = 1;
+        private int _totalDefense;
+        private int _defense;
+        private int _defenseAddition;
+        private int _defenseMultiplier = 1;
 
         //Damage
-        public int _totalDamage;
+        private int _totalDamage;
         public int _baseDamage;
         public float _damageMultiplier = 1;
         public int _damageAddition;
@@ -401,6 +401,26 @@ namespace HelloWorld
         public int GetMaxHealth()
         {
             return _MaxHealth;
+        }
+
+        public int GetHealthRegen()
+        {
+            return _healthRegen;
+        }
+
+        public int GetHeal()
+        {
+            return _totalHeal;
+        }
+
+        public int GetDefense()
+        {
+            return _totalDefense;
+        }
+
+        public int GetDamage()
+        {
+            return _totalDamage;
         }
 
         public char GetAction(ref char choice, string query, string option1, string option2)
