@@ -1626,15 +1626,15 @@ namespace HelloWorld
             switch (_action)
             {
                 case '1':
-                    player.EquipWeapon(inventory[0], 0);
+                    player.EquipWeapon(_player1.GetItem(), inventory[0], 0);
                     break;
 
                 case '2':
-                    player.EquipWeapon(inventory[1], 1);
+                    player.EquipWeapon(_player1.GetItem(), inventory[1], 1);
                     break;
 
                 case '3':
-                    player.EquipWeapon(inventory[2], 2);
+                    player.EquipWeapon(_player1.GetItem(), inventory[2], 2);
                     break;
             } //action switch
         } //Switch Item function

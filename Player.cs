@@ -54,9 +54,9 @@ namespace HelloWorld
         private int _inventorySize = 10;
 
         private Item _currentWeapon;
-        private bool _HasWeaponEquipped;
+        private bool _HasWeaponEquipped = false;
         private Item _currentItem;
-        private bool _HasItemEquipped;
+        private bool _HasItemEquipped = false;
 
         private Item nothing;
 
@@ -64,6 +64,8 @@ namespace HelloWorld
 
         public void NothingInitializer()
         {
+            nothing._name = "nothing";
+
             nothing._healthAddition = 0;
             _healthMultiplier = 1;
 
@@ -85,43 +87,111 @@ namespace HelloWorld
             _inventory[invLocation] = item;
         }
 
-        public void EquipItem(Item item, int itemIndex)
+        public void EquipItem(Item newItem, Item oldItem, int itemIndex)
         {
             Console.Clear();
 
-            item = _inventory[itemIndex];
+            if (_HasItemEquipped)
+            {
+                Console.WriteLine();
 
-            _healthAddition += item._healthAddition;
-            _healthMultiplier += item._healthMultiplier;
+                char action= ' ';
+                GetAction(ref action, "[I have " + oldItem._name + " on; should I put it away or keep it?]", "[Equip new item]", "[Keep old item]");
 
-            _healthRegenAddition += item._healthRegenAddition;
-            _healthRegenMultiplier += item._healthRegenMultiplier;
+                switch(action)
+                {
+                    case '1':
+                        _healthAddition += newItem._healthAddition;
+                        _healthMultiplier += newItem._healthMultiplier;
 
-            _healAddition += item._healAddition;
-            _healMultiplier += item._healMultiplier;
+                        _healthRegenAddition += newItem._healthRegenAddition;
+                        _healthRegenMultiplier += newItem._healthRegenMultiplier;
 
-            _defenseAddition += item._defenseAddition;
-            _defenseMultiplier += item._defenseMultiplier;
+                        _healAddition += newItem._healAddition;
+                        _healMultiplier += newItem._healMultiplier;
 
-            _currentItem = item;
-            _HasItemEquipped = true;
+                        _defenseAddition += newItem._defenseAddition;
+                        _defenseMultiplier += newItem._defenseMultiplier;
 
-            Console.WriteLine("[I've equipped the " + _currentItem + "]");
-            Pause();
-        } //Equip Item
+                        _currentItem = newItem;
+                        _HasItemEquipped = true;
 
-        public void EquipWeapon(Item item, int itemIndex)
+                        StatCalculation();
+                        Console.WriteLine("[I've equipped the " + _currentItem + "]");
+                        Pause();
+
+                        break;
+
+                    default:
+                        Console.WriteLine("[I kept the " + _currentItem + "]");
+                        Pause();
+                        break;
+                } //Action Switch
+            } //If player already has item
+            else
+            {
+                _healthAddition += newItem._healthAddition;
+                _healthMultiplier += newItem._healthMultiplier;
+
+                _healthRegenAddition += newItem._healthRegenAddition;
+                _healthRegenMultiplier += newItem._healthRegenMultiplier;
+
+                _healAddition += newItem._healAddition;
+                _healMultiplier += newItem._healMultiplier;
+
+                _defenseAddition += newItem._defenseAddition;
+                _defenseMultiplier += newItem._defenseMultiplier;
+
+                _currentItem = newItem;
+                _HasItemEquipped = true;
+
+                StatCalculation();
+                Console.WriteLine("[I've equipped the " + _currentItem + "]");
+                Pause();
+
+                newItem = _inventory[itemIndex];
+            } //If player doesn't have item equipped
+        } //Equip Item function
+
+        public void EquipWeapon(Item oldWeapon, Item newWeapon, int itemIndex)
         {
             Console.Clear();
 
-            _baseDamage += item._damageAddition;
-            _damageMultiplier += item._damageMultiplier;
+            if(_HasWeaponEquipped)
+            {
+                char action = ' ';
+                GetAction(ref action, "[I have " + oldWeapon._name + " out; should I put it away or keep it?]", "[Equip new weapon]", "[Keep old weapon]");
 
-            _currentWeapon = item;
-            _HasWeaponEquipped = true;
+                switch(action)
+                {
+                    case '1':
+                        _baseDamage += oldWeapon._damageAddition;
+                        _damageMultiplier += oldWeapon._damageMultiplier;
 
-            Console.WriteLine("[I've equipped the " + _currentWeapon + "]");
-            Pause();
+                        _currentWeapon = oldWeapon;
+                        _HasWeaponEquipped = true;
+
+                        Console.WriteLine("[I've equipped the " + _currentWeapon + "]");
+                        Pause();
+                        break;
+
+                    default:
+                        Console.WriteLine("[I kept the " + _currentWeapon + "]");
+                        Pause();
+                        break;
+                }
+            } //If player has weapon
+            else
+            {
+                _baseDamage += oldWeapon._damageAddition;
+                _damageMultiplier += oldWeapon._damageMultiplier;
+
+                _currentWeapon = oldWeapon;
+                _HasWeaponEquipped = true;
+
+                Console.WriteLine("[I've equipped the " + _currentWeapon + "]");
+                Pause();
+            } //If player doesn't have weapon
         } //Equip Weapon
 
         public void UnequipItem()
@@ -161,11 +231,6 @@ namespace HelloWorld
             _currentWeapon = nothing;
             _HasWeaponEquipped = false;
         } //unequip Weapon
-
-        public Item[] GetInventory()
-        {
-            return _inventory;
-        }
 
         public void CheckInventory()
         {
@@ -399,6 +464,11 @@ namespace HelloWorld
             return _level;
         } //Level Getter
 
+        public Item[] GetInventory()
+        {
+            return _inventory;
+        }
+
         public int GetHealth()
         {
             return _totalHealth;
@@ -432,6 +502,16 @@ namespace HelloWorld
         public string GetSpecialty()
         {
             return _specialty;
+        }
+
+        public Item GetWeapon()
+        {
+            return _currentWeapon;
+        }
+
+        public Item GetItem()
+        {
+            return _currentItem;
         }
 
         public char GetAction(ref char choice, string query, string option1, string option2)
