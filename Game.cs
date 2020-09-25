@@ -7,7 +7,6 @@ namespace HelloWorld
 {
     public struct Item
     {
-
         public string _name;
         public int _expAddition;
         public float _expMultiplier;
