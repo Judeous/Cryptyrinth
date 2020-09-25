@@ -7,7 +7,7 @@ namespace HelloWorld
     class Labyrinth
     {
         //Labyrinth Declarations
-        ///Sets the locations to the EntryWay door location
+        ///Sets the initial locations to the EntryWay door location
         private int _labyLocationX = 7;
         private int _labyLocationY = 26;
         ///For a Back action
