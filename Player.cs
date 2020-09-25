@@ -371,19 +371,19 @@ namespace HelloWorld
                     switch (_action)
                     {
                         case '1': //Health
-                            _totalHealth += 5;
+                            _healthAddition += 5;
                             break;
 
                         case '2': //Regen
-                            _healthRegen += 5;
+                            _healthRegenAddition += 5;
                             break;
 
                         case '3': //Heal
-                            _totalHeal += 5;
+                            _healAddition += 5;
                             break;
 
                         case '4': //Defense
-                            _totalDefense += 5;
+                            _defenseAddition += 5;
                             break;
 
                         case '5': //Damage
@@ -391,11 +391,11 @@ namespace HelloWorld
                             break;
 
                         case '6': //Everything
-                            _totalHealth++;
-                            _healthRegen++;
-                            _totalHeal++;
-                            _totalDamage++;
-                            _baseDamage++;
+                            _healthAddition++;
+                            _healthRegenAddition++;
+                            _healAddition++;
+                            _defenseAddition++;
+                            _damageAddition++;
                             break;
                     } //Action Switch
                 } //While action is invalid
