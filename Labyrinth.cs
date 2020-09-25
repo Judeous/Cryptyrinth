@@ -8,59 +8,59 @@ namespace HelloWorld
     {
         //Labyrinth Declarations
         ///Sets the locations to the EntryWay door location
-        public int _labyLocationX = 7;
-        public int _labyLocationY = 26;
+        private int _labyLocationX = 7;
+        private int _labyLocationY = 26;
         ///For a Back action
-        public int _oldLabyLocationX;
-        public int _oldLabyLocationY;
-        public char _facingDirection;
+        private int _oldLabyLocationX;
+        private int _oldLabyLocationY;
+        private char _facingDirection;
         ///Wall length declarations
-        public string _roomShape;
-        public string _roomType;
-        public int _minWallLength = 1;
-        public int _maxWallLength = 4;
-        public int _wallXLengths;
-        public int _wallYLengths;
+        private string _roomShape;
+        private string _roomType;
+        private int _minWallLength = 1;
+        private int _maxWallLength = 4;
+        private int _wallXLengths;
+        private int _wallYLengths;
         ///Borders for walls
-        public int _wallSouthY;
-        public int _wallNorthY;
-        public int _wallXWBorders;
-        public int _wallXEBorders;
+        private int _wallSouthY;
+        private int _wallNorthY;
+        private int _wallXWBorders;
+        private int _wallXEBorders;
 
-        public int _wallEastX;
-        public int _wallWestX;
-        public int _wallYNBorders;
-        public int _wallYSBorders;
+        private int _wallEastX;
+        private int _wallWestX;
+        private int _wallYNBorders;
+        private int _wallYSBorders;
         ///Variables used for randomizing the appearance of respective doors
-        public int _doorSouthChance;
-        public int _doorNorthChance;
-        public int _doorEastChance;
-        public int _doorWestChance;
+        private int _doorSouthChance;
+        private int _doorNorthChance;
+        private int _doorEastChance;
+        private int _doorWestChance;
         ///Bools for doors
-        public bool CanEscapeE = false;
-        public bool CanEscapeW = false;
-        public bool DoorSouthExists = false;
-        public bool DoorNorthExists = false;
-        public bool DoorEastExists = false;
-        public bool DoorWestExists = false;
+        private bool CanEscapeE = false;
+        private bool CanEscapeW = false;
+        private bool DoorSouthExists = false;
+        private bool DoorNorthExists = false;
+        private bool DoorEastExists = false;
+        private bool DoorWestExists = false;
         ///Coordinate variables for the doors, if they exist
-        public int _escapeDoorWY = 25;
-        public int _escapeDoorWX = 5;
+        private int _escapeDoorWY = 25;
+        private int _escapeDoorWX = 5;
 
-        public int _escapeDoorEY = 22;
-        public int _escapeDoorEX = 9;
+        private int _escapeDoorEY = 22;
+        private int _escapeDoorEX = 9;
 
-        public int _doorSouthX;
-        public int _doorSouthY;
+        private int _doorSouthX;
+        private int _doorSouthY;
 
-        public int _doorNorthX;
-        public int _doorNorthY;
+        private int _doorNorthX;
+        private int _doorNorthY;
 
-        public int _doorEastX;
-        public int _doorEastY;
+        private int _doorEastX;
+        private int _doorEastY;
 
-        public int _doorWestX;
-        public int _doorWestY;
+        private int _doorWestX;
+        private int _doorWestY;
 
         Random r = new Random(); //Sets a variable for a randomizer
 
