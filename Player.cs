@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HelloWorld
 {
-    public class Player
+    public class Player : Character
     {
         //Player Declarations
         private string _name;
