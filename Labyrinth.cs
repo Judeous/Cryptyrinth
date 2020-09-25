@@ -676,6 +676,30 @@ namespace HelloWorld
             Console.WriteLine("[9: Nine Menu]");
         } //Labyrinth Action function
 
+        public void EnterLabyrinthW()
+        {
+            _facingDirection = 'w';
+            _oldLabyLocationX = _labyLocationX;
+            _oldLabyLocationY = _labyLocationY;
+
+            _labyLocationX = 5;
+            _labyLocationY = 25;
+            GenerateRoom();
+            DoorEastExists = true;
+        } //Enter Labyrinth West function
+
+        public void EnterLabyrinthE()
+        {
+            _facingDirection = 'e';
+            _oldLabyLocationX = _labyLocationX;
+            _oldLabyLocationY = _labyLocationY;
+
+            _labyLocationX = 9;
+            _labyLocationY = 22;
+            GenerateRoom();
+            DoorWestExists = true;
+        } //Enter Labyrinth East function
+
         public void DoSouth()
         {
             if (DoorSouthExists == true)
@@ -714,17 +738,21 @@ namespace HelloWorld
             }
         } //Do North function
 
-        public void DoEast()
+        public void DoEast(ref Player player)
         {
             if (DoorEastExists == true)
             {
+                if (CanEscapeW == true)
+                {
+                    player.ChangeArea("LabyrinthEntryway");
+                    return;
+                }
                 _oldLabyLocationX = _labyLocationX;
                 _oldLabyLocationY = _labyLocationY;
 
                 _labyLocationX = _doorEastX;
                 _labyLocationY = _doorEastY;
                 GenerateRoom();
-
             }
             else
             {
@@ -734,17 +762,22 @@ namespace HelloWorld
             }
         } //Do East function
 
-        public void DoWest()
+        public void DoWest(ref Player player)
         {
             if (DoorWestExists == true)
             {
+                if (CanEscapeE == true)
+                {
+                    player.ChangeArea("LabyrinthEntryway");
+                    return;
+                }
                 _oldLabyLocationX = _labyLocationX;
                 _oldLabyLocationY = _labyLocationY;
 
                 _labyLocationX = _doorWestX;
                 _labyLocationY = _doorWestY;
                 GenerateRoom();
-            }
+            } //If a door exists
             else
             {
                 Console.Clear();
@@ -752,6 +785,12 @@ namespace HelloWorld
                 Pause();
             }
         } //Do West function
+
+        public void GoBack()
+        {
+            _labyLocationX = _oldLabyLocationX;
+            _labyLocationY = _oldLabyLocationY;
+        } //Go Back function
 
         public void Pause()
         {

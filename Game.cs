@@ -71,9 +71,6 @@ namespace HelloWorld
         public bool InBattle = false;
         public int turncounter;
 
-
-        string _area = "Shack"; //Starting Location
-
         //Field Locations
         public bool ShackExplored = false;
         public bool FieldExplored = false;
@@ -124,7 +121,7 @@ namespace HelloWorld
                 case '1': //Adventure
                     if (InBattle != true)
                     {
-                        switch (_area)
+                        switch (_player1.GetArea())
                         {
                             case "Shack":
 
@@ -153,7 +150,7 @@ namespace HelloWorld
                                         break;
 
                                     case '2': //Go to the field
-                                        _area = "Field";
+                                        _player1.ChangeArea("Field");
                                         break;
 
                                     case '3':
@@ -200,15 +197,15 @@ namespace HelloWorld
                                 switch (_action)
                                 {
                                     case '1': //Go to Shack
-                                        _area = "Shack";
+                                        _player1.ChangeArea("Shack");
                                         break;
 
                                     case '2': //Go to Labyrinth
-                                        _area = "LabyrinthEntrance";
+                                        _player1.ChangeArea("LabyrinthEntrance");
                                         break;
 
                                     case '3': //Go to Castle
-                                        _area = "CastleGate";
+                                        _player1.ChangeArea("CastleGate");
                                         break;
 
                                     case '4': //Engage a slime
@@ -273,11 +270,11 @@ namespace HelloWorld
                                 switch (_action)
                                 {
                                     case '1': //Go to Field
-                                        _area = "Field";
+                                        _player1.ChangeArea("Field");
                                         break;
 
                                     case '2': //Enter the Labyrinth
-                                        _area = "LabyrinthEntryway";
+                                        _player1.ChangeArea("LabyrinthEntryway");
                                         break;
 
                                     case '3': //Read the Panel
@@ -342,31 +339,17 @@ namespace HelloWorld
                                 switch (_action)
                                 {
                                     case '1': //Exit the Labyrinth
-                                        _area = "LabyrinthEntrance";
+                                        _player1.ChangeArea("LabyrinthEntrance");
                                         break;
 
                                     case '2': //Enter West door
-                                        _area = "Labyrinth";
-                                        _labyrinth._facingDirection = 'w';
-                                        _labyrinth._oldLabyLocationX = _labyrinth._labyLocationX;
-                                        _labyrinth._oldLabyLocationY = _labyrinth._labyLocationY;
-
-                                        _labyrinth._labyLocationX = 5;
-                                        _labyrinth._labyLocationY = 25;
-                                        _labyrinth.GenerateRoom();
-                                        _labyrinth.DoorEastExists = true;
+                                        _player1.ChangeArea("Labyrinth");
+                                        _labyrinth.EnterLabyrinthW();
                                         break;
 
                                     case '3': //Enter East door
-                                        _area = "Labyrinth";
-                                        _labyrinth._facingDirection = 'e';
-                                        _labyrinth._oldLabyLocationX = _labyrinth._labyLocationX;
-                                        _labyrinth._oldLabyLocationY = _labyrinth._labyLocationY;
-
-                                        _labyrinth._labyLocationX = 9;
-                                        _labyrinth._labyLocationY = 22;
-                                        _labyrinth.GenerateRoom();
-                                       _labyrinth. DoorWestExists = true;
+                                        _player1.ChangeArea("Labyrinth");
+                                        _labyrinth.EnterLabyrinthE();
                                         break;
 
                                     case '4': //Check out table
@@ -451,24 +434,15 @@ namespace HelloWorld
                                         break;
 
                                     case '3': //East
-                                        if (_labyrinth.CanEscapeE == true)
-                                        {
-                                            _area = "LabyrinthEntryway";
-                                        }
-                                        _labyrinth.DoEast();
+                                        _labyrinth.DoEast(ref _player1);
                                         break;
 
                                     case '4': //West
-                                        if (_labyrinth.CanEscapeW == true)
-                                        {
-                                            _area = "LabyrinthEntryway";
-                                        }
-                                        _labyrinth.DoWest();
+                                        _labyrinth.DoWest(ref _player1);
                                         break;
 
                                     case '5': //Go Back
-                                        _labyrinth._labyLocationX = _labyrinth._oldLabyLocationX;
-                                        _labyrinth._labyLocationY = _labyrinth._oldLabyLocationY;
+                                        _labyrinth.GoBack();
                                         break;
 
 
@@ -507,11 +481,11 @@ namespace HelloWorld
                                 switch (_action)
                                 {
                                     case '1': //Return to field
-                                        _area = "Field";
+                                        _player1.ChangeArea("Field");
                                         break;
 
                                     case '2': //Go to castle
-                                        _area = "CastleEntry";
+                                        _player1.ChangeArea("CastleEntry");
                                         break;
 
 
@@ -554,7 +528,7 @@ namespace HelloWorld
                                 switch (_action)
                                 {
                                     case '1': //Exit the castle
-                                        _area = "CastleGate";
+                                        _player1.ChangeArea("CastleGate");
                                         break;
 
                                     case '2': //Enter the Void
@@ -567,7 +541,7 @@ namespace HelloWorld
 
                                         if (_player1.GetLevel() >= 10)
                                         {
-                                            _area = "    ";
+                                            _player1.ChangeArea("    ");
                                         }
                                         break;
 
@@ -615,7 +589,7 @@ namespace HelloWorld
                                 switch (_action)
                                 {
                                     case '1': //Exit the Void
-                                        _area = "CastleEntry";
+                                        _player1.ChangeArea("CastleEntry");
                                         break;
 
                                     case '2': //Nothing

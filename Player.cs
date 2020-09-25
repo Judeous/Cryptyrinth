@@ -9,6 +9,7 @@ namespace HelloWorld
         //Player Declarations
         private string _name;
 
+        private string _area = "Shack";
 
         //Experience/Level
         private int _level;
@@ -459,6 +460,17 @@ namespace HelloWorld
         {
             return _name;
         }
+
+        public string GetArea()
+        {
+            return _area;
+        }
+
+        public void ChangeArea(string newArea)
+        {
+            _area = newArea;
+        }
+
         public int GetLevel()
         {
             return _level;
