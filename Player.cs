@@ -102,6 +102,8 @@ namespace HelloWorld
                 switch(action)
                 {
                     case '1':
+                        UnequipItem();
+
                         _healthAddition += newItem._healthAddition;
                         _healthMultiplier += newItem._healthMultiplier;
 
@@ -166,6 +168,8 @@ namespace HelloWorld
                 switch(action)
                 {
                     case '1':
+                        UnequipWeapon();
+
                         _baseDamage += oldWeapon._damageAddition;
                         _damageMultiplier += oldWeapon._damageMultiplier;
 
@@ -212,6 +216,7 @@ namespace HelloWorld
             _defenseMultiplier -= _currentItem._defenseMultiplier;
 
             Console.WriteLine("[I've unequipped the " + _currentItem + "]");
+            Pause();
 
             _currentItem = nothing;
             _HasItemEquipped = false;
@@ -224,6 +229,7 @@ namespace HelloWorld
             if (_currentWeapon._damageAddition > 0)
             {
                 Console.WriteLine("[-" + _currentWeapon._damageAddition + " damage");
+                Pause();
             }
 
             _baseDamage -= _currentItem._damageAddition;
@@ -326,22 +332,28 @@ namespace HelloWorld
 
             if (defender._baseHealth > 0)
             {
-                Console.WriteLine(defender._name + "[Pre-Strike]"); //Stats before being struck
-                Console.WriteLine(defender._totalHealth + " HP <<");
-                Console.WriteLine(defender._totalDefense + " Def");
-                Pause();
-
-                defender._totalHealth -= _totalDamage;  //The Attack
-
-                Console.WriteLine(defender._name + " [Post-Strike]"); //Stats after being struck
-                Console.WriteLine(defender._totalHealth + " HP <<");
-                Console.WriteLine(defender._totalDefense + " Def");
-                Console.WriteLine("");
-                Pause();
-
+                defender.GetDirectAttack(_totalDamage);
             } //If enemy alive
             return defender._totalHealth;
         } //Player Direct Attack Function
+
+        public void GetDirectAttack(int damage)
+        {
+            Console.WriteLine(_name + "[Pre-Strike]"); //Stats before being struck
+            Console.WriteLine(_totalHealth + " HP <<");
+            Console.WriteLine(_totalDefense + " Def");
+            Pause();
+
+            _totalHealth -= _totalDamage;  //The Attack
+
+            Console.WriteLine(_name + " [Post-Strike]"); //Stats after being struck
+            Console.WriteLine(_totalHealth + " HP <<");
+            Console.WriteLine(_totalDefense + " Def");
+            Console.WriteLine("");
+            Pause();
+        } //Get Direct Attack function
+
+
 
         public void GainExperience(int gainedExp)
         {
