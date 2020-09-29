@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace HelloWorld
@@ -18,13 +19,14 @@ namespace HelloWorld
 
         //Health
         private int _totalHealth;
-        private int _MaxHealth;
+        private int _maxHealth;
+        private int _baseHealth;
         private int _healthAddition;
         private int _healthMultiplier = 1;
-        private int _baseHealth;
 
         //Regen
-        private int _healthRegen;
+        private int _totalRegen;
+        private int _baseHealthRegen;
         private int _healthRegenAddition;
         private int _healthRegenMultiplier = 1;
 
@@ -36,7 +38,7 @@ namespace HelloWorld
 
         //Defense
         private int _totalDefense;
-        private int _defense;
+        private int _baseDefense;
         private int _defenseAddition;
         private int _defenseMultiplier = 1;
 
@@ -61,7 +63,44 @@ namespace HelloWorld
 
         private Item nothing;
 
-        public bool IsBot;
+        public Player()
+        {
+            _baseHealth = 100;
+            _baseHealthRegen = 4;
+            _baseDefense = 10;
+            _level = 1;
+            _currentExperience = 0;
+            _totalHeal = 5;
+
+            _baseHeal = 5;
+            _damageMultiplier = 1;
+            _baseDamage = 9;
+
+            _styleName = "Fool";
+            _specialty = "Foolishness";
+
+            NothingInitializer();
+            _inventory = new Item[_inventorySize];
+            _currentWeapon = nothing;
+        } //Initial Constructor
+
+        public Player(string nameVal, int healthVal, int healthRegenVal, int healVal, float damagemultVal, int defenseVal, string style, string specialtyVal)
+        {
+            _name = nameVal;
+            _level = 1;
+            _currentExperience = 0;
+            _baseDamage = 9;
+            _baseHealth = healthVal;
+            _baseHealthRegen = healthRegenVal;
+            _baseHeal = healVal;
+            _damageMultiplier = damagemultVal;
+            _baseDefense = defenseVal;
+            _styleName = style;
+            _specialty = specialtyVal;
+
+            NothingInitializer();
+            _currentWeapon = nothing;
+        } //Overload Constructor
 
         public void NothingInitializer()
         {
@@ -81,7 +120,39 @@ namespace HelloWorld
 
             nothing._damageAddition = 0;
             nothing._damageMultiplier = 1;
-        }
+        } //Nothing item Initializer
+
+        public virtual void Save(StreamWriter writer)
+        {
+            writer.WriteLine(_name);
+            writer.WriteLine(_totalHealth);
+            writer.WriteLine(_totalRegen);
+            writer.WriteLine(_totalHeal);
+            writer.WriteLine(_totalDefense);
+            writer.WriteLine(_totalDamage);
+            writer.WriteLine(_damageMultiplier);
+            writer.Close();
+        } //Save function
+
+        public virtual bool Load(StreamReader reader)
+        {
+            //Variables for stored data
+            string name = reader.ReadLine();
+            int health = 0;
+
+            //Checks to see if successful
+            if (int.TryParse(reader.ReadLine(), out health) == false)
+            {
+                return false;
+            }
+
+
+            _name = name;
+            _totalHealth = health;
+
+            reader.Close();
+            return true;
+        } //Load String function
 
         public void AddToInventory(Item item, int invLocation)
         {
@@ -287,74 +358,6 @@ namespace HelloWorld
             Pause();
         } //Check Item switch
 
-        public Player()
-        {
-            _baseHealth = 100;
-            _healthRegen = 4;
-            _defense = 10;
-            _level = 1;
-            _currentExperience = 0;
-            _totalHeal = 5;
-
-            _baseHeal = 5;
-            _damageMultiplier = 1;
-            _baseDamage = 9;
-
-            _styleName = "Fool";
-            _specialty = "Foolishness";
-
-            NothingInitializer();
-            _inventory = new Item[_inventorySize];
-            _currentWeapon = nothing;
-        } //Initial Constructor
-
-        public Player(string nameVal, int healthVal, int healthRegenVal, int healVal, float damagemultVal, int defenseVal, string style, string specialtyVal)
-        {
-            _name = nameVal;
-            _level = 1;
-            _currentExperience = 0;
-            _baseDamage = 9;
-            _baseHealth = healthVal;
-            _healthRegen = healthRegenVal;
-            _baseHeal = healVal;
-            _damageMultiplier = damagemultVal;
-            _defense = defenseVal;
-            _styleName = style;
-            _specialty = specialtyVal;
-
-            NothingInitializer();
-            _currentWeapon = nothing;
-        } //Overload Constructor
-
-        public int DirectAttack(ref Player defender)
-        {
-            Console.WriteLine("");
-
-            if (defender._baseHealth > 0)
-            {
-                defender.GetDirectAttack(_totalDamage);
-            } //If enemy alive
-            return defender._totalHealth;
-        } //Player Direct Attack Function
-
-        public void GetDirectAttack(int damage)
-        {
-            Console.WriteLine(_name + "[Pre-Strike]"); //Stats before being struck
-            Console.WriteLine(_totalHealth + " HP <<");
-            Console.WriteLine(_totalDefense + " Def");
-            Pause();
-
-            _totalHealth -= _totalDamage;  //The Attack
-
-            Console.WriteLine(_name + " [Post-Strike]"); //Stats after being struck
-            Console.WriteLine(_totalHealth + " HP <<");
-            Console.WriteLine(_totalDefense + " Def");
-            Console.WriteLine("");
-            Pause();
-        } //Get Direct Attack function
-
-
-
         public void GainExperience(int gainedExp)
         {
             Console.WriteLine("Experience gained: " + gainedExp);
@@ -432,13 +435,16 @@ namespace HelloWorld
             _experienceRequirement = _level * 30;
 
             //Player's defense is the base defense with the player's level added
-            _totalDefense = (int)(((_defense + _currentItem._defenseAddition) * _currentItem._defenseMultiplier) + _level);
+            _totalDefense = (int)(((_baseDefense + _currentItem._defenseAddition) * _currentItem._defenseMultiplier) + _level);
 
             //The base health with the addition of level plus half the defense makes the max player health
             _totalHealth = (int)((((_totalDefense * 1 / 2) + _baseHealth + _currentItem._healthAddition) * _currentItem._healthMultiplier) + _level);
 
+            //Regen
+            _totalRegen = (int)(((_baseHealthRegen + _currentItem._healthRegenAddition) * _currentItem._healthRegenMultiplier) + _level);
+
             //Sets the max health to prevent health from regenerating past this limit
-            _MaxHealth = _totalHealth;
+            _maxHealth = _totalHealth;
 
             //Sets the total damage based on the player's level, base damage, and the damage mutliplier
             _totalDamage = (int)(((_baseDamage + _currentWeapon._damageAddition) * _currentWeapon._damageMultiplier) + _level);
@@ -456,7 +462,7 @@ namespace HelloWorld
             Console.WriteLine("Name: " + _name);
             Console.WriteLine("Experience: " + _currentExperience + "/" + _experienceRequirement);
             Console.WriteLine("Health: " + _totalHealth);
-            Console.WriteLine("Regen: " + _healthRegen);
+            Console.WriteLine("Regen: " + _baseHealthRegen);
             Console.WriteLine("Heal: " + _totalHeal);
             Console.WriteLine("Defense: " + _totalDefense);
             Console.WriteLine("Attack: " + _totalDamage);
@@ -500,12 +506,12 @@ namespace HelloWorld
 
         public int GetMaxHealth()
         {
-            return _MaxHealth;
+            return _maxHealth;
         }
 
         public int GetHealthRegen()
         {
-            return _healthRegen;
+            return _baseHealthRegen;
         }
 
         public int GetHeal()
@@ -537,6 +543,16 @@ namespace HelloWorld
         {
             return _currentItem;
         }
+
+        public override void DisplayStats()
+        {
+            Console.WriteLine(_name + ": " + _specialty);
+            Console.WriteLine(_totalHealth + " HP");
+            Console.WriteLine(_totalHeal + " Healing");
+            Console.WriteLine(_totalDamage + " Atk");
+            Console.WriteLine(_totalDefense + " Def");
+            Console.WriteLine("");
+        } //Display Stats function
 
         public char GetAction(ref char choice, string query, string option1, string option2)
         {
@@ -645,13 +661,5 @@ namespace HelloWorld
             return choice;
         } //Get Action 6 options
 
-        void Pause()
-        {
-            Console.WriteLine("");
-            Console.WriteLine("[Press any key to continue]");
-            Console.Write("> ");
-            Console.ReadKey();  //Pauses
-            Console.WriteLine("");
-        }
     } //Player Class
 } //Hello World

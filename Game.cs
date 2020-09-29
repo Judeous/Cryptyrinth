@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.IO;
 using System.Text;
 
 namespace HelloWorld
@@ -25,7 +26,7 @@ namespace HelloWorld
 
         public int _damageAddition;
         public int _damageMultiplier;
-    }
+    } //Item struct
 
     class Game
     {
@@ -33,37 +34,23 @@ namespace HelloWorld
         public Item _baseSword;
         public Item _baseStaff;
 
-        Player _player1 = new Player();
-        Player _player2 = new Player();
-        
-        Labyrinth _labyrinth = new Labyrinth();
+        public Player _player1 = new Player();
+        public Player _player2 = new Player();
+
+        public Enemy Slime = new Enemy();
+        public Enemy Slombie = new Enemy();
+        public Enemy Nothing = new Enemy();
+
+        public Messages SlimeMessage;
+        public Messages SlombieMessage;
+        public Messages NothingMessage;
+
+
+        public Labyrinth _labyrinth = new Labyrinth();
 
         public char _gamemode = ' ';
 
         public char _action = ' ';
-
-        //Enemy Declarations
-        public string _enemyName = "None";
-        public int _enemyExperience;
-        public int _enemyRegen; //Sets the base enemy regen
-        public int _battleEnemyHealth;
-        public int _battleEnemyMaxHP;
-        public int _battleEnemyDefense;
-        public int _enemyHeal = 5; //Sets the base enemy heal
-        public float _enemyDamageMult = 1.0f; //Sets the base enemy damage multiplier
-        public int _baseEnemyDamage = 8; //Sets the base enemy damage
-        public int _enemyDamage;
-
-        public string _enemyAppearMessage = "An enemy appears!";
-        public string _enemyAttackMessage = "The enemy is attacking!";
-        public string _enemyDefendMessage = "The enemy is defending!";
-        public string _enemyNoDefenseMessage = "The enemy has nothing to defend with!";
-        public string _enemyDefenseDestroyedMessage = "The enemy's defense was knocked aside!";
-        public string _enemyUselessDefenseMessage = "The enemy is defending...";
-        public string _enemyNothingMessage = "The enemy does nothing...";
-        public string _enemyHealMessage = "The enemy is healing!";
-        public string _enemyDeathMessage = "The enemy was unmade";
-
 
         Random r = new Random(); //Sets a variable for a randomizer
 
@@ -211,7 +198,7 @@ namespace HelloWorld
                                     case '4': //Engage a slime
                                         Console.Clear(); //Clears the screen
                                         Console.WriteLine("[I engage one of the many slimes]");
-                                        _enemyName = "Slime";
+                                        Slime = new Enemy("Slime");
                                         InBattle = true;
                                         Battle();
                                         break;
@@ -241,7 +228,7 @@ namespace HelloWorld
                                     int SlimeApproach = r.Next(1, 5); //Chance for a slime to engage
                                     if (SlimeApproach == 1) //If a slime engages
                                     {
-                                        _enemyName = "Slime";
+                                        Slime = new Enemy("Slime");
                                         InBattle = true;
                                         Battle();
                                     } //If slime engages
@@ -385,7 +372,7 @@ namespace HelloWorld
                                 int SlombieApproach = r.Next(1, 8); //Chance for a slombie to engage
                                 if (SlombieApproach == 1) //If a slombie engages
                                 {
-                                    _enemyName = "Slombie";
+                                    Slombie = new Enemy("Slombie");
                                     InBattle = true;
                                     Battle();
                                 } //If slomibe engages
@@ -600,7 +587,7 @@ namespace HelloWorld
                                         Console.Clear(); //Clears the screen
                                         Console.WriteLine("[I engage Nothing]");
                                         Pause();
-                                        _enemyName = "Nothing";
+                                        Nothing = new Enemy("Nothing");
                                         InBattle = true;
                                         Battle();
                                         break;
@@ -609,7 +596,7 @@ namespace HelloWorld
                                         Console.Clear(); //Clears the screen
                                         Console.WriteLine("[I engage Nothing in the throne]");
                                         Pause();
-                                        _enemyName = "Nothing";
+                                        Nothing = new Enemy("Nothing");
                                         InBattle = true;
                                         Battle();
                                         break;
@@ -728,22 +715,11 @@ namespace HelloWorld
             Console.WriteLine("[Actions are being decided]");
             Console.WriteLine("");
 
-            Console.WriteLine(p1Name + ": " + p1Specialty); //This and the next few lines show player 1's stats
+            _player1.DisplayStats();
 
-            Console.WriteLine(p1HP + " HP");
-            Console.WriteLine(p1Heal + " Healing");
-            Console.WriteLine(p1Atk + " Atk");
-            Console.WriteLine(p1Def + " Def");
-
+            _player2.DisplayStats();
             Console.WriteLine("");
 
-            Console.WriteLine(p2Name + ": " + p2Specialty); //This and the next few lines show player 2's stats
-            Console.WriteLine(p2HP + " HP");
-            Console.WriteLine(p2Heal + " Healing");
-            Console.WriteLine(p2Atk + " Atk");
-            Console.WriteLine(p2Def + " Def");
-            Console.WriteLine("");
-            Console.WriteLine("");
         } //Pvp Stat Display function
 
         public void Battle(ref Player player1, ref Player player2)
@@ -1282,7 +1258,7 @@ namespace HelloWorld
 
                     Console.Clear(); //Clears the screen
 
-                    playerHP = Regeneration(playerHP, p1MaxHP, p1HPRegen); //Regenerates player
+                    _player1.Regenerate(); //Regenerates player
                     _battleEnemyHealth = Regeneration(_battleEnemyHealth, _battleEnemyMaxHP, _enemyRegen); //Regenerates Enemy
                 } //If in battle
 
@@ -1349,21 +1325,6 @@ namespace HelloWorld
             Console.WriteLine("");
         } //Pause
 
-        public int Regeneration(int currentHealth, int maxHP, int healthRegen)
-        {
-            if (currentHealth < maxHP && currentHealth > 0) //Checks to see if the entity's hp is lower than max and higher than 0
-            {
-                currentHealth += healthRegen;
-
-                if (currentHealth > maxHP) //Sets hp to max if regen surpassed max
-                {
-                    currentHealth = maxHP;
-                }
-            } //If health is within both boundaries
-
-            return currentHealth;
-        } //Regen Function
-
         public int DirectAttack(int damage, int health, int defense, string victimName)
         {
             Console.WriteLine("");
@@ -1391,152 +1352,6 @@ namespace HelloWorld
             } //If enemy alive
             return health;
         } //Direct Attack Function
-
-
-        public int PlayerDefendedAttack(ref Player player, int attackerDamage)
-        {
-            string playerName = player.GetName();
-            int playerHP = player.GetHealth();
-            int playerDef = player.GetDefense();
-            Console.WriteLine("");
-
-            if (playerDef == 0)
-            {
-                Console.WriteLine("[" + playerName + " can't block!]");
-                playerHP = DirectAttack(attackerDamage, playerHP, playerDef, playerName);
-            } //If player has no defense
-
-            else
-            {
-                Console.WriteLine(playerName + "[Pre-Strike]"); //Player's stats before being struck
-                Console.WriteLine(playerHP + " HP ");
-                Console.WriteLine(playerHP + " Def <<");
-                Pause();
-
-                playerDef -= attackerDamage; //Enemy's attack on player's defense
-                if (playerDef <= 0) //If defense falls
-                {
-                    Console.WriteLine("[The defense was knocked aside!]");
-                    playerDef = 0; //Sets defense back to 0
-
-                    Console.WriteLine(playerName + " [Post-Strike]"); //Player's stats after enemy's attack
-                    Console.WriteLine(playerHP + " HP");
-                    Console.WriteLine(playerDef + " Def <<");
-                    Pause();
-                }
-
-                else //If defense didn't fail
-                {
-                    Console.WriteLine("[The attack was successfully blocked!]");
-
-                    Console.WriteLine(playerName + " [Post-Strike]"); //Player's stats after enemy's attack
-                    Console.WriteLine(playerHP + " HP");
-                    Console.WriteLine(playerDef + " Def <<");
-                    Pause();
-                }
-            } //If player has defense
-            return playerDef;
-        } //Player Defended Attack function
-
-        public void EnemyDefendedAttack()
-        {
-            int p1Atk = _player1.GetDamage();
-            Console.WriteLine("");
-
-            if (_battleEnemyDefense == 0)
-            {
-                Console.WriteLine(_enemyNoDefenseMessage);
-                _battleEnemyHealth = DirectAttack(p1Atk, _battleEnemyHealth, _battleEnemyDefense, _enemyName);
-            } //If player has no defense
-
-            else
-            {
-                Console.WriteLine(_enemyName + "[Pre-Strike]"); //Enemy's stats before being struck
-                Console.WriteLine(_battleEnemyHealth + " HP ");
-                Console.WriteLine(_battleEnemyDefense + " Def <<");
-                Pause();
-                Console.WriteLine("");
-
-                _battleEnemyDefense -= p1Atk; //Player's attack on enemy's defense
-                if (_battleEnemyDefense <= 0) //If defense falls
-                {
-                    Console.WriteLine(_enemyDefenseDestroyedMessage);
-                    _battleEnemyDefense = 0; //Sets defense back to 0
-
-                    Console.WriteLine(_enemyName + " [Post-Strike]"); //Enemy's stats after player's attack
-                    Console.WriteLine(_battleEnemyHealth + " HP");
-                    Console.WriteLine(_battleEnemyDefense + " Def <<");
-                }
-
-                else //If defense didn't fail
-                {
-                    Console.WriteLine("[" + _enemyName + " successfully blocked!]");
-
-                    Console.WriteLine(_enemyName + " [Post-Strike]"); //Enemy's stats after enemy's attack
-                    Console.WriteLine(_battleEnemyHealth + " HP");
-                    Console.WriteLine(_battleEnemyDefense + " Def <<");
-                }
-                Pause();
-            } //If enemy has defense
-        } //Enemy Defended Attack function
-
-        public int Heal(int health, int defense, int heal, string name) //Player Heal
-        {
-            Console.WriteLine("");
-
-            if (health > 0)
-            {
-                if (heal < 5) //If player can't heal (If the heal would return less than 5 hp)
-                {
-                    Console.WriteLine("[I can't heal!]");
-                }
-
-                else if (heal >= 5)
-                {
-                    Console.WriteLine(name + " [Pre-Heal]"); //Stats before heal
-                    Console.WriteLine(health + " HP <<");
-                    Console.WriteLine(defense + " Def ");
-
-                    Pause();
-
-                    health += heal; //The heal
-
-                    Console.WriteLine(name + " [Post-Heal]"); //Stats after heal
-                    Console.WriteLine(health + " HP <<");
-                    Console.WriteLine(defense + " Def");
-                }
-            } //If enemy alive
-            return health;
-        } //Player Heal function
-
-        public int Heal(string name, int health, int defense, int heal) //Enemy Heal
-        {
-            Console.WriteLine("");
-
-            if (health > 0)
-            {
-                if (heal < 5) //If they cannot heal (If the heal would return less than 5 hp)
-                {
-                    Console.WriteLine("[" + name + " cannot heal!]");
-                }
-
-                else if (heal >= 5)
-                {
-                    Console.WriteLine(name + " [Pre-Heal]"); //Stats before heal
-                    Console.WriteLine(health + " HP <<");
-                    Console.WriteLine(defense + " Def ");
-                    Pause();
-
-                    health += heal; //The heal
-
-                    Console.WriteLine(name + " [Post-Heal]"); //Stats after heal
-                    Console.WriteLine(health + " HP <<");
-                    Console.WriteLine(defense + " Def");
-                    Pause();
-                }
-            } //If enemy alive
-            return health;
-        } //Enemy Heal function
 
         public void InitializeItems()
         {
@@ -1673,83 +1488,17 @@ namespace HelloWorld
             } //Action Switch
         } //9 Menu function
 
-
-        void EnemySetup()
+        public void Save()
         {
+            StreamWriter writer = new StreamWriter("SaveData.txt");
+            _player1.Save(writer);
+        } //Save function
 
-            switch(_enemyName)
-            {
-                case "Slime":
-                    //Stats
-                    _battleEnemyHealth = r.Next(5, 20); //Randomizes the health of the slime so they don't all have the same stats
-                    _enemyHeal = 15;
-                    _enemyDamageMult = 0.5f;
-                    _battleEnemyDefense = r.Next(5, 15);
-                    _enemyRegen = 5;
-
-                    //Messages
-                    _enemyAppearMessage = "[A slime becomes hostile!]";
-                    _enemyDeathMessage = "[The slime melts into the ground]";
-                    _enemyAttackMessage = "[The slime is attacking!]";
-                    _enemyDefendMessage = "[The slime forms a defensive layer!]";
-                    _enemyNoDefenseMessage = "[The defensive layer is too thin!]";
-                    _enemyDefenseDestroyedMessage = "[The defensive layer was knocked away!]";
-                    _enemyUselessDefenseMessage = "[The slime shows it's defensive layer...]";
-                    _enemyNothingMessage = "[The slime does nothing...]";
-                    _enemyHealMessage = "[The slime is growing!]";
-                    break;
-
-                case "Nothing":
-                    //Stats
-                    _battleEnemyHealth = 150;
-                    _enemyHeal = 20;
-                    _enemyDamageMult = 3;
-                    _battleEnemyDefense = 40;
-                    _enemyRegen = 15;
-
-                    //Messages
-                    _enemyAppearMessage = "[Nothing is approaching!]";
-                    _enemyDeathMessage = "[Nothing stopped existing]";
-                    _enemyAttackMessage = "[Nothing is attacking me]";
-                    _enemyDefendMessage = "[Nothing is defending itself]";
-                    _enemyNoDefenseMessage = "[Nothing has no defense]";
-                    _enemyDefenseDestroyedMessage = "[Nothing's defense was shattered]";
-                    _enemyUselessDefenseMessage = "[Nothing defends itself]";
-                    _enemyNothingMessage = "[Nothing happens]";
-                    _enemyHealMessage = "[Nothing is healing]";
-                    break;
-
-                case "Slombie":
-                    //Stats
-                    _battleEnemyHealth = r.Next(50, 100); //Randomized health
-                    _enemyHeal = 15;
-                    _enemyDamageMult = r.Next(8, 14); //Damage multiplier is somewhere between the lowest and highest player damage multx10
-                    _enemyDamageMult /= 10; //Then divided by 10
-                    _battleEnemyDefense = 10;
-                    _enemyRegen = 2;
-
-                    //Messages
-                    _enemyAppearMessage = "[There's a posessed corpse in here!]";
-                    _enemyDeathMessage = "[The slime leaves the corpse and sinks to the floor]";
-                    _enemyAttackMessage = "[The slombie is attacking!]";
-                    _enemyDefendMessage = "[The slime forms a shield before the corpse!]";
-                    _enemyNoDefenseMessage = "[The shield is malformed!]";
-                    _enemyDefenseDestroyedMessage = "[The shield was torn away!]";
-                    _enemyUselessDefenseMessage = "[The slime forms a shield as a response...]";
-                    _enemyNothingMessage = "[The slombie does nothing...]";
-                    _enemyHealMessage = "[More slime is entering the body from the floor!]";
-                    break;
-            } //Setup Switch
-
-            //Calculates experience to be gained if player wins
-            _enemyExperience = (int)(_battleEnemyHealth * _enemyDamageMult) + _enemyDamage + _battleEnemyDefense;
-
-            //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
-            _battleEnemyMaxHP = _battleEnemyHealth;
-
-            //Sets the total enemy damage based on the base damage and multiplier
-            _enemyDamage = (int)(_baseEnemyDamage * _enemyDamageMult);
-        } //Enemy Setup function
+        public void Load()
+        {
+            StreamReader reader = new StreamReader("SaveData.txt");
+            _player1.Load(reader);
+        } //Load String function
 
         public void DecideSpecialty(ref Player player)
         {

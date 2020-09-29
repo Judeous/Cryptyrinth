@@ -6,22 +6,21 @@ namespace HelloWorld
 {
     class Labyrinth
     {
-        //Labyrinth Declarations
-        ///Sets the initial locations to the EntryWay door location
+        //Sets the initial locations to the EntryWay door location
         private int _labyLocationX = 7;
         private int _labyLocationY = 26;
-        ///For a Back action
+        //For a Back action
         private int _oldLabyLocationX;
         private int _oldLabyLocationY;
         private char _facingDirection;
-        ///Wall length declarations
+        //Wall length declarations
         private string _roomShape;
         private string _roomType;
         private int _minWallLength = 1;
         private int _maxWallLength = 4;
         private int _wallXLengths;
         private int _wallYLengths;
-        ///Borders for walls
+        //Borders for walls
         private int _wallSouthY;
         private int _wallNorthY;
         private int _wallXWBorders;
@@ -31,19 +30,19 @@ namespace HelloWorld
         private int _wallWestX;
         private int _wallYNBorders;
         private int _wallYSBorders;
-        ///Variables used for randomizing the appearance of respective doors
+        //Variables used for randomizing the appearance of respective doors
         private int _doorSouthChance;
         private int _doorNorthChance;
         private int _doorEastChance;
         private int _doorWestChance;
-        ///Bools for doors
+        //Bools for doors
         private bool CanEscapeE = false;
         private bool CanEscapeW = false;
         private bool DoorSouthExists = false;
         private bool DoorNorthExists = false;
         private bool DoorEastExists = false;
         private bool DoorWestExists = false;
-        ///Coordinate variables for the doors, if they exist
+        //Coordinate variables for the doors, if they exist
         private int _escapeDoorWY = 25;
         private int _escapeDoorWX = 5;
 
