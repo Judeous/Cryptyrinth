@@ -42,14 +42,15 @@ namespace HelloWorld
                     Console.WriteLine(_name + " [Pre-Heal]"); //Stats before heal
                     Console.WriteLine(_totalHealth+ " HP <<");
                     Console.WriteLine(_totalDefense + " Def ");
+                    Console.WriteLine("");
 
-                    Pause();
-
-                    _totalHealth+= _totalHeal; //The heal
+                    _totalHealth += _totalHeal; //The heal
 
                     Console.WriteLine(_name + " [Post-Heal]"); //Stats after heal
                     Console.WriteLine(_totalHealth+ " HP <<");
                     Console.WriteLine(_totalDefense + " Def");
+
+                    Pause();
                 }
             } //If enemy alive
             Console.Clear(); //Clears the screen
@@ -57,11 +58,6 @@ namespace HelloWorld
 
         public virtual void Attack(Character defender, char defenderAction)
         {
-            if (IsBot)
-            {
-
-            } //If attacker is a bot
-
             Console.WriteLine("");
             if (defender._totalHealth > 0)
             {
@@ -83,14 +79,15 @@ namespace HelloWorld
             Console.WriteLine(_name + "[Pre-Strike]"); //Stats before being struck
             Console.WriteLine(_totalHealth + " HP <<");
             Console.WriteLine(_totalDefense + " Def");
-            Pause();
+            Console.WriteLine("");
 
-            _totalHealth -= _totalDamage;  //The Attack
+            _totalHealth -= damage;  //The Attack
 
             Console.WriteLine(_name + " [Post-Strike]"); //Stats after being struck
             Console.WriteLine(_totalHealth + " HP <<");
             Console.WriteLine(_totalDefense + " Def");
             Console.WriteLine("");
+
             Pause();
             Console.Clear(); //Clears the screen
         } //Get Direct Attack function
@@ -108,7 +105,6 @@ namespace HelloWorld
                 Console.WriteLine(_name + "[Pre-Strike]"); //Player's stats before being struck
                 Console.WriteLine(_totalHealth + " HP ");
                 Console.WriteLine(_totalDefense + " Def <<");
-                Pause();
 
                 _totalDefense -= attackerDamage; //Enemy's attack on player's defense
                 if (_totalDefense <= 0) //If defense fails
@@ -119,9 +115,7 @@ namespace HelloWorld
                     Console.WriteLine(_name + " [Post-Strike]"); //Player's stats after enemy's attack
                     Console.WriteLine(_totalHealth + " HP");
                     Console.WriteLine(_totalDefense + " Def <<");
-                    Pause();
-                }
-
+                } //If defense fails
                 else //If defense didn't fail
                 {
                     Console.WriteLine("[The attack was successfully blocked!]");
@@ -129,8 +123,8 @@ namespace HelloWorld
                     Console.WriteLine(_name + " [Post-Strike]"); //Player's stats after enemy's attack
                     Console.WriteLine(_totalHealth + " HP");
                     Console.WriteLine(_totalDefense + " Def <<");
-                    Pause();
                 }
+                Pause();
             } //If player has defense
             Console.Clear(); //Clears the screen
         } //Defended Attack function
@@ -155,7 +149,6 @@ namespace HelloWorld
             Console.WriteLine(_totalHeal + " Healing");
             Console.WriteLine(_totalDamage + " Atk");
             Console.WriteLine(_totalDefense + " Def");
-            Console.WriteLine("");
         } //Display Stats function
 
         public bool GetIsBot()

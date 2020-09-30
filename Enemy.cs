@@ -4,14 +4,8 @@ using System.Text;
 
 namespace HelloWorld
 {
-    public struct Messages
-    {
-
-    } //Enemy Messages struct
-
     class Enemy : Character
     {
-        private string _enemyName = "None";
         private int _experience;
 
         //Messages
@@ -27,7 +21,7 @@ namespace HelloWorld
 
         Random r = new Random(); //Sets a variable for a randomizer
 
-        public Enemy()
+        public Enemy(string name)
         {
             _totalHealth = 25;
             _totalHeal = 5;
@@ -43,17 +37,14 @@ namespace HelloWorld
             _noDefenseM = "The enemy has nothing to defend with!";
             _doNothingM = "The enemy does nothing...";
             _deathM = "The enemy was unmade";
-        } //Constructor
 
-        public Enemy(string name)
-        {
-            _enemyName = name;
+            _name = name;
             EnemySetup();
-        }
+        } //Constructor
 
         public void EnemySetup()
         {
-            switch (_enemyName)
+            switch (_name)
             {
                 case "Slime":
                     //Slime Stats
@@ -121,7 +112,7 @@ namespace HelloWorld
             _experience = (int)(_totalHealth * _damageMultiplier) + _totalDamage + _totalDefense;
 
             //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
-            _maxHealth = _totalHealth;
+             _maxHealth = _totalHealth;
 
             //Sets the total enemy damage based on the base damage and multiplier
             _totalDamage = (int)(_baseDamage * _damageMultiplier);
@@ -181,7 +172,7 @@ namespace HelloWorld
 
             else
             {
-                Console.WriteLine(_enemyName + "[Pre-Strike]"); //Enemy's stats before being struck
+                Console.WriteLine(_name + "[Pre-Strike]"); //Enemy's stats before being struck
                 Console.WriteLine(_totalHealth + " HP ");
                 Console.WriteLine(_totalDefense + " Def <<");
                 Pause();
@@ -193,16 +184,16 @@ namespace HelloWorld
                     Console.WriteLine(_destroyedDefenseM);
                     _totalDefense = 0; //Sets defense back to 0
 
-                    Console.WriteLine(_enemyName + " [Post-Strike]"); //Enemy's stats after player's attack
+                    Console.WriteLine(_name + " [Post-Strike]"); //Enemy's stats after player's attack
                     Console.WriteLine(_totalHealth + " HP");
                     Console.WriteLine(_totalDefense + " Def <<");
                 } //If defense fails
 
                 else //If defense didn't fail
                 {
-                    Console.WriteLine("[" + _enemyName + " successfully blocked!]");
+                    Console.WriteLine("[" + _name + " successfully blocked!]");
 
-                    Console.WriteLine(_enemyName + " [Post-Strike]"); //Enemy's stats after enemy's attack
+                    Console.WriteLine(_name + " [Post-Strike]"); //Enemy's stats after enemy's attack
                     Console.WriteLine(_totalHealth + " HP");
                     Console.WriteLine(_totalDefense + " Def <<");
                 } //If defense doesn't fail
