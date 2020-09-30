@@ -6,6 +6,7 @@ namespace HelloWorld
 {
     public struct Messages
     {
+
     } //Enemy Messages struct
 
     class Enemy : Character
@@ -14,7 +15,7 @@ namespace HelloWorld
         private int _enemyExperience;
 
         //Messages
-        private string _appearM;
+        private string _approachM;
         private string _attackM;
         private string _defendM;
         private string _noDefenseM;
@@ -33,14 +34,14 @@ namespace HelloWorld
             _damageMultiplier = 1.0f;
             _baseDamage = 8;
             
-            _appearM = "An enemy appears!";
+            _approachM = "An enemy appears!";
             _attackM = "The enemy is attacking!";
+            _healM = "The enemy is healing!";
             _defendM = "The enemy is defending!";
-            _noDefenseM = "The enemy has nothing to defend with!";
             _destroyedDefenseM = "The enemy's defense was knocked aside!";
             _uselessDefenseM = "The enemy is defending...";
+            _noDefenseM = "The enemy has nothing to defend with!";
             _doNothingM = "The enemy does nothing...";
-            _healM = "The enemy is healing!";
             _deathM = "The enemy was unmade";
         } //Constructor
 
@@ -50,7 +51,7 @@ namespace HelloWorld
             EnemySetup();
         }
 
-        void EnemySetup()
+        public void EnemySetup()
         {
             switch (_enemyName)
             {
@@ -63,15 +64,15 @@ namespace HelloWorld
                     _totalRegen = 5;
 
                     //Slime Messages
-                    _appearM = "[A slime becomes hostile!]";
-                    _deathM = "[The slime melts into the ground]";
+                    _approachM = "[A slime becomes hostile!]";
                     _attackM = "[The slime is attacking!]";
+                    _healM = "[The slime is growing!]";
                     _defendM = "[The slime forms a defensive layer!]";
-                    _noDefenseM = "[The defensive layer is too thin!]";
                     _destroyedDefenseM = "[The defensive layer was knocked away!]";
                     _uselessDefenseM = "[The slime shows it's defensive layer...]";
+                    _noDefenseM = "[The defensive layer is too thin!]";
                     _doNothingM = "[The slime does nothing...]";
-                    _healM = "[The slime is growing!]";
+                    _deathM = "[The slime melts into the ground]";
                     break;
 
                 case "Nothing":
@@ -83,15 +84,15 @@ namespace HelloWorld
                     _totalRegen = 15;
 
                     //Nothing Messages
-                    _appearM = "[Nothing is approaching!]";
+                    _approachM = "[Nothing is approaching!]";
                     _deathM = "[Nothing stopped existing]";
                     _attackM = "[Nothing is attacking me]";
+                    _healM = "[Nothing is dialating]";
                     _defendM = "[Nothing is defending itself]";
                     _noDefenseM = "[Nothing has no defense]";
                     _destroyedDefenseM = "[Nothing's defense was shattered]";
                     _uselessDefenseM = "[Nothing defends itself]";
                     _doNothingM = "[Nothing happens]";
-                    _healM = "[Nothing is healing]";
                     break;
 
                 case "Slombie":
@@ -104,7 +105,7 @@ namespace HelloWorld
                     _totalRegen = 2;
 
                     //Slombie Messages
-                    _appearM = "[There's a posessed corpse in here!]";
+                    _approachM = "[There's a posessed corpse in here!]";
                     _deathM = "[The slime leaves the corpse and sinks to the floor]";
                     _attackM = "[The slombie is attacking!]";
                     _defendM = "[The slime forms a shield before the corpse!]";
@@ -125,6 +126,48 @@ namespace HelloWorld
             //Sets the total enemy damage based on the base damage and multiplier
             _totalDamage = (int)(_baseDamage * _damageMultiplier);
         } //Enemy Setup function
+
+        public void DisplayMessage(char message)
+        {
+            switch (message)
+            {
+                case '1':
+
+                    break;
+
+                case '2':
+
+                    break;
+
+                case '3':
+
+                    break;
+
+                case '4':
+
+                    break;
+
+                case '5':
+
+                    break;
+
+                case '6':
+
+                    break;
+
+                case '7':
+
+                    break;
+
+                case '8':
+
+                    break;
+
+                case '9':
+
+                    break;
+            }
+        }
 
         public void DefendedAttack(int damage)
         {
@@ -166,7 +209,5 @@ namespace HelloWorld
                 Pause();
             } //If enemy has defense
         } //Enemy Defended Attack function
-
-
     } //Enemy
 } //Hello World

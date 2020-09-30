@@ -52,15 +52,29 @@ namespace HelloWorld
                     Console.WriteLine(_totalDefense + " Def");
                 }
             } //If enemy alive
+            Console.Clear(); //Clears the screen
         } //Player Heal function
 
-        public virtual void DirectAttack(ref Player defender)
+        public virtual void Attack(ref Player defender, char defenderAction)
         {
-            Console.WriteLine("");
+            if (IsBot)
+            {
 
+            } //If attacker is a bot
+
+            Console.WriteLine("");
             if (defender._totalHealth > 0)
             {
-                defender.GetDirectAttack(_totalDamage);
+                switch (defenderAction)
+                {
+                    case '2': //Opponent defends attack
+                        defender.DefendAttack(_totalDamage);
+                        break;
+
+                    default: //Opponent not defending
+                        defender.GetDirectAttack(_totalDamage);
+                        break;
+                } //Defender Action switch
             } //If enemy alive
         } //Player Direct Attack Function
 
@@ -78,9 +92,10 @@ namespace HelloWorld
             Console.WriteLine(_totalDefense + " Def");
             Console.WriteLine("");
             Pause();
+            Console.Clear(); //Clears the screen
         } //Get Direct Attack function
 
-        public int DefendAttack(int attackerDamage)
+        public void DefendAttack(int attackerDamage)
         {
             if (_totalDefense == 0)
             {
@@ -96,7 +111,7 @@ namespace HelloWorld
                 Pause();
 
                 _totalDefense -= attackerDamage; //Enemy's attack on player's defense
-                if (_totalDefense <= 0) //If defense falls
+                if (_totalDefense <= 0) //If defense fails
                 {
                     Console.WriteLine("[The defense was knocked aside!]");
                     _totalDefense = 0; //Sets defense back to 0
@@ -117,7 +132,7 @@ namespace HelloWorld
                     Pause();
                 }
             } //If player has defense
-            return _totalDefense;
+            Console.Clear(); //Clears the screen
         } //Defended Attack function
 
         public void Regenerate()
@@ -142,6 +157,11 @@ namespace HelloWorld
             Console.WriteLine(_totalDefense + " Def");
             Console.WriteLine("");
         } //Display Stats function
+
+        public bool GetIsBot()
+        {
+            return IsBot;
+        }
 
         public void Pause()
         {
