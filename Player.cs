@@ -7,9 +7,6 @@ namespace HelloWorld
 {
     public class Player : Character
     {
-        //Player Declarations
-        private string _name;
-
         private string _area = "Shack";
 
         //Experience/Level
@@ -18,39 +15,31 @@ namespace HelloWorld
         private int _experienceRequirement;
 
         //Health
-        private int _totalHealth;
-        private int _maxHealth;
         private int _baseHealth;
         private int _healthAddition;
-        private int _healthMultiplier = 1;
+        private float _healthMultiplier = 1;
 
         //Regen
-        private int _totalRegen;
         private int _baseHealthRegen;
         private int _healthRegenAddition;
-        private int _healthRegenMultiplier = 1;
+        private float _healthRegenMultiplier = 1;
 
         //Healing
-        private int _totalHeal;
         private int _baseHeal;
         private int _healAddition;
-        private int _healMultiplier = 1;
+        private float _healMultiplier = 1;
 
         //Defense
-        private int _totalDefense;
         private int _baseDefense;
         private int _defenseAddition;
-        private int _defenseMultiplier = 1;
+        private float _defenseMultiplier = 1;
 
         //Damage
-        private int _totalDamage;
-        private int _baseDamage;
-        private float _damageMultiplier = 1;
         private int _damageAddition;
 
         //Specialty/Style
         private string _specialty;
-        private string _styleName;
+        private string _style;
 
         //Inventory
         private Item[] _inventory;
@@ -76,7 +65,7 @@ namespace HelloWorld
             _damageMultiplier = 1;
             _baseDamage = 9;
 
-            _styleName = "Fool";
+            _style = "Fool";
             _specialty = "Foolishness";
 
             NothingInitializer();
@@ -95,7 +84,7 @@ namespace HelloWorld
             _baseHeal = healVal;
             _damageMultiplier = damagemultVal;
             _baseDefense = defenseVal;
-            _styleName = style;
+            _style = style;
             _specialty = specialtyVal;
 
             NothingInitializer();
@@ -125,12 +114,25 @@ namespace HelloWorld
         public virtual void Save(StreamWriter writer)
         {
             writer.WriteLine(_name);
-            writer.WriteLine(_totalHealth);
-            writer.WriteLine(_totalRegen);
-            writer.WriteLine(_totalHeal);
-            writer.WriteLine(_totalDefense);
-            writer.WriteLine(_totalDamage);
+
+            writer.WriteLine(_style);
+            writer.WriteLine(_specialty);
+
+            writer.WriteLine(_level);
+            writer.WriteLine(_currentExperience);
+
+            writer.WriteLine(_defenseAddition);
+            writer.WriteLine(_defenseMultiplier);
+
+            writer.WriteLine(_healthRegenAddition);
+            writer.WriteLine(_healthRegenMultiplier);
+
+            writer.WriteLine(_damageAddition);
             writer.WriteLine(_damageMultiplier);
+
+            writer.WriteLine(_healAddition);
+            writer.WriteLine(_healMultiplier);
+
             writer.Close();
         } //Save function
 
@@ -138,17 +140,117 @@ namespace HelloWorld
         {
             //Variables for stored data
             string name = reader.ReadLine();
-            int health = 0;
+
+            string style = reader.ReadLine();
+            string specialty = reader.ReadLine();
+
+            int level;
+            int currentExp;
+
+            int defAdd;
+            float defMult;
+
+            int hpAdd;
+            float hpMult;
+
+            int regAdd;
+            float regMult;
+
+            int atkAdd;
+            float atkMult;
+
+            int healAdd;
+            float healMult;
 
             //Checks to see if successful
-            if (int.TryParse(reader.ReadLine(), out health) == false)
+
+            //Level/Experience
+            if (int.TryParse(reader.ReadLine(), out level) == false)
+            {
+                return false;
+            }
+            if (int.TryParse(reader.ReadLine(), out currentExp) == false)
             {
                 return false;
             }
 
+            //Defense
+            if (int.TryParse(reader.ReadLine(), out defAdd) == false)
+            {
+                return false;
+            }
+            if (float.TryParse(reader.ReadLine(), out defMult) == false)
+            {
+                return false;
+            }
+
+            //Health
+            if (int.TryParse(reader.ReadLine(), out hpAdd) == false)
+            {
+                return false;
+            }
+            if (float.TryParse(reader.ReadLine(), out hpMult) == false)
+            {
+                return false;
+            }
+
+            //Regeneration
+            if (int.TryParse(reader.ReadLine(), out regAdd) == false)
+            {
+                return false;
+            }
+            if (float.TryParse(reader.ReadLine(), out regMult) == false)
+            {
+                return false;
+            }
+
+            //Attack
+            if (int.TryParse(reader.ReadLine(), out atkAdd) == false)
+            {
+                return false;
+            }
+            if (float.TryParse(reader.ReadLine(), out atkMult) == false)
+            {
+                return false;
+            }
+
+            //Heal
+            if (int.TryParse(reader.ReadLine(), out healAdd) == false)
+            {
+                return false;
+            }
+            if (float.TryParse(reader.ReadLine(), out healMult) == false)
+            {
+                return false;
+            }
 
             _name = name;
-            _totalHealth = health;
+
+            _style = style;
+            _specialty = specialty;
+
+            _level = level;
+            _currentExperience = currentExp;
+
+            _baseDefense = 10;
+            _defenseAddition = defAdd;
+            _defenseMultiplier = defMult;
+
+            _baseHealth = 100;
+            _healthAddition = hpAdd;
+            _healthMultiplier = hpMult;
+
+            _baseHealthRegen = 4;
+            _healthRegenAddition = regAdd;
+            _healthRegenMultiplier = regMult;
+
+            _baseDamage = 9;
+            _damageAddition = atkAdd;
+            _damageMultiplier = atkMult;
+
+            _baseHeal = 9;
+            _healAddition = healAdd;
+            _healMultiplier = healMult;
 
             reader.Close();
             return true;
@@ -453,6 +555,29 @@ namespace HelloWorld
             _totalHeal = (int)(((_baseHeal + _currentItem._healAddition) * _currentItem._healMultiplier) + _level);
         } //Stat Calculation function
 
+        public void ChangeName()
+        {
+            char action = ' ';
+            string input;
+            do
+            {
+                Console.Clear(); //Clears the screen
+                Console.WriteLine("What is your name?");
+                Console.WriteLine("");
+                Console.WriteLine("[Press Enter to enter your name]");
+                Console.Write("> My name is ");
+                input = Console.ReadLine(); //Gets the player's name
+
+                Console.Clear(); //Clears the screen
+
+                Console.Write(input);
+                action = GetAction(ref action, " is your name?", "[1: Yes]", "[2: No]");
+            }
+            while (action != '1');
+
+            _name = input;
+        } //Change Name function
+
         public void StatCheck()
         {
             Console.Clear(); //Clears the screen
@@ -467,17 +592,12 @@ namespace HelloWorld
             Console.WriteLine("Defense: " + _totalDefense);
             Console.WriteLine("Attack: " + _totalDamage);
             Console.WriteLine("Level: " + _level);
-            Console.WriteLine("Style: " + _styleName);
+            Console.WriteLine("Style: " + _style);
             Console.WriteLine("Specialty: " + _specialty);
 
             Pause();
             Console.Clear(); //Clears the screen
         } //Stat Check function
-
-        public string GetName()
-        {
-            return _name;
-        }
 
         public string GetArea()
         {
@@ -497,36 +617,6 @@ namespace HelloWorld
         public Item[] GetInventory()
         {
             return _inventory;
-        }
-
-        public int GetHealth()
-        {
-            return _totalHealth;
-        } //Health Getter
-
-        public int GetMaxHealth()
-        {
-            return _maxHealth;
-        }
-
-        public int GetHealthRegen()
-        {
-            return _baseHealthRegen;
-        }
-
-        public int GetHeal()
-        {
-            return _totalHeal;
-        }
-
-        public int GetDefense()
-        {
-            return _totalDefense;
-        }
-
-        public int GetDamage()
-        {
-            return _totalDamage;
         }
 
         public string GetSpecialty()

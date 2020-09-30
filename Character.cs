@@ -55,7 +55,7 @@ namespace HelloWorld
             Console.Clear(); //Clears the screen
         } //Player Heal function
 
-        public virtual void Attack(ref Player defender, char defenderAction)
+        public virtual void Attack(Character defender, char defenderAction)
         {
             if (IsBot)
             {
@@ -162,6 +162,41 @@ namespace HelloWorld
         {
             return IsBot;
         }
+
+        public string GetName()
+        {
+            return _name;
+        } //Name Getter
+
+        public int GetHealth()
+        {
+            return _totalHealth;
+        } //Health Getter
+
+        public int GetMaxHealth()
+        {
+            return _maxHealth;
+        }
+
+        public int GetHealthRegen()
+        {
+            return _totalRegen;
+        }
+
+        public int GetHeal()
+        {
+            return _totalHeal;
+        } //Heal Getter
+
+        public int GetDamage()
+        {
+            return _totalDamage;
+        } //Damage Getter
+
+        public int GetDefense()
+        {
+            return _totalDefense;
+        } //Defense Getter
 
         public void Pause()
         {

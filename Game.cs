@@ -200,7 +200,7 @@ namespace HelloWorld
                                         Console.WriteLine("[I engage one of the many slimes]");
                                         Slime = new Enemy("Slime");
                                         InBattle = true;
-                                        Battle(ref Slime);
+                                        AdventureBattle(ref Slime);
                                         break;
 
                                     case '5': //Look around
@@ -230,7 +230,7 @@ namespace HelloWorld
                                     {
                                         Slime = new Enemy("Slime");
                                         InBattle = true;
-                                        Battle(ref Slime);
+                                        AdventureBattle(ref Slime);
                                     } //If slime engages
                                 } //If not engaging
 
@@ -374,7 +374,7 @@ namespace HelloWorld
                                 {
                                     Slombie = new Enemy("Slombie");
                                     InBattle = true;
-                                    Battle(ref Slombie);
+                                    AdventureBattle(ref Slombie);
                                 } //If slomibe engages
 
                                 LabyrinthEntrywayExplored = true;
@@ -589,7 +589,7 @@ namespace HelloWorld
                                         Pause();
                                         Nothing = new Enemy("Nothing");
                                         InBattle = true;
-                                        Battle(ref Nothing);
+                                        AdventureBattle(ref Nothing);
                                         break;
 
                                     case '4': //Engage Nothing in the throne
@@ -598,7 +598,7 @@ namespace HelloWorld
                                         Pause();
                                         Nothing = new Enemy("Nothing");
                                         InBattle = true;
-                                        Battle(ref Nothing);
+                                        AdventureBattle(ref Nothing);
                                         break;
 
                                     case '5': //Look around
@@ -740,7 +740,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + _player2.GetName() + " is blocking!]");
                         } //If player 2 blocks
 
-                        _player1.Attack(ref _player2, player2action);
+                        _player1.Attack(_player2, player2action);
                         IsDead(_player2);
 
                         if (player2action <= '1' && _player2.GetHealth() > 0) //If the enemy is attacking after player attack & not dead
@@ -748,7 +748,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + _player2.GetName() + " is retaliating!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            _player2.Attack(ref _player1, player1action);
+                            _player2.Attack(_player1, player1action);
                             IsDead(_player1);
                         } // If enemy Retaliates
 
@@ -769,7 +769,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + _player2.GetName() + " is attacking!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            _player2.Attack(ref _player1, player1action);
+                            _player2.Attack(_player1, player1action);
                         } //If enemy Attacks
 
                         else if (player2action == '2')
@@ -811,7 +811,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + _player2.GetName() + " is attacking!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            _player2.Attack(ref _player1, player1action);
+                            _player2.Attack(_player1, player1action);
                             IsDead(_player1);
                         } //If enemy Attacks
 
@@ -857,7 +857,7 @@ namespace HelloWorld
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            _player2.Attack(ref _player1, player1action);
+                            _player2.Attack(_player1, player1action);
                             IsDead(_player1);
                             Pause();
                             if (GameOver == true)
@@ -973,16 +973,11 @@ namespace HelloWorld
             } //InBattle bool
         } //PvP battle functin
 
-        public void Battle(ref Enemy enemy)
+        public void AdventureBattle(ref Enemy enemy)
         {
             InBattle = true;
 
             enemy.EnemySetup();
-
-            Console.WriteLine(enemy.); //Shows the enemy approach message
-            Console.WriteLine("");
-            Console.Write("> ");
-            Console.ReadKey();
             Console.Clear();
 
             turncounter = 0; //Sets the turn counter to 0 before battle starts
@@ -994,20 +989,12 @@ namespace HelloWorld
                 Console.WriteLine("Turn: " + turncounter);
                 Console.WriteLine("[Actions are being decided]");
                 Console.WriteLine("");
-                  
-                Console.WriteLine(playerName + ": " + playerSpecialty); //This and the next few lines show the player's stats
-                Console.WriteLine(playerHP + " HP");
-                Console.WriteLine(playerHeal + " Healing");
-                Console.WriteLine(playerAtk + " Atk");
-                Console.WriteLine(playerDef + " Def");
+
+                _player1.DisplayStats();
 
                 Console.WriteLine("");
 
-                Console.WriteLine(_enemyName); //This and the next line show the enemy's name and health
-                Console.WriteLine(_battleEnemyHealth + " HP");
-                Console.WriteLine(_enemyHeal + " Healing");
-                Console.WriteLine(_enemyDamage + " Atk");
-                Console.WriteLine(_battleEnemyDefense + " Def");
+                enemy.DisplayStats();
                 Console.WriteLine("");
                 Console.WriteLine("");
 
@@ -1023,30 +1010,26 @@ namespace HelloWorld
 
                         if (enemyAction == 2) //If enemy blocks
                         {
-                            Console.WriteLine(_enemyDefendMessage);
-                            EnemyDefendedAttack();
+                            enemy.DisplayMessage("defend"); //Displays enemy defend message
                         } //If enemy blocks
 
-                        else //Whether the enemy is Attacking, Healing, or doing Nothing
-                        {
-                            _battleEnemyHealth = DirectAttack(playerAtk, _battleEnemyHealth, _battleEnemyDefense, _enemyName);
-                        } //If enemy isn't blocking
+                        _player1.Attack(enemy, (char)enemyAction);
 
-                        if (enemyAction <= 1 && _battleEnemyHealth > 0) //If the enemy is attacking after player attack & not dead
+                        if (enemyAction <= 1 && enemy.GetHealth() > 0) //If the enemy is attacking after player attack & not dead
                         {
                             Console.Clear();
-                            Console.WriteLine("[" + _enemyName + " is retaliating!]");
+                            Console.WriteLine("[" + enemy.GetName() + " is retaliating!]");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            playerHP = DirectAttack(_enemyDamage, playerHP, playerDef, playerName);
+                            enemy.Attack(_player1, _action);
                         } // If enemy Retaliates
 
-                        else if (enemyAction == 3 && _battleEnemyHealth > 0) //If the enemy is healing & not dead
+                        else if (enemyAction == 3 && enemy.GetHealth() > 0) //If the enemy is healing & not dead
                         {
-                            Console.WriteLine(_enemyHealMessage);
+                            enemy.DisplayMessage("heal");
                             Pause();
                             Console.Clear(); //Clears the screen
-                            _battleEnemyHealth = Heal(_enemyName, _battleEnemyHealth, _battleEnemyDefense, _enemyHeal);
+                            enemy.Heal();
                         } //If enemy Heals after attack
                         break;
 
@@ -1055,24 +1038,24 @@ namespace HelloWorld
 
                         if (enemyAction <= 1)
                         {
-                            Console.WriteLine(_enemyAttackMessage);
-                            playerDef = PlayerDefendedAttack(ref _player1, _enemyDamage);
+                            enemy.DisplayMessage("attack");
+                            enemy.Attack(_player1, _action);
                         } //If enemy Attacks
 
                         else if (enemyAction == 2)
                         {
-                            Console.WriteLine(_enemyUselessDefenseMessage);
+                            enemy.DisplayMessage("uselessDef");
                         } //If enemy mirrors Block
 
                         else if (enemyAction == 3) //If the enemy is healing
                         {
-                            Console.WriteLine(_enemyHealMessage);
-                            _battleEnemyHealth = Heal(_enemyName, _battleEnemyHealth, _battleEnemyDefense, _enemyHeal);
+                            enemy.DisplayMessage("heal");
+                            enemy.Heal();
                         } //If enemy Heals
 
                         else if (enemyAction == 4)
                         {
-                            Console.WriteLine(_enemyNothingMessage);
+                            enemy.DisplayMessage("nothing");
                         } //If enemy does Nothing
                         break;
 
@@ -1082,45 +1065,45 @@ namespace HelloWorld
 
                         if (enemyAction <= 1) //If the enemy is attacking
                         {
-                            Console.WriteLine("[" + _enemyName + " disagrees!]");
+                            Console.WriteLine("[" + enemy.GetName() + " disagrees!]");
                             Console.WriteLine("");
 
-                            playerHP = Heal(playerHP, playerDef, playerHeal, playerName);
+                            _player1.Heal();
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            Console.WriteLine(_enemyAttackMessage);
-                            playerHP = DirectAttack(_enemyDamage, playerHP, playerDef, playerName);
+                            enemy.DisplayMessage("attack");
+                            enemy.Attack(_player1, _action);
                         } //If enemy Attacks
 
                         else if (enemyAction == 2) //If the enemy is blocking
                         {
-                            Console.WriteLine(_enemyUselessDefenseMessage);
+                            enemy.DisplayMessage("uselessDef");
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            playerHP = Heal(playerHP, playerDef, playerHeal, playerName);
+                            _player1.Heal();
                             Pause();
                         } //If enemy Blocks
 
                         else if (enemyAction == 3) //If the enemy is healing
                         {
-                            Console.WriteLine(_enemyHealMessage);
-                            playerHP = Heal(playerHP, playerDef, playerHeal, playerName);
+                            enemy.DisplayMessage("heal");
+                            _player1.Heal();
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            _battleEnemyHealth = Heal(_enemyName, _battleEnemyHealth, _battleEnemyDefense, _enemyHeal);
+                            enemy.Heal();
                             Pause();
                         } //If enemy also Heals
 
                         else if (enemyAction == 4)
                         {
-                            Console.WriteLine(_enemyNothingMessage);
+                            enemy.DisplayMessage("nothing");
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            playerHP = Heal(playerHP, playerDef, playerHeal, playerName);
+                            _player1.Heal();
                             Pause();
                         } //If enemy does Nothing
                         break;
@@ -1130,11 +1113,11 @@ namespace HelloWorld
 
                         if (enemyAction <= 1) //If the enemy is attacking
                         {
-                            Console.WriteLine(_enemyAttackMessage);
+                            enemy.DisplayMessage("attack");
                             Pause();
                             Console.Clear(); //Clears the screen
 
-                            playerHP = DirectAttack(_enemyDamage, playerHP, playerDef, playerName);
+                            enemy.Attack(_player1, _action);
                             Pause();
                             if (GameOver == true)
                             {
@@ -1144,19 +1127,20 @@ namespace HelloWorld
 
                         else if (enemyAction == 2)
                         {
-                            Console.WriteLine(_enemyUselessDefenseMessage);
+                            enemy.DisplayMessage("uselessDef");
                         } //If enemy Blocks
 
                         else if (enemyAction == 3) //If the enemy is healing
                         {
-                            Console.WriteLine(_enemyHealMessage);
-                            _battleEnemyHealth = Heal(_enemyName, _battleEnemyHealth, _battleEnemyDefense, _enemyHeal);
+                            enemy.DisplayMessage("heal");
+                            enemy.Heal();
                             Pause();
                         } //If enemy Heals
 
                         else if (enemyAction == 4)
                         {
-                            Console.WriteLine(_enemyNothingMessage);
+                            enemy.DisplayMessage("nothing");
+                            Pause();
                         } //If enemy also does Nothing
                         break;
 
@@ -1167,44 +1151,41 @@ namespace HelloWorld
 
                 if (InBattle == true) //Runs the regen & end of round text Only if the battle is continuing
                 {
-                    int _player1.GetMaxHealth = _player1.GetMaxHealth();
-                    int _player1.GetHealthRegen() = _player1.GetHealthRegen();
-
                     Console.WriteLine("");
                     Console.Write("[Press any key to end this round");
-                    if (_battleEnemyHealth > 0 && playerHP > 0) //If both entities have health
+                    if (enemy.GetHealth() > 0 && _player1.GetHealth() > 0) //If both entities have health
                     {
                         //Neither regen
-                        if (_battleEnemyHealth >= _battleEnemyMaxHP && playerHP >= _player2.GetMaxHealth()
+                        if (enemy.GetHealth() >= enemy.GetMaxHealth() && _player1.GetHealth() >= _player1.GetMaxHealth())
                         {
                             Console.WriteLine("; regen won't be applied]");
                             Console.WriteLine("");
-                            Console.WriteLine("[" + playerName + ": " + playerHP + "]");
-                            Console.WriteLine("[" + _enemyName + ": " + _battleEnemyHealth + "]");
+                            Console.WriteLine("[" + _player1.GetName() + ": " + _player1.GetHealth() + "]");
+                            Console.WriteLine("[" + enemy.GetName() + ": " + enemy.GetHealth() + "]");
                         }
                         //Only Enemy regens
-                        else if (_battleEnemyHealth < _battleEnemyMaxHP && playerHP >= _player2.GetMaxHealth()
+                        else if (enemy.GetHealth() < enemy.GetMaxHealth() && _player1.GetHealth() >= _player1.GetMaxHealth())
                         {
                             Console.WriteLine("; regen will be applied]");
                             Console.WriteLine("");
-                            Console.WriteLine("[" + playerName + ": " + playerHP + "]");
-                            Console.WriteLine("[" + _enemyName + ": " + _battleEnemyHealth + " + " + _enemyRegen + "]");
+                            Console.WriteLine("[" + _player1.GetName() + ": " + _player1.GetHealth() + "]");
+                            Console.WriteLine("[" + enemy.GetName() + ": " + enemy.GetHealth() + " + " + enemy.GetHealthRegen() + "]");
                         }
                         //Only Player regens
-                        else if (_battleEnemyHealth >= _battleEnemyMaxHP && playerHP < _player2.GetMaxHealth()
+                        else if (enemy.GetHealth() >= enemy.GetMaxHealth() && _player1.GetHealth() < _player2.GetMaxHealth())
                         {
                             Console.WriteLine("; regen will be applied]");
                             Console.WriteLine("");
-                            Console.WriteLine("[" + playerName + ": " + playerHP + " + " + _player1.GetHealthRegen() + "]");
-                            Console.WriteLine("[" + _enemyName + ": " + _battleEnemyHealth + "]");
+                            Console.WriteLine("[" + _player1.GetName() + ": " + _player1.GetHealth() + " + " + _player1.GetHealthRegen() + "]");
+                            Console.WriteLine("[" + enemy.GetName() + ": " + enemy.GetHealth() + "]");
                         }
                         //Both regen
-                        else if (_battleEnemyHealth <= _battleEnemyMaxHP && playerHP <= _player2.GetMaxHealth()
+                        else if (enemy.GetHealth() <= enemy.GetMaxHealth() && _player1.GetHealth() <= _player2.GetMaxHealth())
                         {
                             Console.WriteLine("; regen will be applied]");
                             Console.WriteLine("");
-                            Console.WriteLine("[" + playerName + ": " + playerHP + " + " + _player1.GetHealthRegen() + "]");
-                            Console.WriteLine("[" + _enemyName + ": " + _battleEnemyHealth + " + " + _enemyRegen + "]");
+                            Console.WriteLine("[" + _player1.GetName() + ": " + _player1.GetHealth() + " + " + _player1.GetHealthRegen() + "]");
+                            Console.WriteLine("[" + enemy.GetName() + ": " + enemy.GetHealth() + " + " + enemy.GetHealthRegen() + "]");
                         }
                     } //If both entities live
                     else //Closes the text if regen won't be applied
@@ -1216,12 +1197,13 @@ namespace HelloWorld
 
                     Console.Clear(); //Clears the screen
 
-                    _player1.Regenerate(); //Regenerates player
-                    _battleEnemyHealth = Regeneration(_battleEnemyHealth, _battleEnemyMaxHP, _enemyRegen); //Regenerates Enemy
+                    //Regenerates both characters
+                    _player1.Regenerate();
+                    enemy.Regenerate();
                 } //If in battle
 
 
-                if (playerHP <= 0) //If the player lost
+                if (_player1.GetHealth() <= 0) //If the player lost
                 {
                     Console.WriteLine("The battle has ended");
                     Pause();
@@ -1230,15 +1212,15 @@ namespace HelloWorld
                     break;
                 } //If player lost
 
-                if (_battleEnemyHealth <= 0) //If the player won
+                if (enemy.GetHealth() <= 0) //If the player won
                 {
-                    Console.WriteLine(_enemyDeathMessage);
+                    enemy.DisplayMessage("death");
                     Console.WriteLine("");
                     Console.WriteLine("Congratulations, you won!");
                     Pause();
                     Console.Clear(); //Clears the screen
 
-                    _player1.GainExperience(_enemyExperience);
+                    _player1.GainExperience(enemy.GetExp());
 
                     if (_player1.GetLevel() == 10)
                     {
@@ -1256,8 +1238,7 @@ namespace HelloWorld
 
         public bool IsDead(Player player)
         {
-            int playerHP = player.GetHealth();
-            if (playerHP > 0) //Checks to see if player was killed by the attack
+            if (_player1.GetHealth() > 0) //Checks to see if player was killed by the attack
             {
                 return false;
             }
@@ -1385,28 +1366,6 @@ namespace HelloWorld
             } //action switch
         } //Switch Item function
 
-        string ChangeName()
-        {
-            char action = ' ';
-            string input;
-            do
-            {
-                Console.Clear(); //Clears the screen
-                Console.WriteLine("What is your name?");
-                Console.WriteLine("");
-                Console.WriteLine("[Press Enter to enter your name]");
-                Console.Write("> My name is ");
-                input = Console.ReadLine(); //Gets the player's name
-
-                Console.Clear(); //Clears the screen
-
-                Console.Write(input);
-                action = GetAction(ref action, " is your name?", "[1: Yes]", "[2: No]");
-            }
-            while (action != '1');
-            return input;
-        } //Get Name function
-
         void NineMenu()
         {
             Console.Clear(); //Clears the screen
@@ -1414,7 +1373,7 @@ namespace HelloWorld
             switch (_action)
             {
                 case '1': //Change Name
-                    _player1.GetName() = ChangeName();
+                    _player1.ChangeName();
                     break;
 
                 case '2': //Check Stats
@@ -1459,7 +1418,6 @@ namespace HelloWorld
 
         public void DecideSpecialty(ref Player player)
         {
-            string name = ChangeName();
             string styleName = "Fool";
 
             int health = 100;
@@ -1470,7 +1428,7 @@ namespace HelloWorld
             string specialty = "Fool";
 
             Console.Clear(); //Clears the screen
-            Console.Write("Welcome, " + name);
+            Console.Write("Welcome, " + _player1.GetName());
             char specialtyKey = ' ';
             char styleKey = ' ';
 
@@ -1752,7 +1710,7 @@ namespace HelloWorld
                     break;
             } //Style Key Switch
             Console.Clear(); //Clears the screen
-            player = new Player(name, health, healthRegen, baseHeal, damageMultiplier, defense, styleName, specialty);
+            player = new Player(_player1.GetName(), health, healthRegen, baseHeal, damageMultiplier, defense, styleName, specialty);
         } //Decide Specialty function
 
         public char GetAction(ref char choice, string query, string option1, string option2)

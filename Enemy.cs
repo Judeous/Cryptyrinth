@@ -12,7 +12,7 @@ namespace HelloWorld
     class Enemy : Character
     {
         private string _enemyName = "None";
-        private int _enemyExperience;
+        private int _experience;
 
         //Messages
         private string _approachM;
@@ -85,7 +85,6 @@ namespace HelloWorld
 
                     //Nothing Messages
                     _approachM = "[Nothing is approaching!]";
-                    _deathM = "[Nothing stopped existing]";
                     _attackM = "[Nothing is attacking me]";
                     _healM = "[Nothing is dialating]";
                     _defendM = "[Nothing is defending itself]";
@@ -93,6 +92,7 @@ namespace HelloWorld
                     _destroyedDefenseM = "[Nothing's defense was shattered]";
                     _uselessDefenseM = "[Nothing defends itself]";
                     _doNothingM = "[Nothing happens]";
+                    _deathM = "[Nothing stopped existing]";
                     break;
 
                 case "Slombie":
@@ -106,19 +106,19 @@ namespace HelloWorld
 
                     //Slombie Messages
                     _approachM = "[There's a posessed corpse in here!]";
-                    _deathM = "[The slime leaves the corpse and sinks to the floor]";
                     _attackM = "[The slombie is attacking!]";
+                    _healM = "[More slime is entering the body from the floor!]";
                     _defendM = "[The slime forms a shield before the corpse!]";
                     _noDefenseM = "[The shield is malformed!]";
                     _destroyedDefenseM = "[The shield was torn away!]";
                     _uselessDefenseM = "[The slime forms a shield as a response...]";
                     _doNothingM = "[The slombie does nothing...]";
-                    _healM = "[More slime is entering the body from the floor!]";
+                    _deathM = "[The slime leaves the corpse and sinks to the floor]";
                     break;
             } //Setup Switch
 
             //Calculates experience to be gained if player wins
-            _enemyExperience = (int)(_totalHealth * _damageMultiplier) + _totalDamage + _totalDefense;
+            _experience = (int)(_totalHealth * _damageMultiplier) + _totalDamage + _totalDefense;
 
             //Sets the max in-battle health for the enemy so they don't regenerate to unholy levels
             _maxHealth = _totalHealth;
@@ -127,47 +127,47 @@ namespace HelloWorld
             _totalDamage = (int)(_baseDamage * _damageMultiplier);
         } //Enemy Setup function
 
-        public void DisplayMessage(char message)
+        public void DisplayMessage(string message)
         {
             switch (message)
             {
-                case '1':
-
+                case "approach":
+                    Console.WriteLine(_approachM);
                     break;
 
-                case '2':
-
+                case "attack":
+                    Console.WriteLine(_attackM);
                     break;
 
-                case '3':
-
+                case "heal":
+                    Console.WriteLine(_healM);
                     break;
 
-                case '4':
-
+                case "defend":
+                    Console.WriteLine(_defendM);
                     break;
 
-                case '5':
-
+                case "noDef":
+                    Console.WriteLine(_noDefenseM);
                     break;
 
-                case '6':
-
+                case "defDestroyed":
+                    Console.WriteLine(_destroyedDefenseM);
                     break;
 
-                case '7':
-
+                case "uselessDef":
+                    Console.WriteLine(_uselessDefenseM);
                     break;
 
-                case '8':
-
+                case "nothing":
+                    Console.WriteLine(_doNothingM);
                     break;
 
-                case '9':
-
+                case "death":
+                    Console.WriteLine(_deathM);
                     break;
-            }
-        }
+            } //Message switch
+        } //Display Message function
 
         public void DefendedAttack(int damage)
         {
@@ -209,5 +209,10 @@ namespace HelloWorld
                 Pause();
             } //If enemy has defense
         } //Enemy Defended Attack function
+
+        public int GetExp()
+        {
+            return _experience;
+        } //Get Experience function
     } //Enemy
 } //Hello World
