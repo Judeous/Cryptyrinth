@@ -25,7 +25,6 @@ namespace HelloWorld
 
         public bool IsBot;
 
-
         public virtual void Heal()
         {
             Console.WriteLine("");

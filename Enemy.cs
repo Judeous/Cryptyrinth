@@ -9,15 +9,8 @@ namespace HelloWorld
         private int _experience;
 
         //Messages
-        private string _approachM;
-        private string _attackM;
-        private string _defendM;
-        private string _noDefenseM;
-        private string _destroyedDefenseM;
-        private string _uselessDefenseM;
-        private string _doNothingM;
-        private string _healM;
-        private string _deathM;
+
+        private string[] messages = new string[9];
 
         Random r = new Random(); //Sets a variable for a randomizer
 
@@ -28,17 +21,18 @@ namespace HelloWorld
             _damageMultiplier = 1.0f;
             _baseDamage = 8;
             
-            _approachM = "An enemy appears!";
-            _attackM = "The enemy is attacking!";
-            _healM = "The enemy is healing!";
-            _defendM = "The enemy is defending!";
-            _destroyedDefenseM = "The enemy's defense was knocked aside!";
-            _uselessDefenseM = "The enemy is defending...";
-            _noDefenseM = "The enemy has nothing to defend with!";
-            _doNothingM = "The enemy does nothing...";
-            _deathM = "The enemy was unmade";
 
-            _name = name;
+            messages[0] = "An enemy appears!";
+            messages[1] = "The enemy is attacking!";
+            messages[7] = "The enemy is healing!";
+            messages[2] = "The enemy is defending!";
+            messages[4] = "The enemy's defense was knocked aside!";
+            messages[5] = "The enemy is defending...";
+            messages[3] = "The enemy has nothing to defend with!";
+            messages[6] = "The enemy does nothing...";
+            messages[8] = "The enemy was unmade";
+
+             _name = name;
             EnemySetup();
         } //Constructor
 
@@ -55,15 +49,15 @@ namespace HelloWorld
                     _totalRegen = 5;
 
                     //Slime Messages
-                    _approachM = "[A slime becomes hostile!]";
-                    _attackM = "[The slime is attacking!]";
-                    _healM = "[The slime is growing!]";
-                    _defendM = "[The slime forms a defensive layer!]";
-                    _destroyedDefenseM = "[The defensive layer was knocked away!]";
-                    _uselessDefenseM = "[The slime shows it's defensive layer...]";
-                    _noDefenseM = "[The defensive layer is too thin!]";
-                    _doNothingM = "[The slime does nothing...]";
-                    _deathM = "[The slime melts into the ground]";
+                    messages[0] = "[A slime becomes hostile!]";
+                    messages[1] = "[The slime is attacking!]";
+                    messages[7] = "[The slime is growing!]";
+                    messages[2] = "[The slime forms a defensive layer!]";
+                    messages[4] = "[The defensive layer was knocked away!]";
+                    messages[5] = "[The slime shows it's defensive layer...]";
+                    messages[3] = "[The defensive layer is too thin!]";
+                    messages[6] = "[The slime does nothing...]";
+                    messages[8] = "[The slime melts into the ground]";
                     break;
 
                 case "Nothing":
@@ -75,15 +69,15 @@ namespace HelloWorld
                     _totalRegen = 15;
 
                     //Nothing Messages
-                    _approachM = "[Nothing is approaching!]";
-                    _attackM = "[Nothing is attacking me]";
-                    _healM = "[Nothing is dialating]";
-                    _defendM = "[Nothing is defending itself]";
-                    _noDefenseM = "[Nothing has no defense]";
-                    _destroyedDefenseM = "[Nothing's defense was shattered]";
-                    _uselessDefenseM = "[Nothing defends itself]";
-                    _doNothingM = "[Nothing happens]";
-                    _deathM = "[Nothing stopped existing]";
+                    messages[0] = "[Nothing is approaching!]";
+                    messages[1] = "[Nothing is attacking me]";
+                    messages[7] = "[Nothing is dialating]";
+                    messages[2] = "[Nothing is defending itself]";
+                    messages[3] = "[Nothing has no defense]";
+                    messages[4] = "[Nothing's defense was shattered]";
+                    messages[5] = "[Nothing defends itself]";
+                    messages[6] = "[Nothing happens]";
+                    messages[8] = "[Nothing stopped existing]";
                     break;
 
                 case "Slombie":
@@ -96,15 +90,15 @@ namespace HelloWorld
                     _totalRegen = 2;
 
                     //Slombie Messages
-                    _approachM = "[There's a posessed corpse in here!]";
-                    _attackM = "[The slombie is attacking!]";
-                    _healM = "[More slime is entering the body from the floor!]";
-                    _defendM = "[The slime forms a shield before the corpse!]";
-                    _noDefenseM = "[The shield is malformed!]";
-                    _destroyedDefenseM = "[The shield was torn away!]";
-                    _uselessDefenseM = "[The slime forms a shield as a response...]";
-                    _doNothingM = "[The slombie does nothing...]";
-                    _deathM = "[The slime leaves the corpse and sinks to the floor]";
+                    messages[0] = "[There's a posessed corpse in here!]";
+                    messages[1] = "[The slombie is attacking!]";
+                    messages[7] = "[More slime is entering the body from the floor!]";
+                    messages[2] = "[The slime forms a shield before the corpse!]";
+                    messages[3] = "[The shield is malformed!]";
+                    messages[4] = "[The shield was torn away!]";
+                    messages[5] = "[The slime forms a shield as a response...]";
+                    messages[6] = "[The slombie does nothing...]";
+                    messages[8] = "[The slime leaves the corpse and sinks to the floor]";
                     break;
             } //Setup Switch
 
@@ -123,39 +117,39 @@ namespace HelloWorld
             switch (message)
             {
                 case "approach":
-                    Console.WriteLine(_approachM);
+                    Console.WriteLine(messages[0]);
                     break;
 
                 case "attack":
-                    Console.WriteLine(_attackM);
+                    Console.WriteLine(messages[1]);
                     break;
 
                 case "heal":
-                    Console.WriteLine(_healM);
+                    Console.WriteLine(messages[7]);
                     break;
 
                 case "defend":
-                    Console.WriteLine(_defendM);
+                    Console.WriteLine(messages[2]);
                     break;
 
                 case "noDef":
-                    Console.WriteLine(_noDefenseM);
+                    Console.WriteLine(messages[3]);
                     break;
 
                 case "defDestroyed":
-                    Console.WriteLine(_destroyedDefenseM);
+                    Console.WriteLine(messages[4]);
                     break;
 
                 case "uselessDef":
-                    Console.WriteLine(_uselessDefenseM);
+                    Console.WriteLine(messages[5]);
                     break;
 
                 case "nothing":
-                    Console.WriteLine(_doNothingM);
+                    Console.WriteLine(messages[6]);
                     break;
 
                 case "death":
-                    Console.WriteLine(_deathM);
+                    Console.WriteLine(messages[8]);
                     break;
             } //Message switch
         } //Display Message function
@@ -166,7 +160,7 @@ namespace HelloWorld
 
             if (_totalDefense == 0)
             {
-                Console.WriteLine(_noDefenseM);
+                Console.WriteLine(messages[3]);
                 GetDirectAttack(damage);
             } //If enemy has no defense
 
@@ -181,7 +175,7 @@ namespace HelloWorld
                 _totalDefense -= damage; //Player's attack on enemy's defense
                 if (_totalDefense <= 0) //If defense fails
                 {
-                    Console.WriteLine(_destroyedDefenseM);
+                    Console.WriteLine(messages[4]);
                     _totalDefense = 0; //Sets defense back to 0
 
                     Console.WriteLine(_name + " [Post-Strike]"); //Enemy's stats after player's attack

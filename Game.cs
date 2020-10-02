@@ -8,41 +8,41 @@ namespace HelloWorld
 {
     class Game
     {
-        public Item _baseDagger = new Item();
-        public Item _baseSword = new Item();
-        public Item _baseStaff = new Item();
+        private Item _baseDagger = new Item();
+        private Item _baseSword = new Item();
+        private Item _baseStaff = new Item();
 
-        public Player _player1 = new Player();
-        public Player _player2 = new Player();
+        private Player _player1 = new Player();
+        private Player _player2 = new Player();
 
-        public Enemy Slime;
-        public Enemy Slombie;
-        public Enemy Nothing;
+        private Enemy Slime;
+        private Enemy Slombie;
+        private Enemy Nothing;
 
-        public Labyrinth _labyrinth = new Labyrinth();
+        private Labyrinth _labyrinth = new Labyrinth();
 
-        public char _gamemode = ' ';
+        private char _gamemode = ' ';
 
-        public char _action = ' ';
+        private char _action = ' ';
 
         Random r = new Random(); //Sets a variable for a randomizer
 
-        public bool GameOver = false;
-        public bool InBattle = false;
-        public int turncounter;
+        private bool GameOver = false;
+        private bool InBattle = false;
+        private int turncounter;
 
         //Field Locations
-        public bool ShackExplored = false;
-        public bool FieldExplored = false;
-        public bool LabyrinthEntranceExplored = false;
-        public bool CastleGateExplored = false;
+        private bool ShackExplored = false;
+        private bool FieldExplored = false;
+        private bool LabyrinthEntranceExplored = false;
+        private bool CastleGateExplored = false;
         //Labyrinth Locations
-        bool LabyrinthEntrywayExplored = false;
-        bool LabyrinthExplored = false;
+        private bool LabyrinthEntrywayExplored = false;
+        private bool LabyrinthExplored = false;
 
         //Castle Locations
-        public bool CastleEntryExplored = false;
-        public bool Explored = false;
+        private bool CastleEntryExplored = false;
+        private bool Explored = false;
 
         public void Run()
         {
@@ -58,19 +58,41 @@ namespace HelloWorld
 
         void Start()
         {
-            GetGamemode();
+            string name = "";
+            if (File.Exists("SaveData.txt"))
+            {
+                StreamReader reader = new StreamReader("SaveData.txt");
+                name = reader.ReadLine(); //Gets the last player's name
+                reader.Close();
+            } //If save data exists
 
-            //Player 1
-            _player1.ChangeName();
-            _player1.DecideSpecialty();
-            _player1.StatCalculation();
-            _player1.StatCheck();
+            if (name != "")
+            {
+                _action = GetAction(ref _action, "Would you happen to be " + name + "?", "[1: Yes]", "[2: No]");
+                if (_action == '1')
+                { //If the player is the previous player
+                    _gamemode = '1';
+                    Load();
+                    Console.Clear();
+                }
+                else
+                {
+                    Console.Clear();
+                    GetGamemode();
+
+                    //Player 1
+                    _player1.ChangeName();
+                    _player1.DecideSpecialty();
+                    _player1.StatCalculation();
+                    _player1.StatCheck();
+                } //If player is not previous player
+            } //If previous name exists
 
             if (_gamemode == '2')
             {
                 //Player 2
-                _player1.ChangeName();
-                _player1.DecideSpecialty();
+                _player2.ChangeName();
+                _player2.DecideSpecialty();
                 _player2.StatCalculation();
                 _player2.StatCheck();
             } //If doing PvP, set up Player 2
@@ -608,11 +630,12 @@ namespace HelloWorld
                     switch (_action)
                     {
                         case '1':
-                            Console.Clear();
+                            Console.Clear(); //Clears the screen
                             PvPBattle();
                             break;
 
                         case '2': //Reselect Specialties
+                            Console.Clear(); //Clears the screen
                             _action = GetAction(ref _action, "[Player 1, do you want to re-select your specialty?]", "[1: Yes]", "[2: No]");
                             if (_action == '1')
                             {
@@ -662,6 +685,7 @@ namespace HelloWorld
                     default:
                         Console.WriteLine(_action + " is not an option");
                         Pause();
+                        Console.Clear();
                         break;
                 }
             }
@@ -707,7 +731,6 @@ namespace HelloWorld
                 {
                     case '1': //If player 1 Attacks
                         Console.Clear(); //Clears the screen to show the enemy's stats before player's attack
-
                         Console.WriteLine("[" + _player1.GetName() + " is attacking!]");
 
                         if (player2action == '2') //If player 2 blocks
@@ -742,7 +765,6 @@ namespace HelloWorld
                         if (player2action <= '1')
                         {
                             Console.WriteLine("[" + _player2.GetName() + " is attacking!]");
-                            Pause();
                             Console.Clear(); //Clears the screen
                             _player2.Attack(_player1, player1action);
                         } //If enemy Attacks
@@ -750,14 +772,12 @@ namespace HelloWorld
                         else if (player2action == '2')
                         {
                             Console.WriteLine("[" + _player2.GetName() + " is also blocking...]");
-                            Pause();
                             Console.Clear(); //Clears the screen
                         } //If enemy mirrors Block
 
                         else if (player2action == '3') //If player 2 is healing
                         {
                             Console.WriteLine("[" + _player2.GetName() + " is healing!]");
-                            Pause();
                             Console.Clear(); //Clears the screen
                             _player2.Heal();
                         } //If enemy Heals
@@ -766,7 +786,6 @@ namespace HelloWorld
                         else if (player2action == '4')
                         {
                             Console.WriteLine("[" + _player2.GetName() + " does nothing...]");
-                            Pause();
                         } //If enemy does Nothing
                         break;
 
@@ -784,8 +803,6 @@ namespace HelloWorld
                             Console.Clear(); //Clears the screen
 
                             Console.WriteLine("[" + _player2.GetName() + " is attacking!]");
-                            Pause();
-                            Console.Clear(); //Clears the screen
                             _player2.Attack(_player1, player1action);
                             IsDead(_player1);
                         } //If enemy Attacks
@@ -797,8 +814,6 @@ namespace HelloWorld
                             Console.Clear(); //Clears the screen
 
                             _player1.Heal();
-                            Pause();
-                            Console.Clear(); //Clears the screen
                         } //If enemy Blocks
 
                         else if (player2action == '3') //If the enemy is healing
@@ -809,7 +824,6 @@ namespace HelloWorld
                             Console.Clear(); //Clears the screen
 
                             _player2.Heal();
-                            Pause();
                         } //If player 2 also Heals
 
                         else if (player2action == '4')
@@ -819,7 +833,6 @@ namespace HelloWorld
                             Console.Clear(); //Clears the screen
 
                             _player1.Heal();
-                            Pause();
                         } //If enemy does Nothing
                         break;
 
@@ -834,7 +847,6 @@ namespace HelloWorld
 
                             _player2.Attack(_player1, player1action);
                             IsDead(_player1);
-                            Pause();
                             if (GameOver == true)
                             {
                                 break;
@@ -844,8 +856,6 @@ namespace HelloWorld
                         else if (player2action == '2')
                         {
                             Console.WriteLine("[" + _player2.GetName() + " is blocking...]");
-                            Pause();
-                            Console.Clear(); //Clears the screen
                         } //If player 2 Blocks
 
                         else if (player2action == '3') //If the player 2 is healing
@@ -854,14 +864,11 @@ namespace HelloWorld
                             Pause();
                             Console.Clear(); //Clears the screen
                             _player2.Heal();
-                            Pause();
                         } //If enemy Heals
 
                         else if (player2action == '4')
                         {
                             Console.WriteLine("[" + _player2.GetName() + " also does nothing...]");
-                            Pause();
-                            Console.Clear(); //Clears the screen
                         } //If enemy also does Nothing
                         break;
 
@@ -869,6 +876,8 @@ namespace HelloWorld
                         turncounter--;
                         break;
                 } //Action Switch
+                Pause();
+                Console.Clear();
 
                 if (InBattle == true) //Runs the regen & end of round text Only if the battle is continuing
                 {
@@ -877,7 +886,7 @@ namespace HelloWorld
                     if (_player2.GetHealth() > 0 && _player1.GetHealth() > 0) //If both players have health
                     {
                         //Neither regen
-                        if (_player2.GetHealth() >= _player2.GetMaxHealth() && _player1.GetHealth() >= _player1.GetMaxHealth())
+                        if (_player1.GetHealth() >= _player1.GetMaxHealth() && _player2.GetHealth() >= _player2.GetMaxHealth())
                         {
                             Console.WriteLine("; regen won't be applied]");
                             Console.WriteLine("");
@@ -885,7 +894,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + _player2.GetName() + ": " + _player2.GetHealth() + "]");
                         }
                         //Only 2 regens
-                        else if (_player2.GetHealth() < _player2.GetMaxHealth() && _player1.GetHealth() >= _player2.GetMaxHealth())
+                        else if (_player2.GetHealth() < _player2.GetMaxHealth() && _player1.GetHealth() >= _player1.GetMaxHealth())
                         {
                             Console.WriteLine("; regen will be applied]");
                             Console.WriteLine("");
@@ -893,7 +902,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + _player2.GetName() + ": " + _player2.GetHealth() + " + " + _player2.GetHealthRegen() + "]");
                         }
                         //Only 1 regens
-                        else if (_player2.GetHealth() >= _player2.GetMaxHealth() && _player1.GetHealth() < _player2.GetMaxHealth())
+                        else if (_player2.GetHealth() >= _player2.GetMaxHealth() && _player1.GetHealth() < _player1.GetMaxHealth())
                         {
                             Console.WriteLine("; regen will be applied]");
                             Console.WriteLine("");
@@ -901,7 +910,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + _player2.GetName() + ": " + _player2.GetHealth() + "]");
                         }
                         //Both regen
-                        else if (_player2.GetHealth() <= _player2.GetMaxHealth() && _player1.GetHealth() <= _player2.GetMaxHealth())
+                        else if (_player2.GetHealth() < _player2.GetMaxHealth() && _player1.GetHealth() < _player2.GetMaxHealth())
                         {
                             Console.WriteLine("; regen will be applied]");
                             Console.WriteLine("");
@@ -995,6 +1004,7 @@ namespace HelloWorld
                             Console.WriteLine("[" + enemy.GetName() + " is retaliating!]");
                             Pause();
                             Console.Clear(); //Clears the screen
+
                             enemy.Attack(_player1, _action);
                         } // If enemy Retaliates
 
@@ -1210,8 +1220,7 @@ namespace HelloWorld
 
         void End()
         {
-            Console.WriteLine("Unfortunate; I had plans for you");
-            Console.WriteLine("");
+
         }
 
         public void Pause()
@@ -1222,34 +1231,6 @@ namespace HelloWorld
             Console.ReadKey();  //Pauses
             Console.WriteLine("");
         } //Pause
-
-        public int DirectAttack(int damage, int health, int defense, string victimName)
-        {
-            Console.WriteLine("");
-
-            if (health > 0)
-            {
-                Console.WriteLine(victimName + "[Pre-Strike]"); //Stats before being struck
-                Console.WriteLine(health + " HP <<");
-                Console.WriteLine(defense + " Def");
-                Pause();
-
-                health -= damage;  //The Attack
-
-                Console.WriteLine(victimName + " [Post-Strike]"); //Stats after being struck
-                Console.WriteLine(health + " HP <<");
-                Console.WriteLine(defense + " Def");
-                Console.WriteLine("");
-                
-                if (health > 0)
-                {
-                    Pause();
-                }
-
-                IsDead(_player1);
-            } //If enemy alive
-            return health;
-        } //Direct Attack Function
 
         public void InitializeItems()
         {
@@ -1295,24 +1276,24 @@ namespace HelloWorld
         void NineMenu()
         {
             Console.Clear(); //Clears the screen
-            _action = GetAction(ref _action, "9 Menu", "[1: Open Inventory]", "[2: Check Stats]", "[3: Return to Game]", "[4: Switch Item]", "[0: Quit]");
+            _action = GetAction(ref _action, "9 Menu", "[1: Return to game]", "[2: Open Inventory]", "[3: Switch Item]", "[4: Check Stats]", "[8: Change Name]", "[0: Quit]");
             switch (_action)
             {
-                case '1': //Open Inventory
-                    _player1.OpenInventory();
-                    break;
-
-                case '2': //Check Stats
-                    _player1.StatCheck();
-                    break;
-
-                case '3': //Return to game
+                case '1': //Return to game
                     //This is a facade
                     //I did not need to make this
                     break;
 
-                case '4':
+                case '2': //Open Inventory
+                    _player1.OpenInventory();
+                    break;
+
+                case '3': //Switch Item
                     _player1.SwitchItem();
+                    break;
+
+                case '4': //Check Stats
+                    _player1.StatCheck();
                     break;
 
                 case '5':
@@ -1323,17 +1304,29 @@ namespace HelloWorld
 
                     break;
 
-                case '7': //Change Name
+                case '8': //Change Name
                     _player1.ChangeName();
                     break;
 
                 case '0': //Quit
                     Console.Clear(); //Clears the screen
                     _action = GetAction(ref _action, "Are you sure you want to leave?", "[1: Yes]", "[2: No]");
-                    if (_action == '1') //Change Name
+                    if (_action == '1') //Leave
                     {
                         GameOver = true;
-                    }
+                        Console.WriteLine("");
+                        Console.WriteLine("");
+                        _action = GetAction(ref _action, "Before you go, would you like to save your progress?", "[1: Yes]", "[2: No]");
+                        if(_action == '1')
+                        {
+                            Save();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Unfortunate; I had plans for you");
+                            Console.WriteLine("");
+                        }
+                    } //If player is exiting
                     Console.Clear(); //Clears the screen
                     break;
 
@@ -1345,14 +1338,92 @@ namespace HelloWorld
         public void Save()
         {
             StreamWriter writer = new StreamWriter("SaveData.txt");
+
             _player1.Save(writer);
+
+            //Saves the state of locations: whether they were explored or not
+            writer.WriteLine(ShackExplored);
+            writer.WriteLine(FieldExplored);
+            writer.WriteLine(LabyrinthEntranceExplored);
+            writer.WriteLine(CastleGateExplored);
+            writer.WriteLine(LabyrinthEntrywayExplored);
+            writer.WriteLine(LabyrinthExplored);
+            writer.WriteLine(CastleEntryExplored);
+            writer.WriteLine(Explored);
+
+            writer.Close();
         } //Save function
 
-        public void Load()
+        public bool Load()
         {
             StreamReader reader = new StreamReader("SaveData.txt");
+
             _player1.Load(reader);
-        } //Load String function
+
+            bool shack;
+            bool field;
+            bool LabyEntrance;
+            bool CastleGate;
+
+            bool LabyEntry;
+            bool Laby;
+
+            bool CastleEntry;
+            bool CastleVoid;
+
+            //Field Locations
+            if (bool.TryParse(reader.ReadLine(), out shack) == false)
+            {
+                return false;
+            }
+            if (bool.TryParse(reader.ReadLine(), out field) == false)
+            {
+                return false;
+            }
+            if (bool.TryParse(reader.ReadLine(), out LabyEntrance) == false)
+            {
+                return false;
+            }
+            if (bool.TryParse(reader.ReadLine(), out CastleGate) == false)
+            {
+                return false;
+            }
+
+            //Labyrinth locations
+            if (bool.TryParse(reader.ReadLine(), out LabyEntry) == false)
+            {
+                return false;
+            }
+            if (bool.TryParse(reader.ReadLine(), out Laby) == false)
+            {
+                return false;
+            }
+
+            //Castle Locations
+            if (bool.TryParse(reader.ReadLine(), out CastleEntry) == false)
+            {
+                return false;
+            }
+            if (bool.TryParse(reader.ReadLine(), out CastleVoid) == false)
+            {
+                return false;
+            }
+
+            //If successful, put in the values
+            ShackExplored = shack;
+            FieldExplored = field;
+            LabyrinthEntranceExplored = LabyEntrance;
+            CastleGateExplored = CastleGate;
+
+            LabyrinthEntrywayExplored = LabyEntry;
+            LabyrinthExplored = Laby;
+
+            CastleEntryExplored = CastleEntry;
+            Explored = CastleVoid;
+
+            reader.Close();
+            return true;
+        } //Load function
 
         public char GetAction(ref char choice, string query, string option1, string option2)
         {

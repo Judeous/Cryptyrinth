@@ -120,6 +120,8 @@ namespace HelloWorld
             writer.WriteLine(_style);
             writer.WriteLine(_specialty);
 
+            writer.WriteLine(_area);
+
             writer.WriteLine(_level);
             writer.WriteLine(_currentExperience);
 
@@ -129,13 +131,14 @@ namespace HelloWorld
             writer.WriteLine(_healthRegenAddition);
             writer.WriteLine(_healthRegenMultiplier);
 
+            writer.WriteLine(_healthRegenAddition);
+            writer.WriteLine(_healthRegenMultiplier);
+
             writer.WriteLine(_damageAddition);
             writer.WriteLine(_damageMultiplier);
 
             writer.WriteLine(_healAddition);
             writer.WriteLine(_healMultiplier);
-
-            writer.Close();
         } //Save function
 
         public virtual bool Load(StreamReader reader)
@@ -145,6 +148,8 @@ namespace HelloWorld
 
             string style = reader.ReadLine();
             string specialty = reader.ReadLine();
+
+            string area = reader.ReadLine();
 
             int level;
             int currentExp;
@@ -165,7 +170,6 @@ namespace HelloWorld
             float healMult;
 
             //Checks to see if successful
-
             //Level/Experience
             if (int.TryParse(reader.ReadLine(), out level) == false)
             {
@@ -231,6 +235,8 @@ namespace HelloWorld
             _style = style;
             _specialty = specialty;
 
+            _area = area;
+
             _level = level;
             _currentExperience = currentExp;
 
@@ -254,7 +260,6 @@ namespace HelloWorld
             _healAddition = healAdd;
             _healMultiplier = healMult;
 
-            reader.Close();
             StatCalculation();
             return true;
         } //Load String function
@@ -530,16 +535,11 @@ namespace HelloWorld
                             _damageAddition++;
                             break;
                     } //Action Switch
-                } //While action is invalid
-                while (_action != '1' || _action != '2' || _action != '3' || _action != '4' || _action != '5' || _action != '6');
-
-                //If action is valid
-                if (_action == '1' || _action == '2' || _action == '3' || _action == '4' || _action == '5' || _action == '6')
-                {
                     _level++;
                     _currentExperience -= _experienceRequirement;
                     StatCalculation();
-                }
+                } //While action is invalid
+                while (_action != '1' && _action != '2' && _action != '3' && _action != '4' && _action != '5' && _action != '6');
                 Console.Clear();
             } //While the player is leveling up
             while (_currentExperience >= _experienceRequirement);
@@ -650,11 +650,15 @@ namespace HelloWorld
 
         public void OpenInventory()
         {
-            for(int i = 0; i < 5; i++)
+            Console.Clear();
+            Console.WriteLine("Inventory of " + _name);
+            Console.WriteLine("");
+            for (int i = 0; i < 5; i++)
             {
                 Console.WriteLine("[" + (i+1) + ": " + _inventory[i]._name + "]");
                 Console.WriteLine("");
             }
+            Pause();
         } //Open Inventory function
 
         public void SwitchItem()
@@ -1081,6 +1085,5 @@ namespace HelloWorld
             choice = Console.ReadKey().KeyChar;
             return choice;
         } //Get Action 6 options
-
     } //Player Class
 } //Hello World
