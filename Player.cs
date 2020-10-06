@@ -75,7 +75,7 @@ namespace HelloWorld
                 _inventory[i] = nothing;
             }
             EquipItem(nothing, nothing, 0);
-            EquipWeapon(nothing, nothing, 0);
+            EquipWeapon(nothing, 0);
         } //Initial Constructor
 
         public Player(string nameVal, int healthVal, int healthRegenVal, int healVal, float damagemultVal, int defenseVal, string style, string specialtyVal)
@@ -342,14 +342,14 @@ namespace HelloWorld
             } //If player doesn't have item equipped
         } //Equip Item function
 
-        public void EquipWeapon(Item oldWeapon, Item newWeapon, int itemIndex)
+        public void EquipWeapon(Item newWeapon, int itemIndex)
         {
             Console.Clear();
 
             if(_HasWeaponEquipped)
             {
                 char action = ' ';
-                GetAction(ref action, "[I have " + oldWeapon._name + " out; should I put it away or keep it?]", "[1: Equip new weapon]", "[2: Keep old weapon]");
+                GetAction(ref action, "[I have the " + _currentWeapon._name + " out; should I put it away or keep it?]", "[1: Equip new weapon]", "[2: Keep old weapon]");
 
                 switch(action)
                 {
@@ -543,6 +543,13 @@ namespace HelloWorld
                 Console.Clear();
             } //While the player is leveling up
             while (_currentExperience >= _experienceRequirement);
+
+            if (_level == 10)
+            {
+                Console.Clear(); //Clears the screen
+                Console.WriteLine("Thinking back to the doorless doorway, entering it has become an appealing thought");
+                Pause();
+            }
         } //Level Up function
 
         public void StatCalculation()
@@ -664,20 +671,28 @@ namespace HelloWorld
         public void SwitchItem()
         {
             char action = ' ';
-            GetAction(ref action, "Choose an item", _inventory[0]._name, _inventory[1]._name, _inventory[2]._name);
+            GetAction(ref action, "Choose an item", _inventory[0]._name, _inventory[1]._name, _inventory[2]._name, _inventory[3]._name, _inventory[4]._name);
 
             switch (action)
             {
                 case '1':
-                    EquipWeapon(GetItem(), _inventory[0], 0);
+                    EquipWeapon(_inventory[0], 0);
                     break;
 
                 case '2':
-                    EquipWeapon(GetItem(), _inventory[1], 1);
+                    EquipWeapon(_inventory[1], 1);
                     break;
 
                 case '3':
-                    EquipWeapon(GetItem(), _inventory[2], 2);
+                    EquipWeapon(_inventory[2], 2);
+                    break;
+
+                case '4':
+                    EquipWeapon(_inventory[3], 3);
+                    break;
+
+                case '5':
+                    EquipWeapon(_inventory[4], 4);
                     break;
             } //action switch
         } //Switch Item function

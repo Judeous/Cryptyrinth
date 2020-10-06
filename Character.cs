@@ -200,4 +200,4 @@ namespace HelloWorld
         } //Pause
 
     } //Character
-} //Hellow World
+} //Hello World

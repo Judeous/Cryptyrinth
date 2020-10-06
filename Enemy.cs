@@ -60,26 +60,6 @@ namespace HelloWorld
                     messages[8] = "[The slime melts into the ground]";
                     break;
 
-                case "Nothing":
-                    //Nothing Stats
-                    _totalHealth = 150;
-                    _totalHeal = 20;
-                    _damageMultiplier = 3;
-                    _totalDefense = 40;
-                    _totalRegen = 15;
-
-                    //Nothing Messages
-                    messages[0] = "[Nothing is approaching!]";
-                    messages[1] = "[Nothing is attacking me]";
-                    messages[7] = "[Nothing is dialating]";
-                    messages[2] = "[Nothing is defending itself]";
-                    messages[3] = "[Nothing has no defense]";
-                    messages[4] = "[Nothing's defense was shattered]";
-                    messages[5] = "[Nothing defends itself]";
-                    messages[6] = "[Nothing happens]";
-                    messages[8] = "[Nothing stopped existing]";
-                    break;
-
                 case "Slombie":
                     //Slombie Stats
                     _totalHealth = r.Next(50, 100); //Randomized health
@@ -99,6 +79,27 @@ namespace HelloWorld
                     messages[5] = "[The slime forms a shield as a response...]";
                     messages[6] = "[The slombie does nothing...]";
                     messages[8] = "[The slime leaves the corpse and sinks to the floor]";
+                    break;
+
+
+                case "Nothing":
+                    //Nothing Stats
+                    _totalHealth = 150;
+                    _totalHeal = 20;
+                    _damageMultiplier = 3;
+                    _totalDefense = 40;
+                    _totalRegen = 15;
+
+                    //Nothing Messages
+                    messages[0] = "[Nothing is approaching!]";
+                    messages[1] = "[Nothing is attacking me]";
+                    messages[7] = "[Nothing is dialating]";
+                    messages[2] = "[Nothing is defending itself]";
+                    messages[3] = "[Nothing has no defense]";
+                    messages[4] = "[Nothing's defense was shattered]";
+                    messages[5] = "[Nothing defends itself]";
+                    messages[6] = "[Nothing happens]";
+                    messages[8] = "[Nothing stopped existing]";
                     break;
             } //Setup Switch
 

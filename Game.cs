@@ -58,6 +58,8 @@ namespace HelloWorld
 
         void Start()
         {
+            InitializeItems();
+
             string name = "";
             if (File.Exists("SaveData.txt"))
             {
@@ -65,6 +67,16 @@ namespace HelloWorld
                 name = reader.ReadLine(); //Gets the last player's name
                 reader.Close();
             } //If save data exists
+            else
+            {
+                //Player 1
+                _player1.ChangeName();
+                _player1.DecideSpecialty();
+                _player1.StatCalculation();
+                _player1.StatCheck();
+
+                GetGamemode();
+            } //If no such file exists
 
             if (name != "")
             {
@@ -85,10 +97,15 @@ namespace HelloWorld
                     _player1.DecideSpecialty();
                     _player1.StatCalculation();
                     _player1.StatCheck();
+
+                    FirstWeapon();
                 } //If player is not previous player
             } //If previous name exists
 
-            if (_gamemode == '2')
+            if (_gamemode =='1')
+                FirstWeapon();
+
+            else if (_gamemode == '2')
             {
                 //Player 2
                 _player2.ChangeName();
@@ -126,7 +143,7 @@ namespace HelloWorld
                                 } //Shack Explored switch
                                 Console.WriteLine("");
 
-                                _action = GetAction(ref _action, "[What do I do?]", "[1: Re-enter the shack to change my style & specialty]", "[2: Follow the path down into the field]", "[3: Look around]", "[9: 9 Menu]");
+                                _action = GetAction(ref _action, "[What do I do?]", "[1: Re-enter the shack to change my style & specialty]", "[2: Follow the path down into the field]", "[3: Look around]", "[9: Nine Menu]");
                                 switch (_action)
                                 {
                                     case '1': //Redecide Style/Specialty
@@ -145,7 +162,7 @@ namespace HelloWorld
                                         Pause();
                                         break;
 
-                                    case '9': //9 Menu
+                                    case '9': //Nine Menu
                                         NineMenu();
                                         break;
                                 } //Action Switch
@@ -177,7 +194,7 @@ namespace HelloWorld
                                 }
                                 Console.WriteLine("");
 
-                                _action = GetAction(ref _action, "[What do I do?]", "[1: Head to the hill with the shack atop it]", "[2: Head to the crypt]", "[3: Head towards the Castle]", "[4: Engage a slime]", "[5: Look around]", "[9: 9 Menu]");
+                                _action = GetAction(ref _action, "[What do I do?]", "[1: Head to the hill with the shack atop it]", "[2: Head to the crypt]", "[3: Head towards the Castle]", "[4: Engage a slime]", "[5: Look around]", "[9: Nine Menu]");
                                 switch (_action)
                                 {
                                     case '1': //Go to Shack
@@ -250,7 +267,7 @@ namespace HelloWorld
                                 } //Labyrinth Entrance Explored switch
                                 Console.WriteLine("");
 
-                                _action = GetAction(ref _action, "[What do I do?]", "[1: Head back to the fork in the field]", "[2: Enter the Crypt]", "[3: Read the panel]", "[4: Look around]", "[9: 9 Menu]");
+                                _action = GetAction(ref _action, "[What do I do?]", "[1: Head back to the fork in the field]", "[2: Enter the Crypt]", "[3: Read the panel]", "[4: Look around]", "[9: Nine Menu]");
                                 switch (_action)
                                 {
                                     case '1': //Go to Field
@@ -319,7 +336,7 @@ namespace HelloWorld
                                 } //Labyrinth Entryway Explored switch
                                 Console.WriteLine("");
 
-                                _action = GetAction(ref _action, "[What do I do?]", "[1: Head up the flight of stairs and exit the Crypt/Labyrinth]", "[2: Enter the door next to the entry stairway]", "[3: Enter the door opposite the stairway]", "[4: Check out the table]", "[5: Look around]", "[9: 9 Menu]");
+                                _action = GetAction(ref _action, "[What do I do?]", "[1: Head up the flight of stairs and exit the Crypt/Labyrinth]", "[2: Enter the door next to the entry stairway]", "[3: Enter the door opposite the stairway]", "[4: Check out the table]", "[5: Look around]", "[9: Nine Menu]");
                                 switch (_action)
                                 {
                                     case '1': //Exit the Labyrinth
@@ -411,7 +428,7 @@ namespace HelloWorld
                                 {
                                     case '1': //South
                                         _labyrinth.DoSouth();
-                                        break; //Case 1
+                                        break;
 
                                     case '2': //North
                                         _labyrinth.DoNorth();
@@ -456,7 +473,7 @@ namespace HelloWorld
                                 Console.WriteLine("");
 
                                 Console.WriteLine("[What do I do?]");
-                                Console.WriteLine("[1: Return to the fork in the path]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[9: 9 Menu]");
+                                Console.WriteLine("[1: Return to the fork in the path]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[9: Nine Menu]");
                                 Console.WriteLine("");
                                 Console.WriteLine("[Press the number to continue]");
                                 Console.Write("> ");
@@ -493,7 +510,7 @@ namespace HelloWorld
                                 break;
 
                             case "CastleEntry":
-                                switch (CastleGateExplored)
+                                switch (CastleEntryExplored)
                                 {
                                     case true:
                                         Console.WriteLine("[I'm in the entryway of the castle]");
@@ -508,7 +525,7 @@ namespace HelloWorld
                                 } //Castle Gate Explored switch
                                 Console.WriteLine("");
 
-                                _action = GetAction(ref _action, "[What do I do?]", "[1: Exit the castle]", "           ", "[3: Look around]", "[9: 9 Menu]");
+                                _action = GetAction(ref _action, "[What do I do?]", "[1: Exit the castle]", "           ", "[3: Look around]", "[9: Nine Menu]");
                                 switch (_action)
                                 {
                                     case '1': //Exit the castle
@@ -523,7 +540,7 @@ namespace HelloWorld
                                             Pause();
                                         }
 
-                                        if (_player1.GetLevel() >= 10)
+                                        else
                                         {
                                             _player1.ChangeArea("    ");
                                         }
@@ -569,7 +586,7 @@ namespace HelloWorld
                                 } //Void Explored switch
                                 Console.WriteLine("");
 
-                                _action = GetAction(ref _action, "[What do I do?]", "[1: Enter the doorless doorway]", "[2: Nothing]", "[3: Engage Nothing]", "[4: Engage Nothing in the throne]", "[5: Look around]", "[9: 9 Menu]");
+                                _action = GetAction(ref _action, "[What do I do?]", "[1: Enter the doorless doorway]", "[2: Nothing]", "[3: Engage Nothing]", "[4: Engage Nothing in the throne]", "[5: Look around]", "[9: Nine Menu]");
                                 switch (_action)
                                 {
                                     case '1': //Exit the Void
@@ -625,7 +642,6 @@ namespace HelloWorld
                     break; //Adventure Mode
 
                 case '2': //PvP
-
                     _action = GetAction(ref _action, "[What do you want to do?]", "[1: Battle]", "[2: Reselect Specialties]", "[0: Quit]");
                     switch (_action)
                     {
@@ -653,7 +669,7 @@ namespace HelloWorld
                         case '0': //Quit
                             Console.Clear(); //Clears the screen
                             _action = GetAction(ref _action, "[Are you sure your want to exit?]", "[1: Yes]", "[2: No]");
-                            if (_action == '1') //Change Name
+                            if (_action == '1')
                             {
                                 GameOver = true;
                             }
@@ -687,9 +703,10 @@ namespace HelloWorld
                         Pause();
                         Console.Clear();
                         break;
-                }
-            }
+                } //Action switch
+            } //Do while gamemode not selected
             while (_gamemode == ' ');
+            Console.Clear();
         } //Get Gamemode function
 
         public void PvpStatDisplay()
@@ -702,7 +719,6 @@ namespace HelloWorld
 
             _player2.DisplayStats();
             Console.WriteLine("");
-
         } //Pvp Stat Display function
 
         public void PvPBattle()
@@ -726,13 +742,12 @@ namespace HelloWorld
                 char player2action = ' ';
                 Console.WriteLine(_player2.GetName());
                 _action = GetAction(ref player2action, "[What do I do?]", "[1: Attack]", "[2: Block]", "[3: Heal]", "[4: Nothing]");
+                Console.Clear(); //Clears the screen
 
                 switch (player1action)
                 {
                     case '1': //If player 1 Attacks
-                        Console.Clear(); //Clears the screen to show the enemy's stats before player's attack
                         Console.WriteLine("[" + _player1.GetName() + " is attacking!]");
-
                         if (player2action == '2') //If player 2 blocks
                         {
                             Console.WriteLine("[" + _player2.GetName() + " is blocking!]");
@@ -744,8 +759,6 @@ namespace HelloWorld
                         if (player2action <= '1' && _player2.GetHealth() > 0) //If the enemy is attacking after player attack & not dead
                         {
                             Console.WriteLine("[" + _player2.GetName() + " is retaliating!]");
-                            Pause();
-                            Console.Clear(); //Clears the screen
                             _player2.Attack(_player1, player1action);
                             IsDead(_player1);
                         } // If enemy Retaliates
@@ -753,125 +766,104 @@ namespace HelloWorld
                         else if (player2action == '3' && _player2.GetHealth() > 0) //If the enemy is healing & not dead
                         {
                             Console.WriteLine("[" + _player2.GetName() + " is healing!]");
-                            Pause();
-                            Console.Clear(); //Clears the screen
                             _player2.Heal();
                         } //If enemy Heals after attack
                         break;
 
                     case '2': //If player blocks
-                        Console.Clear(); //Clears the screen
-
-                        if (player2action <= '1')
+                        switch (player2action)
                         {
-                            Console.WriteLine("[" + _player2.GetName() + " is attacking!]");
-                            Console.Clear(); //Clears the screen
-                            _player2.Attack(_player1, player1action);
-                        } //If enemy Attacks
+                            case '1':
+                                Console.WriteLine("[" + _player2.GetName() + " is attacking!]");
+                                _player2.Attack(_player1, player1action);
+                                IsDead(_player1);
+                                break;
 
-                        else if (player2action == '2')
-                        {
-                            Console.WriteLine("[" + _player2.GetName() + " is also blocking...]");
-                            Console.Clear(); //Clears the screen
-                        } //If enemy mirrors Block
+                            case '2':
+                                Console.WriteLine("[" + _player2.GetName() + " is also blocking...]");
+                                Console.Clear(); //Clears the screen
+                                break;
 
-                        else if (player2action == '3') //If player 2 is healing
-                        {
-                            Console.WriteLine("[" + _player2.GetName() + " is healing!]");
-                            Console.Clear(); //Clears the screen
-                            _player2.Heal();
-                        } //If enemy Heals
+                            case '3':
+                                Console.WriteLine("[" + _player2.GetName() + " is healing!]");
+                                Console.Clear(); //Clears the screen
+                                _player2.Heal();
+                                break;
 
-
-                        else if (player2action == '4')
-                        {
-                            Console.WriteLine("[" + _player2.GetName() + " does nothing...]");
-                        } //If enemy does Nothing
+                            case '4':
+                                Console.WriteLine("[" + _player2.GetName() + " does nothing...]");
+                                break;
+                        } //Player 2 Action switch
                         break;
 
                     case '3':
-                        Console.Clear(); //Clears the screen
                         Console.WriteLine("[" + _player1.GetName() + " is healing!]");
-
-                        if (player2action <= '1') //If the enemy is attacking
+                        switch (player2action)
                         {
-                            Console.WriteLine("[" + _player2.GetName() + " disagrees!]");
-                            Pause();
-                            Console.Clear(); //Clears the screen
+                            case '1':
+                                Console.WriteLine("[" + _player2.GetName() + " disagrees!]");
+                                Pause();
+                                Console.Clear(); //Clears the screen
 
-                            _player1.Heal();
-                            Console.Clear(); //Clears the screen
+                                _player1.Heal();
+                                Console.Clear(); //Clears the screen
 
-                            Console.WriteLine("[" + _player2.GetName() + " is attacking!]");
-                            _player2.Attack(_player1, player1action);
-                            IsDead(_player1);
-                        } //If enemy Attacks
+                                Console.WriteLine("[" + _player2.GetName() + " is attacking!]");
+                                _player2.Attack(_player1, player1action);
+                                IsDead(_player1);
+                                break;
 
-                        else if (player2action == '2') //If the enemy is blocking
-                        {
-                            Console.WriteLine("[" + _player2.GetName() + " is blocking...]");
-                            Pause();
-                            Console.Clear(); //Clears the screen
+                            case '2':
+                                Console.WriteLine("[" + _player2.GetName() + " is blocking...]");
+                                Pause();
+                                Console.Clear(); //Clears the screen
 
-                            _player1.Heal();
-                        } //If enemy Blocks
+                                _player1.Heal();
+                                break;
 
-                        else if (player2action == '3') //If the enemy is healing
-                        {
-                            Console.WriteLine("[" + _player2.GetName() + " is healing!]");
-                            _player1.Heal();
-                            Pause();
-                            Console.Clear(); //Clears the screen
+                            case '3':
+                                Console.WriteLine("[" + _player2.GetName() + " is also healing!]");
+                                _player1.Heal();
 
-                            _player2.Heal();
-                        } //If player 2 also Heals
+                                Pause();
+                                Console.Clear(); //Clears the screen
 
-                        else if (player2action == '4')
-                        {
-                            Console.WriteLine("[" + _player2.GetName() + " does nothing...]");
-                            Pause();
-                            Console.Clear(); //Clears the screen
+                                _player2.Heal();
+                                break;
 
-                            _player1.Heal();
-                        } //If enemy does Nothing
+                            case '4':
+                                _player1.Heal();
+                                break;
+                        } //player 2 Action switch
                         break;
 
                     case '4': //Do nothing
-                        Console.Clear(); //Clears the screen
-
-                        if (player2action <= '1') //If the enemy is attacking
+                        switch(player2action)
                         {
-                            Console.WriteLine("[" + _player2.GetName() + " is attacking!]");
-                            Pause();
-                            Console.Clear(); //Clears the screen
-
-                            _player2.Attack(_player1, player1action);
-                            IsDead(_player1);
-                            if (GameOver == true)
-                            {
+                            case '1':
+                                Console.WriteLine("[" + _player2.GetName() + " is attacking!]");
+                                _player2.Attack(_player1, player1action);
+                                IsDead(_player1);
+                                if (GameOver == true)
+                                {
+                                    break;
+                                }
                                 break;
-                            }
-                        } // If player 2 Attacks
 
-                        else if (player2action == '2')
-                        {
-                            Console.WriteLine("[" + _player2.GetName() + " is blocking...]");
-                        } //If player 2 Blocks
+                            case '2':
+                                Console.WriteLine("[" + _player2.GetName() + " is blocking...]");
+                                break;
 
-                        else if (player2action == '3') //If the player 2 is healing
-                        {
-                            Console.WriteLine("[" + _player2.GetName() + " is healing!]");
-                            Pause();
-                            Console.Clear(); //Clears the screen
-                            _player2.Heal();
-                        } //If enemy Heals
+                            case '3':
+                                Console.WriteLine("[" + _player2.GetName() + " is healing!]");
+                                _player2.Heal();
+                                break;
 
-                        else if (player2action == '4')
-                        {
-                            Console.WriteLine("[" + _player2.GetName() + " also does nothing...]");
-                        } //If enemy also does Nothing
+                            case '4':
+                                Console.WriteLine("[" + _player2.GetName() + " also does nothing...]");
+                                break;
+                        } //Player 2 Action switch
                         break;
-
                     default:
                         turncounter--;
                         break;
@@ -921,8 +913,6 @@ namespace HelloWorld
                     else //Closes the text if regen won't be applied due to one entity being dead
                     {
                         Console.WriteLine("]");
-                        Console.Write("> ");
-                        Console.ReadKey();
                     }
 
                     Pause();
@@ -931,7 +921,6 @@ namespace HelloWorld
                     _player1.Regenerate(); //Regenerates player 1
                     _player2.Regenerate(); //Regenerates player 2
                 } //If in battle
-
 
                 if (_player1.GetHealth() <= 0) //If player 2 won
                 {
@@ -975,10 +964,9 @@ namespace HelloWorld
                 Console.WriteLine("");
 
                 _player1.DisplayStats();
-
                 Console.WriteLine("");
-
                 enemy.DisplayStats();
+
                 Console.WriteLine("");
 
                 int enemyAction = r.Next(0, 4); //Decides the enemy's action
@@ -1022,23 +1010,24 @@ namespace HelloWorld
                         {
                             enemy.DisplayMessage("attack");
                             enemy.Attack(_player1, _action);
+                            IsDead(_player1);
                         } //If enemy Attacks
 
-                        else if (enemyAction == 2)
+                        switch (enemyAction)
                         {
-                            enemy.DisplayMessage("uselessDef");
-                        } //If enemy mirrors Block
+                            case 2:
+                                enemy.DisplayMessage("uselessDef");
+                                break;
 
-                        else if (enemyAction == 3) //If the enemy is healing
-                        {
-                            enemy.DisplayMessage("heal");
-                            enemy.Heal();
-                        } //If enemy Heals
+                            case 3:
+                                enemy.DisplayMessage("heal");
+                                enemy.Heal();
+                                break;
 
-                        else if (enemyAction == 4)
-                        {
-                            enemy.DisplayMessage("nothing");
-                        } //If enemy does Nothing
+                            case 4:
+                                enemy.DisplayMessage("nothing");
+                                break;
+                        } //Enemy Action switch
                         Pause();
                         break;
 
@@ -1076,7 +1065,6 @@ namespace HelloWorld
 
                         else if (enemyAction == 4)
                         {
-                            enemy.DisplayMessage("nothing");
                             _player1.Heal();
                         } //If enemy does Nothing
                         Pause();
@@ -1095,21 +1083,21 @@ namespace HelloWorld
                             }
                         } // If enemy Attacks
 
-                        else if (enemyAction == 2)
+                        switch (enemyAction)
                         {
-                            enemy.DisplayMessage("uselessDef");
-                        } //If enemy Blocks
+                            case 2:
+                                enemy.DisplayMessage("uselessDef");
+                                break;
 
-                        else if (enemyAction == 3) //If the enemy is healing
-                        {
-                            enemy.DisplayMessage("heal");
-                            enemy.Heal();
-                        } //If enemy Heals
+                            case 3:
+                                enemy.DisplayMessage("heal");
+                                enemy.Heal();
+                                break;
 
-                        else if (enemyAction == 4)
-                        {
-                            enemy.DisplayMessage("nothing");
-                        } //If enemy also does Nothing
+                            case 4:
+                                enemy.DisplayMessage("nothing");
+                                break;
+                        } //Enemy Action switch
                         Pause();
                         break;
 
@@ -1171,7 +1159,6 @@ namespace HelloWorld
                     enemy.Regenerate();
                 } //If in battle
 
-
                 if (_player1.GetHealth() <= 0) //If the player lost
                 {
                     Console.WriteLine("The battle has ended");
@@ -1191,13 +1178,6 @@ namespace HelloWorld
 
                     _player1.GainExperience(enemy.GetExp());
 
-                    if (_player1.GetLevel() == 10)
-                    {
-                        Console.Clear(); //Clears the screen
-                        Console.WriteLine("Thinking back to the doorless doorway, entering it has become an appealing thought");
-                        Pause();
-                    }
-
                     Console.Clear(); //Clears the screen
                     InBattle = false;
                     break;
@@ -1207,7 +1187,7 @@ namespace HelloWorld
 
         public bool IsDead(Player player)
         {
-            if (_player1.GetHealth() > 0) //Checks to see if player was killed by the attack
+            if (player.GetHealth() > 0) //Checks to see if player was killed by the attack
             {
                 return false;
             }
@@ -1216,7 +1196,7 @@ namespace HelloWorld
                 Console.WriteLine(player.GetName() + " was unmade");
                 return true;
             }
-        } //Death Check function
+        } //IsDead function
 
         void End()
         {
@@ -1249,7 +1229,7 @@ namespace HelloWorld
 
         public void FirstWeapon()
         {
-            _action = GetAction(ref _action, "Which weapon would you like?", "Staff", "Sword", "Dagger", "[Take all of them]");
+            _action = GetAction(ref _action, "Which weapon would you like?", "[1: Staff]", "[2: Sword]", "[3: Dagger]", "[4: Take all three]");
 
             switch (_action)
             {
@@ -1271,12 +1251,13 @@ namespace HelloWorld
                     _player1.AddToInventory(_baseDagger, 2);
                     break;
             } //Action switch
+            Console.Clear();
         } //First Weapon function
 
         void NineMenu()
         {
             Console.Clear(); //Clears the screen
-            _action = GetAction(ref _action, "9 Menu", "[1: Return to game]", "[2: Open Inventory]", "[3: Switch Item]", "[4: Check Stats]", "[8: Change Name]", "[0: Quit]");
+            _action = GetAction(ref _action, "Nine Menu", "[1: Return to game]", "[2: Open Inventory]", "[3: Switch Item]", "[4: Check Stats]", "[8: Change Name]", "[0: Quit]");
             switch (_action)
             {
                 case '1': //Return to game
@@ -1294,14 +1275,6 @@ namespace HelloWorld
 
                 case '4': //Check Stats
                     _player1.StatCheck();
-                    break;
-
-                case '5':
-
-                    break;
-
-                case '6':
-
                     break;
 
                 case '8': //Change Name
@@ -1333,7 +1306,7 @@ namespace HelloWorld
                 default:
                     break;
             } //Action Switch
-        } //9 Menu function
+        } //Nine Menu function
 
         public void Save()
         {
@@ -1356,6 +1329,11 @@ namespace HelloWorld
 
         public bool Load()
         {
+            if(File.Exists("SaveData.txt") == false)
+            {
+                return false;
+            }
+
             StreamReader reader = new StreamReader("SaveData.txt");
 
             _player1.Load(reader);
