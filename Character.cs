@@ -39,14 +39,14 @@ namespace HelloWorld
                 else if (_totalHeal >= 5)
                 {
                     Console.WriteLine(_name + " [Pre-Heal]"); //Stats before heal
-                    Console.WriteLine(_totalHealth+ " HP <<");
+                    Console.WriteLine(_totalHealth + " HP <<");
                     Console.WriteLine(_totalDefense + " Def ");
                     Console.WriteLine("");
 
                     _totalHealth += _totalHeal; //The heal
 
                     Console.WriteLine(_name + " [Post-Heal]"); //Stats after heal
-                    Console.WriteLine(_totalHealth+ " HP <<");
+                    Console.WriteLine(_totalHealth + " HP <<");
                     Console.WriteLine(_totalDefense + " Def");
 
                     Pause();
@@ -110,19 +110,14 @@ namespace HelloWorld
                 {
                     Console.WriteLine("[The defense was knocked aside!]");
                     _totalDefense = 0; //Sets defense back to 0
-
-                    Console.WriteLine(_name + " [Post-Strike]"); //Player's stats after enemy's attack
-                    Console.WriteLine(_totalHealth + " HP");
-                    Console.WriteLine(_totalDefense + " Def <<");
                 } //If defense fails
                 else //If defense didn't fail
                 {
                     Console.WriteLine("[The attack was successfully blocked!]");
-
-                    Console.WriteLine(_name + " [Post-Strike]"); //Player's stats after enemy's attack
-                    Console.WriteLine(_totalHealth + " HP");
-                    Console.WriteLine(_totalDefense + " Def <<");
                 }
+                Console.WriteLine(_name + " [Post-Strike]"); //Player's stats after enemy's attack
+                Console.WriteLine(_totalHealth + " HP");
+                Console.WriteLine(_totalDefense + " Def <<");
                 Pause();
             } //If player has defense
             Console.Clear(); //Clears the screen
@@ -175,21 +170,6 @@ namespace HelloWorld
             return _totalRegen;
         }
 
-        public int GetHeal()
-        {
-            return _totalHeal;
-        } //Heal Getter
-
-        public int GetDamage()
-        {
-            return _totalDamage;
-        } //Damage Getter
-
-        public int GetDefense()
-        {
-            return _totalDefense;
-        } //Defense Getter
-
         public void Pause()
         {
             Console.WriteLine("");
@@ -198,6 +178,5 @@ namespace HelloWorld
             Console.ReadKey();  //Pauses
             Console.WriteLine("");
         } //Pause
-
     } //Character
 } //Hello World

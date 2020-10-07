@@ -108,3 +108,38 @@
 + GetAction (And all overloads)
   + Takes in a choice char, a string query, and varying amounts of strings for options
   + The query is written to the console, then the options are written in order, then the choice char is set to the player's input through a ReadKey, and the value is returned
+
+## Character.cs
++ Heal
+  + If _totalHeal_ is less than or equal to 5, then displays flavor text and nothing more
+  + If _totalHeal_ is greater than 5, then _name_, _totalHealth_, and _totalDefense_ are displayed before and after adding _totalHeal_ to _totalHealth_
++ Attack
+  + Checks to see if _defenderHealth_ is greater than 0, and if so, it enters a switch for _defenderAction_:
+    + case '2' calls _defender_'s DefendAttack function
+    + default calls _defender_'s GetDirectAttack function
++ GetDirectAttack
+  + _name_, _totalHealth_, and _totalDefense_ are displayed before and after subtracting _attackerDamage_ from _totalHealth_
++ DefendAttack
+  + If _totalDefense_ is 0, display flavor text then calls GetDirectAttack
+  + Otherwise, display _name_, _totalHealth_, and _totalDefense_, then subtract _attackerDamage_ from _totalDefense_
+  + If _totalDefense_ is now below or equal to 0, display flavor text, set _totalDefense_ back to 0
+  + Otherwise, just display flavor text
+  + _name_, _totalHealth_, and _totalDefense_ are displayed once more with the new values
++ Regenerate
+  + If _totalHealth_ is less than _maxHealth_ and _totalHealth_ is greater than 0, then add _totalRegen_ to _totalHealth_
+  + If the new value of _totalHealth_ is greater than _maxHealth_ then set _totalHealth_ to the value of _maxHealth_
++ DisplayStats
+  + Prints _name_, _totalHealth_, _totalHeal_, _totalDamage_, and _totalDefense_
++ GetIsBot
+  + returns _IsBot_
+  + Nothing is done with this currently, but in the future I would like to add an option in that would allow one of the _players_ in PvPBattle to have their _action_ variable treated the same as _enemy_ in the AdventureBattle function
++ GetName
+  + returns _name_
++ GetHealth
+  + returns _totalHealth_
++ GetMaxHealth
+  + returns _maxHealth_
++ GetHealthRegen
+  + returns _totalregen_
++ Pause
+  + prints out flavor text then gets a ReadKey
