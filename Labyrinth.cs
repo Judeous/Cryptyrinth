@@ -99,6 +99,7 @@ namespace HelloWorld
                             {
                                 _wallXEBorders = _labyLocationX;
                             }
+                            _wallXWBorders = _wallXEBorders - 1;
                             break;
 
                         case 3: //If wall lengths are 3
@@ -124,8 +125,8 @@ namespace HelloWorld
                     _wallWestX = _wallXWBorders;
 
                     //Calculates & assigns south and north wall borders
-                    _wallYSBorders = _labyLocationY;
-                    _wallYNBorders = _labyLocationY + _wallYLengths;
+                    _wallYSBorders = _labyLocationY + _wallYLengths;
+                    _wallYNBorders = _labyLocationY;
                     break;
 
                 case 'n': //If facing North
@@ -173,6 +174,8 @@ namespace HelloWorld
                     //Calculates & assigns east and west wall borders
                     _wallYSBorders = _labyLocationY;
                     _wallYNBorders = _labyLocationY + _wallYLengths;
+
+                    //Sets east & west Walls' Y
                     _wallEastX = _wallXEBorders;
                     _wallWestX = _wallXWBorders;
                     break;
@@ -218,9 +221,9 @@ namespace HelloWorld
                     //Calculates & assigns south and north wall borders
                     _wallXWBorders = _labyLocationX;
                     _wallXEBorders = _labyLocationX + _wallXLengths;
+
                     _wallEastX = _labyLocationX;
                     _wallWestX = _labyLocationX + _wallYLengths;
-
                     break;
 
                 case 'w': //If facing West
@@ -799,6 +802,5 @@ namespace HelloWorld
             Console.ReadKey();  //Pauses
             Console.WriteLine("");
         } //Pause
-
     } //Labyrinth
 } //Hello World

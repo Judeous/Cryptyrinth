@@ -46,7 +46,7 @@ namespace HelloWorld
                     _totalHeal = 15;
                     _damageMultiplier = 0.5f;
                     _totalDefense = r.Next(5, 15); //Randomizes the health of the slime so they don't all have the same stats
-                    _totalRegen = 5;
+                    _totalHealthRegen = 5;
 
                     //Slime Messages
                     messages[0] = "[A slime becomes hostile!]";
@@ -67,7 +67,7 @@ namespace HelloWorld
                     _damageMultiplier = r.Next(8, 14); //Damage multiplier is somewhere between the lowest and highest player damage multx10
                     _damageMultiplier /= 10; //Then divided by 10
                     _totalDefense = 10;
-                    _totalRegen = 2;
+                    _totalHealthRegen = 2;
 
                     //Slombie Messages
                     messages[0] = "[There's a posessed corpse in here!]";
@@ -88,7 +88,7 @@ namespace HelloWorld
                     _totalHeal = 20;
                     _damageMultiplier = 3;
                     _totalDefense = 40;
-                    _totalRegen = 15;
+                    _totalHealthRegen = 15;
 
                     //Nothing Messages
                     messages[0] = "[Nothing is approaching!]";
@@ -155,7 +155,7 @@ namespace HelloWorld
             } //Message switch
         } //Display Message function
 
-        public void DefendedAttack(int damage)
+        public override void DefendAttack(int damage)
         {
             Console.WriteLine("");
 
@@ -178,20 +178,16 @@ namespace HelloWorld
                 {
                     Console.WriteLine(messages[4]);
                     _totalDefense = 0; //Sets defense back to 0
-
-                    Console.WriteLine(_name + " [Post-Strike]"); //Enemy's stats after player's attack
-                    Console.WriteLine(_totalHealth + " HP");
-                    Console.WriteLine(_totalDefense + " Def <<");
                 } //If defense fails
 
                 else //If defense didn't fail
                 {
                     Console.WriteLine("[" + _name + " successfully blocked!]");
-
-                    Console.WriteLine(_name + " [Post-Strike]"); //Enemy's stats after enemy's attack
-                    Console.WriteLine(_totalHealth + " HP");
-                    Console.WriteLine(_totalDefense + " Def <<");
                 } //If defense doesn't fail
+
+                Console.WriteLine(_name + " [Post-Strike]"); //Enemy's stats after player's attack
+                Console.WriteLine(_totalHealth + " HP");
+                Console.WriteLine(_totalDefense + " Def <<");
                 Pause();
             } //If enemy has defense
         } //Enemy Defended Attack function

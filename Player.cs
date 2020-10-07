@@ -70,7 +70,7 @@ namespace HelloWorld
             _specialty = "Foolishness";
 
             NothingInitializer();
-            for(int i = 0; i < 5; i++)
+            for(int i = 0; i < _inventory.Length; i++)
             {
                 _inventory[i] = nothing;
             }
@@ -306,6 +306,7 @@ namespace HelloWorld
                             Console.WriteLine("[I've equipped the " + _currentItem + "]");
                             Pause();
                         } //If the item is nothing
+                        _inventory[itemIndex] = newItem;
                         break;
 
                     default:
@@ -412,7 +413,6 @@ namespace HelloWorld
 
             _currentItem = nothing;
             _HasItemEquipped = false;
-
         } //Unequip Item
 
         public void UnequipWeapon()
@@ -535,12 +535,12 @@ namespace HelloWorld
                             _damageAddition++;
                             break;
                     } //Action Switch
-                    _level++;
-                    _currentExperience -= _experienceRequirement;
-                    StatCalculation();
                 } //While action is invalid
                 while (_action != '1' && _action != '2' && _action != '3' && _action != '4' && _action != '5' && _action != '6');
                 Console.Clear();
+                _level++;
+                _currentExperience -= _experienceRequirement;
+                StatCalculation();
             } //While the player is leveling up
             while (_currentExperience >= _experienceRequirement);
 
@@ -564,7 +564,7 @@ namespace HelloWorld
             _totalHealth = (int)((((_totalDefense * 1 / 2) + _baseHealth + _currentItem._healthAddition) * _currentItem._healthMultiplier) + _level);
 
             //Regen
-            _totalRegen = (int)(((_baseHealthRegen + _currentItem._healthRegenAddition) * _currentItem._healthRegenMultiplier) + _level);
+            _totalHealthRegen = (int)(((_baseHealthRegen + _currentItem._healthRegenAddition) * _currentItem._healthRegenMultiplier) + _level);
 
             //Sets the max health to prevent health from regenerating past this limit
             _maxHealth = _totalHealth;
@@ -608,7 +608,7 @@ namespace HelloWorld
             Console.WriteLine("Name: " + _name);
             Console.WriteLine("Experience: " + _currentExperience + "/" + _experienceRequirement);
             Console.WriteLine("Health: " + _totalHealth);
-            Console.WriteLine("Regen: " + _baseHealthRegen);
+            Console.WriteLine("Regen: " + _totalHealthRegen); 
             Console.WriteLine("Heal: " + _totalHeal);
             Console.WriteLine("Defense: " + _totalDefense);
             Console.WriteLine("Attack: " + _totalDamage);
@@ -660,7 +660,7 @@ namespace HelloWorld
             Console.Clear();
             Console.WriteLine("Inventory of " + _name);
             Console.WriteLine("");
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < _inventory.Length; i++)
             {
                 Console.WriteLine("[" + (i+1) + ": " + _inventory[i]._name + "]");
                 Console.WriteLine("");

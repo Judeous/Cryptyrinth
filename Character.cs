@@ -13,7 +13,7 @@ namespace HelloWorld
         protected int _totalHealth;
         protected int _maxHealth;
 
-        protected int _totalRegen;
+        protected int _totalHealthRegen;
 
         protected int _totalHeal;
 
@@ -91,7 +91,7 @@ namespace HelloWorld
             Console.Clear(); //Clears the screen
         } //Get Direct Attack function
 
-        public void DefendAttack(int attackerDamage)
+        public virtual void DefendAttack(int attackerDamage)
         {
             if (_totalDefense == 0)
             {
@@ -127,7 +127,7 @@ namespace HelloWorld
         {
             if (_totalHealth < _maxHealth && _totalHealth > 0) //Checks to see if the character's hp is lower than max and higher than 0
             {
-                _totalHealth += _totalRegen;
+                _totalHealth += _totalHealthRegen;
 
                 if (_totalHealth > _maxHealth) //Sets hp to max if regen surpassed max
                 {
@@ -167,7 +167,7 @@ namespace HelloWorld
 
         public int GetHealthRegen()
         {
-            return _totalRegen;
+            return _totalHealthRegen;
         }
 
         public void Pause()

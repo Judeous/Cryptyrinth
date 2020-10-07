@@ -143,3 +143,141 @@
   + returns _totalregen_
 + Pause
   + prints out flavor text then gets a ReadKey
+
+ ## Player.cs
++ Player Constructor
+  + Initializes _inventory_, _baseHealth_, _baseHealthRegen_, _baseDefense_, _level_, _currentExperience_, _totalHeal_, _baseHeal_, _damageMultiplier_, _style_, _specialty_
+  + Calls NothingInitializer, enters a for loop which sets the "slots" to _nothing_, then calls EquipItem, then EquipWeapon, so _currentItem_ and _currentWeapon_ are all _nothing_
++ Overload Player Constructor
+  + Sets passed in values to the respective private values
++ NothingInitializer
+  + Initializes the stats for _nothing_ Item, sets _statMultiplier_s to 1 and _statAddition_s to 0
++ Save
+  + Uses previously declared SaveData.txt StreamWriter to write out the values needed for StatCalculation to set them back to where they were when Save was called during a previous run
++ Load
+  + Declares temporary values for a previously declared SaveData.txt StreamReader to read into, then does a TryParse for all non-string values:
+    + Load is a bool function, and all the TryParses are within if statements. If any of the TryParses fail, the function returns false to prevent any half-loading
+  + After TryParse for read-in values is run successfully, the private values are set to the respective temporary values, then StatCalculation is called, then the function returns true
++ AddToInventory
+  + Sets _inventory[inventoryLocation_ to the passed in _item_
++ EquipItem
+  + If _hasItemEquipped_ is true, then GetAction is called to ask if the user would like to keep _currentItem_ as it is or set it to the passed in _item_, then enters a switch for _action_
+    + If the player switches to the passed in _item_, (case '1') UnEquipItem is called to set _currentItem_ to _nothing_, then the stats of the passed in _item_ are set to the respective private values, _currentItem_ is set to the passed in _item_, _HasItemEquipped_ is set to true, _inventory[itemIndex]_ is set to the passed in _item_, then flavor text is displayed
+    + The default case displays flavor text and nothing more
+  + Otherwise, the values of the new _item_ are set to the respective private values, then flavor text is displayed, then _currentItem_ is set to the passed in _item_ and _HasItemEquipped_ is set to true, then _inventory[itemIndex]_ is set to the passed in _item_
++ EquipWeapon
+  + Does the same as EquipItem, but using _HasWeaponEquipped_, _currentWeapon_, and _UnequipWeapon_
++ UnequipItem
+  + Subtracts the values of _statAddition_s and _statMultiplier_s of _currentItem_ from the respective private values, displays flavor text, sets _currentItem_ to _nothing_, then _HasItemEquipped_ is set to false
++ UnEquipWeapon
+  + If _currentWeapon.damageAddition_ is greater than 0, then text will be displayed showing the value of _damageAddition_ that will be subtracted from the private _damageAddition_
+  + _damageAddition_ is subtracted from_baseDamage_, _damageMultiplier_ of _currentItem_ is subtracted from the private _damageMultiplier_, _currentWeapon_ is set to _nothing_, and _HasWeaponEquipped_ is set to false
++ CheckInventory
+  + Enters a for loop for every _Item_:
+    + Prints the name of the _item_ at _i_, then displays other stats if they are not the same as those of _nothing_
++ GainExperience
+  + Displays the value of passed in _gainedExp_, adds that value to _currentExperience_, displays _currentExperience_ and _experinceRequirement_, and if _currentExperience_ is greater than _experinceRequirement_, then LevelUp is called
++ LevelUp
+  + Enters a do/while loop that loops an invalid choice
+    + Enters another do/while loop that continues while _currentExperince_ is greater than _experienceRequirement_
+      + Flavor text is displayed, then GetAction is called, asking which of five stats the player would like to increment:
+        + Health (case '1') increments _healthAddition_ by 5
+        + Regen (case '2') increments _healthRegenAddition_ by 5
+        + Heal (case '3') increments _healAddition_ by 5
+        + Defense (case '4') increments _defenseAddition by 5
+        + Damage (case '5') increments _damageAddition_ by 5
+        + Split Evenly (case '6') increments all above by 1
+      + Once a valid option is selected, _level_ is incremented, _experienceRequirement_ is subtracted from _currentExperince_, then StatCalculation is called
+  + If _level_ is 10, then text is displayed, hinting at entering a previously inaccessible area
++ StatCalculation
+  + _experinceRequirement_ is set to _level_ multiplied by 30
+  + _totalDefense_is set to _baseDefense_ added to _currentWeapon.defenseAddition_, the result of that being multiplied by _currentWeapon.defenseMultiplier_, then that number having _level_ added to it
+  + _totalHealth_ is set to half of _totalDefense_ added to _baseHealth_ as well as_currentItem.healthAddition_, the sum of those being multiplied by _currentItem.healthMultiplier_, then the result having _level_ added to it
+  + _totalRegen_ is set to _baseHealthRegen_ added to _currentItem.healthRegenAddition_, the sum being multiplied by _currentItem.healthRegenMultiplier_, the result having the value of _level_ added to it
+  + _totalDamage_ is set to _baseDamage added to _currentWeapon.damageAddition_, the sum being multiplied by _currentWeapon.damageMultiplier_, and the result with _level_ added to it
+  + _totalHeal_ is set to _baseHeal_ added to _currentItem.HealAddition_, their sum being multiplied by _currentItem.healMultiplier_, and that being added to _level_
++ ChangeName
+  + Enters a do/while the player is dissatisfied with their name:
+    + Text is displayed, asking the user what they'd like _name_ to be set to, then does a ReadLine
+    + Calls GetAction asking if the user is satisfied with the _input_ they gave
+  + Sets private _name_ to _input_
++ StatCheck
+  + Prints out _name_, _currentExperience_, _experienceRequirement_, _totalHealth_, _totalHealthRegen_, _totalHeal_, _totalDefense_, _totalDamage_, _level_, _style_, _specialty_
++ GetArea
+  + returns _area_
++ ChangeArea
+  + sets private _area_ to _newArea_
++ GetLevel
+  + returns _level_
++ GetInventory
+  + returns _inventory
++ GetSpecialty
+  + returns _specialty_
++ GetWeapon
+  + returns _currentWeapon_
++ GetItem
+  + returns _currentItem_
++ OpenInventory
+  + Displays flavor text, then enters a for loop for every _item_ in _inventory_
+    + Prints out the position (Plus 1) then _inventory[i].name_
++ SwitchItem
+  + Calls GetAction to ask which item the user would like _currentItem_ to be set to
++ DisplayStats
+  + Prints _name_, _specialty_, _totalHealth_, _totalHeal_, _totalDamage_, totalDefense_
++ DecideSpecialty
+  + Calls GetAction to ask the user which _style_ they would like _player_ to have, then enters a styleKey switch
+    + Magic (case '1') displays the _baseHealth_, _baseHealthRegen_, _baseHeal_, _damageMult_, and _baseDefense_ of the four _specialties_ of the Magic _style_
+    + Warrior (case '2') displays the _baseHealth_, _baseHealthRegen_, _baseHeal_, _damageMult_, and _baseDefense_ of the four _specialties_ of the Warrior _style_
+    + Trickster (case '3') displays the _baseHealth_, _baseHealthRegen_, _baseHeal_, _damageMult_, and _baseDefense_ of the four _specialties_ of the Trickster _style_
+    + In all three cases, GetAction is called to ask the user which of the four _specialties_ they would like the _player_ to be assigned to, then enters a _specialtyKey_ switch which assigns the values of the chosen _specialty_
++ GetAction (And all overloads)
+  + Takes in a choice char, a string query, and varying amounts of strings for options
+  + The query is written to the console, then the options are written in order, then the choice char is set to the player's input through a ReadKey, and the value is returned
+
+## Enemy.cs
++ Enemy Constructor
+  + initializes _totalHealth_, _totalHeal_, _damageMultiplier_, _baseDamage_, all of the strings in the _messages_ array, and the private _name_ is set to the passed in _name_, then EnemySetup is called
++ EnemySetup
+  + Enters a switch for the private _name_ variable
+    + For all cases, the values are set
+  + _experience_ is set to _totalHealth_ multiplied by _damageMultiplier_, the result being added to _totalDamage_ and _totalDefense_
+  + _maxHealth_ is assigned to the value of _totalHealth_
+  + _totalDamage_ is set to _baseDamage_ multiplied by _damageMultiplier_
++ DisplayMessage
+  + Enters a switch for passed in _message_
+    + case "approach" displays messages[0]
+    + case "attack" displays messages[1]
+    + case "heal" displays messages[2]
+    + case "defend" displays messages[3]
+    + case "noDef" displays messages[4]
+    + case "defDestroyed displays messages[5]
+    + case "uselessDef" displays messages[6]
+    + case "nothing" displays messages[7]
+    + case "death" displays messages[8]
++ DefendAttack
+  + Checks to see if _totalDefense_ is 0
+    + If it is, then flavor text is displayed, and GetDirectAttack is called
+    + Otherwise, _name_, _totalHealth_, and _totalDefense_ are displayed, then _totalDefense has _damage_ is subtracted from it, then depending on whether or not _totalDefense fell below or to 0, different flavor text is displayed, then _name_, _totalHealth_, and _totalDefense_ are displayed once more
++ GetExp
+  + returns _experience
+
+## Labyrinth
++ GenerateRoom
+  + Randomizes the values of _wallXLengths_ and _wallYLengths_ between the value of _mixWallLength_ and _MaxWallLength_ then enters a switch for _facingDirection_ to assign values to room variables based on the value of _facingDirection_:
+    + South (case 's') enters a switch for _wallXLengths_:
+      + If X lengths are 1, (case 1) _wallXEBorders_ and _wallXEBorders_ are set to the player's X location: _labyLocationX_
+      + case 2: _wallXBorders_ are sent through a Next to make them either _labyLocationX_ or _labyLocationX_ + 1, then if _wallXWBorders_ are _labyLocationX_, then _wallXEBorders_ are set to _labyLocationX_ + 1. Otherwise, _wallXEBorders_ are set to _labyLocationX_. Either way, _wallXWBorders are set to _wallXEBorders - 1
+      + case 3: _wallXWBorders_ are set to _labyLocationX_ - 1, and _wallXEBorders_ are set to _labyLocationX_ + 1
+      + case 4: _wallXBorders are randomized within the values of _labyLocationX_ and _labyLocationX_ + 1, then if _wallXWBorders_ are _labyLocationX_ - 1, then _wallXEBorders_ are set to _labyLocationX_ + 2. Otherwise, _wallXEBorders are set to _labyLocationX_ + 1
+      + _wallEastX_ is set to _wallXEBorders_, then _wallYSBorders are set to _wallXEBorders, and _wallYNBorders + _wallYLengths_ are set to _labylocationY_
+    + North (case 'n') enters a switch for _wallXLengths_:
+      + If X lengths are 1, (case 1) _wallXEBorders_ and _wallXEBorders_ are set to the player's X location: _labyLocationX_
+      + case 2: _wallXBorders_ are sent through a Next to make them either _labyLocationX_ or _labyLocationX_ + 1, then if _wallXWBorders_ are _labyLocationX_, then _wallXEBorders_ are set to _labyLocationX_ + 1. Otherwise, _wallXEBorders_ are set to _labyLocationX_. Either way, _wallXWBorders are set to _wallXEBorders - 1
+      + case 3: _wallXWBorders_ are set to _labyLocationX_ - 1, and _wallXEBorders_ are set to _labyLocationX_ + 1
+      + case 4: _wallEastX_ is set to _wallXEBorders_, then _wallYSBorders are set to _wallXEBorders, and _wallYNBorders are set to _labylocationY_ + _wallYLengths_
+      + _wallNorthY_ is set to _labyLocationY_, then _wallSouthY_ is set to _labyLocationY_ + _wallYLengths_, then _wallYSBorders_ are set to _labyLocationY_ and _wallYNBorders are set to _labyLocationY_ + _wallYLengths_, and _wallEastX_ is set to _wallXEBorders_ and _wallEastX_ is set to _wallXWBorders_
+    + East (case 'e') enters a switch for _wallYLengths_:
+      + If _wallYLengths_ are 1 (case 1), the _wallYNBorders_ are set to _labyLocationY_ and _wallYSBorders_ are set to _labyLocationY_
+      + case 2: _wallYNBorders_ are sent through a Next to make them either _labyLocationY_ or _labyLocationY_ + 1, then if _wallYSBorders_ are _labyLocationY_, then set _wallYSBorders_ to _labyLocationY_ + 1. Otherwise set _wallYSBorders_ to _labyLocationY_
+      + case 3: _wallYNBorders_ are set to _labyLocationY_ - 1 and _wallSBorders_ are set to _labyLocationY_ + 1
+      + case 4: _wallYNBorders are sent through a Next to make them either _labyLocationY_ or _labyLocationY_ + 1, then if _wallyNBorders_ are _labyLocationY - 1,
