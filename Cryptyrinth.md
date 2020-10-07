@@ -280,4 +280,11 @@
       + If _wallYLengths_ are 1 (case 1), the _wallYNBorders_ are set to _labyLocationY_ and _wallYSBorders_ are set to _labyLocationY_
       + case 2: _wallYNBorders_ are sent through a Next to make them either _labyLocationY_ or _labyLocationY_ + 1, then if _wallYSBorders_ are _labyLocationY_, then set _wallYSBorders_ to _labyLocationY_ + 1. Otherwise set _wallYSBorders_ to _labyLocationY_
       + case 3: _wallYNBorders_ are set to _labyLocationY_ - 1 and _wallSBorders_ are set to _labyLocationY_ + 1
-      + case 4: _wallYNBorders are sent through a Next to make them either _labyLocationY_ or _labyLocationY_ + 1, then if _wallyNBorders_ are _labyLocationY - 1,
+      + case 4: _wallYNBorders are sent through a Next to make them either _labyLocationY_ or _labyLocationY_ + 1, then if _wallyNBorders_ are _labyLocationY - 1, set _wallYSBorders_ to _labyLocationY_ + 2. Otherwise, set _wallSBorders to _labyLocationY_ + 1
+      + _wallXWBorders are set to _labyLocationX_, _wallXEBorders_ are set to _labyLocationX_ + _wallXLengths_, then _wallEastX_ is set to _labyLocationX, and _wallWestX_ is set to _labyLocationX_ + _wallYLengths_
+    + West (case 'w') enters a switch for _wallYLengths_:
+      + If _wallYLengths_ are 1, (case 1) the _wallYNBorders_ are set to _labyLocationY_ and _wallYSBorders_ are set to _labyLocationY_
+      + case 2: _wallYNBorders_ are sent through a Next to make them either _labyLocationY_ or _labyLocationY_ + 1, then if _wallYSBorders_ are _labyLocationY_, then set _wallYSBorders_ to _labyLocationY_ + 1. Otherwise set _wallYSBorders_ to _labyLocationY_
+      + case 3: _wallYNBorders_ are set to _labyLocationY_ - 1 and _wallSBorders_ are set to _labyLocationY_ + 1
+      + case 4: _wallYNBorders_ are sent through a Next to make them anywhere from _labyLocationY_ - 1 to _labyLocationY_ + 2, then if _wallYSBorders_ are _labyLocationY_ - 1, then set _wallYSBorders_ to _labyLocationY_ + 2. Otherwise set _wallSBorders_ to _labyLocationY_ + 1
+    + If _labyLocationX_ is _escapeDoorEX_ and _
