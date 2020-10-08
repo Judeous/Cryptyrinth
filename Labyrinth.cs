@@ -308,25 +308,25 @@ namespace HelloWorld
             DoorWestExists = _doorWestChance >= 25;
 
             //Puts doors on walls if they exist
-            if (DoorSouthExists == true)
+            if (DoorSouthExists)
             {
                 _doorSouthY = r.Next(_wallXWBorders, _wallXEBorders);
                 _doorSouthX = _wallSouthY;
             }
-            if (DoorNorthExists == true)
+            if (DoorNorthExists)
             {
                 _doorNorthY = r.Next(_wallXWBorders, _wallXEBorders);
                 _doorNorthX = _wallNorthY;
             }
-            if (DoorEastExists == true)
+            if (DoorEastExists)
             {
-                _doorEastX = _wallEastX;
                 _doorEastY = r.Next(_wallYNBorders, _wallYSBorders);
+                _doorEastX = _wallEastX;
             }
-            if (DoorWestExists == true)
+            if (DoorWestExists)
             {
-                _doorWestX = _wallWestX;
                 _doorWestY = r.Next(_wallYNBorders, _wallYSBorders);
+                _doorWestX = _wallWestX;
             }
 
             RoomSizeAssigner();
@@ -337,7 +337,6 @@ namespace HelloWorld
             switch (_wallXLengths)
             {
                 case 1: //1x
-
                     switch (_wallYLengths)
                     {
                         case 1: //1y
@@ -437,7 +436,6 @@ namespace HelloWorld
                     } //Y wall length
                     break; //4x
             } //X wall length
-
         } //Labyrinth Text function
 
         public void LabyrinthRoomText()
@@ -644,7 +642,7 @@ namespace HelloWorld
                 Console.WriteLine("[2: Look at Northern Wall]");
             } //North
 
-            if (CanEscapeE == true)
+            if (CanEscapeE)
             {
                 Console.WriteLine("[3: Escape through East Door]");
             }
@@ -657,7 +655,7 @@ namespace HelloWorld
                 Console.WriteLine("[3: Look at Eastern Wall]");
             } //East
 
-            if (CanEscapeW == true) //West
+            if (CanEscapeW) //West
             {
                 Console.WriteLine("[4: Escape through West Door]");
             }
@@ -704,7 +702,7 @@ namespace HelloWorld
 
         public void DoSouth()
         {
-            if (DoorSouthExists == true)
+            if (DoorSouthExists)
             {
                 _oldLabyLocationX = _labyLocationX;
                 _oldLabyLocationY = _labyLocationY;
@@ -723,7 +721,7 @@ namespace HelloWorld
 
         public void DoNorth()
         {
-            if (DoorNorthExists == true)
+            if (DoorNorthExists)
             {
                 _oldLabyLocationX = _labyLocationX;
                 _oldLabyLocationY = _labyLocationY;
@@ -742,9 +740,9 @@ namespace HelloWorld
 
         public void DoEast(ref Player player)
         {
-            if (DoorEastExists == true)
+            if (DoorEastExists)
             {
-                if (CanEscapeW == true)
+                if (CanEscapeW)
                 {
                     player.ChangeArea("LabyrinthEntryway");
                     return;
@@ -766,9 +764,9 @@ namespace HelloWorld
 
         public void DoWest(ref Player player)
         {
-            if (DoorWestExists == true)
+            if (DoorWestExists)
             {
-                if (CanEscapeE == true)
+                if (CanEscapeE)
                 {
                     player.ChangeArea("LabyrinthEntryway");
                     return;

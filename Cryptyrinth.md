@@ -287,4 +287,64 @@
       + case 2: _wallYNBorders_ are sent through a Next to make them either _labyLocationY_ or _labyLocationY_ + 1, then if _wallYSBorders_ are _labyLocationY_, then set _wallYSBorders_ to _labyLocationY_ + 1. Otherwise set _wallYSBorders_ to _labyLocationY_
       + case 3: _wallYNBorders_ are set to _labyLocationY_ - 1 and _wallSBorders_ are set to _labyLocationY_ + 1
       + case 4: _wallYNBorders_ are sent through a Next to make them anywhere from _labyLocationY_ - 1 to _labyLocationY_ + 2, then if _wallYSBorders_ are _labyLocationY_ - 1, then set _wallYSBorders_ to _labyLocationY_ + 2. Otherwise set _wallSBorders_ to _labyLocationY_ + 1
-    + If _labyLocationX_ is _escapeDoorEX_ and _
+  + If the value of _labyLocationX_ is the same as that of _escapeDoorEX_ and the value of _labylocationY_ is the same as that of _escapeDoorEY_, then _CanEscapeW_ is set to true_
+  + Else if the value of __labyLocationX_ is the same as that of _escapeDoorWX_ and the value of _labylocationY_ is the same as that of _escapeDoorWY_, then _CanEscapeE_ is set to true_
+  + If the value of _wallYSBorders_ is equal or less than the value of _escapeDoorWY_ and the value of _wallYNBorders_ is equal to or greater than that of _escapeDoorWY, then set _CanEscapeW to true
+  + If the value of _wallYSBorders_ is equal or less than the value of _escapeDoorEY_ and the value of _wallYNBorders_ is equal to or greater than that of _escapeDoorEY, then set _CanEscapeE to true
+  + The values for _doorSouthChance_, _coorNorthChance_, _doorEastChance_, _doorWestChance_ are randomized from 1 to 50, then the respective _DoorDirectionExists_ bool is set to whether or not the previously randomized numbers are greater than or equal to 25
+  + If _DoorSouthExists_, then set the value of _doorSouthY_ to be somewhere from _wallXWBorders_ to _wallXEBorders_, and set _doorSouthX_'s value to be that of _wallSouthY_
+  + If _DoorNorthExists_, then set the value of _doorNorthY_ to be somewhere from _wallXWBorders_ to _wallXEBorders_, and set _doorNorthX_'s value to be that of _wallSouthY_
+  + If _DoorEastExists_, then set the value of _doorEastY_ to be somewhere from _wallYNBorders_ to _wallYSBorders_, and set _doorEast_'s value to be that of _wallEastX_
+  + If _DoorEastExists_, then set the value of _doorWestY_ to be somewhere from _wallYNBorders_ to _wallYSBorders_, and set _doorWest_'s value to be that of _wallWestX_
+  + RoomSizeAssigner is called
++ RoomSizeAssigner
+  + Enters a _wallXLengths_ switch:
+    + If the length of the X-running walls are 1, (case 1) enter a _wallYLengths_ switch:
+      + If the lengths of the Y-running walls are 1, (case 1) set _roomShape_ to "1x1" and set _roomType_ to "square"
+      + case 2: set _roomShape_ to "1x2" and _roomType_ to "rectangle"
+      + case 3: set _roomShape_ to "1x3" and _roomType_ to "hallway"
+      + case 4: set _roomShape_ to "1x4" and _roomType_ to "hallway"
+    + case 2: enter a _wallYLengths_ switch:
+      + If the lengths of the Y-running walls are 1, (case 1) set _roomShape_ to "1x2" and set _roomType_ to "rectangle"
+      + case 2: set _roomShape_ to "2x2" and _roomType_ to "rectangle"
+      + case 3: set _roomShape_ to "2x3" and _roomType_ to "rectangle"
+      + case 4: set _roomShape_ to "2x4" and _roomType_ to "hallway"
+    + case 3: enter a _wallYLengths_ switch:
+      + If the lengths of the Y-running walls are 1, (case 1) set _roomShape_ to "1x3" and set _roomType_ to "hallway"
+      + case 2: set _roomShape_ to "2x3" and _roomType_ to "rectangle"
+      + case 3: set _roomShape_ to "3x3" and _roomType_ to "square"
+      + case 4: set _roomShape_ to "3x4" and _roomType_ to "rectangle"
+    + case 4: enter a _wallYLengths_ switch:
+      + If the lengths of the Y-running walls are 1, (case 1) set _roomShape_ to "1x4" and set _roomType_ to "hallway"
+      + case 2: set _roomShape_ to "2x4" and _roomType_ to "hallway"
+      + case 3: set _roomShape_ to "3x4" and _roomType_ to "rectangle"
+      + case 4: set _roomShape_ to "4x4" and _roomType_ to "square"
++ LabyrinthRoomText
+  + Enters a _roomShape_ switch that writes different flavor text based off of the value of _roomShape_
+  + Four if statements check the values of _DoorDirectionExists_, and if any apply, then a _roomType_ switch is entered with respectively descriptive flavor text
++ LabyrinthActionText
+  + Runs through a series of if/else _DoorDirectionExists_ statements that display respectively descriptive flavor text. After these, prints "[9: Nine Menu]"
++ EnterLabyrinthW
+  + sets _facingDirection_ to 'w', _oldLabyLocationX_ to _labyLocationX_, _oldLabyLocationY_ to _labyLocationY_, _labyLocationX_ to 5, and _labyLocationY_ to 25
+  + Calls GenerateRoom, then sets _DoorEastExists_ to true
+  + Not sure if setting _DoorEastExists_ to true after calling GenerateRoom would make "escaping" possible. I will look into this later
++ EnterLabyrinthE
+  + sets _facingDirection_ to 'e', _oldLabyLocationX_ to _labyLocationX_, _oldLabyLocationY_ to _labyLocationY_, _labyLocationX_ to 9, and _labyLocationY_ to 22
+  + Calls GenerateRoom, then sets _DoorWestExists_ to true
+  + Same unsureness as previous function
++ DoSouth
+  + If _DoorSouthExists_ is true, then sets _oldLabyLocationX_ to _labyLocationX_, _oldLabyLocationY_ to _labyLocationY_, _labyLocationX_ to _doorSouthX_, _labyLocationY to _doorSouthY_, then calls GenerateRoom
+  + Otherwise, writes sarcastic flavor text
++ DoNorth
+  + If _DoorNorthExists_ is true, then sets _oldLabyLocationX_ to _labyLocationX_, _oldLabyLocationY_ to _labyLocationY_, _labyLocationX_ to _doorNorthX_, _labyLocationY to _doorNorthY_, then calls GenerateRoom
+  + Otherwise, writes sarcastic flavor text
++ DoEast
+  + If _DoorEastExists_ is true, if _CanEscapeE_ is true, then calls _player_'s ChangeArea, passing in "LabyrinthEntryway". Otherwise, sets _oldLabyLocationX_ to _labyLocationX_, _oldLabyLocationY_ to _labyLocationY_, _labyLocationX_ to _doorEastX_, _labyLocationY to _doorEastY_, then calls GenerateRoom
+  + Otherwise, writes sarcastic flavor text
++ DoWest
+  + If _DoorWestExists_ is true, if _CanEscapeW_ is true, then calls _player_'s ChangeArea, passing in "LabyrinthEntryway". Otherwise, then sets _oldLabyLocationX_ to _labyLocationX_, _oldLabyLocationY_ to _labyLocationY_, _labyLocationX_ to _doorWestX_, _labyLocationY to _doorWestY_, then calls GenerateRoom
+  + Otherwise, writes sarcastic flavor text
++ GoBack
+  + Sets _labyLocationX_ to _oldLabyLocationX_ and _labyLocationY_ to _oldLabyLocationY_
++ Pause
+  + Prints flavor text and gets a ReadKey
