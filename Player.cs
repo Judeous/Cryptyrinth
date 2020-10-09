@@ -120,6 +120,11 @@ namespace HelloWorld
             writer.WriteLine(_style);
             writer.WriteLine(_specialty);
 
+            for(int i = 0; i < _inventory.Length; i++)
+            {
+                _inventory[i].Save(writer);
+            }
+
             writer.WriteLine(_area);
 
             writer.WriteLine(_level);
@@ -148,6 +153,11 @@ namespace HelloWorld
 
             string style = reader.ReadLine();
             string specialty = reader.ReadLine();
+
+            for (int i = 0; i < _inventory.Length; i++)
+            {
+                _inventory[i].Load(reader);
+            }
 
             string area = reader.ReadLine();
 

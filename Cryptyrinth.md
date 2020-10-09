@@ -51,7 +51,7 @@
         + The Nothing '4') case displays flavor text and nothing more
       + Default decrements _turnCounter_ to act as if nothing happened
     + If _InBattle_ is still true, checks for various combinations of _health_ being at _maxHealth_, and displays flavor text accordingly
-    + Calls Regenerate function for both _players_
+    + Calls Regenerate function for both _players_ if _player1action_ is '1', '2', '3', or '4'
    * Checks to see if either _player_ had their health reach or fall below 0, and if either has, displays text and sets _GameOver_ to true and set _InBattle_ to false
 + AdventureBattle
    * Sets _InBattle_ to true, calls _enemy_.EnemySetup, clears the console, sets _turnCounter_ to 0, the enters a while (InBattle ==true) loop
@@ -81,7 +81,7 @@
         + The Heal (3) case fisplays flavor text then calls _enemy_'s Heal function
         + The Nothing (4) case displays flavor text and nothing more
       + If InBattle is still true, checks for various combinations of _health_ being at _maxHealth_, and displays flavor text accordingly
-    + Calls Regenerate functions for _player1_ and _enemy_
+    + Calls Regenerate functions for _player1_ and _enemy_ if _action_ is '1', '2', '3', or '4'
    * Checks to see if either _player1_ or _enemy_ had their health reach or fall below 0, and if either has, displays text and sets _GameOver_ to true and set _InBattle_ to false
 + IsDead
    * Checks to see if a Player's health is above 0. If yes, return true, otherwise display flavor text and return false
@@ -348,3 +348,16 @@
   + Sets _labyLocationX_ to _oldLabyLocationX_ and _labyLocationY_ to _oldLabyLocationY_
 + Pause
   + Prints flavor text and gets a ReadKey
+
+## Item.cs
++ Initial Constructor
+  + Initialies all variables by setting them all to 0
++ Overload Constructor
+  + Sets not currently private variables to passed in variables
+  + Currently unused, as the Item class was a Struct thrown into a class
++ Save
+  + Writes all variables to SaveData.txt
++ Load
+  + Declares temporary values for a previously declared SaveData.txt StreamReader to read into, then does a TryParse for all non-string values:
+    + Load is a bool function, and all the TryParses are within if statements. If any of the TryParses fail, the function returns false to prevent any half-loading
+  + After TryParse for read-in values is run successfully, the private values are set to the respective temporary values, then StatCalculation is called, then the function returns true

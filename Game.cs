@@ -69,18 +69,27 @@ namespace HelloWorld
             } //If save data exists
             else
             {
+                GetGamemode();
+
                 //Player 1
                 _player1.ChangeName();
                 _player1.DecideSpecialty();
                 _player1.StatCalculation();
                 _player1.StatCheck();
 
-                GetGamemode();
+                if (_gamemode == '1')
+                    FirstWeapon();
             } //If no such file exists
 
             if (name != "")
             {
-                _action = GetAction(ref _action, "Would you happen to be " + name + "?", "[1: Yes]", "[2: No]");
+                do
+                {
+                    _action = GetAction(ref _action, "Would you happen to be " + name + "?", "[1: Yes]", "[2: No]");
+                    Console.Clear();
+                }
+                while (_action != '1' && _action != '2');
+
                 if (_action == '1')
                 { //If the player is the previous player
                     _gamemode = '1';
@@ -101,9 +110,6 @@ namespace HelloWorld
                     FirstWeapon();
                 } //If player is not previous player
             } //If previous name exists
-
-            if (_gamemode =='1')
-                FirstWeapon();
 
             else if (_gamemode == '2')
             {
@@ -918,8 +924,11 @@ namespace HelloWorld
                     Pause();
                     Console.Clear(); //Clears the screen
 
-                    _player1.Regenerate(); //Regenerates player 1
-                    _player2.Regenerate(); //Regenerates player 2
+                    if (player1action == '1' || player1action == '2' || player1action == '3' || player1action == '4')
+                    {
+                        _player1.Regenerate(); //Regenerates player 1
+                        _player2.Regenerate(); //Regenerates player 2
+                    }
                 } //If in battle
 
                 if (_player1.GetHealth() <= 0) //If player 2 won
@@ -1154,6 +1163,11 @@ namespace HelloWorld
 
                     Console.Clear(); //Clears the screen
 
+                    if (_action == '1' || _action == '2' || _action == '3' || _action == '4')
+                    {
+                        _player1.Regenerate(); //Regenerates player 1
+                        _player2.Regenerate(); //Regenerates player 2
+                    }
                     //Regenerates both characters
                     _player1.Regenerate();
                     enemy.Regenerate();
