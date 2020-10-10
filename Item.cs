@@ -71,7 +71,6 @@ namespace HelloWorld
 
             _damageAddition = atkAdd;
             _damageMultiplier = atkMult;
-
         } //Overload Constructor
 
         public virtual void Save(StreamWriter writer)
@@ -178,6 +177,8 @@ namespace HelloWorld
             {
                 return false;
             }
+
+            _name = name;
 
             _expAddition = expAdd;
             _expMultiplier = expMult;

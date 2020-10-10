@@ -276,6 +276,9 @@ namespace HelloWorld
 
         public void AddToInventory(Item item, int invLocation)
         {
+            Console.WriteLine("Where should I put this?");
+
+
             _inventory[invLocation] = item;
         }
 
@@ -313,14 +316,14 @@ namespace HelloWorld
                         StatCalculation();
                         if(newItem._name != "nothing")
                         {
-                            Console.WriteLine("[I've equipped the " + _currentItem + "]");
+                            Console.WriteLine("[I've equipped the " + _currentItem._name + "]");
                             Pause();
                         } //If the item is nothing
                         _inventory[itemIndex] = newItem;
                         break;
 
                     default:
-                        Console.WriteLine("[I kept the " + _currentItem + "]");
+                        Console.WriteLine("[I kept the " + _currentItem._name + "]");
                         Pause();
                         break;
                 } //Action Switch
@@ -345,7 +348,7 @@ namespace HelloWorld
                 StatCalculation();
                 if (newItem._name != "nothing")
                 {
-                    Console.WriteLine("[I've equipped the " + _currentItem + "]");
+                    Console.WriteLine("[I've equipped the " + _currentItem._name + "]");
                     Pause();
                 } //If the item is nothing
 
@@ -375,13 +378,13 @@ namespace HelloWorld
 
                         if (newWeapon._name != "nothing")
                         {
-                            Console.WriteLine("[I've equipped the " + _currentWeapon + "]");
+                            Console.WriteLine("[I've equipped the " + _currentWeapon._name + "]");
                             Pause();
                         } //If the weapon is nothing
                         break;
 
                     default:
-                        Console.WriteLine("[I kept the " + _currentWeapon + "]");
+                        Console.WriteLine("[I kept the " + _currentWeapon._name + "]");
                         Pause();
                         break;
                 } //Action switch
@@ -396,7 +399,7 @@ namespace HelloWorld
 
                 if (newWeapon._name != "nothing")
                 {
-                    Console.WriteLine("[I've equipped the " + _currentWeapon + "]");
+                    Console.WriteLine("[I've equipped the " + _currentWeapon._name + "]");
                     Pause();
                 } //If the weapon is nothing
             } //If player doesn't have weapon
@@ -418,7 +421,7 @@ namespace HelloWorld
             _defenseAddition -= _currentItem._defenseAddition;
             _defenseMultiplier -= _currentItem._defenseMultiplier;
 
-            Console.WriteLine("[I've unequipped the " + _currentItem + "]");
+            Console.WriteLine("[I've unequipped the " + _currentItem._name + "]");
             Pause();
 
             _currentItem = nothing;
@@ -427,7 +430,7 @@ namespace HelloWorld
 
         public void UnequipWeapon()
         {
-            Console.WriteLine("[I've unequipped the " + _currentWeapon + "]");
+            Console.WriteLine("[I've unequipped the " + _currentWeapon._name + "]");
             if (_currentWeapon._damageAddition > 0)
             {
                 Console.WriteLine("[-" + _currentWeapon._damageAddition + " damage");
@@ -451,43 +454,59 @@ namespace HelloWorld
                 //Health
                 if (_inventory[i]._healthAddition != 0)
                 {
-                    Console.WriteLine("Atk Add: " + _inventory[i]._damageAddition);
+                    Console.WriteLine("Health Add: " + _inventory[i]._damageAddition);
                 }
-                if (_inventory[i]._healthMultiplier != 1)
+                if (_inventory[i]._healthMultiplier != 0)
                 {
-                    Console.WriteLine("Atk Mult: " + _inventory[i]._damageMultiplier);
+                    Console.WriteLine("Health Mult: " + _inventory[i]._damageMultiplier);
                 }
                 //Regen
                 if (_inventory[i]._healthRegenAddition != 0)
                 {
-                    Console.WriteLine("Reg Add: " + _inventory[i]._healthRegenAddition);
+                    Console.WriteLine("Health Regen Add: " + _inventory[i]._healthRegenAddition);
                 }
-                if (_inventory[i]._healthRegenMultiplier != 1)
+                if (_inventory[i]._healthRegenMultiplier != 0)
                 {
-                    Console.WriteLine("Reg Mult: " + _inventory[i]._healthRegenMultiplier);
+                    Console.WriteLine("Health Regen Mult: " + _inventory[i]._healthRegenMultiplier);
                 }
                 //Heal
                 if (_inventory[i]._healAddition != 0)
                 {
                     Console.WriteLine("Heal Add: " + _inventory[i]._healAddition);
                 }
-                if (_inventory[i]._healMultiplier != 1)
+                if (_inventory[i]._healMultiplier != 0)
                 {
                     Console.WriteLine("Heal Mult: " + _inventory[i]._healMultiplier);
                 }
                 //Defense
                 if (_inventory[i]._defenseAddition != 0)
                 {
-                    Console.WriteLine("Def Add: " + _inventory[i]._defenseAddition);
+                    Console.WriteLine("Defense Add: " + _inventory[i]._defenseAddition);
                 }
-                if (_inventory[i]._defenseMultiplier > 1)
+                if (_inventory[i]._defenseMultiplier > 0)
                 {
-                    Console.WriteLine("Def Mult: " + _inventory[i]._defenseMultiplier);
+                    Console.WriteLine("Defense Mult: " + _inventory[i]._defenseMultiplier);
+                }
+                //Damage
+                if (_inventory[i]._damageAddition != 0)
+                {
+                    Console.WriteLine("Damage Add: " + _inventory[i]._damageAddition);
+                }
+                if (_inventory[i]._damageMultiplier != 0)
+                {
+                    Console.WriteLine("Damage Mult: " + _inventory[i]._damageMultiplier);
                 }
                 Console.WriteLine("");
             } //For every item
             Pause();
-        } //Check Item switch
+        } //Check Inventory function
+
+        public void InspectItem(int index)
+        {
+            Console.WriteLine(_inventory[index]._name);
+
+
+        } //Inspect Item function
 
         public void GainExperience(int gainedExp)
         {
