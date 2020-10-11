@@ -97,20 +97,20 @@ namespace HelloWorld
         {
             nothing._name = "nothing";
 
-            nothing._healthAddition = 0;
-            nothing._healthMultiplier = 1;
+            nothing.healthAddition = 0;
+            nothing.healthMultiplier = 1;
 
-            nothing._healthRegenAddition = 0;
-            nothing._healthRegenMultiplier = 1;
+            nothing.healthRegenAddition = 0;
+            nothing.healthRegenMultiplier = 1;
 
-            nothing._healAddition = 0;
-            nothing._healMultiplier = 1;
+            nothing.healAddition = 0;
+            nothing.healMultiplier = 1;
 
-            nothing._defenseAddition = 0;
-            nothing._defenseMultiplier = 1;
+            nothing.defenseAddition = 0;
+            nothing.defenseMultiplier = 1;
 
-            nothing._damageAddition = 0;
-            nothing._damageMultiplier = 1;
+            nothing.damageAddition = 0;
+            nothing.damageMultiplier = 1;
         } //Nothing Initializer
 
         public virtual void Save(StreamWriter writer)
@@ -276,11 +276,41 @@ namespace HelloWorld
 
         public void AddToInventory(Item item, int invLocation)
         {
-            Console.WriteLine("Where should I put this?");
-
-
+            char action = ' ';
+            
+            GetAction(ref action, "Where should I put this?", "[1: Slot 1]", "[2: Slot 2]", "[3: Slot 3]", "[4: Slot 4]", "[5: Slot 5]");
+            invLocation = (int)action;
             _inventory[invLocation] = item;
         }
+
+        public void SwitchItem()
+        {
+            char action = ' ';
+            GetAction(ref action, "Choose an item", "[1: " + _inventory[0]._name + "]", "[2: " + _inventory[1]._name + "]", "[3: " + _inventory[2]._name + "]", "[4: " + _inventory[3]._name + "]", "[5: " + _inventory[4]._name + "]");
+
+            switch (action)
+            {
+                case '1':
+                    EquipWeapon(_inventory[0], 0);
+                    break;
+
+                case '2':
+                    EquipWeapon(_inventory[1], 1);
+                    break;
+
+                case '3':
+                    EquipWeapon(_inventory[2], 2);
+                    break;
+
+                case '4':
+                    EquipWeapon(_inventory[3], 3);
+                    break;
+
+                case '5':
+                    EquipWeapon(_inventory[4], 4);
+                    break;
+            } //action switch
+        } //Switch Item function
 
         public void EquipItem(Item newItem, Item oldItem, int itemIndex)
         {
@@ -298,17 +328,17 @@ namespace HelloWorld
                     case '1':
                         UnequipItem();
 
-                        _healthAddition += newItem._healthAddition;
-                        _healthMultiplier += newItem._healthMultiplier;
+                        _healthAddition += newItem.healthAddition;
+                        _healthMultiplier += newItem.healthMultiplier;
 
-                        _healthRegenAddition += newItem._healthRegenAddition;
-                        _healthRegenMultiplier += newItem._healthRegenMultiplier;
+                        _healthRegenAddition += newItem.healthRegenAddition;
+                        _healthRegenMultiplier += newItem.healthRegenMultiplier;
 
-                        _healAddition += newItem._healAddition;
-                        _healMultiplier += newItem._healMultiplier;
+                        _healAddition += newItem.healAddition;
+                        _healMultiplier += newItem.healMultiplier;
 
-                        _defenseAddition += newItem._defenseAddition;
-                        _defenseMultiplier += newItem._defenseMultiplier;
+                        _defenseAddition += newItem.defenseAddition;
+                        _defenseMultiplier += newItem.defenseMultiplier;
 
                         _currentItem = newItem;
                         _HasItemEquipped = true;
@@ -330,17 +360,17 @@ namespace HelloWorld
             } //If player already has item
             else
             {
-                _healthAddition += newItem._healthAddition;
-                _healthMultiplier += newItem._healthMultiplier;
+                _healthAddition += newItem.healthAddition;
+                _healthMultiplier += newItem.healthMultiplier;
 
-                _healthRegenAddition += newItem._healthRegenAddition;
-                _healthRegenMultiplier += newItem._healthRegenMultiplier;
+                _healthRegenAddition += newItem.healthRegenAddition;
+                _healthRegenMultiplier += newItem.healthRegenMultiplier;
 
-                _healAddition += newItem._healAddition;
-                _healMultiplier += newItem._healMultiplier;
+                _healAddition += newItem.healAddition;
+                _healMultiplier += newItem.healMultiplier;
 
-                _defenseAddition += newItem._defenseAddition;
-                _defenseMultiplier += newItem._defenseMultiplier;
+                _defenseAddition += newItem.defenseAddition;
+                _defenseMultiplier += newItem.defenseMultiplier;
 
                 _currentItem = newItem;
                 _HasItemEquipped = true;
@@ -370,8 +400,8 @@ namespace HelloWorld
                     case '1':
                         UnequipWeapon();
 
-                        _baseDamage += newWeapon._damageAddition;
-                        _damageMultiplier += newWeapon._damageMultiplier;
+                        _baseDamage += newWeapon.damageAddition;
+                        _damageMultiplier += newWeapon.damageMultiplier;
 
                         _currentWeapon = newWeapon;
                         _HasWeaponEquipped = true;
@@ -391,8 +421,8 @@ namespace HelloWorld
             } //If player has weapon
             else
             {
-                _baseDamage += newWeapon._damageAddition;
-                _damageMultiplier += newWeapon._damageMultiplier;
+                _baseDamage += newWeapon.damageAddition;
+                _damageMultiplier += newWeapon.damageMultiplier;
 
                 _currentWeapon = newWeapon;
                 _HasWeaponEquipped = true;
@@ -409,17 +439,17 @@ namespace HelloWorld
         {
             Console.Clear();
 
-            _healthAddition -= _currentItem._healthAddition;
-            _healthMultiplier -= _currentItem._healthMultiplier;
+            _healthAddition -= _currentItem.healthAddition;
+            _healthMultiplier -= _currentItem.healthMultiplier;
 
-            _healthRegenAddition -= _currentItem._healthRegenAddition;
-            _healthRegenMultiplier -= _currentItem._healthRegenMultiplier;
+            _healthRegenAddition -= _currentItem.healthRegenAddition;
+            _healthRegenMultiplier -= _currentItem.healthRegenMultiplier;
 
-            _healAddition -= _currentItem._healAddition;
-            _healMultiplier -= _currentItem._healMultiplier;
+            _healAddition -= _currentItem.healAddition;
+            _healMultiplier -= _currentItem.healMultiplier;
 
-            _defenseAddition -= _currentItem._defenseAddition;
-            _defenseMultiplier -= _currentItem._defenseMultiplier;
+            _defenseAddition -= _currentItem.defenseAddition;
+            _defenseMultiplier -= _currentItem.defenseMultiplier;
 
             Console.WriteLine("[I've unequipped the " + _currentItem._name + "]");
             Pause();
@@ -431,14 +461,14 @@ namespace HelloWorld
         public void UnequipWeapon()
         {
             Console.WriteLine("[I've unequipped the " + _currentWeapon._name + "]");
-            if (_currentWeapon._damageAddition > 0)
+            if (_currentWeapon.damageAddition > 0)
             {
-                Console.WriteLine("[-" + _currentWeapon._damageAddition + " damage");
+                Console.WriteLine("[-" + _currentWeapon.damageAddition + " damage");
                 Pause();
             }
 
-            _baseDamage -= _currentItem._damageAddition;
-            _damageMultiplier -= _currentItem._damageMultiplier;
+            _baseDamage -= _currentItem.damageAddition;
+            _damageMultiplier -= _currentItem.damageMultiplier;
 
             _currentWeapon = nothing;
             _HasWeaponEquipped = false;
@@ -449,64 +479,101 @@ namespace HelloWorld
             for (int i = 0; i < _inventory.Length; i++)
             {
                 Console.WriteLine((i + 1) + _inventory[i]._name + ": ");
-
-                //Will only print stats if the stat is changed by the item
-                //Health
-                if (_inventory[i]._healthAddition != 0)
-                {
-                    Console.WriteLine("Health Add: " + _inventory[i]._damageAddition);
-                }
-                if (_inventory[i]._healthMultiplier != 0)
-                {
-                    Console.WriteLine("Health Mult: " + _inventory[i]._damageMultiplier);
-                }
-                //Regen
-                if (_inventory[i]._healthRegenAddition != 0)
-                {
-                    Console.WriteLine("Health Regen Add: " + _inventory[i]._healthRegenAddition);
-                }
-                if (_inventory[i]._healthRegenMultiplier != 0)
-                {
-                    Console.WriteLine("Health Regen Mult: " + _inventory[i]._healthRegenMultiplier);
-                }
-                //Heal
-                if (_inventory[i]._healAddition != 0)
-                {
-                    Console.WriteLine("Heal Add: " + _inventory[i]._healAddition);
-                }
-                if (_inventory[i]._healMultiplier != 0)
-                {
-                    Console.WriteLine("Heal Mult: " + _inventory[i]._healMultiplier);
-                }
-                //Defense
-                if (_inventory[i]._defenseAddition != 0)
-                {
-                    Console.WriteLine("Defense Add: " + _inventory[i]._defenseAddition);
-                }
-                if (_inventory[i]._defenseMultiplier > 0)
-                {
-                    Console.WriteLine("Defense Mult: " + _inventory[i]._defenseMultiplier);
-                }
-                //Damage
-                if (_inventory[i]._damageAddition != 0)
-                {
-                    Console.WriteLine("Damage Add: " + _inventory[i]._damageAddition);
-                }
-                if (_inventory[i]._damageMultiplier != 0)
-                {
-                    Console.WriteLine("Damage Mult: " + _inventory[i]._damageMultiplier);
-                }
-                Console.WriteLine("");
             } //For every item
             Pause();
         } //Check Inventory function
 
-        public void InspectItem(int index)
+        public void InspectItem(Item item)
         {
-            Console.WriteLine(_inventory[index]._name);
+            Console.WriteLine(item._name);
 
+            //Will only print stats if the stat is changed by the item
+            //Health
+            if (item.healthAddition != 0)
+            {
+                Console.WriteLine("Health Add: " + item.damageAddition);
+            }
+            if (item.healthMultiplier != 0)
+            {
+                Console.WriteLine("Health Mult: " + item.damageMultiplier);
+            }
+            //Regen
+            if (item.healthRegenAddition != 0)
+            {
+                Console.WriteLine("Health Regen Add: " + item.healthRegenAddition);
+            }
+            if (item.healthRegenMultiplier != 0)
+            {
+                Console.WriteLine("Health Regen Mult: " + item.healthRegenMultiplier);
+            }
+            //Heal
+            if (item.healAddition != 0)
+            {
+                Console.WriteLine("Heal Add: " + item.healAddition);
+            }
+            if (item.healMultiplier != 0)
+            {
+                Console.WriteLine("Heal Mult: " + item.healMultiplier);
+            }
+            //Defense
+            if (item.defenseAddition != 0)
+            {
+                Console.WriteLine("Defense Add: " + item.defenseAddition);
+            }
+            if (item.defenseMultiplier > 0)
+            {
+                Console.WriteLine("Defense Mult: " + item.defenseMultiplier);
+            }
+            //Damage
+            if (item.damageAddition != 0)
+            {
+                Console.WriteLine("Damage Add: " + item.damageAddition);
+            }
+            if (item.damageMultiplier != 0)
+            {
+                Console.WriteLine("Damage Mult: " + item.damageMultiplier);
+            }
+            Console.WriteLine("");
+            Console.WriteLine("");
+
+            char action = ' ';
+            GetAction(ref action, "[What do I do with this?]", "[1: Equip]", "[2: Discard]", "[3: ]", "[4: ]");
 
         } //Inspect Item function
+
+        public void OpenInventory()
+        {
+            Console.Clear();
+            char action = ' ';
+            GetAction(ref action, "[Select an item]", "[1: " + _inventory[0]._name + "]", "[2: " + _inventory[1]._name + "]", "[3: " + _inventory[2]._name + "]", "[4: " + _inventory[3]._name + "]", "[5: " + _inventory[4]._name + "]", "[6: Do nothing]");
+
+            switch (action)
+            {
+                case '1':
+                    InspectItem(_inventory[0]);
+                    break;
+
+                case '2':
+                    InspectItem(_inventory[1]);
+                    break;
+
+                case '3':
+                    InspectItem(_inventory[2]);
+                    break;
+
+                case '4':
+                    InspectItem(_inventory[3]);
+                    break;
+
+                case '5':
+                    InspectItem(_inventory[4]);
+                    break;
+
+                default:
+
+                    break;
+            } //action switch
+        } //Open Inventory function
 
         public void GainExperience(int gainedExp)
         {
@@ -529,9 +596,9 @@ namespace HelloWorld
         {
             char _action = ' ';
             do
-            {
+            { //While the player is leveling up
                 do
-                {
+                { //While action is invalid
                     Console.WriteLine("You've gained a level!");
                     _action = GetAction(ref _action, "What would you like to level up?", "[1: Health]", "[2: Regen]", "[3: Heal]", "[4: Defense]", "[5: Damage]", "[6: Split Evenly]");
                     switch (_action)
@@ -587,22 +654,22 @@ namespace HelloWorld
             _experienceRequirement = _level * 30;
 
             //Player's defense is the base defense with the player's level added
-            _totalDefense = (int)(((_baseDefense + _currentItem._defenseAddition) * _currentItem._defenseMultiplier) + _level);
+            _totalDefense = (int)(((_baseDefense + _defenseAddition) * _defenseMultiplier) + _level);
 
             //The base health with the addition of level plus half the defense makes the max player health
-            _totalHealth = (int)((((_totalDefense * 1 / 2) + _baseHealth + _currentItem._healthAddition) * _currentItem._healthMultiplier) + _level);
+            _totalHealth = (int)((((_totalDefense * 1 / 2) + _baseHealth + _healthAddition) * _healthMultiplier) + _level);
 
             //Regen
-            _totalHealthRegen = (int)(((_baseHealthRegen + _currentItem._healthRegenAddition) * _currentItem._healthRegenMultiplier) + _level);
+            _totalHealthRegen = (int)(((_baseHealthRegen + _healthRegenAddition) * _healthRegenMultiplier) + _level);
 
             //Sets the max health to prevent health from regenerating past this limit
             _maxHealth = _totalHealth;
 
             //Sets the total damage based on the player's level, base damage, and the damage mutliplier
-            _totalDamage = (int)(((_baseDamage + _currentWeapon._damageAddition) * _currentWeapon._damageMultiplier) + _level);
+            _totalDamage = (int)(((_baseDamage + _damageAddition) * _damageMultiplier) + _level);
 
             //Adds the player's level to the amount they heal
-            _totalHeal = (int)(((_baseHeal + _currentItem._healAddition) * _currentItem._healMultiplier) + _level);
+            _totalHeal = (int)(((_baseHeal + _healAddition) * _healMultiplier) + _level);
         } //Stat Calculation function
 
         public void ChangeName()
@@ -683,48 +750,6 @@ namespace HelloWorld
         {
             return _currentItem;
         }
-
-        public void OpenInventory()
-        {
-            Console.Clear();
-            Console.WriteLine("Inventory of " + _name);
-            Console.WriteLine("");
-            for (int i = 0; i < _inventory.Length; i++)
-            {
-                Console.WriteLine("[" + (i+1) + ": " + _inventory[i]._name + "]");
-                Console.WriteLine("");
-            }
-            Pause();
-        } //Open Inventory function
-
-        public void SwitchItem()
-        {
-            char action = ' ';
-            GetAction(ref action, "Choose an item", _inventory[0]._name, _inventory[1]._name, _inventory[2]._name, _inventory[3]._name, _inventory[4]._name);
-
-            switch (action)
-            {
-                case '1':
-                    EquipWeapon(_inventory[0], 0);
-                    break;
-
-                case '2':
-                    EquipWeapon(_inventory[1], 1);
-                    break;
-
-                case '3':
-                    EquipWeapon(_inventory[2], 2);
-                    break;
-
-                case '4':
-                    EquipWeapon(_inventory[3], 3);
-                    break;
-
-                case '5':
-                    EquipWeapon(_inventory[4], 4);
-                    break;
-            } //action switch
-        } //Switch Item function
 
         public override void DisplayStats()
         {

@@ -36,8 +36,8 @@ namespace HelloWorld
         private int _doorEastChance;
         private int _doorWestChance;
         //Bools for doors
-        private bool CanEscapeE = false;
-        private bool CanEscapeW = false;
+        private bool CanEscapeE = false; //Can escape through the East door in LabyrinthEntry
+        private bool CanEscapeW = false; //Can escape through the West door in LabyrinthEntry
         private bool DoorSouthExists = false;
         private bool DoorNorthExists = false;
         private bool DoorEastExists = false;
@@ -65,7 +65,7 @@ namespace HelloWorld
 
         public void GenerateRoom()
         {
-            //Sets the door's existance and can escape bool to false by default
+            //Sets the door's existance and can escape bools to false by default
             DoorSouthExists = false;
             DoorNorthExists = false;
             DoorEastExists = false;
@@ -302,10 +302,57 @@ namespace HelloWorld
             _doorEastChance = r.Next(1, 50);
             _doorWestChance = r.Next(1, 50);
 
-            DoorSouthExists = _doorSouthChance >= 25;
-            DoorNorthExists = _doorNorthChance >= 25;
-            DoorEastExists = _doorEastChance >= 25;
-            DoorWestExists = _doorWestChance >= 25;
+            do
+            { //While no doors exist
+                switch (_facingDirection)
+                {
+                    case 's':
+                        //North door does exist
+                        _doorNorthChance = 50;
+
+                        //Other doors may exist
+                        _doorSouthChance = r.Next(1, 50);
+                        _doorEastChance = r.Next(1, 50);
+                        _doorWestChance = r.Next(1, 50);
+                        break;
+
+                    case 'n':
+                        //South door does exist
+                        _doorSouthChance = 50;
+
+                        //Other doors may exist
+                        _doorNorthChance = r.Next(1, 50);
+                        _doorEastChance = r.Next(1, 50);
+                        _doorWestChance = r.Next(1, 50);
+                        break;
+
+                    case 'e':
+                        //West door does exist
+                        _doorWestChance = 50;
+
+                        //Other doors may exist
+                        _doorSouthChance = r.Next(1, 50);
+                        _doorNorthChance = r.Next(1, 50);
+                        _doorEastChance = r.Next(1, 50);
+                        break;
+
+                    case 'w':
+                        //East door does exist
+                        _doorEastChance = 50;
+
+                        //Other doors may exist
+                        _doorSouthChance = r.Next(1, 50);
+                        _doorNorthChance = r.Next(1, 50);
+                        _doorWestChance = r.Next(1, 50);
+                        break;
+                } //Facing Direction switch
+
+                DoorSouthExists = _doorSouthChance >= 25;
+                DoorNorthExists = _doorNorthChance >= 25;
+                DoorEastExists = _doorEastChance >= 25;
+                DoorWestExists = _doorWestChance >= 25;
+            } //Do
+            while (DoorSouthExists != true && DoorNorthExists != true && DoorEastExists != true && DoorWestExists != true);
 
             //Puts doors on walls if they exist
             if (DoorSouthExists)
@@ -328,7 +375,6 @@ namespace HelloWorld
                 _doorWestY = r.Next(_wallYNBorders, _wallYSBorders);
                 _doorWestX = _wallWestX;
             }
-
             RoomSizeAssigner();
         } //Generate Room function
 
