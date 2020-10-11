@@ -688,6 +688,23 @@ namespace HelloWorld
             } //Gamemode switch
         } //Update
 
+        void End()
+        {
+            Console.Clear();
+            if (_gamemode == '1')
+            {
+                _action = GetAction(ref _action, "Before you go, would you like to save your progress?", "[1: Yes]", "[2: No]");
+                if (_action == '1')
+                {
+                    Save();
+                }
+                else
+                {
+                    Console.WriteLine("Unfortunate; I had plans for you");
+                    Console.WriteLine("");
+                }
+            } //If in Adventure
+        } //End
 
         public void GetGamemode()
         {
@@ -1128,7 +1145,7 @@ namespace HelloWorld
                             Console.WriteLine("");
                             Console.WriteLine("[" + _player1.GetName() + ": " + _player1.GetHealth() + "]");
                             Console.WriteLine("[" + enemy.GetName() + ": " + enemy.GetHealth() + "]");
-                        }
+                        } //Neither regen
                         //Only Enemy regens
                         else if (enemy.GetHealth() < enemy.GetMaxHealth() && _player1.GetHealth() >= _player1.GetMaxHealth())
                         {
@@ -1136,7 +1153,7 @@ namespace HelloWorld
                             Console.WriteLine("");
                             Console.WriteLine("[" + _player1.GetName() + ": " + _player1.GetHealth() + "]");
                             Console.WriteLine("[" + enemy.GetName() + ": " + enemy.GetHealth() + " + " + enemy.GetHealthRegen() + "]");
-                        }
+                        } //Only Enemy regens
                         //Only Player regens
                         else if (enemy.GetHealth() >= enemy.GetMaxHealth() && _player1.GetHealth() < _player2.GetMaxHealth())
                         {
@@ -1144,7 +1161,7 @@ namespace HelloWorld
                             Console.WriteLine("");
                             Console.WriteLine("[" + _player1.GetName() + ": " + _player1.GetHealth() + " + " + _player1.GetHealthRegen() + "]");
                             Console.WriteLine("[" + enemy.GetName() + ": " + enemy.GetHealth() + "]");
-                        }
+                        } //Only Player regens
                         //Both regen
                         else if (enemy.GetHealth() <= enemy.GetMaxHealth() && _player1.GetHealth() <= _player2.GetMaxHealth())
                         {
@@ -1152,25 +1169,25 @@ namespace HelloWorld
                             Console.WriteLine("");
                             Console.WriteLine("[" + _player1.GetName() + ": " + _player1.GetHealth() + " + " + _player1.GetHealthRegen() + "]");
                             Console.WriteLine("[" + enemy.GetName() + ": " + enemy.GetHealth() + " + " + enemy.GetHealthRegen() + "]");
-                        }
+                        } //Both regen
+                        Console.Write("> ");
+                        Console.ReadKey();
                     } //If both entities live
                     else //Closes the text if regen won't be applied
                     {
                         Console.WriteLine("]");
                         Console.Write("> ");
                         Console.ReadKey();
-                    }
+                    } //Neither regen
 
                     Console.Clear(); //Clears the screen
 
                     if (_action == '1' || _action == '2' || _action == '3' || _action == '4')
                     {
+                        //Regenerates both characters
                         _player1.Regenerate(); //Regenerates player 1
-                        _player2.Regenerate(); //Regenerates player 2
-                    }
-                    //Regenerates both characters
-                    _player1.Regenerate();
-                    enemy.Regenerate();
+                        enemy.Regenerate(); //Regenerates player 2
+                    } //If action is valid
                 } //If in battle
 
                 if (_player1.GetHealth() <= 0) //If the player lost
@@ -1212,11 +1229,6 @@ namespace HelloWorld
             }
         } //IsDead function
 
-        void End()
-        {
-
-        }
-
         public void Pause()
         {
             Console.WriteLine("");
@@ -1229,16 +1241,16 @@ namespace HelloWorld
         public void InitializeItems()
         {
             _baseStaff._name = "Basic Staff";
-            _baseStaff._damageAddition = 5;
-            _baseStaff._damageMultiplier = 1;
+            _baseStaff.damageAddition = 5;
+            _baseStaff.damageMultiplier = 1;
 
             _baseSword._name = "Basic Sword";
-            _baseSword._damageAddition = 5;
-            _baseSword._damageMultiplier = 1;
+            _baseSword.damageAddition = 5;
+            _baseSword.damageMultiplier = 1;
 
             _baseDagger._name = "Basic Dagger";
-            _baseDagger._damageAddition = 5;
-            _baseDagger._damageMultiplier = 1;
+            _baseDagger.damageAddition = 5;
+            _baseDagger.damageMultiplier = 1;
         } //Initialize Items function
 
         public void FirstWeapon()
@@ -1301,18 +1313,6 @@ namespace HelloWorld
                     if (_action == '1') //Leave
                     {
                         GameOver = true;
-                        Console.WriteLine("");
-                        Console.WriteLine("");
-                        _action = GetAction(ref _action, "Before you go, would you like to save your progress?", "[1: Yes]", "[2: No]");
-                        if(_action == '1')
-                        {
-                            Save();
-                        }
-                        else
-                        {
-                            Console.WriteLine("Unfortunate; I had plans for you");
-                            Console.WriteLine("");
-                        }
                     } //If player is exiting
                     Console.Clear(); //Clears the screen
                     break;

@@ -8,10 +8,9 @@ namespace HelloWorld
         {
             //Create a new instance of a Game
             Game game = new Game();
+
             //Run the Game
             game.Run();
-            //Wait before closing
-            Console.ReadKey();
-        }
-    }
-}
+        } //Main
+    } //Program
+} //HelloWorld

@@ -9,91 +9,91 @@ namespace HelloWorld
     {
         public string _name;
 
-        public int _expAddition;
-        public float _expMultiplier;
+        public int expAddition;
+        public float expMultiplier;
 
-        public int _healthAddition;
-        public float _healthMultiplier;
+        public int healthAddition;
+        public float healthMultiplier;
 
-        public int _healthRegenAddition;
-        public float _healthRegenMultiplier;
+        public int healthRegenAddition;
+        public float healthRegenMultiplier;
 
-        public int _healAddition;
-        public float _healMultiplier;
+        public int healAddition;
+        public float healMultiplier;
 
-        public int _defenseAddition;
-        public float _defenseMultiplier;
+        public int defenseAddition;
+        public float defenseMultiplier;
 
-        public int _damageAddition;
-        public float _damageMultiplier;
+        public int damageAddition;
+        public float damageMultiplier;
 
         public Item()
         {
             _name = "";
 
-            _expAddition = 0;
-            _expMultiplier = 0;
+            expAddition = 0;
+            expMultiplier = 0;
 
-            _healthAddition = 0;
-            _healthMultiplier = 0;
+            healthAddition = 0;
+            healthMultiplier = 0;
 
-            _healthRegenAddition = 0;
-            _healthRegenMultiplier = 0;
+            healthRegenAddition = 0;
+            healthRegenMultiplier = 0;
 
-            _healAddition = 0;
-            _healMultiplier = 0;
+            healAddition = 0;
+            healMultiplier = 0;
 
-            _defenseAddition = 0;
-            _defenseMultiplier = 0;
+            defenseAddition = 0;
+            defenseMultiplier = 0;
 
-            _damageAddition = 0;
-            _damageMultiplier = 0;
+            damageAddition = 0;
+            damageMultiplier = 0;
         } //Constructor
 
         public Item(string name, int xpAdd, float xpMult, int hpAdd, float hpMult, int regAdd, float regMult, int healAdd, float healMult, int defAdd, float defMult, int atkAdd, float atkMult)
         {
             _name = name;
 
-            _expAddition = xpAdd;
-            _expMultiplier = xpMult;
+            expAddition = xpAdd;
+            expMultiplier = xpMult;
 
-            _healthAddition = hpAdd;
-            _healthMultiplier = hpMult;
+            healthAddition = hpAdd;
+            healthMultiplier = hpMult;
 
-            _healthRegenAddition = regAdd;
-            _healthRegenMultiplier = regMult;
+            healthRegenAddition = regAdd;
+            healthRegenMultiplier = regMult;
 
-            _healAddition = healAdd;
-            _healMultiplier = healMult;
+            healAddition = healAdd;
+            healMultiplier = healMult;
 
-            _defenseAddition = defAdd;
-            _defenseMultiplier = defMult;
+            defenseAddition = defAdd;
+            defenseMultiplier = defMult;
 
-            _damageAddition = atkAdd;
-            _damageMultiplier = atkMult;
+            damageAddition = atkAdd;
+            damageMultiplier = atkMult;
         } //Overload Constructor
 
         public virtual void Save(StreamWriter writer)
         {
             writer.WriteLine(_name);
 
-            writer.WriteLine(_expAddition);
-            writer.WriteLine(_expMultiplier);
+            writer.WriteLine(expAddition);
+            writer.WriteLine(expMultiplier);
 
-            writer.WriteLine(_healthAddition);
-            writer.WriteLine(_healthMultiplier);
+            writer.WriteLine(healthAddition);
+            writer.WriteLine(healthMultiplier);
 
-            writer.WriteLine(_healthRegenAddition);
-            writer.WriteLine(_healthRegenMultiplier);
+            writer.WriteLine(healthRegenAddition);
+            writer.WriteLine(healthRegenMultiplier);
 
-            writer.WriteLine(_healAddition);
-            writer.WriteLine(_healMultiplier);
+            writer.WriteLine(healAddition);
+            writer.WriteLine(healMultiplier);
 
-            writer.WriteLine(_defenseAddition);
-            writer.WriteLine(_defenseMultiplier);
+            writer.WriteLine(defenseAddition);
+            writer.WriteLine(defenseMultiplier);
 
-            writer.WriteLine(_damageAddition);
-            writer.WriteLine(_damageMultiplier);
+            writer.WriteLine(damageAddition);
+            writer.WriteLine(damageMultiplier);
         } // Save function
 
         public virtual bool Load(StreamReader reader)
@@ -180,23 +180,23 @@ namespace HelloWorld
 
             _name = name;
 
-            _expAddition = expAdd;
-            _expMultiplier = expMult;
+            expAddition = expAdd;
+            expMultiplier = expMult;
 
-            _healthAddition = healthAdd;
-            _healthMultiplier = healthMult;
+            healthAddition = healthAdd;
+            healthMultiplier = healthMult;
 
-            _healthRegenAddition = hpRegAdd;
-            _healthRegenMultiplier = hpRegMult;
+            healthRegenAddition = hpRegAdd;
+            healthRegenMultiplier = hpRegMult;
 
-            _healAddition = healAdd;
-            _healMultiplier = healMult;
+            healAddition = healAdd;
+            healMultiplier = healMult;
 
-            _defenseAddition = defAdd;
-            _defenseMultiplier = defMult;
+            defenseAddition = defAdd;
+            defenseMultiplier = defMult;
 
-            _damageAddition = atkAdd;
-            _damageMultiplier = atkMult;
+            damageAddition = atkAdd;
+            damageMultiplier = atkMult;
             return true;
         } //Load function
     } //Item
