@@ -5,7 +5,7 @@
 
 + Start: Calls InitializeItems, checks for SavaData.txt, and if there is SaveData, asks if the current user is the player that uses said SaveData
    * If the player is the one that previously saved to SaveData.txt, then Load is called
-   * If not, then _player1_ is rebuilt, and GetGamemode is called, then the respective functions are called:
+   * If not, then _player1_ is rebuilt, and GetGamemode is called, then the respective code is called:
      * Gamemode 1: FirstWeapon
      * Gamemode 2: _player2_ is created
 + Update: has a _gamemode_ switch:
@@ -14,15 +14,18 @@
     + In each area case, different overloads of GetAction area called with different options unique to that case, with each having the option 9: Nine Menu, which calls the NineMenu function
    * Player versus Player Mode:
     + GetAction reference so the user(s) can call the PvPBattle function, Call the DecideSpecialty function for either _player_, or Quit
++ End
+   * If _gamemode_ is '1', then call a GetAction asking if the user would like Save to be called
+   * If the resulting _action_ is '1', then Save is called. Otherwise, flavor is displayed
 + GetGamemode
    * Has a dowhile that checks for invalid input from a GetAction switch that allows the user to set the _gamemode_
    * Clears the console at the end
 + PvPStatDisplay
-   * Writes out the value of _turncounter_, and calls DisplayStats for both _players_
+   * Writes out the value of _turnCounter_, and calls DisplayStats for both _players_
 + PvPBattle
    * Sets _InBattle_ bool to true
    * Enters a while(InBattle = true) loop that
-    + Increments _turncounter_
+    + Increments _turnCounter_
     + Calls PvPStatDisplay
     + Sets _player1action_ = ' '
     + Writes _player1_'s name, then calls GetAction with the four standard battle options: Attack, Block, Heal, and Nothing. Repeats for _player2_
@@ -85,8 +88,6 @@
    * Checks to see if either _player1_ or _enemy_ had their health reach or fall below 0, and if either has, displays text and sets _GameOver_ to true and set _InBattle_ to false
 + IsDead
    * Checks to see if a Player's health is above 0. If yes, return true, otherwise display flavor text and return false
-+ End
-   * Empty
 + Pause
    * Displays flavor text and gets a ReadKey
 + InitializeItems
@@ -159,7 +160,7 @@
     + Load is a bool function, and all the TryParses are within if statements. If any of the TryParses fail, the function returns false to prevent any half-loading
   + After TryParse for read-in values is run successfully, the private values are set to the respective temporary values, then StatCalculation is called, then the function returns true
 + AddToInventory
-  + Sets _inventory[inventoryLocation_ to the passed in _item_
+  + Calls a GetAction to ask the user which "slot" they'd like to be set to the passed in Item, sets _invLocation_ to _action_ cast as an int, then sets _inventory_[_invLocation_] to the passed in Item
 + EquipItem
   + If _hasItemEquipped_ is true, then GetAction is called to ask if the user would like to keep _currentItem_ as it is or set it to the passed in _item_, then enters a switch for _action_
     + If the player switches to the passed in _item_, (case '1') UnEquipItem is called to set _currentItem_ to _nothing_, then the stats of the passed in _item_ are set to the respective private values, _currentItem_ is set to the passed in _item_, _HasItemEquipped_ is set to true, _inventory[itemIndex]_ is set to the passed in _item_, then flavor text is displayed
@@ -174,7 +175,14 @@
   + _damageAddition_ is subtracted from_baseDamage_, _damageMultiplier_ of _currentItem_ is subtracted from the private _damageMultiplier_, _currentWeapon_ is set to _nothing_, and _HasWeaponEquipped_ is set to false
 + CheckInventory
   + Enters a for loop for every _Item_:
-    + Prints the name of the _item_ at _i_, then displays other stats if they are not the same as those of _nothing_
+    + Prints i + 1, then _inventory_[i]._name_
++ InspectItem
+  + Prints the name of the _item_ at _i_, then displays other stats if they are not the same as those of _nothing_. Afterwards, calls a GetAction to ask what the user would like done with _item_
+  + As of now, there are two options: "[1: Equip]" and "[2: Discard]"
+    + Case '1' calls EquipItem
+    + Case '2' does nothing as of now
++ OpenInventory
+  + Calls a GetAction with the "options" being the names for each Item in _inventory_, then enters a switch for _action_ with each of the cases calling InspectItem for the respective _inventory_[position]
 + GainExperience
   + Displays the value of passed in _gainedExp_, adds that value to _currentExperience_, displays _currentExperience_ and _experinceRequirement_, and if _currentExperience_ is greater than _experinceRequirement_, then LevelUp is called
 + LevelUp
@@ -217,11 +225,8 @@
   + returns _currentWeapon_
 + GetItem
   + returns _currentItem_
-+ OpenInventory
-  + Displays flavor text, then enters a for loop for every _item_ in _inventory_
-    + Prints out the position (Plus 1) then _inventory[i].name_
 + SwitchItem
-  + Calls GetAction to ask which item the user would like _currentItem_ to be set to
+  + Calls GetAction to ask which item the user would like _currentItem_ to set _currentItem_ to, then enters an _action_ switch that calls EquipItem passing in respective ints and _inventory_ array locations
 + DisplayStats
   + Prints _name_, _specialty_, _totalHealth_, _totalHeal_, _totalDamage_, totalDefense_
 + DecideSpecialty
@@ -257,7 +262,8 @@
 + DefendAttack
   + Checks to see if _totalDefense_ is 0
     + If it is, then flavor text is displayed, and GetDirectAttack is called
-    + Otherwise, _name_, _totalHealth_, and _totalDefense_ are displayed, then _totalDefense has _damage_ is subtracted from it, then depending on whether or not _totalDefense fell below or to 0, different flavor text is displayed, then _name_, _totalHealth_, and _totalDefense_ are displayed once more
+    + Otherwise, _totalDefense has _damage_ is subtracted from it, then depending on whether or not _totalDefense fell below or to 0, different flavor text is displayed
+  + _name_, _totalHealth_, and _totalDefense_ are displayed
 + GetExp
   + returns _experience
 

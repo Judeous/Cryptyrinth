@@ -94,7 +94,7 @@ namespace HelloWorld
 
             writer.WriteLine(damageAddition);
             writer.WriteLine(damageMultiplier);
-        } // Save function
+        } //Save function
 
         public virtual bool Load(StreamReader reader)
         {

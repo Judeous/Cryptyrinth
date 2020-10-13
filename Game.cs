@@ -428,7 +428,7 @@ namespace HelloWorld
                                 Console.WriteLine("[Press the number to continue]");
                                 Console.Write("> ");
                                 _action = ' ';
-                                _action = Console.ReadKey().KeyChar;
+                                _action = Console.ReadKey(true).KeyChar;
 
                                 switch (_action)
                                 {
@@ -483,7 +483,7 @@ namespace HelloWorld
                                 Console.WriteLine("");
                                 Console.WriteLine("[Press the number to continue]");
                                 Console.Write("> ");
-                                _action = Console.ReadKey().KeyChar;
+                                _action = Console.ReadKey(true).KeyChar;
 
                                 switch (_action)
                                 {
@@ -1171,13 +1171,13 @@ namespace HelloWorld
                             Console.WriteLine("[" + enemy.GetName() + ": " + enemy.GetHealth() + " + " + enemy.GetHealthRegen() + "]");
                         } //Both regen
                         Console.Write("> ");
-                        Console.ReadKey();
+                        Console.ReadKey(true);
                     } //If both entities live
                     else //Closes the text if regen won't be applied
                     {
                         Console.WriteLine("]");
                         Console.Write("> ");
-                        Console.ReadKey();
+                        Console.ReadKey(true);
                     } //Neither regen
 
                     Console.Clear(); //Clears the screen
@@ -1234,7 +1234,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press any key to continue]");
             Console.Write("> ");
-            Console.ReadKey();  //Pauses
+            Console.ReadKey(true);  //Pauses
             Console.WriteLine("");
         } //Pause
 
@@ -1430,7 +1430,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
             Console.Write("> ");
-            choice = Console.ReadKey().KeyChar;
+            choice = Console.ReadKey(true).KeyChar;
 
             return choice;
         } //Get Action 2 options
@@ -1450,7 +1450,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
             Console.Write("> ");
-            choice = Console.ReadKey().KeyChar;
+            choice = Console.ReadKey(true).KeyChar;
             return choice;
         } //Get Action 3 options
 
@@ -1471,7 +1471,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
             Console.Write("> ");
-            choice = Console.ReadKey().KeyChar;
+            choice = Console.ReadKey(true).KeyChar;
             return choice;
         } //Get Action 4 options
 
@@ -1495,7 +1495,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
             Console.Write("> ");
-            choice = Console.ReadKey().KeyChar;
+            choice = Console.ReadKey(true).KeyChar;
             return choice;
         } //Get Action 5 options
 
@@ -1520,7 +1520,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
             Console.Write("> ");
-            choice = Console.ReadKey().KeyChar;
+            choice = Console.ReadKey(true).KeyChar;
             return choice;
         } //Get Action 6 options
     } //Game

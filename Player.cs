@@ -74,7 +74,7 @@ namespace HelloWorld
             {
                 _inventory[i] = nothing;
             }
-            EquipItem(nothing, nothing, 0);
+            EquipItem(nothing, 0);
             EquipWeapon(nothing, 0);
         } //Initial Constructor
 
@@ -98,19 +98,19 @@ namespace HelloWorld
             nothing._name = "nothing";
 
             nothing.healthAddition = 0;
-            nothing.healthMultiplier = 1;
+            nothing.healthMultiplier = 0;
 
             nothing.healthRegenAddition = 0;
-            nothing.healthRegenMultiplier = 1;
+            nothing.healthRegenMultiplier = 0;
 
             nothing.healAddition = 0;
-            nothing.healMultiplier = 1;
+            nothing.healMultiplier = 0;
 
             nothing.defenseAddition = 0;
-            nothing.defenseMultiplier = 1;
+            nothing.defenseMultiplier = 0;
 
             nothing.damageAddition = 0;
-            nothing.damageMultiplier = 1;
+            nothing.damageMultiplier = 0;
         } //Nothing Initializer
 
         public virtual void Save(StreamWriter writer)
@@ -279,9 +279,29 @@ namespace HelloWorld
             char action = ' ';
             
             GetAction(ref action, "Where should I put this?", "[1: Slot 1]", "[2: Slot 2]", "[3: Slot 3]", "[4: Slot 4]", "[5: Slot 5]");
-            invLocation = (int)action;
-            _inventory[invLocation] = item;
-        }
+            switch(action)
+            {
+                case '1':
+                    _inventory[0] = item;
+                    break;
+
+                case '2':
+                    _inventory[1] = item;
+                    break;
+
+                case '3':
+                    _inventory[2] = item;
+                    break;
+
+                case '4':
+                    _inventory[3] = item;
+                    break;
+
+                case '5':
+                    _inventory[4] = item;
+                    break;
+            }
+        } //AddtoInventory function
 
         public void SwitchItem()
         {
@@ -312,16 +332,22 @@ namespace HelloWorld
             } //action switch
         } //Switch Item function
 
-        public void EquipItem(Item newItem, Item oldItem, int itemIndex)
+        public void EquipItem(Item newItem, int itemIndex)
         {
             Console.Clear();
 
-            if (_HasItemEquipped)
+            if (newItem == _currentItem)
+            {
+                Console.WriteLine("[I already have this equipped]");
+                Pause();
+            }
+
+            else if (_HasItemEquipped)
             {
                 Console.WriteLine();
 
                 char action= ' ';
-                GetAction(ref action, "[I have " + oldItem._name + " on; should I put it away or keep it?]", "[Equip new item]", "[Keep old item]");
+                GetAction(ref action, "[I have " + _currentItem._name + " on; should I put it away or keep it?]", "[Equip new item]", "[Keep old item]");
 
                 switch(action)
                 {
@@ -483,8 +509,9 @@ namespace HelloWorld
             Pause();
         } //Check Inventory function
 
-        public void InspectItem(Item item)
+        public void InspectItem(Item item, int itemIndex)
         {
+            Console.Clear();
             Console.WriteLine(item._name);
 
             //Will only print stats if the stat is changed by the item
@@ -537,8 +564,17 @@ namespace HelloWorld
             Console.WriteLine("");
 
             char action = ' ';
-            GetAction(ref action, "[What do I do with this?]", "[1: Equip]", "[2: Discard]", "[3: ]", "[4: ]");
+            GetAction(ref action, "[What do I do with this?]", "[1: Equip]", "[2: Discard]");
+            switch (action)
+            {
+                case '1':
+                    EquipItem(item, itemIndex);
+                    break;
 
+                case '2':
+
+                    break;
+            } //Action switch
         } //Inspect Item function
 
         public void OpenInventory()
@@ -550,23 +586,23 @@ namespace HelloWorld
             switch (action)
             {
                 case '1':
-                    InspectItem(_inventory[0]);
+                    InspectItem(_inventory[0], 1);
                     break;
 
                 case '2':
-                    InspectItem(_inventory[1]);
+                    InspectItem(_inventory[1], 2);
                     break;
 
                 case '3':
-                    InspectItem(_inventory[2]);
+                    InspectItem(_inventory[2], 3);
                     break;
 
                 case '4':
-                    InspectItem(_inventory[3]);
+                    InspectItem(_inventory[3], 4);
                     break;
 
                 case '5':
-                    InspectItem(_inventory[4]);
+                    InspectItem(_inventory[4], 5);
                     break;
 
                 default:
@@ -817,7 +853,7 @@ namespace HelloWorld
 
                     Console.WriteLine("[Press the number to continue]");
                     Console.Write("> My specialty is ");
-                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Magic
+                    specialtyKey = Console.ReadKey(true).KeyChar; //Gets the specialty of Magic
 
                     switch (specialtyKey)
                     {
@@ -908,7 +944,7 @@ namespace HelloWorld
 
                     Console.WriteLine("[Press the number to continue]");
                     Console.Write("> My specialty is ");
-                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Knight
+                    specialtyKey = Console.ReadKey(true).KeyChar; //Gets the specialty of Knight
 
                     switch (specialtyKey)
                     {
@@ -999,7 +1035,7 @@ namespace HelloWorld
 
                     Console.WriteLine("[Press the number to continue]");
                     Console.Write("> My specialty is ");
-                    specialtyKey = Console.ReadKey().KeyChar; //Gets the specialty of Trickster
+                    specialtyKey = Console.ReadKey(true).KeyChar; //Gets the specialty of Trickster
 
                     switch (specialtyKey)
                     {
@@ -1061,7 +1097,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
             Console.Write("> ");
-            choice = Console.ReadKey().KeyChar;
+            choice = Console.ReadKey(true).KeyChar;
 
             return choice;
         } //Get Action 2 options
@@ -1081,7 +1117,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
             Console.Write("> ");
-            choice = Console.ReadKey().KeyChar;
+            choice = Console.ReadKey(true).KeyChar;
             return choice;
         } //Get Action 3 options
 
@@ -1102,7 +1138,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
             Console.Write("> ");
-            choice = Console.ReadKey().KeyChar;
+            choice = Console.ReadKey(true).KeyChar;
             return choice;
         } //Get Action 4 options
 
@@ -1126,7 +1162,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
             Console.Write("> ");
-            choice = Console.ReadKey().KeyChar;
+            choice = Console.ReadKey(true).KeyChar;
             return choice;
         } //Get Action 5 options
 
@@ -1151,7 +1187,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press the number to continue]");
             Console.Write("> ");
-            choice = Console.ReadKey().KeyChar;
+            choice = Console.ReadKey(true).KeyChar;
             return choice;
         } //Get Action 6 options
     } //Player Class
