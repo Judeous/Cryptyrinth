@@ -6,7 +6,7 @@ using System.Text;
 
 namespace HelloWorld
 {
-    public class Character
+    public abstract class Character
     {
         protected string _name;
 

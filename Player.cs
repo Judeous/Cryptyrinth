@@ -531,56 +531,114 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("");
 
-            char action = ' ';
-            GetAction(ref action, "[What do I do with this?]", "[1: Equip]", "[2: Discard]");
-            switch (action)
+            if (_currentItem == item)
             {
-                case '1':
-                    EquipItem(item, itemIndex);
-                    break;
+                char action = ' ';
+                GetAction(ref action, "[What do I do with this?]", "[1: Unequip]", "[2: Nothing]");
+                switch (action)
+                {
+                    case '1':
+                        UnequipItem();
+                        break;
 
-                case '2':
+                    case '2':
 
-                    break;
-            } //Action switch
+                        break;
+                } //Action switch
+            } //if Equipped Item is Inspected Item
+            else
+            {
+                char action = ' ';
+                GetAction(ref action, "[What do I do with this?]", "[1: Equip]", "[2: Nothing]");
+                switch (action)
+                {
+                    case '1':
+                        EquipItem(item, itemIndex);
+                        break;
+
+                    case '2':
+
+                        break;
+                } //Action switch
+            } //If Equipped Item is not Inspected Item
+
         } //Inspect Item function
 
         public void OpenInventory()
         {
             Console.Clear();
 
-            Console.WriteLine("[Current Item: " + _currentItem._name + "]");
-            Console.WriteLine("");
-
-            char action = ' ';
-            GetAction(ref action, "[Select an item]", "[1: " + _inventory[0]._name + "]", "[2: " + _inventory[1]._name + "]", "[3: " + _inventory[2]._name + "]", "[4: " + _inventory[3]._name + "]", "[5: " + _inventory[4]._name + "]", "[6: Do nothing]");
-
-            switch (action)
+            if (_HasItemEquipped)
             {
-                case '1':
-                    InspectItem(_inventory[0], 1);
-                    break;
+                Console.WriteLine("[Current Item: " + _currentItem._name + "]");
+                Console.WriteLine("");
 
-                case '2':
-                    InspectItem(_inventory[1], 2);
-                    break;
+                char action = ' ';
+                GetAction(ref action, "[Select an item]", "[1: " + _inventory[0]._name + "]", "[2: " + _inventory[1]._name + "]", "[3: " + _inventory[2]._name + "]", "[4: " + _inventory[3]._name + "]", "[5: " + _inventory[4]._name + "]", "[6: Unequip " + _currentItem._name + "]", "[7: Do Nothing]");
 
-                case '3':
-                    InspectItem(_inventory[2], 3);
-                    break;
+                switch (action)
+                {
+                    case '1':
+                        InspectItem(_inventory[0], 1);
+                        break;
 
-                case '4':
-                    InspectItem(_inventory[3], 4);
-                    break;
+                    case '2':
+                        InspectItem(_inventory[1], 2);
+                        break;
 
-                case '5':
-                    InspectItem(_inventory[4], 5);
-                    break;
+                    case '3':
+                        InspectItem(_inventory[2], 3);
+                        break;
 
-                default:
+                    case '4':
+                        InspectItem(_inventory[3], 4);
+                        break;
 
-                    break;
-            } //action switch
+                    case '5':
+                        InspectItem(_inventory[4], 5);
+                        break;
+
+                    case '6':
+                        UnequipItem();
+                        break;
+
+                    default:
+
+                        break;
+                } //action switch
+            } //If player has an Item equipped
+            else
+            {
+                char action = ' ';
+                GetAction(ref action, "[Select an item]", "[1: " + _inventory[0]._name + "]", "[2: " + _inventory[1]._name + "]", "[3: " + _inventory[2]._name + "]", "[4: " + _inventory[3]._name + "]", "[5: " + _inventory[4]._name + "]", "[6: Do Nothing]");
+
+                switch (action)
+                {
+                    case '1':
+                        InspectItem(_inventory[0], 1);
+                        break;
+
+                    case '2':
+                        InspectItem(_inventory[1], 2);
+                        break;
+
+                    case '3':
+                        InspectItem(_inventory[2], 3);
+                        break;
+
+                    case '4':
+                        InspectItem(_inventory[3], 4);
+                        break;
+
+                    case '5':
+                        InspectItem(_inventory[4], 5);
+                        break;
+
+                    default:
+
+                        break;
+                } //action switch
+            } //If player does not have an Item equipped
         } //Open Inventory function
 
         public void GainExperience(int gainedExp)
@@ -1152,5 +1210,32 @@ namespace HelloWorld
             choice = Console.ReadKey(true).KeyChar;
             return choice;
         } //Get Action 6 options
+
+        public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4, string option5, string option6, string option7)
+        {
+            Console.WriteLine(query);
+
+            Console.WriteLine("");
+
+            Console.WriteLine(option1);
+
+            Console.WriteLine(option2);
+
+            Console.WriteLine(option3);
+
+            Console.WriteLine(option4);
+
+            Console.WriteLine(option5);
+
+            Console.WriteLine(option6);
+
+            Console.WriteLine(option7);
+
+            Console.WriteLine("");
+            Console.WriteLine("[Press the number to continue]");
+            Console.Write("> ");
+            choice = Console.ReadKey(true).KeyChar;
+            return choice;
+        } //Get Action 7 options
     } //Player Class
 } //Hello World

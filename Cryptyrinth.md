@@ -184,7 +184,8 @@
     + Case '1' calls EquipItem
     + Case '2' does nothing as of now
 + OpenInventory
-  + Displays _currentItem_ then calls a GetAction with the "options" being the names for each Item in _inventory_, then enters a switch for _action_ with each of the cases calling InspectItem for the respective _inventory_[position]
+  + If _HasItemEquipped_ is true, then displays _currentItem_ then calls a GetAction with the "options" being the names for each Item in _inventory_ and an additional option to call Unequip, then enters a switch for _action_ with each of the cases calling InspectItem for the respective _inventory_[position], or calls Unequip if _action_ is '6'
+  + Otherwise, calls a GetAction with the "options" being the names for each Item in _inventory_, then enters a switch for _action_ with each of the cases calling InspectItem for the respective _inventory_[position]
 + GainExperience
   + Displays the value of passed in _gainedExp_, adds that value to _currentExperience_, displays _currentExperience_ and _experinceRequirement_, and if _currentExperience_ is greater than _experinceRequirement_, then LevelUp is called
 + LevelUp
@@ -235,7 +236,7 @@
     + In all three cases, GetAction is called to ask the user which of the four _specialties_ they would like the _player_ to be assigned to, then enters a _specialtyKey_ switch which assigns the values of the chosen _specialty_
 + GetAction (And all overloads)
   + Takes in a choice char, a string query, and varying amounts of strings for options
-  + The query is written to the console, then the options are written in order, then the choice char is set to the player's input through a ReadKey, and the value is returned
+  + The query is written to the console, then the options are printed in order, then the choice char is set to the player's input through a ReadKey, and the value is returned
 
 ## Enemy.cs
 + Enemy Constructor
@@ -273,33 +274,33 @@
       + case 2: _wallXBorders_ are sent through a Next to make them either _labyLocationX_ or _labyLocationX_ + 1, then if _wallXWBorders_ are _labyLocationX_, then _wallXEBorders_ are set to _labyLocationX_ + 1. Otherwise, _wallXEBorders_ are set to _labyLocationX_. Either way, _wallXWBorders are set to _wallXEBorders - 1
       + case 3: _wallXWBorders_ are set to _labyLocationX_ - 1, and _wallXEBorders_ are set to _labyLocationX_ + 1
       + case 4: _wallXBorders are randomized within the values of _labyLocationX_ and _labyLocationX_ + 1, then if _wallXWBorders_ are _labyLocationX_ - 1, then _wallXEBorders_ are set to _labyLocationX_ + 2. Otherwise, _wallXEBorders are set to _labyLocationX_ + 1
-      + _wallEastX_ is set to _wallXEBorders_, then _wallYSBorders are set to _wallXEBorders, and _wallYNBorders + _wallYLengths_ are set to _labylocationY_
+      + _wallEastX_ is set to _wallXEBorders_, then _wallSouthY are set to _wallXEBorders, and _wallNorthY + _wallYLengths_ are set to _labylocationY_
     + North (case 'n') enters a switch for _wallXLengths_:
       + If X lengths are 1, (case 1) _wallXEBorders_ and _wallXEBorders_ are set to the player's X location: _labyLocationX_
       + case 2: _wallXBorders_ are sent through a Next to make them either _labyLocationX_ or _labyLocationX_ + 1, then if _wallXWBorders_ are _labyLocationX_, then _wallXEBorders_ are set to _labyLocationX_ + 1. Otherwise, _wallXEBorders_ are set to _labyLocationX_. Either way, _wallXWBorders are set to _wallXEBorders - 1
       + case 3: _wallXWBorders_ are set to _labyLocationX_ - 1, and _wallXEBorders_ are set to _labyLocationX_ + 1
-      + case 4: _wallEastX_ is set to _wallXEBorders_, then _wallYSBorders are set to _wallXEBorders, and _wallYNBorders are set to _labylocationY_ + _wallYLengths_
-      + _wallNorthY_ is set to _labyLocationY_, then _wallSouthY_ is set to _labyLocationY_ + _wallYLengths_, then _wallYSBorders_ are set to _labyLocationY_ and _wallYNBorders are set to _labyLocationY_ + _wallYLengths_, and _wallEastX_ is set to _wallXEBorders_ and _wallEastX_ is set to _wallXWBorders_
+      + case 4: _wallEastX_ is set to _wallXEBorders_, then _wallSouthY are set to _wallXEBorders, and _wallNorthY are set to _labylocationY_ + _wallYLengths_
+      + _wallNorthY_ is set to _labyLocationY_, then _wallSouthY_ is set to _labyLocationY_ + _wallYLengths_, then _wallSouthY_ are set to _labyLocationY_ and _wallNorthY are set to _labyLocationY_ + _wallYLengths_, and _wallEastX_ is set to _wallXEBorders_ and _wallEastX_ is set to _wallXWBorders_
     + East (case 'e') enters a switch for _wallYLengths_:
-      + If _wallYLengths_ are 1 (case 1), the _wallYNBorders_ are set to _labyLocationY_ and _wallYSBorders_ are set to _labyLocationY_
-      + case 2: _wallYNBorders_ are sent through a Next to make them either _labyLocationY_ or _labyLocationY_ + 1, then if _wallYSBorders_ are _labyLocationY_, then set _wallYSBorders_ to _labyLocationY_ + 1. Otherwise set _wallYSBorders_ to _labyLocationY_
-      + case 3: _wallYNBorders_ are set to _labyLocationY_ - 1 and _wallSBorders_ are set to _labyLocationY_ + 1
-      + case 4: _wallYNBorders are sent through a Next to make them either _labyLocationY_ or _labyLocationY_ + 1, then if _wallyNBorders_ are _labyLocationY - 1, set _wallYSBorders_ to _labyLocationY_ + 2. Otherwise, set _wallSBorders to _labyLocationY_ + 1
+      + If _wallYLengths_ are 1 (case 1), the _wallNorthY_ are set to _labyLocationY_ and _wallSouthY_ are set to _labyLocationY_
+      + case 2: _wallNorthY_ are sent through a Next to make them either _labyLocationY_ or _labyLocationY_ + 1, then if _wallSouthY_ are _labyLocationY_, then set _wallSouthY_ to _labyLocationY_ + 1. Otherwise set _wallSouthY_ to _labyLocationY_
+      + case 3: _wallNorthY_ are set to _labyLocationY_ - 1 and _wallSBorders_ are set to _labyLocationY_ + 1
+      + case 4: _wallNorthY are sent through a Next to make them either _labyLocationY_ or _labyLocationY_ + 1, then if _wallNorthY_ are _labyLocationY - 1, set _wallSouthY_ to _labyLocationY_ + 2. Otherwise, set _wallSBorders to _labyLocationY_ + 1
       + _wallXWBorders are set to _labyLocationX_, _wallXEBorders_ are set to _labyLocationX_ + _wallXLengths_, then _wallEastX_ is set to _labyLocationX, and _wallWestX_ is set to _labyLocationX_ + _wallYLengths_
     + West (case 'w') enters a switch for _wallYLengths_:
-      + If _wallYLengths_ are 1, (case 1) the _wallYNBorders_ are set to _labyLocationY_ and _wallYSBorders_ are set to _labyLocationY_
-      + case 2: _wallYNBorders_ are sent through a Next to make them either _labyLocationY_ or _labyLocationY_ + 1, then if _wallYSBorders_ are _labyLocationY_, then set _wallYSBorders_ to _labyLocationY_ + 1. Otherwise set _wallYSBorders_ to _labyLocationY_
-      + case 3: _wallYNBorders_ are set to _labyLocationY_ - 1 and _wallSBorders_ are set to _labyLocationY_ + 1
-      + case 4: _wallYNBorders_ are sent through a Next to make them anywhere from _labyLocationY_ - 1 to _labyLocationY_ + 2, then if _wallYSBorders_ are _labyLocationY_ - 1, then set _wallYSBorders_ to _labyLocationY_ + 2. Otherwise set _wallSBorders_ to _labyLocationY_ + 1
+      + If _wallYLengths_ are 1, (case 1) the _wallNorthY_ are set to _labyLocationY_ and _wallSouthY_ are set to _labyLocationY_
+      + case 2: _wallNorthY_ are sent through a Next to make them either _labyLocationY_ or _labyLocationY_ + 1, then if _wallSouthY_ are _labyLocationY_, then set _wallSouthY_ to _labyLocationY_ + 1. Otherwise set _wallSouthY_ to _labyLocationY_
+      + case 3: _wallNorthY_ are set to _labyLocationY_ - 1 and _wallSBorders_ are set to _labyLocationY_ + 1
+      + case 4: _wallNorthY_ are sent through a Next to make them anywhere from _labyLocationY_ - 1 to _labyLocationY_ + 2, then if _wallSouthY_ are _labyLocationY_ - 1, then set _wallSouthY_ to _labyLocationY_ + 2. Otherwise set _wallSBorders_ to _labyLocationY_ + 1
   + If the value of _labyLocationX_ is the same as that of _escapeDoorEX_ and the value of _labylocationY_ is the same as that of _escapeDoorEY_, then _CanEscapeW_ is set to true_
   + Else if the value of __labyLocationX_ is the same as that of _escapeDoorWX_ and the value of _labylocationY_ is the same as that of _escapeDoorWY_, then _CanEscapeE_ is set to true_
-  + If the value of _wallYSBorders_ is equal or less than the value of _escapeDoorWY_ and the value of _wallYNBorders_ is equal to or greater than that of _escapeDoorWY, then set _CanEscapeW to true
-  + If the value of _wallYSBorders_ is equal or less than the value of _escapeDoorEY_ and the value of _wallYNBorders_ is equal to or greater than that of _escapeDoorEY, then set _CanEscapeE to true
-  + The values for _doorSouthChance_, _coorNorthChance_, _doorEastChance_, _doorWestChance_ are randomized from 1 to 50, then the respective _DoorDirectionExists_ bool is set to whether or not the previously randomized numbers are greater than or equal to 25
+  + If the value of _escapeDoorWY_ is within or equal to those of _wallSouthY_ and _wallNorthY_, and the value of _escapeDoorWX_ is within or equal to those of _wallEastX_ and _wallWestX_, then set _CanEscapeW_ to true
+  + If the value of _escapeDoorEY_ is within or equal to those of _wallSouthY_ and _wallNorthY_, and the value of _escapeDoorEX_ is within or equal to those of _wallEastX_ and _wallWestX_, then set _CanEscapeE_ to true
+  + Based on the value of _facingDirection_, the values for _doorSouthChance_, _coorNorthChance_, _doorEastChance_, _doorWestChance_ are randomized from 1 to 50 if the cardinal direction in the _Chance_ variable name is not the opposite of _facingDirection_ (If it is, then the value is set to 50, guaranteeing that the next mentioned respective bool will be set to true), then the respective _DoorDirectionExists_ bool is set to whether or not the previously randomized numbers are greater than or equal to 25
   + If _DoorSouthExists_, then set the value of _doorSouthY_ to be somewhere from _wallXWBorders_ to _wallXEBorders_, and set _doorSouthX_'s value to be that of _wallSouthY_
   + If _DoorNorthExists_, then set the value of _doorNorthY_ to be somewhere from _wallXWBorders_ to _wallXEBorders_, and set _doorNorthX_'s value to be that of _wallSouthY_
-  + If _DoorEastExists_, then set the value of _doorEastY_ to be somewhere from _wallYNBorders_ to _wallYSBorders_, and set _doorEast_'s value to be that of _wallEastX_
-  + If _DoorEastExists_, then set the value of _doorWestY_ to be somewhere from _wallYNBorders_ to _wallYSBorders_, and set _doorWest_'s value to be that of _wallWestX_
+  + If _DoorEastExists_, then check to see if _CanEscapeW_ is true. If it is, then set the value of _doorEastY_ to that of _escapeDoorWY and the value of _doorEastX_ to that of _escapeDoorWX_. Otherwise, set the value of _doorEastY_ to be somewhere from _wallNorthY_ to _wallSouthY_, and set _doorEast_'s value to be that of _wallEastX_
+  + If _DoorEastExists_, then check to see if _CanEscapeE_ is true. If it is, then set the value of _doorWestY_ to that of _escapeDoorEY and the value of _doorWestX_ to that of _escapeDoorEX_. Otherwise, set the value of _doorWestY_ to be somewhere from _wallNorthY_ to _wallSouthY_, and set _doorWest_'s value to be that of _wallWestX_
   + RoomSizeAssigner is called
 + RoomSizeAssigner
   + Enters a _wallXLengths_ switch:
