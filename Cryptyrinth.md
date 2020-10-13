@@ -90,6 +90,13 @@
    * Checks to see if a Player's health is above 0. If yes, return true, otherwise display flavor text and return false
 + Pause
    * Displays flavor text and gets a ReadKey
++ ConvertEnemyAction
+  + Used instead of casting because Attack uses a char instead of an int, and _enemyAction_ is sent through a Next randomizer with a weight of 2 on "Attack", so even if it could be converted with a cast or TryParse, then it still wouldn't work
+  + Enters a switch for the passed in int
+    + cases 0 and 1 set _newAction_ to '1'
+    + case 2 sets _newAction_ to '2'
+    + case 3 sets _newAction_ to '3'
+    + case 4 sets _newAction_ to '4'
 + InitializeItems
    * Sets names and values for items
 + FirstWeapon
@@ -148,7 +155,7 @@
  ## Player.cs
 + Player Constructor
   + Initializes _inventory_, _baseHealth_, _baseHealthRegen_, _baseDefense_, _level_, _currentExperience_, _totalHeal_, _baseHeal_, _damageMultiplier_, _style_, _specialty_
-  + Calls NothingInitializer, enters a for loop which sets the "slots" to _nothing_, then calls EquipItem, then EquipWeapon, so _currentItem_ and _currentWeapon_ are all _nothing_
+  + Calls NothingInitializer, enters a for loop which sets the "slots" to _nothing_, then calls EquipItem so _currentItem_ is _nothing_
 + Overload Player Constructor
   + Sets passed in values to the respective private values
 + NothingInitializer
@@ -160,19 +167,14 @@
     + Load is a bool function, and all the TryParses are within if statements. If any of the TryParses fail, the function returns false to prevent any half-loading
   + After TryParse for read-in values is run successfully, the private values are set to the respective temporary values, then StatCalculation is called, then the function returns true
 + AddToInventory
-  + Calls a GetAction to ask the user which "slot" they'd like to be set to the passed in Item, sets _invLocation_ to _action_ cast as an int, then sets _inventory_[_invLocation_] to the passed in Item
+  + Calls a GetAction to ask the user which "slot" they'd like to be set to the passed in Item, sets _invLocation_ to _action_ cast as an int, then sets _inventory_[_invLocation_] to the passed in Item, then calls a GetAction to ask if the user would like to set _currentItem_ to the passed in Item
 + EquipItem
   + If _hasItemEquipped_ is true, then GetAction is called to ask if the user would like to keep _currentItem_ as it is or set it to the passed in _item_, then enters a switch for _action_
     + If the player switches to the passed in _item_, (case '1') UnEquipItem is called to set _currentItem_ to _nothing_, then the stats of the passed in _item_ are set to the respective private values, _currentItem_ is set to the passed in _item_, _HasItemEquipped_ is set to true, _inventory[itemIndex]_ is set to the passed in _item_, then flavor text is displayed
     + The default case displays flavor text and nothing more
   + Otherwise, the values of the new _item_ are set to the respective private values, then flavor text is displayed, then _currentItem_ is set to the passed in _item_ and _HasItemEquipped_ is set to true, then _inventory[itemIndex]_ is set to the passed in _item_
-+ EquipWeapon
-  + Does the same as EquipItem, but using _HasWeaponEquipped_, _currentWeapon_, and _UnequipWeapon_
 + UnequipItem
   + Subtracts the values of _statAddition_s and _statMultiplier_s of _currentItem_ from the respective private values, displays flavor text, sets _currentItem_ to _nothing_, then _HasItemEquipped_ is set to false
-+ UnEquipWeapon
-  + If _currentWeapon.damageAddition_ is greater than 0, then text will be displayed showing the value of _damageAddition_ that will be subtracted from the private _damageAddition_
-  + _damageAddition_ is subtracted from_baseDamage_, _damageMultiplier_ of _currentItem_ is subtracted from the private _damageMultiplier_, _currentWeapon_ is set to _nothing_, and _HasWeaponEquipped_ is set to false
 + CheckInventory
   + Enters a for loop for every _Item_:
     + Prints i + 1, then _inventory_[i]._name_
@@ -182,7 +184,7 @@
     + Case '1' calls EquipItem
     + Case '2' does nothing as of now
 + OpenInventory
-  + Calls a GetAction with the "options" being the names for each Item in _inventory_, then enters a switch for _action_ with each of the cases calling InspectItem for the respective _inventory_[position]
+  + Displays _currentItem_ then calls a GetAction with the "options" being the names for each Item in _inventory_, then enters a switch for _action_ with each of the cases calling InspectItem for the respective _inventory_[position]
 + GainExperience
   + Displays the value of passed in _gainedExp_, adds that value to _currentExperience_, displays _currentExperience_ and _experinceRequirement_, and if _currentExperience_ is greater than _experinceRequirement_, then LevelUp is called
 + LevelUp
@@ -199,11 +201,11 @@
   + If _level_ is 10, then text is displayed, hinting at entering a previously inaccessible area
 + StatCalculation
   + _experinceRequirement_ is set to _level_ multiplied by 30
-  + _totalDefense_is set to _baseDefense_ added to _currentWeapon.defenseAddition_, the result of that being multiplied by _currentWeapon.defenseMultiplier_, then that number having _level_ added to it
-  + _totalHealth_ is set to half of _totalDefense_ added to _baseHealth_ as well as_currentItem.healthAddition_, the sum of those being multiplied by _currentItem.healthMultiplier_, then the result having _level_ added to it
-  + _totalRegen_ is set to _baseHealthRegen_ added to _currentItem.healthRegenAddition_, the sum being multiplied by _currentItem.healthRegenMultiplier_, the result having the value of _level_ added to it
-  + _totalDamage_ is set to _baseDamage added to _currentWeapon.damageAddition_, the sum being multiplied by _currentWeapon.damageMultiplier_, and the result with _level_ added to it
-  + _totalHeal_ is set to _baseHeal_ added to _currentItem.HealAddition_, their sum being multiplied by _currentItem.healMultiplier_, and that being added to _level_
+  + _totalDefense_is set to _baseDefense_ added to _defenseAddition_ and _currentItem.defenseAddition_, the result of that being multiplied by _currentItem.defenseMultiplier_, then that number having _level_ added to it
+  + _totalHealth_ is set to half of _totalDefense_ added to _baseHealth_ as well as _healthAddition_ and _currentItem.healthAddition_, the sum of those being multiplied by _currentItem.healthMultiplier_, then the result having _level_ added to it
+  + _totalRegen_ is set to _baseHealthRegen_ added to _currentItem.healthRegenAddition_ and _healthRegenAddition_, the sum being multiplied by _currentItem.healthRegenMultiplier_, the result having the value of _level_ added to it
+  + _totalDamage_ is set to _baseDamage added to _currentItem.damageAddition_ and _damageAddition_, the sum being multiplied by _currentItem.damageMultiplier_, and the result with _level_ added to it
+  + _totalHeal_ is set to _baseHeal_ added to _currentItem.HealAddition_ and _healAddition_, their sum being multiplied by _currentItem.healMultiplier_, and that being added to _level_
 + ChangeName
   + Enters a do/while the player is dissatisfied with their name:
     + Text is displayed, asking the user what they'd like _name_ to be set to, then does a ReadLine
@@ -221,10 +223,6 @@
   + returns _inventory
 + GetSpecialty
   + returns _specialty_
-+ GetWeapon
-  + returns _currentWeapon_
-+ GetItem
-  + returns _currentItem_
 + SwitchItem
   + Calls GetAction to ask which item the user would like _currentItem_ to set _currentItem_ to, then enters an _action_ switch that calls EquipItem passing in respective ints and _inventory_ array locations
 + DisplayStats

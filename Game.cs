@@ -1010,7 +1010,7 @@ namespace HelloWorld
                             enemy.DisplayMessage("defend"); //Displays enemy defend message
                         } //If enemy blocks
 
-                        _player1.Attack(enemy, (char)enemyAction);
+                        _player1.Attack(enemy, ConvertEnemyAction(enemyAction));
 
                         if (enemyAction <= 1 && enemy.GetHealth() > 0) //If the enemy is attacking after player attack & not dead
                         {
@@ -1238,19 +1238,49 @@ namespace HelloWorld
             Console.WriteLine("");
         } //Pause
 
+        public char ConvertEnemyAction(int intAction)
+        {
+            char newAction = ' ';
+
+            switch(intAction)
+            {
+                case 0:
+                    newAction = '1';
+                    break;
+
+                case 1:
+                    newAction = '1';
+                    break;
+
+                case 2:
+                    newAction = '2';
+                        break;
+
+                case 3:
+                    newAction = '3';
+                    break;
+
+                case 4:
+                    newAction = '4';
+                    break;
+            } //intAction switch
+
+            return newAction;
+        } //Convert Enemy Action funtion
+
         public void InitializeItems()
         {
             _baseStaff._name = "Basic Staff";
             _baseStaff.damageAddition = 5;
-            _baseStaff.damageMultiplier = 1;
+            _baseStaff.damageMultiplier = 0;
 
             _baseSword._name = "Basic Sword";
             _baseSword.damageAddition = 5;
-            _baseSword.damageMultiplier = 1;
+            _baseSword.damageMultiplier = 0;
 
             _baseDagger._name = "Basic Dagger";
             _baseDagger.damageAddition = 5;
-            _baseDagger.damageMultiplier = 1;
+            _baseDagger.damageMultiplier = 0;
         } //Initialize Items function
 
         public void FirstWeapon()

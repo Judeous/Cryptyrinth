@@ -175,7 +175,7 @@ namespace HelloWorld
             Console.WriteLine("");
             Console.WriteLine("[Press any key to continue]");
             Console.Write("> ");
-            Console.ReadKey(true);  //Pauses
+            Console.ReadKey(true); //Pauses
             Console.WriteLine("");
         } //Pause
     } //Character
