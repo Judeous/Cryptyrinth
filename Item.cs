@@ -48,7 +48,7 @@ namespace HelloWorld
 
             damageAddition = 0;
             damageMultiplier = 0;
-        } //Constructor
+        } //Initial Constructor
 
         public Item(string name, int xpAdd, float xpMult, int hpAdd, float hpMult, int regAdd, float regMult, int healAdd, float healMult, int defAdd, float defMult, int atkAdd, float atkMult)
         {
@@ -73,6 +73,10 @@ namespace HelloWorld
             damageMultiplier = atkMult;
         } //Overload Constructor
 
+        /// <summary>
+        /// Writes out values of variables to a text file for future recovering
+        /// </summary>
+        /// <param name="writer"></param>
         public virtual void Save(StreamWriter writer)
         {
             writer.WriteLine(_name);
@@ -96,6 +100,11 @@ namespace HelloWorld
             writer.WriteLine(damageMultiplier);
         } //Save function
 
+        /// <summary>
+        /// Reads out previously written values then assigns to private variables after conversion
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         public virtual bool Load(StreamReader reader)
         {
             string name = reader.ReadLine();

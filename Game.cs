@@ -32,17 +32,16 @@ namespace HelloWorld
         private int turncounter;
 
         //Field Locations
-        private bool ShackExplored = false;
-        private bool FieldExplored = false;
-        private bool LabyrinthEntranceExplored = false;
-        private bool CastleGateExplored = false;
+        private bool shackExplored = false;
+        private bool fieldExplored = false;
+        private bool labyrinthEntranceExplored = false;
+        private bool castleGateExplored = false;
         //Labyrinth Locations
-        private bool LabyrinthEntrywayExplored = false;
-        private bool LabyrinthExplored = false;
-
+        private bool labyrinthEntrywayExplored = false;
+        private bool labyrinthExplored = false;
         //Castle Locations
-        private bool CastleEntryExplored = false;
-        private bool Explored = false;
+        private bool castleEntryExplored = false;
+        private bool explored = false;
 
         public void Run()
         {
@@ -81,7 +80,7 @@ namespace HelloWorld
                     FirstWeapon();
             } //If no such file exists
 
-            if (name != "")
+            if (name != null)
             {
                 do
                 {
@@ -152,7 +151,7 @@ namespace HelloWorld
                                         break;
                                 } //Action Switch
 
-                                ShackExplored = true;
+                                shackExplored = true;
                                 Console.Clear(); //Clears the screen
                                 break; //Shack
 
@@ -180,7 +179,7 @@ namespace HelloWorld
                                         AdventureBattle(ref Slime);
                                         break;
 
-                                    case '5': //Look around 
+                                    case '5': //Look around
                                         LookAround();
                                         break;
 
@@ -201,7 +200,7 @@ namespace HelloWorld
                                     } //If slime engages
                                 } //If not engaging
 
-                                FieldExplored = true;
+                                fieldExplored = true;
                                 Console.Clear(); //Clears the screen
                                 break;
 
@@ -235,7 +234,7 @@ namespace HelloWorld
                                         Pause();
                                         break;
 
-                                    case '4': //Look around 
+                                    case '4': //Look around
                                         LookAround();
                                         break;
 
@@ -244,7 +243,7 @@ namespace HelloWorld
                                         break;
                                 } //Action Switch
 
-                                LabyrinthEntranceExplored = true;
+                                labyrinthEntranceExplored = true;
                                 Console.Clear(); //Clears the screen
                                 break;
 
@@ -272,7 +271,7 @@ namespace HelloWorld
                                         Pause();
                                         break;
 
-                                    case '5': //Look around 
+                                    case '5': //Look around
                                         LookAround();
                                         break;
 
@@ -289,17 +288,12 @@ namespace HelloWorld
                                     AdventureBattle(ref Slombie);
                                 } //If slomibe engages
 
-                                LabyrinthEntrywayExplored = true;
+                                labyrinthEntrywayExplored = true;
                                 Console.Clear(); //Clears the screen
                                 break;
 
                             case "Labyrinth":
-                                Console.WriteLine("[What do I do?]");
-                                Console.WriteLine("");
                                 _labyrinth.LabyrinthActionText();
-                                Console.WriteLine("");
-                                Console.WriteLine("[Press the number to continue]");
-                                Console.Write("> ");
                                 _action = ' ';
                                 _action = Console.ReadKey(true).KeyChar;
 
@@ -330,18 +324,12 @@ namespace HelloWorld
                                         NineMenu();
                                         break;
                                 } //Action Switch
-                                LabyrinthExplored = true;
+                                labyrinthExplored = true;
                                 Console.Clear();
                                 break;
 
                             case "CastleGate":
-                                Console.WriteLine("[What do I do?]");
-                                Console.WriteLine("[1: Return to the fork in the path]\n[2: Enter the odd 'entrance']\n[3: Look around]\n[9: Nine Menu]");
-                                Console.WriteLine("");
-                                Console.WriteLine("[Press the number to continue]");
-                                Console.Write("> ");
-                                _action = Console.ReadKey(true).KeyChar;
-
+                                _action = GetAction(ref _action, "[What do I do?]", "[1: Return to the fork in the path]", "[2: Enter the odd 'entrance']", "[3: Look around]", "[9: Nine Menu]");
                                 switch (_action)
                                 {
                                     case '1': //Return to field
@@ -353,7 +341,7 @@ namespace HelloWorld
                                         break;
 
 
-                                    case '3': //Look around 
+                                    case '3': //Look around
                                         LookAround();
                                         break;
 
@@ -362,12 +350,16 @@ namespace HelloWorld
                                         break;
 
                                 } //Action Switch
-                                CastleGateExplored = true;
+                                castleGateExplored = true;
                                 Console.Clear();
                                 break;
 
                             case "CastleEntry":
-                                _action = GetAction(ref _action, "[What do I do?]", "[1: Exit the castle]", "           ", "[3: Look around]", "[9: Nine Menu]");
+                                if (_player1.GetLevel() < 10)
+                                    _action = GetAction(ref _action, "[What do I do?]", "[1: Exit the castle]", "[4: Look at the doorless doorway]", "[3: Look around]", "[9: Nine Menu]");
+                                else
+                                    _action = GetAction(ref _action, "[What do I do?]", "[1: Exit the castle]", "[4:                           ]", "[3: Look around]", "[9: Nine Menu]");
+
                                 switch (_action)
                                 {
                                     case '1': //Exit the castle
@@ -388,7 +380,7 @@ namespace HelloWorld
                                         }
                                         break;
 
-                                    case '3': //Look around 
+                                    case '3': //Look around
                                         LookAround();
                                         break;
 
@@ -397,7 +389,7 @@ namespace HelloWorld
                                         break;
                                 } //Action Switch
 
-                                CastleEntryExplored = true;
+                                castleEntryExplored = true;
                                 Console.Clear(); //Clears the screen
                                 break;
 
@@ -431,7 +423,7 @@ namespace HelloWorld
                                         AdventureBattle(ref Nothing);
                                         break;
 
-                                    case '5': //Look around 
+                                    case '5': //Look around
                                         LookAround();
                                         break;
 
@@ -440,7 +432,7 @@ namespace HelloWorld
                                         break;
                                 } //Action Switch
 
-                                Explored = true;
+                                explored = true;
                                 Console.Clear(); //Clears the screen
                                 break;
                         } //Area Switch
@@ -514,7 +506,7 @@ namespace HelloWorld
             switch (_player1.GetArea())
             {
                 case "Shack":
-                    switch (ShackExplored)
+                    switch (shackExplored)
                     {
                         case true:
                             Console.WriteLine("[I'm back on the hill outside the shack]");
@@ -532,7 +524,7 @@ namespace HelloWorld
                     break;
 
                 case "Field":
-                    switch (FieldExplored)
+                    switch (fieldExplored)
                     {
                         case true:
                             Console.WriteLine("[I'm back in the slime field, and living slime is still everywhere]");
@@ -556,7 +548,7 @@ namespace HelloWorld
                     break;
 
                 case "LabyrinthEntrance":
-                    switch (LabyrinthEntranceExplored)
+                    switch (labyrinthEntranceExplored)
                     {
                         case true:
                             Console.WriteLine("[I'm at the entrance of the crypt]");
@@ -571,7 +563,7 @@ namespace HelloWorld
                     break;
 
                 case "LabyrinthEntryway":
-                    switch (LabyrinthEntrywayExplored)
+                    switch (labyrinthEntrywayExplored)
                     {
                         case true:
                             Console.WriteLine("[I'm in the entryway of the Labyrinth]");
@@ -594,7 +586,7 @@ namespace HelloWorld
                     break;
 
                 case "Labyrinth":
-                    switch (LabyrinthExplored)
+                    switch (labyrinthExplored)
                     {
                         case true:
                             Console.WriteLine("[I'm in the slimy labyrinth]");
@@ -614,7 +606,7 @@ namespace HelloWorld
                     break;
 
                 case "CastleGate":
-                    switch (CastleGateExplored)
+                    switch (castleGateExplored)
                     {
                         case true:
                             Console.WriteLine("[I'm in front of the taken-over brick castle that has an odd 'entrance']");
@@ -631,7 +623,7 @@ namespace HelloWorld
                     break;
 
                 case "CastleEntry":
-                    switch (CastleEntryExplored)
+                    switch (castleEntryExplored)
                     {
                         case true:
                             Console.WriteLine("[I'm in the entryway of the castle]");
@@ -647,7 +639,7 @@ namespace HelloWorld
                     break;
 
                 case "    ":
-                    switch (Explored)
+                    switch (explored)
                     {
                         case true:
                             Console.WriteLine("[I'm in the     ]");
@@ -671,6 +663,9 @@ namespace HelloWorld
             Console.WriteLine("");
         } //Area Text function
 
+        /// <summary>
+        /// Prints out text depending on the player's _area
+        /// </summary>
         public void LookAround()
         {
             Console.Clear(); //Clears the screen
@@ -710,9 +705,10 @@ namespace HelloWorld
                     Console.WriteLine("[Likely one of the repurposed dead the panel mentioned]");
                     Console.WriteLine("");
                     Console.WriteLine("[I'm in a mostly rectangular room, the stairway is in the center of one end]");
-                    Console.WriteLine("[On the opposite end, to the right, there's a small square space, with a round stone table in the center of it]");
+                    Console.WriteLine("[On the opposite end, to the right, before a small square space with a round stone table, there's a door of stone]");
                     Console.WriteLine("");
-                    Console.WriteLine("[To the left of the entrance, (When I first enter the Labyrinth/Crypt) there's a doorway to the right, with another door of stone]");
+                    Console.WriteLine("[It's similar to the one I had to push through to enter the crypt]");
+                    Console.WriteLine("[To the left of the entrance, (When I first enter the Labyrinth/Crypt) there's another door of stone]");
                     Console.WriteLine("[Right before the small space and to the right, there's another door]");
                     break;
 
@@ -795,6 +791,9 @@ namespace HelloWorld
             Console.WriteLine("");
         } //Pvp Stat Display function
 
+        /// <summary>
+        /// Pits two players against each other
+        /// </summary>
         public void PvPBattle()
         {
             InBattle = true;
@@ -1023,6 +1022,10 @@ namespace HelloWorld
             } //InBattle bool
         } //PvP battle functin
 
+        /// <summary>
+        /// Pits a player and an enemy against each other
+        /// </summary>
+        /// <param name="enemy"></param>
         public void AdventureBattle(ref Enemy enemy)
         {
             InBattle = true;
@@ -1267,6 +1270,11 @@ namespace HelloWorld
             } //InBattle bool
         } //Adventure Battle Function
 
+        /// <summary>
+        /// Checks to see if the passed in player's health is above 0
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         public bool IsDead(Player player)
         {
             if (player.GetHealth() > 0) //Checks to see if player was killed by the attack
@@ -1280,6 +1288,9 @@ namespace HelloWorld
             }
         } //IsDead function
 
+        /// <summary>
+        /// Gets a ReadKey to allow for either a break or reading of text
+        /// </summary>
         public void Pause()
         {
             Console.WriteLine("");
@@ -1289,6 +1300,11 @@ namespace HelloWorld
             Console.WriteLine("");
         } //Pause
 
+        /// <summary>
+        /// Converts the passed in int into the respective char
+        /// </summary>
+        /// <param name="intAction"></param>
+        /// <returns></returns>
         public char ConvertEnemyAction(int intAction)
         {
             char newAction = ' ';
@@ -1319,6 +1335,9 @@ namespace HelloWorld
             return newAction;
         } //Convert Enemy Action funtion
 
+        /// <summary>
+        /// Gives values to previously declared Items
+        /// </summary>
         public void InitializeItems()
         {
             _baseStaff._name = "Basic Staff";
@@ -1334,6 +1353,9 @@ namespace HelloWorld
             _baseDagger.damageMultiplier = 0;
         } //Initialize Items function
 
+        /// <summary>
+        /// Allows the player to get an Item when created
+        /// </summary>
         public void FirstWeapon()
         {
             _action = GetAction(ref _action, "Which weapon would you like?", "[1: Staff]", "[2: Sword]", "[3: Dagger]", "[4: Take all three]");
@@ -1361,6 +1383,9 @@ namespace HelloWorld
             Console.Clear();
         } //First Weapon function
 
+        /// <summary>
+        /// Allows the player to call OpenInventory, Switch their currentItem, call StatCheck, Change their name, or quit the game
+        /// </summary>
         void NineMenu()
         {
             Console.Clear(); //Clears the screen
@@ -1403,6 +1428,9 @@ namespace HelloWorld
             } //Action Switch
         } //Nine Menu function
 
+        /// <summary>
+        /// Calls player1's Save, then writes out the values of the different areaExplored bools so the player doesn't have to see the initial area texts again
+        /// </summary>
         public void Save()
         {
             StreamWriter writer = new StreamWriter("SaveData.txt");
@@ -1410,18 +1438,22 @@ namespace HelloWorld
             _player1.Save(writer);
 
             //Saves the state of locations: whether they were explored or not
-            writer.WriteLine(ShackExplored);
-            writer.WriteLine(FieldExplored);
-            writer.WriteLine(LabyrinthEntranceExplored);
-            writer.WriteLine(CastleGateExplored);
-            writer.WriteLine(LabyrinthEntrywayExplored);
-            writer.WriteLine(LabyrinthExplored);
-            writer.WriteLine(CastleEntryExplored);
-            writer.WriteLine(Explored);
+            writer.WriteLine(shackExplored);
+            writer.WriteLine(fieldExplored);
+            writer.WriteLine(labyrinthEntranceExplored);
+            writer.WriteLine(castleGateExplored);
+            writer.WriteLine(labyrinthEntrywayExplored);
+            writer.WriteLine(labyrinthExplored);
+            writer.WriteLine(castleEntryExplored);
+            writer.WriteLine(explored);
 
             writer.Close();
         } //Save function
 
+        /// <summary>
+        /// Reads in the previously written out data from Save, then converts it to the correct variable types, then sets them to the correct private variables
+        /// </summary>
+        /// <returns></returns>
         public bool Load()
         {
             if (File.Exists("SaveData.txt") == false)
@@ -1483,21 +1515,29 @@ namespace HelloWorld
             }
 
             //If successful, put in the values
-            ShackExplored = shack;
-            FieldExplored = field;
-            LabyrinthEntranceExplored = LabyEntrance;
-            CastleGateExplored = CastleGate;
+            shackExplored = shack;
+            fieldExplored = field;
+            labyrinthEntranceExplored = LabyEntrance;
+            castleGateExplored = CastleGate;
 
-            LabyrinthEntrywayExplored = LabyEntry;
-            LabyrinthExplored = Laby;
+            labyrinthEntrywayExplored = LabyEntry;
+            labyrinthExplored = Laby;
 
-            CastleEntryExplored = CastleEntry;
-            Explored = CastleVoid;
+            castleEntryExplored = CastleEntry;
+            explored = CastleVoid;
 
             reader.Close();
             return true;
         } //Load function
 
+        /// <summary>
+        /// Writes out a query, the choices, then gets a ReadKey and returns that key
+        /// </summary>
+        /// <param name="choice"></param>
+        /// <param name="query"></param>
+        /// <param name="option1"></param>
+        /// <param name="option2"></param>
+        /// <returns></returns>
         public char GetAction(ref char choice, string query, string option1, string option2)
         {
             Console.WriteLine(query);
@@ -1516,6 +1556,15 @@ namespace HelloWorld
             return choice;
         } //Get Action 2 options
 
+        /// <summary>
+        /// Writes out a query, the choices, then gets a ReadKey and returns that key
+        /// </summary>
+        /// <param name="choice"></param>
+        /// <param name="query"></param>
+        /// <param name="option1"></param>
+        /// <param name="option2"></param>
+        /// <param name="option3"></param>
+        /// <returns></returns>
         public char GetAction(ref char choice, string query, string option1, string option2, string option3)
         {
             Console.WriteLine(query);
@@ -1535,6 +1584,16 @@ namespace HelloWorld
             return choice;
         } //Get Action 3 options
 
+        /// <summary>
+        /// Writes out a query, the choices, then gets a ReadKey and returns that key
+        /// </summary>
+        /// <param name="choice"></param>
+        /// <param name="query"></param>
+        /// <param name="option1"></param>
+        /// <param name="option2"></param>
+        /// <param name="option3"></param>
+        /// <param name="option4"></param>
+        /// <returns></returns>
         public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4)
         {
             Console.WriteLine(query);
@@ -1556,6 +1615,17 @@ namespace HelloWorld
             return choice;
         } //Get Action 4 options
 
+        /// <summary>
+        /// Writes out a query, the choices, then gets a ReadKey and returns that key
+        /// </summary>
+        /// <param name="choice"></param>
+        /// <param name="query"></param>
+        /// <param name="option1"></param>
+        /// <param name="option2"></param>
+        /// <param name="option3"></param>
+        /// <param name="option4"></param>
+        /// <param name="option5"></param>
+        /// <returns></returns>
         public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4, string option5)
         {
             Console.WriteLine(query);
@@ -1580,6 +1650,18 @@ namespace HelloWorld
             return choice;
         } //Get Action 5 options
 
+        /// <summary>
+        /// Writes out a query, the choices, then gets a ReadKey and returns that key
+        /// </summary>
+        /// <param name="choice"></param>
+        /// <param name="query"></param>
+        /// <param name="option1"></param>
+        /// <param name="option2"></param>
+        /// <param name="option3"></param>
+        /// <param name="option4"></param>
+        /// <param name="option5"></param>
+        /// <param name="option6"></param>
+        /// <returns></returns>
         public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4, string option5, string option6)
         {
             Console.WriteLine(query);

@@ -35,12 +35,12 @@ namespace HelloWorld
         private int _doorWestChance;
 
         //Bools for doors
-        private bool CanEscapeE = false; //Can escape through the East door in LabyrinthEntry
-        private bool CanEscapeW = false; //Can escape through the West door in LabyrinthEntry
-        private bool DoorSouthExists = false;
-        private bool DoorNorthExists = false;
-        private bool DoorEastExists = false;
-        private bool DoorWestExists = false;
+        private bool _canEscapeE = false; //Can escape through the East door in LabyrinthEntry
+        private bool _canEscapeW = false; //Can escape through the West door in LabyrinthEntry
+        private bool _doorSouthExists = false;
+        private bool _doorNorthExists = false;
+        private bool _doorEastExists = false;
+        private bool _doorWestExists = false;
 
         //Coordinate variables for the doors, if they exist
         private int _escapeDoorWY = 25;
@@ -63,15 +63,18 @@ namespace HelloWorld
 
         Random r = new Random(); //Sets a variable for a randomizer
 
+        /// <summary>
+        /// Creates a room with random-esque dimensions
+        /// </summary>
         public void GenerateRoom()
         {
             //Sets the door's existance and can escape bools to false by default
-            DoorSouthExists = false;
-            DoorNorthExists = false;
-            DoorEastExists = false;
-            DoorWestExists = false;
-            CanEscapeE = false;
-            CanEscapeW = false;
+            _doorSouthExists = false;
+            _doorNorthExists = false;
+            _doorEastExists = false;
+            _doorWestExists = false;
+            _canEscapeE = false;
+            _canEscapeW = false;
 
             //Generates the wall lengths
             _wallXLengths = r.Next(_minWallLength, _maxWallLength);
@@ -258,21 +261,21 @@ namespace HelloWorld
             //Just Entered Labyrinth Condition
             if (_labyLocationX == _escapeDoorEX && _labyLocationY == _escapeDoorEY)
             { //Just entered East Door
-                CanEscapeW = true;
+                _canEscapeW = true;
             }
             else if (_labyLocationX == _escapeDoorWX && _labyLocationY == _escapeDoorWY)
             { //Just entered West Door
-                CanEscapeE = true;
+                _canEscapeE = true;
             }
 
             //If all wall borders contain the escape Door's coordinates
             if (_wallSouthY <= _escapeDoorWY && _wallNorthY >= _escapeDoorWY && _wallEastX >= _escapeDoorWX && _wallWestX <= _escapeDoorWX)
             { //West Escape Door
-                CanEscapeW = true;
+                _canEscapeW = true;
             }
             else if (_wallSouthY <= _escapeDoorEY && _wallNorthY >= _escapeDoorEY && _wallEastX >= _escapeDoorEX && _wallWestX <= _escapeDoorEX)
             { //East Escape Door
-                CanEscapeE = true;
+                _canEscapeE = true;
             }
 
             do
@@ -320,27 +323,27 @@ namespace HelloWorld
                         break;
                 } //Facing Direction switch
 
-                DoorSouthExists = _doorSouthChance >= 25;
-                DoorNorthExists = _doorNorthChance >= 25;
-                DoorEastExists = _doorEastChance >= 25;
-                DoorWestExists = _doorWestChance >= 25;
+                _doorSouthExists = _doorSouthChance >= 25;
+                _doorNorthExists = _doorNorthChance >= 25;
+                _doorEastExists = _doorEastChance >= 25;
+                _doorWestExists = _doorWestChance >= 25;
             } //Do
-            while (DoorSouthExists != true && DoorNorthExists != true && DoorEastExists != true && DoorWestExists != true);
+            while (_doorSouthExists != true && _doorNorthExists != true && _doorEastExists != true && _doorWestExists != true);
 
             //Puts doors on walls if they exist
-            if (DoorSouthExists)
+            if (_doorSouthExists)
             {
                 _doorSouthY = r.Next(_wallEastX, _wallWestX);
                 _doorSouthX = _wallSouthY;
             } //If a South Door exists
-            if (DoorNorthExists)
+            if (_doorNorthExists)
             {
                 _doorNorthY = r.Next(_wallEastX, _wallWestX);
                 _doorNorthX = _wallNorthY;
             } //If a North Door exists
-            if (DoorEastExists)
+            if (_doorEastExists)
             {
-                if (CanEscapeW)
+                if (_canEscapeW)
                 {
                     _doorEastY = _escapeDoorWY;
                     _doorEastX = _escapeDoorWX;
@@ -351,9 +354,9 @@ namespace HelloWorld
                     _doorEastX = _wallEastX;
                 }
             } //If an East Door exists
-            if (DoorWestExists)
+            if (_doorWestExists)
             {
-                if (CanEscapeE)
+                if (_canEscapeE)
                 {
                     _doorWestY = _escapeDoorEY;
                     _doorWestX = _escapeDoorEX;
@@ -367,6 +370,9 @@ namespace HelloWorld
             RoomSizeAssigner();
         } //Generate Room function
 
+        /// <summary>
+        /// Based on previously generated dimensions, assigns _roomShape and _roomType
+        /// </summary>
         public void RoomSizeAssigner()
         {
             switch (_wallXLengths)
@@ -473,6 +479,9 @@ namespace HelloWorld
             } //X wall length
         } //Labyrinth Text function
 
+        /// <summary>
+        /// Displays text based on _roomShape and _roomType
+        /// </summary>
         public void LabyrinthRoomText()
         {
             switch (_roomShape)
@@ -528,7 +537,7 @@ namespace HelloWorld
                     break;
             } //Room Shape Text switch
 
-            if (DoorSouthExists)
+            if (_doorSouthExists)
             {
                 switch (_roomType)
                 {
@@ -560,7 +569,7 @@ namespace HelloWorld
                 } //Room Type switch
             } //South Door
 
-            if (DoorNorthExists)
+            if (_doorNorthExists)
             {
                 switch (_roomType)
                 {
@@ -592,7 +601,7 @@ namespace HelloWorld
                 } //Room Type switch
             } //North Door
 
-            if (DoorEastExists)
+            if (_doorEastExists)
             {
                 switch (_roomType)
                 {
@@ -624,7 +633,7 @@ namespace HelloWorld
                 } //Room Type switch
             } //East Door
 
-            if (DoorWestExists)
+            if (_doorWestExists)
             {
                 switch (_roomType)
                 {
@@ -657,9 +666,14 @@ namespace HelloWorld
             } //West Door
         } //Labyrinth Room Text
 
+        /// <summary>
+        /// Displays different text based on whether doors exist or not
+        /// </summary>
         public void LabyrinthActionText()
         {
-            if (DoorSouthExists) //South
+            Console.WriteLine("[What do I do?]");
+            Console.WriteLine("");
+            if (_doorSouthExists) //South
             {
                 Console.WriteLine("[1: Go South]");
             }
@@ -668,7 +682,7 @@ namespace HelloWorld
                 Console.WriteLine("[1: Look at Southern Wall]");
             } //South
 
-            if (DoorNorthExists) //North
+            if (_doorNorthExists) //North
             {
                 Console.WriteLine("[2: Go North]");
             }
@@ -677,11 +691,11 @@ namespace HelloWorld
                 Console.WriteLine("[2: Look at Northern Wall]");
             } //North
 
-            if (CanEscapeE)
+            if (_canEscapeE)
             {
                 Console.WriteLine("[3: Escape through East Door]");
             }
-            else if (DoorEastExists) //East
+            else if (_doorEastExists) //East
             {
                 Console.WriteLine("[3: Go East]");
             }
@@ -690,11 +704,11 @@ namespace HelloWorld
                 Console.WriteLine("[3: Look at Eastern Wall]");
             } //East
 
-            if (CanEscapeW) //West
+            if (_canEscapeW) //West
             {
                 Console.WriteLine("[4: Escape through West Door]");
             }
-            else if (DoorWestExists)
+            else if (_doorWestExists)
             {
                 Console.WriteLine("[4: Go West]");
             }
@@ -709,8 +723,15 @@ namespace HelloWorld
             } //If player didn't just enter the labyrinth
 
             Console.WriteLine("[9: Nine Menu]");
+
+            Console.WriteLine("");
+            Console.WriteLine("[Press the number to continue]");
+            Console.Write("> ");
         } //Labyrinth Action function
 
+        /// <summary>
+        /// Enters the Labyrinth through the West door
+        /// </summary>
         public void EnterLabyrinthW()
         {
             _facingDirection = 'w';
@@ -720,9 +741,12 @@ namespace HelloWorld
             _labyLocationX = 5;
             _labyLocationY = 25;
             GenerateRoom();
-            DoorEastExists = true;
+            _doorEastExists = true;
         } //Enter Labyrinth West function
 
+        /// <summary>
+        /// Enters the Labyrinth through the West door
+        /// </summary>
         public void EnterLabyrinthE()
         {
             _facingDirection = 'e';
@@ -732,12 +756,15 @@ namespace HelloWorld
             _labyLocationX = 9;
             _labyLocationY = 22;
             GenerateRoom();
-            DoorWestExists = true;
+            _doorWestExists = true;
         } //Enter Labyrinth East function
 
+        /// <summary>
+        /// If a door exists on the South wall, then sets the oldLabyLocations to the current labyLocations, then sets labyLocations to the South door coordinates
+        /// </summary>
         public void DoSouth()
         {
-            if (DoorSouthExists)
+            if (_doorSouthExists)
             {
                 _oldLabyLocationX = _labyLocationX;
                 _oldLabyLocationY = _labyLocationY;
@@ -754,9 +781,12 @@ namespace HelloWorld
             }
         } //Do South function
 
+        /// <summary>
+        /// If a door exists on the North wall, then sets the oldLabyLocations to the current labyLocations, then sets labyLocations to the North door coordinates
+        /// </summary>
         public void DoNorth()
         {
-            if (DoorNorthExists)
+            if (_doorNorthExists)
             {
                 _oldLabyLocationX = _labyLocationX;
                 _oldLabyLocationY = _labyLocationY;
@@ -773,11 +803,16 @@ namespace HelloWorld
             }
         } //Do North function
 
+        /// <summary>
+        /// If a door exists on the East wall, then sets the oldLabyLocations to the current labyLocations
+        /// If CanEscapeW is true, then the player moves to LabyrinthEntryway
+        /// </summary>
+        /// <param name="player"></param>
         public void DoEast(ref Player player)
         {
-            if (DoorEastExists)
+            if (_doorEastExists)
             {
-                if (CanEscapeW)
+                if (_canEscapeW)
                 {
                     player.ChangeArea("LabyrinthEntryway");
                     return;
@@ -797,11 +832,16 @@ namespace HelloWorld
             }
         } //Do East function
 
+        /// <summary>
+        /// If a door exists on the East wall, then sets the oldLabyLocations to the current labyLocations
+        /// If CanEscapeW is true, then the player moves to LabyrinthEntryway
+        /// </summary>
+        /// <param name="player"></param>
         public void DoWest(ref Player player)
         {
-            if (DoorWestExists)
+            if (_doorWestExists)
             {
-                if (CanEscapeE)
+                if (_canEscapeE)
                 {
                     player.ChangeArea("LabyrinthEntryway");
                     return;
@@ -821,12 +861,18 @@ namespace HelloWorld
             }
         } //Do West function
 
+        /// <summary>
+        /// Moves the player to the previous coordinates
+        /// </summary>
         public void GoBack()
         {
             _labyLocationX = _oldLabyLocationX;
             _labyLocationY = _oldLabyLocationY;
         } //Go Back function
 
+        /// <summary>
+        /// Gets a ReadKey to allow for either a break or reading of text
+        /// </summary>
         public void Pause()
         {
             Console.WriteLine("");

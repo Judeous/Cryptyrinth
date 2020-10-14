@@ -9,7 +9,6 @@ namespace HelloWorld
         private int _experience;
 
         //Messages
-
         private string[] messages = new string[9];
 
         Random r = new Random(); //Sets a variable for a randomizer
@@ -36,6 +35,9 @@ namespace HelloWorld
             EnemySetup();
         } //Constructor
 
+        /// <summary>
+        /// Based around the enemy's name, applies the respective stats for the enemy
+        /// </summary>
         public void EnemySetup()
         {
             switch (_name)
@@ -113,6 +115,10 @@ namespace HelloWorld
             _totalDamage = (int)(_baseDamage * _damageMultiplier);
         } //Enemy Setup function
 
+        /// <summary>
+        /// Displays a message based on what was passed in
+        /// </summary>
+        /// <param name="message"></param>
         public void DisplayMessage(string message)
         {
             switch (message)
@@ -155,6 +161,12 @@ namespace HelloWorld
             } //Message switch
         } //Display Message function
 
+        /// <summary>
+        /// If defense is 0, then prints out a message, then calls GetDirectAttack
+        /// Otherwise, takes the passed in damage from _totalDefense
+        /// If that made _totalDefense fall below 0, then set it to 0 and display an extra message
+        /// </summary>
+        /// <param name="damage"></param>
         public override void DefendAttack(int damage)
         {
             Console.WriteLine("");
@@ -192,9 +204,6 @@ namespace HelloWorld
             } //If enemy has defense
         } //Enemy Defended Attack function
 
-        public int GetExp()
-        {
-            return _experience;
-        } //Get Experience function
+        public int GetExp() { return _experience; }
     } //Enemy
 } //Hello World

@@ -25,6 +25,9 @@ namespace HelloWorld
 
         public bool IsBot;
 
+        /// <summary>
+        /// If the character can, then applies the value of _totalHeal to _totalHealth
+        /// </summary>
         public virtual void Heal()
         {
             Console.WriteLine("");
@@ -55,6 +58,11 @@ namespace HelloWorld
             Console.Clear(); //Clears the screen
         } //Player Heal function
 
+        /// <summary>
+        /// Based on defenderAction, either calls the defender's DefendAttack or GetDirectAttack, passing in _totalDamage
+        /// </summary>
+        /// <param name="defender"></param>
+        /// <param name="defenderAction"></param>
         public virtual void Attack(Character defender, char defenderAction)
         {
             Console.WriteLine("");
@@ -73,6 +81,10 @@ namespace HelloWorld
             } //If enemy alive
         } //Player Direct Attack Function
 
+        /// <summary>
+        /// Takes the value of the passed in damage from _totalhealth
+        /// </summary>
+        /// <param name="damage"></param>
         public virtual void GetDirectAttack(int damage)
         {
             Console.WriteLine(_name + "[Pre-Strike]"); //Stats before being struck
@@ -91,6 +103,10 @@ namespace HelloWorld
             Console.Clear(); //Clears the screen
         } //Get Direct Attack function
 
+        /// <summary>
+        /// If possible, takes the value of attackerDamage from totalDefense, and if not, calls GetDirectAttack
+        /// </summary>
+        /// <param name="attackerDamage"></param>
         public virtual void DefendAttack(int attackerDamage)
         {
             if (_totalDefense == 0)
@@ -123,6 +139,10 @@ namespace HelloWorld
             Console.Clear(); //Clears the screen
         } //Defended Attack function
 
+        /// <summary>
+        /// If _totalHealth is within 0 and _maxHealth, then applies the value of _totalHealthRegen to _totalHealth
+        /// If that surpassed _maxHealth, then set _totalHealth to _maxHealth
+        /// </summary>
         public void Regenerate()
         {
             if (_totalHealth < _maxHealth && _totalHealth > 0) //Checks to see if the character's hp is lower than max and higher than 0
@@ -136,6 +156,9 @@ namespace HelloWorld
             } //If health is within both boundaries
         } //Regen Function
 
+        /// <summary>
+        /// Displays totalStats
+        /// </summary>
         public virtual void DisplayStats()
         {
             Console.WriteLine(_name);
@@ -145,31 +168,19 @@ namespace HelloWorld
             Console.WriteLine(_totalDefense + " Def");
         } //Display Stats function
 
-        public bool GetIsBot()
-        {
-            return IsBot;
-        }
+        public bool GetIsBot() { return IsBot; }
 
-        public string GetName()
-        {
-            return _name;
-        } //Name Getter
+        public string GetName() { return _name; }
 
-        public int GetHealth()
-        {
-            return _totalHealth;
-        } //Health Getter
+        public int GetHealth() { return _totalHealth; }
 
-        public int GetMaxHealth()
-        {
-            return _maxHealth;
-        }
+        public int GetMaxHealth() { return _maxHealth; }
 
-        public int GetHealthRegen()
-        {
-            return _totalHealthRegen;
-        }
+        public int GetHealthRegen() { return _totalHealthRegen; }
 
+        /// <summary>
+        /// Gets a ReadKey to allow for either a break or reading of text
+        /// </summary>
         public void Pause()
         {
             Console.WriteLine("");

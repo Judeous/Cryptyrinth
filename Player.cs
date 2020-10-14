@@ -45,9 +45,9 @@ namespace HelloWorld
         private Item[] _inventory;
 
         private Item _currentItem = new Item();
-        private bool _HasItemEquipped = false;
+        private bool _hasItemEquipped = false;
 
-        private Item nothing = new Item();
+        private Item _nothing = new Item();
 
         public Player()
         {
@@ -69,9 +69,9 @@ namespace HelloWorld
             NothingInitializer();
             for(int i = 0; i < _inventory.Length; i++)
             {
-                _inventory[i] = nothing;
+                _inventory[i] = _nothing;
             }
-            EquipItem(nothing, 0);
+            EquipItem(_nothing, 0);
         } //Initial Constructor
 
         public Player(string nameVal, int healthVal, int healthRegenVal, int healVal, float damagemultVal, int defenseVal, string style, string specialtyVal)
@@ -89,26 +89,33 @@ namespace HelloWorld
             _specialty = specialtyVal;
         } //Overload Constructor
 
+        /// <summary>
+        /// Sets the values for _nothing to be 0, and sets the name to be nothing as well
+        /// </summary>
         public void NothingInitializer()
         {
-            nothing._name = "nothing";
+            _nothing._name = "nothing";
 
-            nothing.healthAddition = 0;
-            nothing.healthMultiplier = 0;
+            _nothing.healthAddition = 0;
+            _nothing.healthMultiplier = 0;
 
-            nothing.healthRegenAddition = 0;
-            nothing.healthRegenMultiplier = 0;
+            _nothing.healthRegenAddition = 0;
+            _nothing.healthRegenMultiplier = 0;
 
-            nothing.healAddition = 0;
-            nothing.healMultiplier = 0;
+            _nothing.healAddition = 0;
+            _nothing.healMultiplier = 0;
 
-            nothing.defenseAddition = 0;
-            nothing.defenseMultiplier = 0;
+            _nothing.defenseAddition = 0;
+            _nothing.defenseMultiplier = 0;
 
-            nothing.damageAddition = 0;
-            nothing.damageMultiplier = 0;
+            _nothing.damageAddition = 0;
+            _nothing.damageMultiplier = 0;
         } //Nothing Initializer
 
+        /// <summary>
+        /// Writes out needed variables into a text file for future recovery
+        /// </summary>
+        /// <param name="writer"></param>
         public virtual void Save(StreamWriter writer)
         {
             writer.WriteLine(_name);
@@ -142,6 +149,11 @@ namespace HelloWorld
             writer.WriteLine(_healMultiplier);
         } //Save function
 
+        /// <summary>
+        /// Recovers previously written text and converts it into the respective types for the private values to be set to
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         public virtual bool Load(StreamReader reader)
         {
             //Variables for stored data
@@ -270,6 +282,11 @@ namespace HelloWorld
             return true;
         } //Load String function
 
+        /// <summary>
+        /// Adds an item into the player's inventory, then asks if the player would like to equip it
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="invLocation"></param>
         public void AddToInventory(Item item, int invLocation)
         {
             Console.Clear();
@@ -318,9 +335,11 @@ namespace HelloWorld
                 } //Action switch
             } //do
             while (action != '1' && action != '2' && action != '3' && action != '4' && action != '5');
-
         } //AddtoInventory function
 
+        /// <summary>
+        /// Opens the inventory, then asks which item the player would like to equip
+        /// </summary>
         public void SwitchItem()
         {
             char action = ' ';
@@ -350,6 +369,11 @@ namespace HelloWorld
             } //action switch
         } //Switch Item function
 
+        /// <summary>
+        /// Sets an Item to be _currentItem, then applies the stats of said Item to the player's stats
+        /// </summary>
+        /// <param name="newItem"></param>
+        /// <param name="itemIndex"></param>
         public void EquipItem(Item newItem, int itemIndex)
         {
             Console.Clear();
@@ -360,7 +384,7 @@ namespace HelloWorld
                 Pause();
             }
 
-            else if (_HasItemEquipped)
+            else if (_hasItemEquipped)
             {
                 Console.WriteLine();
 
@@ -388,9 +412,9 @@ namespace HelloWorld
                         _damageMultiplier += newItem.damageMultiplier;
 
                         _currentItem = newItem;
-                        if(newItem != nothing)
+                        if(newItem != _nothing)
                         {
-                            _HasItemEquipped = true;
+                            _hasItemEquipped = true;
                         }
 
                         StatCalculation();
@@ -425,9 +449,9 @@ namespace HelloWorld
                 _damageMultiplier += newItem.damageMultiplier;
 
                 _currentItem = newItem;
-                if (newItem != nothing)
+                if (newItem != _nothing)
                 {
-                    _HasItemEquipped = true;
+                    _hasItemEquipped = true;
                 }
 
                 StatCalculation();
@@ -439,6 +463,9 @@ namespace HelloWorld
             } //If player doesn't have item equipped
         } //Equip Item function
 
+        /// <summary>
+        /// Sets _nothing to be _currentItem, then takes the stats of the previous _currentItem to the player's stats
+        /// </summary>
         public void UnequipItem()
         {
             Console.Clear();
@@ -464,10 +491,13 @@ namespace HelloWorld
                 Pause();
             }
 
-            _currentItem = nothing;
-            _HasItemEquipped = false;
+            _currentItem = _nothing;
+            _hasItemEquipped = false;
         } //Unequip Item
 
+        /// <summary>
+        /// Runs through a for loop to display the names of every Item in the player's inventory
+        /// </summary>
         public void CheckInventory()
         {
             for (int i = 0; i < _inventory.Length; i++)
@@ -477,6 +507,11 @@ namespace HelloWorld
             Pause();
         } //Check Inventory function
 
+        /// <summary>
+        /// Displays the name of the Item, then if the stat is not 0, then displays that stat
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="itemIndex"></param>
         public void InspectItem(Item item, int itemIndex)
         {
             Console.Clear();
@@ -561,14 +596,17 @@ namespace HelloWorld
                         break;
                 } //Action switch
             } //If Equipped Item is not Inspected Item
-
         } //Inspect Item function
 
+        /// <summary>
+        /// Prints out the names of every Item the player's inventory and if selected, calls InspectItem for that Item
+        /// Also allows the player to call UnequipItem
+        /// </summary>
         public void OpenInventory()
         {
             Console.Clear();
 
-            if (_HasItemEquipped)
+            if (_hasItemEquipped)
             {
                 Console.WriteLine("[Current Item: " + _currentItem._name + "]");
                 Console.WriteLine("");
@@ -641,6 +679,10 @@ namespace HelloWorld
             } //If player does not have an Item equipped
         } //Open Inventory function
 
+        /// <summary>
+        /// Applies passed in gainedExp to _currentExperience, then if _currentExperience has reached _experienceRequirement, then calls LevelUp
+        /// </summary>
+        /// <param name="gainedExp"></param>
         public void GainExperience(int gainedExp)
         {
             Console.WriteLine("Experience gained: " + gainedExp);
@@ -658,16 +700,20 @@ namespace HelloWorld
             }
         } //Gain Experience function
 
+        /// <summary>
+        /// Enters a do while _currentExperience is greater than or equal to _experienceRequirement and a do while action is invalid
+        /// Asks the player which statAddition they'd like to increment
+        /// </summary>
         public void LevelUp()
         {
-            char _action = ' ';
+            char action = ' ';
             do
             { //While the player is leveling up
                 do
                 { //While action is invalid
                     Console.WriteLine("You've gained a level!");
-                    _action = GetAction(ref _action, "What would you like to level up?", "[1: Health]", "[2: Regen]", "[3: Heal]", "[4: Defense]", "[5: Damage]", "[6: Split Evenly]");
-                    switch (_action)
+                    action = GetAction(ref action, "What would you like to level up?", "[1: Health]", "[2: Regen]", "[3: Heal]", "[4: Defense]", "[5: Damage]", "[6: Split Evenly]");
+                    switch (action)
                     {
                         case '1': //Health
                             _healthAddition += 5;
@@ -698,7 +744,7 @@ namespace HelloWorld
                             break;
                     } //Action Switch
                 } //While action is invalid
-                while (_action != '1' && _action != '2' && _action != '3' && _action != '4' && _action != '5' && _action != '6');
+                while (action != '1' && action != '2' && action != '3' && action != '4' && action != '5' && action != '6');
                 Console.Clear();
                 _level++;
                 _currentExperience -= _experienceRequirement;
@@ -714,6 +760,9 @@ namespace HelloWorld
             }
         } //Level Up function
 
+        /// <summary>
+        /// Calculates totalStats and _experienceRequirement
+        /// </summary>
         public void StatCalculation()
         {
             //The Experience Requirement is 30x the player's level
@@ -738,6 +787,9 @@ namespace HelloWorld
             _totalHeal = (int)(((_baseHeal + _healAddition + _currentItem.healAddition) * (_healMultiplier + _currentItem.healMultiplier)) + _level);
         } //Stat Calculation function
 
+        /// <summary>
+        /// Enters a do while name is unacceptable which asks the player for a name
+        /// </summary>
         public void ChangeName()
         {
             char action = ' ';
@@ -761,6 +813,9 @@ namespace HelloWorld
             _name = input;
         } //Change Name function
 
+        /// <summary>
+        /// Displays several variables of the player
+        /// </summary>
         public void StatCheck()
         {
             Console.Clear(); //Clears the screen
@@ -782,31 +837,19 @@ namespace HelloWorld
             Console.Clear(); //Clears the screen
         } //Stat Check function
 
-        public string GetArea()
-        {
-            return _area;
-        }
+        public string GetArea() { return _area; }
 
-        public void ChangeArea(string newArea)
-        {
-            _area = newArea;
-        }
+        public void ChangeArea(string newArea) { _area = newArea; }
 
-        public int GetLevel()
-        {
-            return _level;
-        } //Level Getter
+        public int GetLevel() { return _level; }
 
-        public Item[] GetInventory()
-        {
-            return _inventory;
-        }
+        public Item[] GetInventory() { return _inventory; }
 
-        public string GetSpecialty()
-        {
-            return _specialty;
-        }
+        public string GetSpecialty() { return _specialty; }
 
+        /// <summary>
+        /// Displays only totalStats
+        /// </summary>
         public override void DisplayStats()
         {
             Console.WriteLine(_name + ": " + _specialty);
@@ -817,6 +860,9 @@ namespace HelloWorld
             Console.WriteLine("");
         } //Display Stats function
 
+        /// <summary>
+        /// Asks the player what they'd like their style to be, then asks which of the four possible specialties of said style they'd like
+        /// </summary>
         public void DecideSpecialty()
         {
             Console.Clear(); //Clears the screen
@@ -1104,6 +1150,14 @@ namespace HelloWorld
             Console.Clear(); //Clears the screen
         } //Decide Specialty function
 
+        /// <summary>
+        /// Writes out a query, the choices, then gets a ReadKey and returns that key
+        /// </summary>
+        /// <param name="choice"></param>
+        /// <param name="query"></param>
+        /// <param name="option1"></param>
+        /// <param name="option2"></param>
+        /// <returns></returns>
         public char GetAction(ref char choice, string query, string option1, string option2)
         {
             Console.WriteLine(query);
@@ -1122,6 +1176,15 @@ namespace HelloWorld
             return choice;
         } //Get Action 2 options
 
+        /// <summary>
+        /// Writes out a query, the choices, then gets a ReadKey and returns that key
+        /// </summary>
+        /// <param name="choice"></param>
+        /// <param name="query"></param>
+        /// <param name="option1"></param>
+        /// <param name="option2"></param>
+        /// <param name="option3"></param>
+        /// <returns></returns>
         public char GetAction(ref char choice, string query, string option1, string option2, string option3)
         {
             Console.WriteLine(query);
@@ -1141,6 +1204,16 @@ namespace HelloWorld
             return choice;
         } //Get Action 3 options
 
+        /// <summary>
+        /// Writes out a query, the choices, then gets a ReadKey and returns that key
+        /// </summary>
+        /// <param name="choice"></param>
+        /// <param name="query"></param>
+        /// <param name="option1"></param>
+        /// <param name="option2"></param>
+        /// <param name="option3"></param>
+        /// <param name="option4"></param>
+        /// <returns></returns>
         public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4)
         {
             Console.WriteLine(query);
@@ -1162,6 +1235,17 @@ namespace HelloWorld
             return choice;
         } //Get Action 4 options
 
+        /// <summary>
+        /// Writes out a query, the choices, then gets a ReadKey and returns that key
+        /// </summary>
+        /// <param name="choice"></param>
+        /// <param name="query"></param>
+        /// <param name="option1"></param>
+        /// <param name="option2"></param>
+        /// <param name="option3"></param>
+        /// <param name="option4"></param>
+        /// <param name="option5"></param>
+        /// <returns></returns>
         public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4, string option5)
         {
             Console.WriteLine(query);
@@ -1186,6 +1270,18 @@ namespace HelloWorld
             return choice;
         } //Get Action 5 options
 
+        /// <summary>
+        /// Writes out a query, the choices, then gets a ReadKey and returns that key
+        /// </summary>
+        /// <param name="choice"></param>
+        /// <param name="query"></param>
+        /// <param name="option1"></param>
+        /// <param name="option2"></param>
+        /// <param name="option3"></param>
+        /// <param name="option4"></param>
+        /// <param name="option5"></param>
+        /// <param name="option6"></param>
+        /// <returns></returns>
         public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4, string option5, string option6)
         {
             Console.WriteLine(query);
@@ -1211,6 +1307,19 @@ namespace HelloWorld
             return choice;
         } //Get Action 6 options
 
+        /// <summary>
+        /// Writes out a query, the choices, then gets a ReadKey and returns that key
+        /// </summary>
+        /// <param name="choice"></param>
+        /// <param name="query"></param>
+        /// <param name="option1"></param>
+        /// <param name="option2"></param>
+        /// <param name="option3"></param>
+        /// <param name="option4"></param>
+        /// <param name="option5"></param>
+        /// <param name="option6"></param>
+        /// <param name="option7"></param>
+        /// <returns></returns>
         public char GetAction(ref char choice, string query, string option1, string option2, string option3, string option4, string option5, string option6, string option7)
         {
             Console.WriteLine(query);
