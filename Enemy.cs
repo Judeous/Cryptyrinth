@@ -182,7 +182,6 @@ namespace HelloWorld
                 Console.WriteLine(_name + "[Pre-Strike]"); //Enemy's stats before being struck
                 Console.WriteLine(_totalHealth + " HP ");
                 Console.WriteLine(_totalDefense + " Def <<");
-                Pause();
                 Console.WriteLine("");
 
                 _totalDefense -= damage; //Player's attack on enemy's defense
@@ -202,7 +201,7 @@ namespace HelloWorld
                 Console.WriteLine(_totalDefense + " Def <<");
                 Pause();
             } //If enemy has defense
-        } //Enemy Defended Attack function
+        } //Defended Attack function
 
         public int GetExp() { return _experience; }
     } //Enemy

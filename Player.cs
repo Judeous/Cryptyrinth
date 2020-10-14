@@ -763,7 +763,7 @@ namespace HelloWorld
         /// <summary>
         /// Calculates totalStats and _experienceRequirement
         /// </summary>
-        public void StatCalculation()
+        public virtual void StatCalculation()
         {
             //The Experience Requirement is 30x the player's level
             _experienceRequirement = _level * 30;

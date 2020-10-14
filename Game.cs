@@ -1070,8 +1070,6 @@ namespace HelloWorld
                         {
                             Console.Clear();
                             Console.WriteLine("[" + enemy.GetName() + " is retaliating!]");
-                            Pause();
-                            Console.Clear(); //Clears the screen
 
                             enemy.Attack(_player1, _action);
                         } // If enemy Retaliates
