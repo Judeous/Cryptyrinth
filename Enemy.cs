@@ -161,6 +161,12 @@ namespace HelloWorld
             } //Message switch
         } //Display Message function
 
+        public override void Attack(Character defender, char defenderAction)
+        {
+            DisplayMessage("attack");
+            base.Attack(defender, defenderAction);
+        } //Attack override
+
         /// <summary>
         /// If defense is 0, then prints out a message, then calls GetDirectAttack
         /// Otherwise, takes the passed in damage from _totalDefense
@@ -169,11 +175,12 @@ namespace HelloWorld
         /// <param name="damage"></param>
         public override void DefendAttack(int damage)
         {
+            DisplayMessage("defend");
             Console.WriteLine("");
 
             if (_totalDefense == 0)
             {
-                Console.WriteLine(messages[3]);
+                DisplayMessage("noDef");
                 GetDirectAttack(damage);
             } //If enemy has no defense
 
@@ -187,7 +194,7 @@ namespace HelloWorld
                 _totalDefense -= damage; //Player's attack on enemy's defense
                 if (_totalDefense <= 0) //If defense fails
                 {
-                    Console.WriteLine(messages[4]);
+                    DisplayMessage("defDestroyed");
                     _totalDefense = 0; //Sets defense back to 0
                 } //If defense fails
 
@@ -203,6 +210,47 @@ namespace HelloWorld
             } //If enemy has defense
         } //Defended Attack function
 
+        public override void Heal()
+        {
+            DisplayMessage("heal");
+            base.Heal();
+        } //Heal Override
+
         public int GetExp() { return _experience; }
+
+        /// <summary>
+        /// Randomizes the decision of the enemy, with a weight of 2 on the "attack" choice, which is '1'
+        /// </summary>
+        /// <returns></returns>
+        public char GetBattleAction()
+        {
+            int action = r.Next(0, 4); //Decides the enemy's action
+            char convertedAction = ' ';
+
+            switch (action)
+            {
+                case 0: //Attack
+                    convertedAction = '1';
+                    break;
+
+                case 1: //Attack
+                    convertedAction = '1';
+                    break;
+
+                case 2: //Defend
+                    convertedAction = '2';
+                    break;
+
+                case 3: //Heal
+                    convertedAction = '3';
+                    break;
+
+                case 4: //Nothing
+                    convertedAction = '4';
+                    break;
+            } //Action switch
+
+            return convertedAction;
+        } //Get Battle Action function
     } //Enemy
 } //Hello World

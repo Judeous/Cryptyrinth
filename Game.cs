@@ -1049,7 +1049,7 @@ namespace HelloWorld
 
                 Console.WriteLine("");
 
-                int enemyAction = r.Next(0, 4); //Decides the enemy's action
+                char enemyAction = enemy.GetBattleAction(); //Decides the enemy's action
 
                 _action = GetAction(ref _action, "[What do I do?]", "[1: Attack]", "[2: Block]", "[3: Heal]", "[4: Nothing]");
                 switch (_action)
@@ -1059,12 +1059,7 @@ namespace HelloWorld
 
                         Console.WriteLine("[I am attacking!]");
 
-                        if (enemyAction == 2) //If enemy blocks
-                        {
-                            enemy.DisplayMessage("defend"); //Displays enemy defend message
-                        } //If enemy blocks
-
-                        _player1.Attack(enemy, ConvertEnemyAction(enemyAction));
+                        _player1.Attack(enemy, enemyAction);
 
                         if (enemyAction <= 1 && enemy.GetHealth() > 0) //If the enemy is attacking after player attack & not dead
                         {
@@ -1076,33 +1071,28 @@ namespace HelloWorld
 
                         else if (enemyAction == 3 && enemy.GetHealth() > 0) //If the enemy is healing & not dead
                         {
-                            enemy.DisplayMessage("heal");
                             enemy.Heal();
                         } //If enemy Heals after attack
                         break;
 
                     case '2': //If player blocks
                         Console.Clear(); //Clears the screen
-
-                        if (enemyAction <= 1)
-                        {
-                            enemy.DisplayMessage("attack");
-                            enemy.Attack(_player1, _action);
-                            IsDead(_player1);
-                        } //If enemy Attacks
-
                         switch (enemyAction)
                         {
-                            case 2:
+                            case '1': //Attack
+                                enemy.Attack(_player1, _action);
+                                IsDead(_player1);
+                                break;
+
+                            case '2': //Block
                                 enemy.DisplayMessage("uselessDef");
                                 break;
 
-                            case 3:
-                                enemy.DisplayMessage("heal");
+                            case '3': //Heal
                                 enemy.Heal();
                                 break;
 
-                            case 4:
+                            case '4': //Do nothing
                                 enemy.DisplayMessage("nothing");
                                 break;
                         } //Enemy Action switch
@@ -1112,67 +1102,59 @@ namespace HelloWorld
                     case '3':
                         Console.Clear(); //Clears the screen
                         Console.WriteLine("[I am healing!]");
-
-                        if (enemyAction <= 1) //If the enemy is attacking
+                        switch (enemyAction)
                         {
-                            Console.WriteLine("[" + enemy.GetName() + " disagrees!]");
-                            Console.WriteLine("");
-                            _player1.Heal();
-                            Pause();
-                            Console.Clear(); //Clears the screen
+                            case '1':
+                                Console.WriteLine("[" + enemy.GetName() + " disagrees!]");
+                                Console.WriteLine("");
+                                _player1.Heal();
 
-                            enemy.DisplayMessage("attack");
-                            enemy.Attack(_player1, _action);
-                        } //If enemy Attacks
+                                Pause();
+                                Console.Clear(); //Clears the screen
 
-                        else if (enemyAction == 2) //If the enemy is blocking
-                        {
-                            enemy.DisplayMessage("uselessDef");
-                            _player1.Heal();
-                        } //If enemy Blocks
+                                enemy.DisplayMessage("attack");
+                                enemy.Attack(_player1, _action);
+                                break;
 
-                        else if (enemyAction == 3) //If the enemy is healing
-                        {
-                            enemy.DisplayMessage("heal");
-                            _player1.Heal();
-                            Pause();
-                            Console.Clear(); //Clears the screen
+                            case '2':
+                                enemy.DisplayMessage("uselessDef");
+                                _player1.Heal();
+                                break;
 
-                            enemy.Heal();
-                        } //If enemy also Heals
+                            case '3':
+                                _player1.Heal();
 
-                        else if (enemyAction == 4)
-                        {
-                            _player1.Heal();
-                        } //If enemy does Nothing
+                                Pause();
+                                Console.Clear(); //Clears the screen
+
+                                enemy.Heal();
+                                break;
+
+                            case '4':
+                                _player1.Heal();
+                                break;
+                        } //Enemy Action switch
                         Pause();
                         break;
 
                     case '4': //Do nothing
                         Console.Clear(); //Clears the screen
-
-                        if (enemyAction <= 1) //If the enemy is attacking
-                        {
-                            enemy.DisplayMessage("attack");
-                            enemy.Attack(_player1, _action);
-                            if (GameOver == true)
-                            {
-                                break;
-                            }
-                        } // If enemy Attacks
-
                         switch (enemyAction)
                         {
-                            case 2:
+                            case '1': //Attack
+                                enemy.Attack(_player1, _action);
+                                IsDead(_player1);
+                                break;
+
+                            case '2': //Block
                                 enemy.DisplayMessage("uselessDef");
                                 break;
 
-                            case 3:
-                                enemy.DisplayMessage("heal");
+                            case '3': //Heal
                                 enemy.Heal();
                                 break;
 
-                            case 4:
+                            case '4': //Do nothing
                                 enemy.DisplayMessage("nothing");
                                 break;
                         } //Enemy Action switch
@@ -1181,10 +1163,11 @@ namespace HelloWorld
 
                     default:
                         turncounter--;
+                        _action = ' ';
                         break;
                 } //Action Switch
 
-                if (InBattle == true) //Runs the regen & end of round text Only if the battle is continuing
+                if (InBattle == true && _action != ' ') //Runs the regen & end of round text Only if the battle is continuing and the player's action was valid
                 {
                     Console.WriteLine("");
                     Console.Write("[Press any key to end this round");
@@ -1297,41 +1280,6 @@ namespace HelloWorld
             Console.ReadKey(true);  //Pauses
             Console.WriteLine("");
         } //Pause
-
-        /// <summary>
-        /// Converts the passed in int into the respective char
-        /// </summary>
-        /// <param name="intAction"></param>
-        /// <returns></returns>
-        public char ConvertEnemyAction(int intAction)
-        {
-            char newAction = ' ';
-
-            switch (intAction)
-            {
-                case 0:
-                    newAction = '1';
-                    break;
-
-                case 1:
-                    newAction = '1';
-                    break;
-
-                case 2:
-                    newAction = '2';
-                    break;
-
-                case 3:
-                    newAction = '3';
-                    break;
-
-                case 4:
-                    newAction = '4';
-                    break;
-            } //intAction switch
-
-            return newAction;
-        } //Convert Enemy Action funtion
 
         /// <summary>
         /// Gives values to previously declared Items
