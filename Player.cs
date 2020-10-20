@@ -55,16 +55,14 @@ namespace HelloWorld
             _baseHealth = 100;
             _baseHealthRegen = 4;
             _baseDefense = 10;
+            _baseHeal = 3;
+            _baseDamage = 9;
             _level = 1;
             _currentExperience = 0;
-            _totalHeal = 5;
-
-            _baseHeal = 5;
             _damageMultiplier = 1;
-            _baseDamage = 9;
 
-            _style = "Fool";
-            _specialty = "Foolishness";
+            _style = "None";
+            _specialty = "None";
 
             NothingInitializer();
             for(int i = 0; i < _inventory.Length; i++)
@@ -903,7 +901,7 @@ namespace HelloWorld
                     Console.WriteLine("Base Health = 70");
                     Console.WriteLine("Base Regen = 5");
                     Console.WriteLine("Base Heal = 8");
-                    Console.WriteLine("Damage Mult = 1.3");
+                    Console.WriteLine("Damage Mult = 1.2");
                     Console.WriteLine("Base Defense = 11");
                     Console.WriteLine("");
                     Console.WriteLine("");
@@ -945,7 +943,7 @@ namespace HelloWorld
                             _baseHealth = 70;
                             _baseHealthRegen = 5;
                             _baseHeal = 8;
-                            _damageMultiplier = 1.3f;
+                            _damageMultiplier = 1.2f;
                             _baseDefense = 11;
                             _specialty = "Battle Mage";
                             break;
@@ -993,7 +991,7 @@ namespace HelloWorld
                     Console.WriteLine("Shielder [3]");
                     Console.WriteLine("Base Health = 100");
                     Console.WriteLine("Base Regen = 2");
-                    Console.WriteLine("Base Heal = 5");
+                    Console.WriteLine("Base Heal = 3");
                     Console.WriteLine("Damage Mult = 0.9");
                     Console.WriteLine("Base Defense = 30");
                     Console.WriteLine("");
@@ -1035,7 +1033,7 @@ namespace HelloWorld
                         case '3': //Shielder
                             _baseHealth = 100;
                             _baseHealthRegen = 2;
-                            _baseHeal = 5;
+                            _baseHeal = 3;
                             _damageMultiplier = 0.9f;
                             _baseDefense = 30;
                             _specialty = "Shielder";
@@ -1064,7 +1062,7 @@ namespace HelloWorld
                     Console.WriteLine("");
 
                     Console.WriteLine("Assassin [1]");
-                    Console.WriteLine("Base Health = 70");
+                    Console.WriteLine("Base Health = 65");
                     Console.WriteLine("Base Regen = 4");
                     Console.WriteLine("Base Heal = 0");
                     Console.WriteLine("Damage Mult = 1.35");
@@ -1073,7 +1071,7 @@ namespace HelloWorld
                     Console.WriteLine("");
 
                     Console.WriteLine("Martial Artist [2]");
-                    Console.WriteLine("Base Health = 80");
+                    Console.WriteLine("Base Health = 70");
                     Console.WriteLine("Base Regen = 6");
                     Console.WriteLine("Base Heal = 5");
                     Console.WriteLine("Damage Mult = 1.2");
@@ -1084,8 +1082,8 @@ namespace HelloWorld
                     Console.WriteLine("Ninja [3]");
                     Console.WriteLine("Base Health = 65");
                     Console.WriteLine("Base Regen = 4");
-                    Console.WriteLine("Base Heal = 5");
-                    Console.WriteLine("Damage Mult = 1.4");
+                    Console.WriteLine("Base Heal = 0");
+                    Console.WriteLine("Damage Mult = 1.5");
                     Console.WriteLine("Base Defense = 5");
                     Console.WriteLine("");
                     Console.WriteLine("");
@@ -1106,7 +1104,7 @@ namespace HelloWorld
                     switch (specialtyKey)
                     {
                         case '1':
-                            _baseHealth = 70;
+                            _baseHealth = 65;
                             _baseHealthRegen = 4;
                             _baseHeal = 0;
                             _damageMultiplier = 1.35f;
@@ -1115,7 +1113,7 @@ namespace HelloWorld
                             break;
 
                         case '2':
-                            _baseHealth = 80;
+                            _baseHealth = 70;
                             _baseHealthRegen = 6;
                             _baseHeal = 5;
                             _damageMultiplier = 1.2f;
@@ -1126,8 +1124,8 @@ namespace HelloWorld
                         case '3':
                             _baseHealth = 65;
                             _baseHealthRegen = 4;
-                            _baseHeal = 5;
-                            _damageMultiplier = 1.4f;
+                            _baseHeal = 0;
+                            _damageMultiplier = 1.5f;
                             _baseDefense = 5;
                             _specialty = "Ninja";
                             break;
