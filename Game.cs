@@ -101,10 +101,7 @@ namespace HelloWorld
                     GetGamemode();
 
                     //Player 1
-                    _player1.ChangeName();
-                    _player1.DecideSpecialty();
-                    _player1.StatCalculation();
-                    _player1.StatCheck();
+                    _player1.Create();
 
                     FirstWeapon();
                 } //If player is not previous player
@@ -113,10 +110,7 @@ namespace HelloWorld
             else if (_gamemode == '2')
             {
                 //Player 2
-                _player2.ChangeName();
-                _player2.DecideSpecialty();
-                _player2.StatCalculation();
-                _player2.StatCheck();
+                _player2.Create();
             } //If doing PvP, set up Player 2
         } //Start
 
@@ -1028,6 +1022,9 @@ namespace HelloWorld
         /// <param name="enemy"></param>
         public void AdventureBattle(ref Enemy enemy)
         {
+            enemy.DisplayMessage("approach");
+            Pause();
+
             InBattle = true;
 
             enemy.EnemySetup();
@@ -1169,7 +1166,6 @@ namespace HelloWorld
 
                 if (InBattle == true && _action != ' ') //Runs the regen & end of round text Only if the battle is continuing and the player's action was valid
                 {
-                    Console.WriteLine("");
                     Console.Write("[Press any key to end this round");
                     if (enemy.GetHealth() > 0 && _player1.GetHealth() > 0) //If both entities have health
                     {

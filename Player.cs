@@ -406,7 +406,7 @@ namespace HelloWorld
                         _defenseAddition += newItem.defenseAddition;
                         _defenseMultiplier += newItem.defenseMultiplier;
 
-                        _baseDamage += newItem.damageAddition;
+                        _damageAddition += newItem.damageAddition;
                         _damageMultiplier += newItem.damageMultiplier;
 
                         _currentItem = newItem;
@@ -443,7 +443,7 @@ namespace HelloWorld
                 _defenseAddition += newItem.defenseAddition;
                 _defenseMultiplier += newItem.defenseMultiplier;
 
-                _baseDamage += newItem.damageAddition;
+                _damageAddition += newItem.damageAddition;
                 _damageMultiplier += newItem.damageMultiplier;
 
                 _currentItem = newItem;
@@ -480,7 +480,7 @@ namespace HelloWorld
             _defenseAddition -= _currentItem.defenseAddition;
             _defenseMultiplier -= _currentItem.defenseMultiplier;
 
-            _baseDamage -= _currentItem.damageAddition;
+            _damageAddition -= _currentItem.damageAddition;
             _damageMultiplier -= _currentItem.damageMultiplier;
 
             if (_currentItem._name != "nothing")
@@ -857,6 +857,14 @@ namespace HelloWorld
             Console.WriteLine(_totalDefense + " Def");
             Console.WriteLine("");
         } //Display Stats function
+
+        public void Create()
+        {
+            ChangeName();
+            DecideSpecialty();
+            StatCalculation();
+            StatCheck();
+        } //Create
 
         /// <summary>
         /// Asks the player what they'd like their style to be, then asks which of the four possible specialties of said style they'd like
